@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+*/.DS_Store
+
+# Temp Office files
+~$*
+
+# Training materials (binary, not code)
+*.xlsx
+*.pptx
+*.docx
+
+# Claude Code session data
+.claude/
+
+# Node modules (if any future build step)
+node_modules/

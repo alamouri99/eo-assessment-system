@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICP Clarity Scoring Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        #icp-scorer {
+            --bg: #000000;
+            --bg-alt: #0A0A0A;
+            --bg-card: rgba(255,255,255,0.04);
+            --accent: #FF6600;
+            --accent-hover: #CC5200;
+            --text: #FFFFFF;
+            --text-muted: #A3A3A3;
+            --border: rgba(255,255,255,0.08);
+            --success: #22C55E;
+            --error: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        #icp-scorer {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg-alt) 100%);
+        }
+
+        /* Navigation */
+        .icp-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 2rem;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .icp-logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--accent), #FF8533);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .icp-progress-wrapper {
+            flex: 1;
+            margin: 0 3rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .icp-progress-bar {
+            flex: 1;
+            height: 4px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .icp-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #FF8533);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .icp-progress-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Main Container */
+        .icp-main {
+            margin-top: 70px;
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .icp-screen {
+            display: none;
+        }
+
+        .icp-screen.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Welcome Screen */
+        .icp-welcome {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .icp-welcome h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text), var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .icp-welcome-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .icp-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .icp-stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .icp-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .icp-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section Preview Cards */
+        .icp-sections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .icp-section-preview {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .icp-section-preview:hover {
+            border-color: rgba(255, 102, 0, 0.3);
+            background: rgba(255, 102, 0, 0.05);
+        }
+
+        .icp-section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .icp-section-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .icp-section-questions {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* CTA Button */
+        .icp-cta-primary {
+            background: linear-gradient(135deg, var(--accent), #FF8533);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+        }
+
+        .icp-cta-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(255, 102, 0, 0.4);
+        }
+
+        .icp-cta-primary:active {
+            transform: translateY(0);
+        }
+
+        /* Question Screen */
+        .icp-question-header {
+            margin-bottom: 2rem;
+        }
+
+        .icp-section-label {
+            display: inline-block;
+            background: rgba(255, 102, 0, 0.1);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .icp-question-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .icp-question-counter {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .icp-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .icp-option {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icp-option:hover {
+            border-color: rgba(255, 102, 0, 0.3);
+            background: rgba(255, 102, 0, 0.08);
+        }
+
+        .icp-option.selected {
+            background: rgba(255, 102, 0, 0.15);
+            border-color: var(--accent);
+        }
+
+        .icp-option-text {
+            font-size: 1rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .icp-option-value {
+            font-size: 0.75rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Navigation Buttons */
+        .icp-nav-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 3rem;
+            justify-content: space-between;
+        }
+
+        .icp-btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .icp-btn-secondary:hover {
+            border-color: var(--accent);
+            background: rgba(255, 102, 0, 0.1);
+        }
+
+        .icp-btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Results Screen */
+        .icp-score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .icp-score-circle-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--accent) 0deg,
+                var(--accent) calc(var(--score-percent) * 3.6deg),
+                var(--bg-card) calc(var(--score-percent) * 3.6deg)
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+        }
+
+        .icp-score-inner {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icp-score-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .icp-score-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .icp-score-band {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .icp-band-crystal { color: var(--success); }
+        .icp-band-good { color: #3B82F6; }
+        .icp-band-fuzzy { color: #F59E0B; }
+        .icp-band-noclear { color: #EF4444; }
+
+        .icp-sections-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .icp-section-score-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .icp-section-score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .icp-section-score-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .icp-section-score-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .icp-mini-progress {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-card);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .icp-mini-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #FF8533);
+            transition: width 0.3s ease;
+        }
+
+        .icp-mini-progress-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Recommendations */
+        .icp-recommendations {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            margin-bottom: 2rem;
+        }
+
+        .icp-recommendations h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .icp-recommendation-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .icp-recommendation-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .icp-recommendation-title {
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .icp-recommendation-title.threshold {
+            color: var(--error);
+        }
+
+        .icp-recommendation-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .icp-recommendation-item {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .icp-recommendation-item:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Gap Analysis */
+        .icp-gap-analysis {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            margin-bottom: 2rem;
+        }
+
+        .icp-gap-analysis h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .icp-gap-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .icp-gap-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .icp-gap-name {
+            font-weight: 600;
+            color: var(--text);
+            flex: 1;
+        }
+
+        .icp-gap-bar {
+            flex: 2;
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0 1.5rem;
+            position: relative;
+        }
+
+        .icp-gap-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #FF8533);
+            transition: width 0.3s ease;
+        }
+
+        .icp-gap-percent {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--accent);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* Results CTA */
+        .icp-results-cta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .icp-cta-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .icp-cta-card:hover {
+            border-color: rgba(255, 102, 0, 0.3);
+            background: rgba(255, 102, 0, 0.05);
+        }
+
+        .icp-cta-card h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .icp-cta-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .icp-cta-card button {
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .icp-nav {
+                padding: 0 1rem;
+            }
+
+            .icp-progress-wrapper {
+                margin: 0 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .icp-welcome h1 {
+                font-size: 1.8rem;
+            }
+
+            .icp-main {
+                padding: 1.5rem 1rem;
+            }
+
+            .icp-question-title {
+                font-size: 1.5rem;
+            }
+
+            .icp-score-circle {
+                width: 150px;
+                height: 150px;
+            }
+
+            .icp-score-number {
+                font-size: 2rem;
+            }
+        }
+
+        .icp-hidden {
+            display: none !important;
+        }
+
+        /* Contact Form */
+        .icp-contact-screen {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .icp-contact-screen h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .icp-contact-screen p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .icp-contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .icp-form-group { text-align: left; }
+        .icp-form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+        .icp-form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .icp-form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Loading Overlay */
+        .icp-loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .icp-spinner {
+            width: 48px; height: 48px;
+            border: 4px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: icpSpin 0.8s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes icpSpin { to { transform: rotate(360deg); } }
+        .icp-loading-text {
+            color: var(--text);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* AI Enhanced Elements */
+        .icp-ai-insight {
+            background: rgba(255,102,0,0.1);
+            border: 1px solid rgba(255,102,0,0.3);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        .icp-ai-strength {
+            color: var(--success);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        .icp-ai-weakness {
+            color: #F59E0B;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        .icp-saved-badge {
+            display: inline-block;
+            background: rgba(34,197,94,0.15);
+            color: var(--success);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        .icp-ai-plan {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .icp-ai-plan h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+        .icp-ai-plan ol {
+            padding-left: 1.5rem;
+            color: var(--text-muted);
+        }
+        .icp-ai-plan li {
+            padding: 0.5rem 0;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div id="icp-scorer">
+        <!-- Navigation -->
+        <div class="icp-nav">
+            <div class="icp-logo">SalesMfast ICP</div>
+            <div class="icp-progress-wrapper">
+                <div class="icp-progress-bar">
+                    <div class="icp-progress-fill"></div>
+                </div>
+                <div class="icp-progress-text"><span id="current-q">0</span>/20</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="icp-main">
+            <!-- Welcome Screen -->
+            <div class="icp-screen icp-welcome active" data-screen="welcome">
+                <h1>How Well Do You Know Your Buyer?</h1>
+                <p class="icp-welcome-subtitle">
+                    Discover the gaps in your ICP clarity. This assessment reveals whether you have a crystal-clear picture of your ideal customer, or just assumptions.
+                </p>
+
+                <div class="icp-stats">
+                    <div class="icp-stat-card">
+                        <div class="icp-stat-value">20</div>
+                        <div class="icp-stat-label">Questions</div>
+                    </div>
+                    <div class="icp-stat-card">
+                        <div class="icp-stat-value">6</div>
+                        <div class="icp-stat-label">Sections</div>
+                    </div>
+                    <div class="icp-stat-card">
+                        <div class="icp-stat-value">7 min</div>
+                        <div class="icp-stat-label">Time</div>
+                    </div>
+                    <div class="icp-stat-card">
+                        <div class="icp-stat-value">100</div>
+                        <div class="icp-stat-label">Max Score</div>
+                    </div>
+                </div>
+
+                <div class="icp-sections-grid">
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">👤 WHO</div>
+                        <div class="icp-section-subtitle">Dream Customer</div>
+                        <div class="icp-section-questions">5 questions • 25 points</div>
+                    </div>
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">📍 WHERE</div>
+                        <div class="icp-section-subtitle">Congregation Points</div>
+                        <div class="icp-section-questions">4 questions • 20 points</div>
+                    </div>
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">🧲 CAPTURE</div>
+                        <div class="icp-section-subtitle">Attention Capture</div>
+                        <div class="icp-section-questions">4 questions • 20 points</div>
+                    </div>
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">✨ RESULT</div>
+                        <div class="icp-section-subtitle">Transformation</div>
+                        <div class="icp-section-questions">3 questions • 15 points</div>
+                    </div>
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">💡 EPIPHANY</div>
+                        <div class="icp-section-subtitle">Bridge</div>
+                        <div class="icp-section-questions">2 questions • 10 points</div>
+                    </div>
+                    <div class="icp-section-preview">
+                        <div class="icp-section-title">🎭 CHARACTER</div>
+                        <div class="icp-section-subtitle">Attractive Identity</div>
+                        <div class="icp-section-questions">2 questions • 10 points</div>
+                    </div>
+                </div>
+
+                <button class="icp-cta-primary" onclick="startAssessment()">Start Assessment</button>
+            </div>
+
+            <!-- Questions Screen -->
+            <div class="icp-screen" data-screen="questions">
+                <div class="icp-question-header">
+                    <div class="icp-section-label" id="section-label">Section A</div>
+                    <h2 class="icp-question-title" id="question-text"></h2>
+                    <div class="icp-question-counter"><span id="question-number">1</span> of 20</div>
+                </div>
+                <div class="icp-options" id="options-container"></div>
+                <div class="icp-nav-buttons">
+                    <button class="icp-btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>← Previous</button>
+                    <button class="icp-btn-secondary" id="next-btn" onclick="nextQuestion()" disabled>Next →</button>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div class="icp-screen" data-screen="results">
+                <div style="text-align: center; margin-bottom: 4rem;">
+                    <div class="icp-score-circle" style="--score-percent: var(--score-value, 0);">
+                        <div class="icp-score-circle-bg">
+                            <div class="icp-score-inner">
+                                <div class="icp-score-number" id="final-score">0</div>
+                                <div class="icp-score-label">out of 100</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="icp-score-band" id="score-band"></div>
+                </div>
+
+                <div class="icp-sections-breakdown" id="sections-breakdown"></div>
+
+                <div class="icp-recommendations" id="recommendations-container"></div>
+
+                <div class="icp-gap-analysis" id="gap-analysis-container"></div>
+
+                <div class="icp-results-cta">
+                    <div class="icp-cta-card">
+                        <h3>Ready to Sharpen Your ICP?</h3>
+                        <p>Book a free strategic hour to create your buyer clarity roadmap with our experts.</p>
+                        <button class="icp-cta-primary">Book Your Free Hour</button>
+                    </div>
+                    <div class="icp-cta-card">
+                        <h3>Retake the Assessment</h3>
+                        <p>Refine your answers after implementing recommendations to track your progress.</p>
+                        <button class="icp-cta-primary" onclick="restartAssessment()">Retake Assessment</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form Screen -->
+            <div class="icp-screen icp-contact-screen" data-screen="contact" style="display:none;">
+                <h2>Get Your AI-Powered ICP Analysis</h2>
+                <p>Enter your details to receive personalized recommendations from our Brunson + Holmes strategy engine.</p>
+                <form class="icp-contact-form" onsubmit="submitToWebhook(event)">
+                    <div class="icp-form-group">
+                        <label for="icp-contact-name">Full Name</label>
+                        <input type="text" id="icp-contact-name" placeholder="Your name" required>
+                    </div>
+                    <div class="icp-form-group">
+                        <label for="icp-contact-email">Email</label>
+                        <input type="email" id="icp-contact-email" placeholder="you@company.com" required>
+                    </div>
+                    <div class="icp-form-group">
+                        <label for="icp-contact-company">Company</label>
+                        <input type="text" id="icp-contact-company" placeholder="Your company name" required>
+                    </div>
+                    <button type="submit" class="icp-cta-primary" style="width:100%;margin-top:0.5rem;">Get My AI Analysis</button>
+                    <button type="button" class="icp-btn-secondary" style="width:100%;margin-top:4px;" onclick="showResults()">Skip — Show Basic Results</button>
+                </form>
+            </div>
+
+            <!-- Loading Overlay -->
+            <div class="icp-loading-overlay" id="icp-loading" style="display:none;">
+                <div class="icp-spinner"></div>
+                <div class="icp-loading-text">Analyzing your ICP with AI...</div>
+                <div class="icp-loading-text" style="font-size:14px;opacity:0.7;margin-top:8px;">This takes 10-15 seconds</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const QUESTIONS = [
+            // Section A: WHO (5 questions, 25 points)
+            {
+                section: 'A',
+                sectionName: 'WHO',
+                sectionLabel: 'Dream Customer',
+                question: 'Can you name a specific person who represents your ideal buyer?',
+                options: [
+                    { text: 'Yes: full name, company, role, and daily reality', value: 5 },
+                    { text: 'I can describe the role and company type specifically', value: 3 },
+                    { text: 'I have a general segment in mind', value: 1 },
+                    { text: 'My product is for everyone / I\'m not sure', value: 0 }
+                ]
+            },
+            {
+                section: 'A',
+                sectionName: 'WHO',
+                sectionLabel: 'Dream Customer',
+                question: 'What state is your target buyer currently in?',
+                options: [
+                    { text: 'Frustrated with their current solution, actively looking', value: 5 },
+                    { text: 'Satisfied but open; would switch for something clearly better', value: 3 },
+                    { text: 'Loyal to current provider, hard to switch', value: 1 },
+                    { text: 'Unaware they have this problem', value: 0 }
+                ]
+            },
+            {
+                section: 'A',
+                sectionName: 'WHO',
+                sectionLabel: 'Dream Customer',
+                question: 'Can you describe their dream outcome in THEIR words?',
+                options: [
+                    { text: 'Yes: I have exact quotes from buyer conversations', value: 5 },
+                    { text: 'I can paraphrase what they\'ve told me', value: 3 },
+                    { text: 'I\'m describing what I think they want', value: 1 },
+                    { text: 'I haven\'t asked them directly', value: 0 }
+                ]
+            },
+            {
+                section: 'A',
+                sectionName: 'WHO',
+                sectionLabel: 'Dream Customer',
+                question: 'How clear are the pain AND the aspiration?',
+                options: [
+                    { text: 'Both are crystal clear: I know what hurts AND what they dream of', value: 5 },
+                    { text: 'Pain is clear but dream outcome is vague', value: 3 },
+                    { text: 'Dream is clear but pain isn\'t urgent', value: 2 },
+                    { text: 'Neither is well-defined', value: 0 }
+                ]
+            },
+            {
+                section: 'A',
+                sectionName: 'WHO',
+                sectionLabel: 'Dream Customer',
+                question: 'Which storytelling role fits your brand?',
+                options: [
+                    { text: 'The Leader: I give my audience new opportunities', value: 5 },
+                    { text: 'The Adventurer: I take them on a journey with me', value: 4 },
+                    { text: 'The Reporter: I gather expert insights for them', value: 3 },
+                    { text: 'The Reluctant Hero: circumstances forced my hand', value: 2 },
+                    { text: 'I haven\'t thought about this', value: 0 }
+                ]
+            },
+
+            // Section B: WHERE (4 questions, 20 points)
+            {
+                section: 'B',
+                sectionName: 'WHERE',
+                sectionLabel: 'Congregation Points',
+                question: 'Where does your buyer gather in person?',
+                options: [
+                    { text: 'Named events I\'ve attended; I can list 3+ with dates', value: 5 },
+                    { text: 'I know specific events but haven\'t attended', value: 3 },
+                    { text: 'General networking events', value: 1 },
+                    { text: 'No idea where they gather', value: 0 }
+                ]
+            },
+            {
+                section: 'B',
+                sectionName: 'WHERE',
+                sectionLabel: 'Congregation Points',
+                question: 'Where is your buyer online?',
+                options: [
+                    { text: 'Specific LinkedIn groups, WhatsApp communities, forums - named', value: 5 },
+                    { text: 'I know the platforms but not specific groups', value: 3 },
+                    { text: 'Somewhere on social media', value: 1 },
+                    { text: 'I don\'t know where they spend time online', value: 0 }
+                ]
+            },
+            {
+                section: 'B',
+                sectionName: 'WHERE',
+                sectionLabel: 'Congregation Points',
+                question: 'What content does your buyer consume?',
+                options: [
+                    { text: 'Named podcasts, YouTube channels, newsletters they follow', value: 5 },
+                    { text: 'I know the general topics but not specific creators', value: 3 },
+                    { text: 'They probably read industry news', value: 1 },
+                    { text: 'I haven\'t researched their content habits', value: 0 }
+                ]
+            },
+            {
+                section: 'B',
+                sectionName: 'WHERE',
+                sectionLabel: 'Congregation Points',
+                question: 'Who does your buyer trust for recommendations?',
+                options: [
+                    { text: 'Named influencers, consultants, or peers they listen to', value: 5 },
+                    { text: 'I know the type of advisor they trust', value: 3 },
+                    { text: 'General word-of-mouth', value: 1 },
+                    { text: 'I don\'t know who influences their decisions', value: 0 }
+                ]
+            },
+
+            // Section C: WHAT CAPTURE (4 questions, 20 points)
+            {
+                section: 'C',
+                sectionName: 'CAPTURE',
+                sectionLabel: 'Attention Capture',
+                question: 'Can you stop your buyer scrolling with one sentence?',
+                options: [
+                    { text: 'Tested hook with >3% click-through rate', value: 5 },
+                    { text: 'Strong hook hypothesis I believe will work', value: 3 },
+                    { text: 'Generic: "We help companies improve..."', value: 1 },
+                    { text: 'No hook; I lead with product features', value: 0 }
+                ]
+            },
+            {
+                section: 'C',
+                sectionName: 'CAPTURE',
+                sectionLabel: 'Attention Capture',
+                question: 'Do you have an origin story that creates belief?',
+                options: [
+                    { text: 'Full story: backstory → wall → epiphany → plan → results', value: 5 },
+                    { text: 'I have a story but haven\'t structured it', value: 3 },
+                    { text: 'I mention my background sometimes', value: 1 },
+                    { text: 'No origin story', value: 0 }
+                ]
+            },
+            {
+                section: 'C',
+                sectionName: 'CAPTURE',
+                sectionLabel: 'Attention Capture',
+                question: 'What do you give them to enter your world?',
+                options: [
+                    { text: 'Specific tool, calculator, or template they actually use', value: 5 },
+                    { text: 'A valuable guide or checklist', value: 4 },
+                    { text: 'Free consultation offer', value: 3 },
+                    { text: 'Download our brochure / nothing', value: 1 }
+                ]
+            },
+            {
+                section: 'C',
+                sectionName: 'CAPTURE',
+                sectionLabel: 'Attention Capture',
+                question: 'What proof do you have that it works?',
+                options: [
+                    { text: 'Published case studies with metrics + video testimonials', value: 5 },
+                    { text: 'Written testimonials from real customers', value: 4 },
+                    { text: 'Personal track record and experience', value: 3 },
+                    { text: 'None yet, trust me', value: 0 }
+                ]
+            },
+
+            // Section D: RESULT (3 questions, 15 points)
+            {
+                section: 'D',
+                sectionName: 'RESULT',
+                sectionLabel: 'Desired Transformation',
+                question: 'Can you show a measurable before/after?',
+                options: [
+                    { text: 'Exact metrics: "From 3 hours to 15 minutes" or "From $X to $Y"', value: 5 },
+                    { text: 'Clear improvement with approximate numbers', value: 3 },
+                    { text: 'General improvement statement', value: 1 },
+                    { text: 'No clear before/after', value: 0 }
+                ]
+            },
+            {
+                section: 'D',
+                sectionName: 'RESULT',
+                sectionLabel: 'Desired Transformation',
+                question: 'How fast does the customer see the transformation?',
+                options: [
+                    { text: 'Same day: instant visible value', value: 5 },
+                    { text: 'Within a week: quick wins', value: 4 },
+                    { text: 'Within 30 days: building value', value: 3 },
+                    { text: '90+ days: slow burn', value: 1 }
+                ]
+            },
+            {
+                section: 'D',
+                sectionName: 'RESULT',
+                sectionLabel: 'Desired Transformation',
+                question: 'Can you de-risk their decision?',
+                options: [
+                    { text: 'Performance guarantee with measurable criteria', value: 5 },
+                    { text: 'Money-back guarantee', value: 4 },
+                    { text: 'Free trial or pilot period', value: 3 },
+                    { text: 'No guarantee, take it or leave it', value: 0 }
+                ]
+            },
+
+            // Section E: EPIPHANY BRIDGE (2 questions, 10 points)
+            {
+                section: 'E',
+                sectionName: 'EPIPHANY',
+                sectionLabel: 'Bridge',
+                question: 'Do you know what false belief stops them from buying?',
+                options: [
+                    { text: 'Specific belief I\'ve heard from 5+ buyers with evidence', value: 5 },
+                    { text: 'I have a strong hypothesis about their objection', value: 3 },
+                    { text: 'They have general resistance but I can\'t pinpoint why', value: 1 },
+                    { text: 'I don\'t know what\'s holding them back', value: 0 }
+                ]
+            },
+            {
+                section: 'E',
+                sectionName: 'EPIPHANY',
+                sectionLabel: 'Bridge',
+                question: 'Have you framed your solution as a NEW opportunity?',
+                options: [
+                    { text: 'Clear new category, not a better version of what exists', value: 5 },
+                    { text: 'Positioned as significantly different approach', value: 3 },
+                    { text: 'Better version of existing solutions', value: 2 },
+                    { text: 'Same as competitors', value: 0 }
+                ]
+            },
+
+            // Section F: ATTRACTIVE CHARACTER (2 questions, 10 points)
+            {
+                section: 'F',
+                sectionName: 'CHARACTER',
+                sectionLabel: 'Attractive Identity',
+                question: 'Which archetype have you chosen and are you consistent?',
+                options: [
+                    { text: 'Consciously chosen, tested, and consistent across all content', value: 5 },
+                    { text: 'Natural persona but unstructured', value: 3 },
+                    { text: 'Different persona on different platforms', value: 1 },
+                    { text: 'No public persona', value: 0 }
+                ]
+            },
+            {
+                section: 'F',
+                sectionName: 'CHARACTER',
+                sectionLabel: 'Attractive Identity',
+                question: 'Does your backstory create authority AND relatability?',
+                options: [
+                    { text: 'Tested backstory that generates "that happened to me too"', value: 5 },
+                    { text: 'Have a compelling story I share sometimes', value: 3 },
+                    { text: 'Standard bio / resume', value: 1 },
+                    { text: 'No personal backstory in my marketing', value: 0 }
+                ]
+            }
+        ];
+
+        const SECTION_MAXES = {
+            'A': 25,
+            'B': 20,
+            'C': 20,
+            'D': 15,
+            'E': 10,
+            'F': 10
+        };
+
+        const RECOMMENDATIONS = {
+            'A': [
+                "Stop thinking in segments. Find ONE real person on LinkedIn. Study their posts.",
+                "Interview 5 potential buyers. Ask: 'What's the worst part of your current process?'",
+                "Write a 'Day in the Life' for your ideal buyer: what happens at 9am, 2pm, 5pm?"
+            ],
+            'B': [
+                "Join 5 LinkedIn groups where your ICP posts. Monitor for 2 weeks before posting.",
+                "Map MENA events: GITEX, STEP, ArabNet. Attend as a human, not a sponsor.",
+                "Identify 10 'connectors': consultants, accountants who serve your ICP."
+            ],
+            'C': [
+                "Write 10 hooks. Test 3 on LinkedIn. Formula: [Counterintuitive claim] + [Specific result] + [Time]",
+                "Build your Epiphany Bridge: What happened that changed your mind about this problem?",
+                "Replace 'free consultation' with a specific tool: calculator, scorecard, or template."
+            ],
+            'D': [
+                "Create a before/after case with exact numbers from one customer",
+                "Add a risk-reversal: free trial, money-back, or pilot program"
+            ],
+            'E': [
+                "List 3 objections you hear most. Each is a limiting belief to address.",
+                "Reframe: You're not selling improvement. You're offering a new opportunity."
+            ],
+            'F': [
+                "Read Expert Secrets Chapter 3. Pick your archetype.",
+                "Write your origin story in 60 seconds. Record it. Share it."
+            ]
+        };
+
+        let currentQuestion = 0;
+        let answers = new Array(QUESTIONS.length).fill(-1);
+
+        function startAssessment() {
+            showScreen('questions');
+            displayQuestion();
+        }
+
+        function showScreen(screenName) {
+            document.querySelectorAll('.icp-screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.querySelector(`[data-screen="${screenName}"]`).classList.add('active');
+        }
+
+        function displayQuestion() {
+            const q = QUESTIONS[currentQuestion];
+            document.getElementById('section-label').textContent = `Section ${q.section} • ${q.sectionName}: ${q.sectionLabel}`;
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('question-number').textContent = currentQuestion + 1;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((option, idx) => {
+                const div = document.createElement('div');
+                div.className = 'icp-option' + (answers[currentQuestion] === option.value ? ' selected' : '');
+                div.innerHTML = `
+                    <div class="icp-option-text">${option.text}</div>
+                    <div class="icp-option-value">${option.value} points</div>
+                `;
+                div.onclick = () => selectOption(option.value, idx);
+                optionsContainer.appendChild(div);
+            });
+
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        function selectOption(value, idx) {
+            answers[currentQuestion] = value;
+            document.querySelectorAll('.icp-option').forEach((el, i) => {
+                if (i === idx) {
+                    el.classList.add('selected');
+                } else {
+                    el.classList.remove('selected');
+                }
+            });
+            updateNavigationButtons();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < QUESTIONS.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showContactForm();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion();
+            }
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+            document.getElementById('next-btn').disabled = answers[currentQuestion] === -1;
+            if (currentQuestion === QUESTIONS.length - 1) {
+                document.getElementById('next-btn').textContent = 'See Results →';
+            } else {
+                document.getElementById('next-btn').textContent = 'Next →';
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / QUESTIONS.length) * 100;
+            document.querySelector('.icp-progress-fill').style.width = progress + '%';
+            document.getElementById('current-q').textContent = currentQuestion + 1;
+        }
+
+        function showResults(aiData) {
+            // Hide contact form and loading
+            var contactEl = document.querySelector('[data-screen="contact"]');
+            if (contactEl) contactEl.style.display = 'none';
+            var loadingEl = document.getElementById('icp-loading');
+            if (loadingEl) loadingEl.style.display = 'none';
+
+            const scores = calculateScores();
+            const totalScore = scores.total;
+
+            document.getElementById('final-score').textContent = totalScore;
+            document.documentElement.style.setProperty('--score-value', totalScore);
+
+            const band = getBand(totalScore);
+            document.getElementById('score-band').textContent = band.label;
+            document.getElementById('score-band').className = `icp-score-band ${band.className}`;
+
+            displaySectionBreakdown(scores);
+            displayRecommendations(scores);
+            displayGapAnalysis(scores);
+
+            showScreen('results');
+
+            // AI-enhanced content
+            if (aiData) {
+                // Key insight banner
+                if (aiData.keyInsight) {
+                    var insightDiv = document.createElement('div');
+                    insightDiv.className = 'icp-ai-insight';
+                    insightDiv.innerHTML = '<strong>AI Insight:</strong> ' + aiData.keyInsight;
+                    var scoreCircle = document.querySelector('.icp-score-circle');
+                    if (scoreCircle) scoreCircle.parentNode.insertBefore(insightDiv, scoreCircle.nextSibling.nextSibling);
+                }
+
+                // Section-level strengths/weaknesses
+                if (aiData.sectionAnalysis) {
+                    var sectionKeys = ['who', 'where', 'capture', 'result', 'epiphany', 'character'];
+                    var cards = document.querySelectorAll('.icp-section-score-card');
+                    cards.forEach(function(card, idx) {
+                        var analysis = aiData.sectionAnalysis[sectionKeys[idx]];
+                        if (analysis) {
+                            if (analysis.strength) {
+                                var s = document.createElement('div');
+                                s.className = 'icp-ai-strength';
+                                s.textContent = '\u2713 ' + analysis.strength;
+                                card.appendChild(s);
+                            }
+                            if (analysis.weakness) {
+                                var w = document.createElement('div');
+                                w.className = 'icp-ai-weakness';
+                                w.textContent = '\u26A0 ' + analysis.weakness;
+                                card.appendChild(w);
+                            }
+                        }
+                    });
+                }
+
+                // 30-day action plan
+                if (aiData.thirtyDayPlan && aiData.thirtyDayPlan.length > 0) {
+                    var planDiv = document.createElement('div');
+                    planDiv.className = 'icp-ai-plan';
+                    planDiv.id = 'icp-ai-plan';
+                    var planHTML = '<h2>30-Day ICP Sharpening Plan</h2><ol>';
+                    aiData.thirtyDayPlan.forEach(function(step) {
+                        planHTML += '<li>' + step + '</li>';
+                    });
+                    planHTML += '</ol>';
+                    planDiv.innerHTML = planHTML;
+                    var recsContainer = document.getElementById('recommendations-container');
+                    if (recsContainer) recsContainer.parentNode.insertBefore(planDiv, recsContainer);
+                }
+
+                // AI recommendations
+                if (aiData.recommendations && aiData.recommendations.length > 0) {
+                    var recsEl = document.getElementById('recommendations-container');
+                    if (recsEl) {
+                        var aiRecsHTML = '<div class="icp-recommendation-section"><div class="icp-recommendation-title">AI Recommendations</div><ul class="icp-recommendation-list">';
+                        aiData.recommendations.forEach(function(r) {
+                            aiRecsHTML += '<li class="icp-recommendation-item">' + r + '</li>';
+                        });
+                        aiRecsHTML += '</ul></div>';
+                        recsEl.innerHTML += aiRecsHTML;
+                    }
+                }
+
+                // Saved badge
+                var bandEl = document.getElementById('score-band');
+                if (bandEl) {
+                    var badge = document.createElement('div');
+                    badge.className = 'icp-saved-badge';
+                    badge.textContent = '\u2713 Results saved to your profile';
+                    bandEl.parentNode.insertBefore(badge, bandEl.nextSibling);
+                }
+            }
+        }
+
+        function calculateScores() {
+            const sectionScores = {};
+            let total = 0;
+
+            Object.keys(SECTION_MAXES).forEach(section => {
+                sectionScores[section] = 0;
+            });
+
+            QUESTIONS.forEach((q, idx) => {
+                if (answers[idx] !== -1) {
+                    sectionScores[q.section] += answers[idx];
+                    total += answers[idx];
+                }
+            });
+
+            return { ...sectionScores, total };
+        }
+
+        function getBand(score) {
+            if (score >= 85) return { label: 'Crystal Clear', className: 'icp-band-crystal' };
+            if (score >= 70) return { label: 'Good Foundation', className: 'icp-band-good' };
+            if (score >= 50) return { label: 'Fuzzy ICP', className: 'icp-band-fuzzy' };
+            if (score >= 25) return { label: 'No Clarity', className: 'icp-band-noclear' };
+            return { label: 'Critical', className: 'icp-band-noclear' };
+        }
+
+        function displaySectionBreakdown(scores) {
+            const sections = [
+                { key: 'A', name: 'WHO', icon: '👤' },
+                { key: 'B', name: 'WHERE', icon: '📍' },
+                { key: 'C', name: 'CAPTURE', icon: '🧲' },
+                { key: 'D', name: 'RESULT', icon: '✨' },
+                { key: 'E', name: 'EPIPHANY', icon: '💡' },
+                { key: 'F', name: 'CHARACTER', icon: '🎭' }
+            ];
+
+            const html = sections.map(s => {
+                const score = scores[s.key];
+                const max = SECTION_MAXES[s.key];
+                const percent = (score / max) * 100;
+                return `
+                    <div class="icp-section-score-card">
+                        <div class="icp-section-score-header">
+                            <div class="icp-section-score-name">${s.icon} ${s.name}</div>
+                            <div class="icp-section-score-value">${score}/${max}</div>
+                        </div>
+                        <div class="icp-mini-progress">
+                            <div class="icp-mini-progress-fill" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="icp-mini-progress-label">${Math.round(percent)}% Complete</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('sections-breakdown').innerHTML = html;
+        }
+
+        function displayRecommendations(scores) {
+            const sections = ['A', 'B', 'C', 'D', 'E', 'F'];
+            const thresholds = { 'A': 15, 'B': 12, 'C': 12, 'D': 9, 'E': 6, 'F': 6 };
+            const sectionNames = { 'A': 'WHO', 'B': 'WHERE', 'C': 'CAPTURE', 'D': 'RESULT', 'E': 'EPIPHANY', 'F': 'CHARACTER' };
+
+            let html = '<h2>Sharpening Your ICP</h2>';
+
+            sections.forEach(section => {
+                const score = scores[section];
+                const threshold = thresholds[section];
+                const recs = RECOMMENDATIONS[section];
+                const isThreshold = score < threshold;
+
+                html += `
+                    <div class="icp-recommendation-section">
+                        <div class="icp-recommendation-title ${isThreshold ? 'threshold' : ''}">
+                            ${isThreshold ? '⚠️ ' : '✓ '} ${sectionNames[section]} ${isThreshold ? '(Below Target)' : '(On Track)'}
+                        </div>
+                        <ul class="icp-recommendation-list">
+                            ${recs.map(r => `<li class="icp-recommendation-item">${r}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+
+            document.getElementById('recommendations-container').innerHTML = html;
+        }
+
+        function displayGapAnalysis(scores) {
+            const sections = [
+                { key: 'A', name: 'WHO (Dream Customer)' },
+                { key: 'B', name: 'WHERE (Congregation Points)' },
+                { key: 'C', name: 'CAPTURE (Attention)' },
+                { key: 'D', name: 'RESULT (Transformation)' },
+                { key: 'E', name: 'EPIPHANY (Bridge)' },
+                { key: 'F', name: 'CHARACTER (Identity)' }
+            ];
+
+            let html = '<h2>Brunson Framework Gap Analysis</h2>';
+
+            sections.forEach(s => {
+                const score = scores[s.key];
+                const max = SECTION_MAXES[s.key];
+                const percent = (score / max) * 100;
+
+                html += `
+                    <div class="icp-gap-row">
+                        <div class="icp-gap-name">${s.name}</div>
+                        <div class="icp-gap-bar">
+                            <div class="icp-gap-bar-fill" style="width: ${percent}%"></div>
+                        </div>
+                        <div class="icp-gap-percent">${Math.round(percent)}%</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('gap-analysis-container').innerHTML = html;
+        }
+
+        function restartAssessment() {
+            currentQuestion = 0;
+            answers = new Array(QUESTIONS.length).fill(-1);
+            // Hide contact form and loading
+            var contactEl = document.querySelector('[data-screen="contact"]');
+            if (contactEl) contactEl.style.display = 'none';
+            var loadingEl = document.getElementById('icp-loading');
+            if (loadingEl) loadingEl.style.display = 'none';
+            // Remove AI elements
+            var badge = document.querySelector('.icp-saved-badge');
+            if (badge) badge.remove();
+            var plan = document.getElementById('icp-ai-plan');
+            if (plan) plan.remove();
+            var insight = document.querySelector('.icp-ai-insight');
+            if (insight) insight.remove();
+            document.querySelectorAll('.icp-ai-strength, .icp-ai-weakness').forEach(function(el) { el.remove(); });
+            showScreen('welcome');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.icp-progress-fill').style.width = '0%';
+        });
+
+        // --- Webhook Integration ---
+        var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-score';
+
+        function showContactForm() {
+            document.querySelectorAll('.icp-screen').forEach(function(s) { s.classList.remove('active'); });
+            var contactEl = document.querySelector('[data-screen="contact"]');
+            contactEl.style.display = 'block';
+            contactEl.classList.add('active');
+            document.querySelector('.icp-progress-fill').style.width = '100%';
+        }
+
+        function buildWebhookPayload() {
+            var answerMap = {};
+            var sectionLetters = { A: 'a', B: 'b', C: 'c', D: 'd', E: 'e', F: 'f' };
+            var sectionCounters = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+
+            QUESTIONS.forEach(function(q, idx) {
+                sectionCounters[q.section]++;
+                var key = sectionLetters[q.section] + sectionCounters[q.section];
+                answerMap[key] = (answers[idx] !== -1) ? answers[idx] : 0;
+            });
+
+            var scores = calculateScores();
+            var sectionKeyMap = { A: 'who', B: 'where', C: 'capture', D: 'result', E: 'epiphany', F: 'character' };
+            var sectionScores = {};
+            Object.keys(sectionKeyMap).forEach(function(s) {
+                sectionScores[sectionKeyMap[s]] = scores[s];
+            });
+
+            var totalScore = scores.total;
+            var band;
+            if (totalScore >= 80) band = 'CRYSTAL_CLEAR';
+            else if (totalScore >= 60) band = 'GOOD_FOUNDATION';
+            else if (totalScore >= 40) band = 'FUZZY';
+            else if (totalScore >= 20) band = 'NO_CLARITY';
+            else band = 'CRITICAL';
+
+            return {
+                assessment: 'icp-clarity',
+                answers: answerMap,
+                section_scores: sectionScores,
+                total_score: totalScore,
+                band: band,
+                contact: {
+                    name: document.getElementById('icp-contact-name').value,
+                    email: document.getElementById('icp-contact-email').value,
+                    company: document.getElementById('icp-contact-company').value
+                }
+            };
+        }
+
+        function submitToWebhook(event) {
+            event.preventDefault();
+            var payload = buildWebhookPayload();
+
+            document.querySelector('[data-screen="contact"]').style.display = 'none';
+            document.querySelector('[data-screen="contact"]').classList.remove('active');
+            document.getElementById('icp-loading').style.display = 'flex';
+
+            fetch(WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(response) {
+                if (!response.ok) throw new Error('Webhook returned ' + response.status);
+                return response.json();
+            })
+            .then(function(data) {
+                if (data && data.success && data.results && data.results.ai_analysis) {
+                    showResults(data.results.ai_analysis);
+                } else {
+                    showResults();
+                }
+            })
+            .catch(function(err) {
+                console.error('Webhook error:', err);
+                showResults();
+            });
+        }
+    </script>
+</body>
+</html>

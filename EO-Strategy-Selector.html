@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MicroSaaS Strategy Selector | SalesMfast</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    #sm-selector {
+      --bg: #000000;
+      --bg-alt: #0A0A0A;
+      --bg-card: rgba(255,255,255,0.04);
+      --accent: #FF6600;
+      --accent-hover: #CC5200;
+      --accent-light: #FFF3E6;
+      --accent-glow: rgba(255,102,0,0.15);
+      --text: #FFFFFF;
+      --text-muted: #A3A3A3;
+      --text-dark: #171717;
+      --text-dark-muted: #525252;
+      --border: rgba(255,255,255,0.08);
+      --border-light: #E5E5E5;
+      --success: #22C55E;
+      --error: #EF4444;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+
+      color: #FFFFFF;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #000000;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── NAVIGATION ── */
+    #sm-selector .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    #sm-selector .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #sm-selector .nav-logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    #sm-selector .nav-logo-sales { color: #FFFFFF; }
+    #sm-selector .nav-logo-mfast { color: var(--accent); }
+    #sm-selector .nav-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      margin-left: 0.75rem;
+    }
+    #sm-selector .nav-progress {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #sm-selector .nav-progress-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    #sm-selector .nav-progress-bar {
+      width: 120px;
+      height: 4px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    #sm-selector .nav-progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 100px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+
+    /* ── SCREENS ── */
+    #sm-selector .screen {
+      display: none;
+      min-height: 100vh;
+      padding: 100px 2rem 4rem;
+    }
+    #sm-selector .screen.active { display: block; }
+
+    /* ── WELCOME SCREEN ── */
+    #sm-selector .welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 100vh;
+      padding: 100px 2rem 4rem;
+    }
+    #sm-selector .welcome.active { display: flex; }
+    #sm-selector .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      border: 1px solid var(--accent);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+    #sm-selector .welcome h1 {
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 800px;
+    }
+    #sm-selector .accent { color: var(--accent); }
+    #sm-selector .welcome-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+    #sm-selector .welcome-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 600px;
+      margin-bottom: 3rem;
+      width: 100%;
+    }
+    #sm-selector .welcome-stat-number {
+      font-family: 'Courier New', monospace;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    #sm-selector .welcome-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: block;
+      margin-top: 0.25rem;
+    }
+    #sm-selector .path-preview {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 3rem;
+    }
+    #sm-selector .path-preview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+    #sm-selector .path-preview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(255,102,0,0.15);
+      border-color: rgba(255,102,0,0.3);
+    }
+    #sm-selector .path-preview-num {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+    }
+    #sm-selector .path-preview-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 0.5rem;
+      line-height: 1.3;
+    }
+    #sm-selector .path-preview-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      line-height: 1.4;
+    }
+
+    /* ── BUTTONS ── */
+    #sm-selector .btn-primary {
+      background: var(--accent);
+      color: var(--text-dark);
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: var(--font);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    #sm-selector .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,102,0,0.4);
+    }
+    #sm-selector .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      padding: 1rem 2.5rem;
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    #sm-selector .btn-ghost:hover {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    /* ── QUESTION SCREEN ── */
+    #sm-selector .question-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #sm-selector .question-header {
+      margin-bottom: 2.5rem;
+    }
+    #sm-selector .question-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    #sm-selector .question-counter {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    #sm-selector .question-text {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    #sm-selector .question-context {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── ANSWER OPTIONS ── */
+    #sm-selector .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    #sm-selector .option-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      position: relative;
+    }
+    #sm-selector .option-card:hover {
+      border-color: rgba(255,102,0,0.3);
+      background: rgba(255,102,0,0.05);
+      transform: translateX(4px);
+    }
+    #sm-selector .option-card.selected {
+      border-color: var(--accent);
+      background: rgba(255,102,0,0.1);
+      box-shadow: 0 0 20px rgba(255,102,0,0.15);
+    }
+    #sm-selector .option-radio {
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+    #sm-selector .option-card.selected .option-radio {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+    #sm-selector .option-card.selected .option-radio::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #000;
+      border-radius: 50%;
+    }
+    #sm-selector .option-content { flex: 1; }
+    #sm-selector .option-label {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+    #sm-selector .option-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    #sm-selector .option-score {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--accent);
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      opacity: 0;
+    }
+
+    /* ── NAVIGATION BUTTONS ── */
+    #sm-selector .question-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    #sm-selector .btn-back {
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.75rem 1.5rem;
+      transition: color 0.3s;
+    }
+    #sm-selector .btn-back:hover { color: var(--text); }
+    #sm-selector .btn-next {
+      background: var(--accent);
+      color: var(--text-dark);
+      border: none;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    #sm-selector .btn-next.enabled {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #sm-selector .btn-next.enabled:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,102,0,0.4);
+    }
+
+    /* ── RESULTS SCREEN ── */
+    #sm-selector .results-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    #sm-selector .results-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    #sm-selector .results-header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    #sm-selector .results-header p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* Primary Path Card */
+    #sm-selector .primary-path {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #sm-selector .primary-path::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #CC5200);
+    }
+    #sm-selector .path-badge {
+      display: inline-flex;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 1rem;
+    }
+    #sm-selector .badge-primary {
+      background: var(--accent);
+      color: var(--text-dark);
+    }
+    #sm-selector .badge-secondary {
+      background: rgba(255,102,0,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(255,102,0,0.3);
+    }
+    #sm-selector .path-title {
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    #sm-selector .path-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    #sm-selector .path-score-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    #sm-selector .path-score-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    #sm-selector .path-score-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #CC5200);
+      border-radius: 100px;
+      transition: width 1s ease;
+    }
+    #sm-selector .path-score-label {
+      font-family: 'Courier New', monospace;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 60px;
+      text-align: right;
+    }
+
+    /* Why Section */
+    #sm-selector .path-why {
+      background: rgba(255,102,0,0.08);
+      border-left: 4px solid var(--accent);
+      padding: 1.25rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1.5rem;
+    }
+    #sm-selector .path-why-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    #sm-selector .path-why-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* MENA Proof Points */
+    #sm-selector .proof-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    #sm-selector .proof-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    #sm-selector .proof-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    #sm-selector .proof-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    #sm-selector .proof-metric {
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* Secondary Path */
+    #sm-selector .secondary-path {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Score Breakdown */
+    #sm-selector .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    #sm-selector .score-dimension {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    #sm-selector .score-dim-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    #sm-selector .score-dim-value {
+      font-family: 'Courier New', monospace;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    #sm-selector .score-dim-max {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* 2x2 Matrix */
+    #sm-selector .matrix-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    #sm-selector .matrix-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    #sm-selector .matrix-grid {
+      display: grid;
+      grid-template-columns: auto 1fr 1fr;
+      grid-template-rows: auto 1fr 1fr;
+      gap: 0;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    #sm-selector .matrix-corner { background: transparent; }
+    #sm-selector .matrix-col-header {
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    #sm-selector .matrix-row-header {
+      writing-mode: vertical-lr;
+      transform: rotate(180deg);
+      text-align: center;
+      padding: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+    }
+    #sm-selector .matrix-cell {
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    #sm-selector .matrix-cell.active-cell {
+      background: rgba(255,102,0,0.15);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(255,102,0,0.2);
+    }
+    #sm-selector .matrix-cell-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    #sm-selector .matrix-cell-action {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    #sm-selector .matrix-cell.active-cell .matrix-cell-label {
+      color: var(--accent);
+    }
+
+    /* CTA Section */
+    #sm-selector .results-cta {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: var(--bg-alt);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    #sm-selector .results-cta h2 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    #sm-selector .results-cta p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+    #sm-selector .results-cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ── ANIMATIONS ── */
+    #sm-selector .sm-animate {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    #sm-selector .sm-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #sm-selector .fade-in {
+      animation: smFadeIn 0.5s ease forwards;
+    }
+    @keyframes smFadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    #sm-selector .stagger-1 { animation-delay: 0.1s; }
+    #sm-selector .stagger-2 { animation-delay: 0.2s; }
+    #sm-selector .stagger-3 { animation-delay: 0.3s; }
+    #sm-selector .stagger-4 { animation-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #sm-selector .screen { padding: 90px 1rem 3rem; }
+      #sm-selector .welcome { padding: 90px 1rem 3rem; }
+      #sm-selector .path-preview { grid-template-columns: 1fr 1fr; }
+      #sm-selector .welcome-stats { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+      #sm-selector .primary-path { padding: 1.5rem; }
+      #sm-selector .secondary-path { padding: 1.5rem; }
+      #sm-selector .results-cta-buttons { flex-direction: column; align-items: center; }
+      #sm-selector .results-cta-buttons .btn-primary,
+      #sm-selector .results-cta-buttons .btn-ghost { width: 100%; text-align: center; }
+      #sm-selector .matrix-grid { font-size: 0.85rem; }
+      #sm-selector .nav-tag { display: none; }
+    }
+    @media (max-width: 480px) {
+      #sm-selector .path-preview { grid-template-columns: 1fr; }
+      #sm-selector .scores-grid { grid-template-columns: 1fr 1fr; }
+      #sm-selector .proof-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CONTACT FORM ── */
+    #sm-selector .contact-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+    }
+    #sm-selector .contact-form h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    #sm-selector .contact-form > p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    #sm-selector .form-group {
+      width: 100%;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    #sm-selector .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+    #sm-selector .form-input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 1rem;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+    #sm-selector .form-input:focus {
+      border-color: var(--accent);
+    }
+    #sm-selector .form-input::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+    #sm-selector .form-error {
+      color: var(--error);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: none;
+      text-align: left;
+      width: 100%;
+    }
+    #sm-selector .form-actions {
+      width: 100%;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    #sm-selector .btn-submit {
+      width: 100%;
+      background: var(--accent);
+      color: var(--text-dark);
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: var(--font);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #sm-selector .btn-submit:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,102,0,0.4);
+    }
+    #sm-selector .btn-skip {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font);
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.3s;
+    }
+    #sm-selector .btn-skip:hover { color: var(--text); }
+
+    /* ── LOADING SCREEN ── */
+    #sm-selector .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      text-align: center;
+    }
+    #sm-selector .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border);
+      border-top: 4px solid var(--accent);
+      border-radius: 50%;
+      animation: smSpin 0.8s linear infinite;
+      margin-bottom: 1.5rem;
+    }
+    @keyframes smSpin {
+      to { transform: rotate(360deg); }
+    }
+    #sm-selector .loading-text {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    #sm-selector .loading-subtext {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.5rem;
+    }
+
+    /* ── SAVED INDICATOR ── */
+    #sm-selector .saved-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(34,197,94,0.15);
+      color: var(--success);
+      border: 1px solid rgba(34,197,94,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="sm-selector">
+
+    <!-- NAV -->
+    <nav class="nav">
+      <div class="nav-container">
+        <div style="display:flex;align-items:center;">
+          <div class="nav-logo">
+            <span class="nav-logo-sales">Sales</span><span class="nav-logo-mfast">Mfast</span>
+          </div>
+          <span class="nav-tag">Diagnostic</span>
+        </div>
+        <div class="nav-progress" id="navProgress" style="display:none;">
+          <span class="nav-progress-text" id="progressText">0 / 7</span>
+          <div class="nav-progress-bar">
+            <div class="nav-progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- WELCOME SCREEN -->
+    <div class="screen welcome active" id="screenWelcome">
+      <span class="pill">MicroSaaS Strategy Selector</span>
+      <h1>Which MicroSaaS Path<br>Is <span class="accent">Right For You?</span></h1>
+      <p class="welcome-subtitle">7 questions. 4 strategy paths. Scored against 91 MENA founders who shipped real products. Find your highest-probability path in under 3 minutes.</p>
+
+      <div class="welcome-stats">
+        <div>
+          <span class="welcome-stat-number">91</span>
+          <span class="welcome-stat-label">MENA Founders Analyzed</span>
+        </div>
+        <div>
+          <span class="welcome-stat-number">4</span>
+          <span class="welcome-stat-label">Proven Strategy Paths</span>
+        </div>
+        <div>
+          <span class="welcome-stat-number">3m</span>
+          <span class="welcome-stat-label">To Your Result</span>
+        </div>
+      </div>
+
+      <div class="path-preview">
+        <div class="path-preview-card">
+          <span class="path-preview-num">PATH 01</span>
+          <div class="path-preview-name">Replicate &amp; Localize</div>
+          <div class="path-preview-desc">Language &amp; geo arbitrage. Localize what works.</div>
+        </div>
+        <div class="path-preview-card">
+          <span class="path-preview-num">PATH 02</span>
+          <div class="path-preview-name">Consulting-First SaaS</div>
+          <div class="path-preview-desc">Service to product. Productize what repeats.</div>
+        </div>
+        <div class="path-preview-card">
+          <span class="path-preview-num">PATH 03</span>
+          <div class="path-preview-name">Boring Micro-SaaS</div>
+          <div class="path-preview-desc">One painful problem. Patient compounding.</div>
+        </div>
+        <div class="path-preview-card">
+          <span class="path-preview-num">PATH 04</span>
+          <div class="path-preview-name">Hammering Deep</div>
+          <div class="path-preview-desc">One feature. One persona. Relentless depth.</div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="startDiagnostic()">Start the Diagnostic</button>
+    </div>
+
+    <!-- QUESTION SCREENS -->
+    <div class="screen" id="screenQuestion">
+      <div class="question-container">
+        <div class="question-header">
+          <span class="question-eyebrow" id="qDimension"></span>
+          <span class="question-counter" id="qCounter"></span>
+          <h2 class="question-text" id="qText"></h2>
+          <p class="question-context" id="qContext"></p>
+        </div>
+        <div class="options-grid" id="optionsGrid"></div>
+        <div class="question-nav">
+          <button class="btn-back" id="btnBack" onclick="goBack()">Back</button>
+          <button class="btn-next" id="btnNext" onclick="goNext()">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT FORM SCREEN -->
+    <div class="screen" id="screenContact">
+      <div class="contact-form">
+        <span class="pill">Almost Done</span>
+        <h2>Get Your <span class="accent">Strategy Profile</span></h2>
+        <p>Enter your details to save your results and unlock personalized strategy recommendations.</p>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" class="form-input" id="contactName" placeholder="e.g. Mamoun Alamouri">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-input" id="contactEmail" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company</label>
+          <input type="text" class="form-input" id="contactCompany" placeholder="Your company name (optional)">
+        </div>
+        <div id="contactError" class="form-error"></div>
+        <div class="form-actions">
+          <button class="btn-submit" onclick="submitAndShowResults()">Get My Results</button>
+          <button class="btn-skip" onclick="skipContactForm()">Skip — show results without saving</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOADING SCREEN -->
+    <div class="screen" id="screenLoading">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <div class="loading-text">Analyzing your strategy profile...</div>
+        <div class="loading-subtext">Scoring against 91 MENA founders — takes 2-3 seconds</div>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div class="screen" id="screenResults">
+      <div class="results-container" id="resultsContent"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ── CONFIGURATION ──
+    // UPDATE THIS URL to your n8n webhook URL (production path)
+    // For n8n cloud: https://YOUR-SUBDOMAIN.app.n8n.cloud/webhook/eo-strategy-selector
+    // For self-hosted: https://your-n8n-domain.com/webhook/eo-strategy-selector
+    var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-strategy-selector';
+
+    // ── QUESTION DATA ──
+    const questions = [
+      {
+        dimension: "Existing Expertise",
+        text: "How deep is your domain expertise in your target market?",
+        context: "This isn't about general tech skills. It's about knowing the buyer's pain, the purchase journey, and the industry dynamics in your specific niche.",
+        options: [
+          { label: "I have 5+ years in this exact industry", desc: "You know the buyers by name. You've seen the pain firsthand.", scores: [2, 5, 3, 4] },
+          { label: "I have adjacent experience", desc: "You know the space but haven't sold to this specific buyer.", scores: [4, 3, 3, 3] },
+          { label: "I've done research but no direct experience", desc: "You've validated through interviews and data, not lived experience.", scores: [3, 1, 4, 2] },
+          { label: "Starting fresh — this is a new market for me", desc: "Pure opportunity play. No domain baggage, no domain advantage.", scores: [5, 1, 3, 2] }
+        ]
+      },
+      {
+        dimension: "Available Capital",
+        text: "How much runway can you commit to building this?",
+        context: "Be honest. This determines whether you need revenue on day 1 or can afford to build first. There's no wrong answer — each path has a different capital requirement.",
+        options: [
+          { label: "I can self-fund 6-12 months of development", desc: "Enough runway to build without immediate revenue pressure.", scores: [4, 2, 3, 5] },
+          { label: "I have 3-6 months of savings to commit", desc: "Moderate runway. Need to see traction signals within 90 days.", scores: [3, 3, 4, 3] },
+          { label: "I need revenue within 30-60 days", desc: "Cash-constrained. Must monetize skills immediately.", scores: [2, 5, 2, 1] },
+          { label: "I have a job — this is a side project", desc: "Limited time but no financial pressure. Evenings and weekends.", scores: [3, 2, 5, 4] }
+        ]
+      },
+      {
+        dimension: "Risk Tolerance",
+        text: "How do you handle uncertainty in business?",
+        context: "Every path has risk. This question reveals which type of risk you can stomach — market risk, execution risk, or competition risk.",
+        options: [
+          { label: "I'll ship fast and iterate — speed over perfection", desc: "Comfortable with public failure. Learn by shipping.", scores: [4, 2, 3, 5] },
+          { label: "I prefer validating before building", desc: "Methodical. You need signal before investing time.", scores: [3, 4, 4, 2] },
+          { label: "I follow proven models and adapt them", desc: "Lower risk preference. Why reinvent when you can localize?", scores: [5, 3, 3, 1] },
+          { label: "I invest deeply in one bet and go all-in", desc: "High conviction player. When you commit, you commit fully.", scores: [2, 4, 2, 5] }
+        ]
+      },
+      {
+        dimension: "Market Familiarity",
+        text: "How well do you understand MENA buyer behavior?",
+        context: "MENA B2B is not Silicon Valley. Trust mechanics, payment friction, and decision timelines are fundamentally different. This matters more than most founders think.",
+        options: [
+          { label: "I've sold B2B in MENA for years", desc: "You know the coffee meetings, the trust timeline, the payment workarounds.", scores: [3, 5, 3, 4] },
+          { label: "I live in MENA but haven't sold B2B here", desc: "Cultural context yes, commercial context no.", scores: [4, 3, 4, 3] },
+          { label: "I'm targeting MENA from outside the region", desc: "Opportunity-driven. You see the gap but haven't lived the dynamics.", scores: [5, 2, 3, 2] },
+          { label: "I'm focused on global markets, MENA is secondary", desc: "MENA is one geography in a multi-market strategy.", scores: [3, 2, 4, 4] }
+        ]
+      },
+      {
+        dimension: "Competitive Landscape",
+        text: "What does the competition look like in your space?",
+        context: "Competition isn't always bad. Sometimes it proves the market. The question is: does an Arabic-native solution exist?",
+        options: [
+          { label: "Global players exist but no Arabic/MENA version", desc: "Classic localization opportunity. The model is proven, the gap is clear.", scores: [5, 1, 2, 2] },
+          { label: "Competitors exist but they're mediocre", desc: "They have the market but not the execution. Room to outperform.", scores: [2, 3, 4, 5] },
+          { label: "It's a crowded space — many solutions available", desc: "Differentiation will be harder. Need a sharp angle.", scores: [1, 2, 3, 5] },
+          { label: "Almost no competition — new category", desc: "Exciting but risky. You'll need to educate the market.", scores: [3, 4, 4, 3] }
+        ]
+      },
+      {
+        dimension: "Building Style",
+        text: "How do you prefer to build products?",
+        context: "This reveals your natural motion as a builder. Some founders are code-first, others are customer-first. Neither is wrong — but each fits different paths.",
+        options: [
+          { label: "I build with AI tools (Claude, bolt.new, Cursor)", desc: "Modern builder. Ship fast using AI-assisted development.", scores: [4, 2, 4, 5] },
+          { label: "I hire developers or use agencies", desc: "You manage, they build. Capital-for-speed trade.", scores: [5, 3, 3, 3] },
+          { label: "I start with manual processes, then automate", desc: "Service-first mindset. Prove it works before coding it.", scores: [2, 5, 3, 2] },
+          { label: "I use no-code / low-code platforms", desc: "GHL, Bubble, Webflow — platforms over custom code.", scores: [4, 3, 5, 2] }
+        ]
+      },
+      {
+        dimension: "Revenue Goal",
+        text: "What's your 12-month revenue target?",
+        context: "This isn't about ambition — it's about which path has the ceiling height you need. A boring micro-SaaS can hit $20K MRR. Hammering deep can hit $200K MRR. Different games.",
+        options: [
+          { label: "$1K - $5K MRR", desc: "Side income. Replace a salary or fund your next project.", scores: [3, 3, 5, 2] },
+          { label: "$5K - $20K MRR", desc: "Full-time founder income. Sustainable micro-SaaS.", scores: [4, 3, 4, 4] },
+          { label: "$20K - $50K MRR", desc: "Serious business. Will need team and systems.", scores: [4, 4, 3, 4] },
+          { label: "$50K+ MRR", desc: "Venture-scale ambition. Dominant market position.", scores: [3, 3, 2, 5] }
+        ]
+      }
+    ];
+
+    // ── PATH DATA ──
+    const paths = [
+      {
+        id: 'replicate',
+        name: 'Replicate & Localize',
+        subtitle: 'Language & geo arbitrage. Find what works globally, build the Arabic/MENA version.',
+        description: 'You spotted a proven SaaS product that has no Arabic-native version. Your advantage is speed of localization and deep understanding of MENA market dynamics. The model is validated — you just need to execute the adaptation faster than the incumbent can localize.',
+        risk: 'Incumbents may localize before you scale. Speed is your moat.',
+        proofs: [
+          { name: 'Teachizy (Arabic LMS)', desc: 'Localized course platform for Arabic-speaking creators', metric: 'Growing MRR' },
+          { name: 'SaaSFast', desc: 'MENA-native SaaS toolkit modeled on global patterns', metric: 'Active users' },
+          { name: 'EO Platform', desc: 'AppSumo model for MENA solopreneurs', metric: 'In development' }
+        ]
+      },
+      {
+        id: 'consulting',
+        name: 'Consulting-First SaaS',
+        subtitle: 'Start with services. Productize what repeats. SaaS emerges from your expertise.',
+        description: 'You have deep domain expertise and existing client relationships. Instead of guessing what to build, you start with consulting — solving the problem manually. When you find the repeatable part, you productize it. This is the lowest-risk path because you generate revenue from day 1.',
+        risk: 'Getting stuck in service mode and never shipping the product.',
+        proofs: [
+          { name: 'SalesMfast', desc: 'Mamoun\'s journey: Avaya/Cisco consulting to signal engine product', metric: '$3,500/mo engine' },
+          { name: 'SparkLine', desc: 'Service-to-product in content marketing space', metric: 'Profitable SaaS' },
+          { name: 'CXMfast AI', desc: 'Contact center consulting to AI-native platform', metric: 'Enterprise clients' }
+        ]
+      },
+      {
+        id: 'boring',
+        name: 'Boring Micro-SaaS',
+        subtitle: 'One unsexy problem. $20-200/month. Patient compounding through volume.',
+        description: 'You don\'t need to build the next big thing. Find one painful, unsexy problem that people will pay $20-200/month to solve. Stack revenue through volume and patience. This path works best when you\'re comfortable with niche markets and have the discipline to resist feature creep.',
+        risk: 'Market may be too small if not properly scoped.',
+        proofs: [
+          { name: 'Curator.io', desc: 'Social media aggregation tool. Boring, profitable, growing.', metric: '$50K+ MRR' },
+          { name: 'Frill.co', desc: 'Feature request tracking. Solves one problem perfectly.', metric: 'Steady growth' },
+          { name: 'Mike Hill Portfolio', desc: 'Multiple boring tools stacked together.', metric: '$200K MRR' }
+        ]
+      },
+      {
+        id: 'hammering',
+        name: 'Hammering Deep',
+        subtitle: 'One feature. One persona. Relentless depth. Undisputed best at one thing.',
+        description: 'You resist the temptation to add features. You pick one persona with one burning problem and you become the undisputed best solution. This path requires obsessive focus and the courage to say no to adjacent opportunities. When it works, it creates a defensible moat through depth, not breadth.',
+        risk: 'Market may not be deep enough for one-feature dominance.',
+        proofs: [
+          { name: 'Tibo', desc: 'LinkedIn posting tool. One feature, obsessively polished.', metric: '~$700K MRR' },
+          { name: 'Revit.ai', desc: 'Deep focus on one vertical with one killer feature.', metric: '$400K MRR' },
+          { name: 'ShipFast (Marc Lou)', desc: 'One thing: ship Next.js SaaS fast.', metric: '$250K+ MRR' }
+        ]
+      }
+    ];
+
+    // ── STATE ──
+    let currentQuestion = 0;
+    let answers = [];
+    let pathScores = [0, 0, 0, 0]; // replicate, consulting, boring, hammering
+
+    // ── FUNCTIONS ──
+    function startDiagnostic() {
+      document.getElementById('screenWelcome').classList.remove('active');
+      document.getElementById('screenQuestion').classList.add('active');
+      document.getElementById('navProgress').style.display = 'flex';
+      answers = new Array(questions.length).fill(null);
+      pathScores = [0, 0, 0, 0];
+      currentQuestion = 0;
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      var q = questions[currentQuestion];
+      document.getElementById('qDimension').textContent = q.dimension;
+      document.getElementById('qCounter').textContent = 'Question ' + (currentQuestion + 1) + ' of ' + questions.length;
+      document.getElementById('qText').textContent = q.text;
+      document.getElementById('qContext').textContent = q.context;
+
+      var grid = document.getElementById('optionsGrid');
+      grid.innerHTML = '';
+      q.options.forEach(function(opt, i) {
+        var card = document.createElement('div');
+        card.className = 'option-card fade-in stagger-' + (i + 1);
+        if (answers[currentQuestion] === i) card.className += ' selected';
+        card.onclick = function() { selectOption(i); };
+        card.innerHTML = '<div class="option-radio"></div>' +
+          '<div class="option-content">' +
+            '<div class="option-label">' + opt.label + '</div>' +
+            '<div class="option-desc">' + opt.desc + '</div>' +
+          '</div>';
+        grid.appendChild(card);
+      });
+
+      // Progress
+      var pct = Math.round(((currentQuestion) / questions.length) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = currentQuestion + ' / ' + questions.length;
+
+      // Nav buttons
+      document.getElementById('btnBack').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+      var nextBtn = document.getElementById('btnNext');
+      nextBtn.textContent = currentQuestion === questions.length - 1 ? 'See My Results' : 'Next';
+      if (answers[currentQuestion] !== null) {
+        nextBtn.classList.add('enabled');
+      } else {
+        nextBtn.classList.remove('enabled');
+      }
+    }
+
+    function selectOption(index) {
+      // Remove old selection scores
+      if (answers[currentQuestion] !== null) {
+        var oldScores = questions[currentQuestion].options[answers[currentQuestion]].scores;
+        for (var i = 0; i < 4; i++) pathScores[i] -= oldScores[i];
+      }
+
+      answers[currentQuestion] = index;
+      var newScores = questions[currentQuestion].options[index].scores;
+      for (var i = 0; i < 4; i++) pathScores[i] += newScores[i];
+
+      // Update UI
+      var cards = document.querySelectorAll('#sm-selector .option-card');
+      cards.forEach(function(c, ci) {
+        if (ci === index) c.classList.add('selected');
+        else c.classList.remove('selected');
+      });
+      document.getElementById('btnNext').classList.add('enabled');
+    }
+
+    function goNext() {
+      if (answers[currentQuestion] === null) return;
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showContactForm();
+      }
+    }
+
+    function goBack() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        renderQuestion();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById('screenQuestion').classList.remove('active');
+        document.getElementById('screenWelcome').classList.add('active');
+        document.getElementById('navProgress').style.display = 'none';
+      }
+    }
+
+    function showContactForm() {
+      document.getElementById('screenQuestion').classList.remove('active');
+      document.getElementById('screenContact').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('progressText').textContent = '7 / 7';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function submitAndShowResults() {
+      var name = document.getElementById('contactName').value.trim();
+      var email = document.getElementById('contactEmail').value.trim();
+      var company = document.getElementById('contactCompany').value.trim();
+
+      if (!email) {
+        var errEl = document.getElementById('contactError');
+        errEl.textContent = 'Please enter your email to get your results.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      // Basic email validation
+      if (email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+        var errEl = document.getElementById('contactError');
+        errEl.textContent = 'Please enter a valid email address.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      document.getElementById('contactError').style.display = 'none';
+      document.getElementById('screenContact').classList.remove('active');
+      document.getElementById('screenLoading').classList.add('active');
+
+      var payload = {
+        answers: answers,
+        contact: { name: name, email: email, company: company }
+      };
+
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        document.getElementById('screenLoading').classList.remove('active');
+        renderResults(data);
+      })
+      .catch(function(err) {
+        console.error('Webhook error:', err);
+        document.getElementById('screenLoading').classList.remove('active');
+        renderResults(null); // Fallback: show client-side results
+      });
+    }
+
+    function skipContactForm() {
+      document.getElementById('screenContact').classList.remove('active');
+      renderResults(null);
+    }
+
+    function renderResults(webhookData) {
+      document.getElementById('screenQuestion').classList.remove('active');
+      document.getElementById('screenContact').classList.remove('active');
+      document.getElementById('screenLoading').classList.remove('active');
+      document.getElementById('screenResults').classList.add('active');
+      document.getElementById('progressFill').style.width = '100%';
+      document.getElementById('progressText').textContent = '7 / 7';
+
+      // Rank paths
+      var ranked = paths.map(function(p, i) {
+        return { path: p, score: pathScores[i], index: i };
+      }).sort(function(a, b) { return b.score - a.score; });
+
+      var primary = ranked[0];
+      var secondary = ranked[1];
+      var maxScore = questions.length * 5;
+
+      // Determine 2x2 matrix position
+      var masProxy = pathScores[0] + pathScores[2]; // replicate + boring = market signal strength
+      var gtmProxy = pathScores[1] + pathScores[3]; // consulting + hammering = execution readiness
+      var masHigh = masProxy > (questions.length * 5 * 0.5);
+      var gtmHigh = gtmProxy > (questions.length * 5 * 0.5);
+
+      // Dimension scores (from answers)
+      var dimScores = questions.map(function(q, qi) {
+        if (answers[qi] === null) return 0;
+        var optScores = q.options[answers[qi]].scores;
+        return optScores[primary.index];
+      });
+
+      var html = '';
+
+      // Header
+      html += '<div class="results-header fade-in">';
+      html += '<span class="pill">Your Strategy Profile</span>';
+      html += '<h1>Your Best Path:<br><span class="accent">' + primary.path.name + '</span></h1>';
+      html += '<p>Based on your expertise, capital, risk tolerance, and market position — scored against 91 MENA founders.</p>';
+      if (webhookData && webhookData.success) {
+        html += '<div style="margin-top:1rem;"><span class="saved-badge">&#10003; Results saved to your profile</span></div>';
+      }
+      html += '</div>';
+
+      // Primary Path Card
+      html += '<div class="primary-path fade-in stagger-1">';
+      html += '<span class="path-badge badge-primary">Primary Path</span>';
+      html += '<div class="path-title">' + primary.path.name + '</div>';
+      html += '<div class="path-subtitle">' + primary.path.subtitle + '</div>';
+      html += '<div class="path-score-bar">';
+      html += '<div class="path-score-track"><div class="path-score-fill" style="width:' + Math.round((primary.score / maxScore) * 100) + '%"></div></div>';
+      html += '<span class="path-score-label">' + Math.round((primary.score / maxScore) * 100) + '%</span>';
+      html += '</div>';
+      html += '<div class="path-why">';
+      html += '<div class="path-why-title">Why This Path</div>';
+      html += '<div class="path-why-text">' + primary.path.description + '</div>';
+      html += '</div>';
+      html += '<div class="path-why" style="border-left-color:var(--error);background:rgba(239,68,68,0.08);">';
+      html += '<div class="path-why-title" style="color:var(--error);">Key Risk</div>';
+      html += '<div class="path-why-text">' + primary.path.risk + '</div>';
+      html += '</div>';
+      html += '<div style="margin-top:1.5rem;"><div class="path-why-title" style="margin-bottom:0.75rem;">MENA Proof Points</div></div>';
+      html += '<div class="proof-grid">';
+      primary.path.proofs.forEach(function(p) {
+        html += '<div class="proof-card">';
+        html += '<div class="proof-name">' + p.name + '</div>';
+        html += '<div class="proof-desc">' + p.desc + '</div>';
+        html += '<span class="proof-metric">' + p.metric + '</span>';
+        html += '</div>';
+      });
+      html += '</div>';
+      html += '</div>';
+
+      // Secondary Path Card
+      html += '<div class="secondary-path fade-in stagger-2">';
+      html += '<span class="path-badge badge-secondary">Secondary Path</span>';
+      html += '<div class="path-title" style="font-size:1.5rem;margin-top:0.5rem;">' + secondary.path.name + '</div>';
+      html += '<div class="path-subtitle">' + secondary.path.subtitle + '</div>';
+      html += '<div class="path-score-bar">';
+      html += '<div class="path-score-track"><div class="path-score-fill" style="width:' + Math.round((secondary.score / maxScore) * 100) + '%"></div></div>';
+      html += '<span class="path-score-label">' + Math.round((secondary.score / maxScore) * 100) + '%</span>';
+      html += '</div>';
+      html += '<div class="path-why">';
+      html += '<div class="path-why-title">Why This Could Work Too</div>';
+      html += '<div class="path-why-text">' + secondary.path.description + '</div>';
+      html += '</div>';
+      html += '</div>';
+
+      // Score Breakdown
+      html += '<div style="margin-top:0.5rem;margin-bottom:1rem;"><span class="question-eyebrow">Dimension Scores</span></div>';
+      html += '<div class="scores-grid fade-in stagger-3">';
+      questions.forEach(function(q, qi) {
+        var s = dimScores[qi];
+        html += '<div class="score-dimension">';
+        html += '<span class="score-dim-label">' + q.dimension + '</span>';
+        html += '<span class="score-dim-value">' + s + '<span class="score-dim-max"> / 5</span></span>';
+        html += '</div>';
+      });
+      html += '</div>';
+
+      // 2x2 Matrix
+      html += '<div class="matrix-section fade-in stagger-4">';
+      html += '<div class="matrix-title">Your Position: Demand-First 2x2 Matrix</div>';
+      html += '<div class="matrix-grid">';
+      html += '<div class="matrix-corner"></div>';
+      html += '<div class="matrix-col-header">GTM Readiness HIGH</div>';
+      html += '<div class="matrix-col-header">GTM Readiness LOW</div>';
+      html += '<div class="matrix-row-header">MAS HIGH</div>';
+      html += '<div class="matrix-cell' + (masHigh && gtmHigh ? ' active-cell' : '') + '"><span class="matrix-cell-label">BUILD + SELL</span><span class="matrix-cell-action">Full speed. Ship fast, sell while building.</span></div>';
+      html += '<div class="matrix-cell' + (masHigh && !gtmHigh ? ' active-cell' : '') + '"><span class="matrix-cell-label">BUILD + LEARN</span><span class="matrix-cell-action">Market wants it. Iterate on distribution.</span></div>';
+      html += '<div class="matrix-row-header">MAS LOW</div>';
+      html += '<div class="matrix-cell' + (!masHigh && gtmHigh ? ' active-cell' : '') + '"><span class="matrix-cell-label">SELL + VALIDATE</span><span class="matrix-cell-action">Channels exist. Validate demand first.</span></div>';
+      html += '<div class="matrix-cell' + (!masHigh && !gtmHigh ? ' active-cell' : '') + '"><span class="matrix-cell-label">KILL or PIVOT</span><span class="matrix-cell-action">No signal, no distribution. Reframe.</span></div>';
+      html += '</div>';
+      html += '</div>';
+
+      // CTA
+      html += '<div class="results-cta fade-in">';
+      html += '<h2>Know Your Path. <span class="accent">Now Learn the System.</span></h2>';
+      html += '<p>The Strategy Selector is just the first 15 minutes of the Free Hour. Watch the full session to learn how to validate, score, and build your micro-SaaS using Demand-First Thinking.</p>';
+      html += '<div class="results-cta-buttons">';
+      html += '<a href="#" class="btn-primary">Watch the Free Hour</a>';
+      html += '<button class="btn-ghost" onclick="restart()">Retake the Diagnostic</button>';
+      html += '</div>';
+      html += '</div>';
+
+      document.getElementById('resultsContent').innerHTML = html;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function restart() {
+      document.getElementById('screenResults').classList.remove('active');
+      document.getElementById('screenContact').classList.remove('active');
+      document.getElementById('screenLoading').classList.remove('active');
+      document.getElementById('screenWelcome').classList.add('active');
+      document.getElementById('navProgress').style.display = 'none';
+      document.getElementById('contactName').value = '';
+      document.getElementById('contactEmail').value = '';
+      document.getElementById('contactCompany').value = '';
+      document.getElementById('contactError').style.display = 'none';
+      pathScores = [0, 0, 0, 0];
+      answers = [];
+      currentQuestion = 0;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
