@@ -904,10 +904,7 @@
                             <div class="mas-stat-number">5</div>
                             <div class="mas-stat-label">Minutes</div>
                         </div>
-                        <div class="mas-stat">
-                            <div class="mas-stat-number">100</div>
-                            <div class="mas-stat-label">Points</div>
-                        </div>
+                        <!-- points stat hidden -->
                     </div>
 
                     <div class="mas-preview-cards">
@@ -1265,6 +1262,8 @@
             state.currentScreen = 'questions';
             state.currentSection = 'A';
             state.currentQuestion = 0;
+            document.getElementById('mas-welcome').style.display = 'none';
+            document.getElementById('mas-questions').style.display = 'block';
             renderQuestion();
         }
 
@@ -1305,7 +1304,7 @@
                         <input type="radio" name="question-${answerKey}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer('${answerKey}', ${idx}, ${option.score})">
                         <div class="mas-option-text">
                             <div class="mas-option-label">${option.label}</div>
-                            <div class="mas-option-score">${option.score} point${option.score !== 1 ? 's' : ''}</div>
+                            <!-- score hidden from user -->
                         </div>
                     </label>`;
             });

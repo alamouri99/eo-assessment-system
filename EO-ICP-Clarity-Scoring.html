@@ -806,42 +806,39 @@
                         <div class="icp-stat-value">7 min</div>
                         <div class="icp-stat-label">Time</div>
                     </div>
-                    <div class="icp-stat-card">
-                        <div class="icp-stat-value">100</div>
-                        <div class="icp-stat-label">Max Score</div>
-                    </div>
+                    <!-- max score stat hidden -->
                 </div>
 
                 <div class="icp-sections-grid">
                     <div class="icp-section-preview">
                         <div class="icp-section-title">👤 WHO</div>
                         <div class="icp-section-subtitle">Dream Customer</div>
-                        <div class="icp-section-questions">5 questions • 25 points</div>
+                        <div class="icp-section-questions">5 questions</div>
                     </div>
                     <div class="icp-section-preview">
                         <div class="icp-section-title">📍 WHERE</div>
                         <div class="icp-section-subtitle">Congregation Points</div>
-                        <div class="icp-section-questions">4 questions • 20 points</div>
+                        <div class="icp-section-questions">4 questions</div>
                     </div>
                     <div class="icp-section-preview">
                         <div class="icp-section-title">🧲 CAPTURE</div>
                         <div class="icp-section-subtitle">Attention Capture</div>
-                        <div class="icp-section-questions">4 questions • 20 points</div>
+                        <div class="icp-section-questions">4 questions</div>
                     </div>
                     <div class="icp-section-preview">
                         <div class="icp-section-title">✨ RESULT</div>
                         <div class="icp-section-subtitle">Transformation</div>
-                        <div class="icp-section-questions">3 questions • 15 points</div>
+                        <div class="icp-section-questions">3 questions</div>
                     </div>
                     <div class="icp-section-preview">
                         <div class="icp-section-title">💡 EPIPHANY</div>
                         <div class="icp-section-subtitle">Bridge</div>
-                        <div class="icp-section-questions">2 questions • 10 points</div>
+                        <div class="icp-section-questions">2 questions</div>
                     </div>
                     <div class="icp-section-preview">
                         <div class="icp-section-title">🎭 CHARACTER</div>
                         <div class="icp-section-subtitle">Attractive Identity</div>
-                        <div class="icp-section-questions">2 questions • 10 points</div>
+                        <div class="icp-section-questions">2 questions</div>
                     </div>
                 </div>
 
@@ -1251,7 +1248,6 @@
                 div.className = 'icp-option' + (answers[currentQuestion] === option.value ? ' selected' : '');
                 div.innerHTML = `
                     <div class="icp-option-text">${option.text}</div>
-                    <div class="icp-option-value">${option.value} points</div>
                 `;
                 div.onclick = () => selectOption(option.value, idx);
                 optionsContainer.appendChild(div);
