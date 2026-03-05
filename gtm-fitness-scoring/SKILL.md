@@ -145,7 +145,7 @@ Not every founder should use every motion. This assessment identifies the **2-3 
 - **Team Requirement**: Founder (relationship owner)
 - **Budget**: $1-2K (gifting, time)
 - **MENA Viability**: **THIS IS THE MENA STRATEGY**. Relationship-based market = Dream 100 on steroids. Personal trust > brand. In Gulf, this is default sales mode
-- **Competitors Using This**: B2B founders, Russell Brunson, SalesMfast methodology
+- **Competitors Using This**: B2B founders, Russell Brunson, EO MicroSaaS methodology
 - **Common Pitfalls**: Poorly targeted list, generic outreach, no follow-up
 
 ---

@@ -1,1779 +1,1562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Attractiveness Scoring - EO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        #mas-scorer {
-            --bg: #000000;
-            --bg-alt: #0A0A0A;
-            --bg-card: rgba(255, 255, 255, 0.04);
-            --accent: #FF6600;
-            --accent-hover: #CC5200;
-            --text: #FFFFFF;
-            --text-muted: #A3A3A3;
-            --border: rgba(255, 255, 255, 0.08);
-            --success: #22C55E;
-            --error: #EF4444;
-            --warning: #FBBF24;
-            --info: #3B82F6;
-        }
-
-        #mas-scorer {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Navigation */
-        .mas-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            background: var(--bg-alt);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            z-index: 1000;
-        }
-
-        .mas-nav-brand {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .mas-nav-brand span {
-            color: var(--accent);
-        }
-
-        .mas-progress-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 3px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .mas-nav-right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        /* Main Content */
-        .mas-container {
-            margin-top: 72px;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 16px;
-        }
-
-        .mas-content {
-            width: 100%;
-            max-width: 900px;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Welcome Screen */
-        .mas-welcome {
-            text-align: center;
-        }
-
-        .mas-welcome h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            letter-spacing: -1px;
-        }
-
-        .mas-welcome p {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-bottom: 48px;
-            line-height: 1.6;
-        }
-
-        .mas-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .mas-stat {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .mas-stat-number {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 4px;
-        }
-
-        .mas-stat-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .mas-preview-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 48px;
-        }
-
-        .mas-preview-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .mas-preview-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--accent);
-        }
-
-        .mas-preview-card-icon {
-            font-size: 32px;
-            margin-bottom: 12px;
-        }
-
-        .mas-preview-card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .mas-preview-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-
-        .mas-cta-button {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            padding: 16px 48px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mas-cta-button:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        /* Question Screen */
-        .mas-question-screen {
-            display: none;
-        }
-
-        .mas-question-screen.active {
-            display: block;
-        }
-
-        .mas-question-header {
-            margin-bottom: 40px;
-        }
-
-        .mas-section-label {
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .mas-question-number {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .mas-question-text {
-            font-size: 28px;
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 32px;
-        }
-
-        .mas-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mas-option {
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-        }
-
-        .mas-option:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--accent);
-        }
-
-        .mas-option.selected {
-            background: rgba(255, 102, 0, 0.1);
-            border-color: var(--accent);
-        }
-
-        .mas-option input[type="radio"] {
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--text-muted);
-            border-radius: 50%;
-            cursor: pointer;
-            margin-top: 2px;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
-        }
-
-        .mas-option input[type="radio"]:checked {
-            border-color: var(--accent);
-            background: var(--accent);
-        }
-
-        .mas-option-text {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .mas-option-label {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.4;
-        }
-
-        .mas-option-score {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .mas-button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 48px;
-            justify-content: space-between;
-        }
-
-        .mas-btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mas-btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-
-        .mas-btn-secondary:hover {
-            border-color: var(--accent);
-            background: rgba(255, 102, 0, 0.05);
-        }
-
-        .mas-btn-primary {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .mas-btn-primary:hover {
-            background: var(--accent-hover);
-        }
-
-        .mas-btn-primary:disabled {
-            background: var(--text-muted);
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        /* Results Screen */
-        .mas-results-screen {
-            display: none;
-        }
-
-        .mas-results-screen.active {
-            display: block;
-        }
-
-        .mas-results-header {
-            text-align: center;
-            margin-bottom: 56px;
-        }
-
-        .mas-results-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .mas-score-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-
-        .mas-circular-score {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin-bottom: 24px;
-        }
-
-        .mas-score-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(var(--accent) 0deg, var(--accent) var(--rotation), transparent var(--rotation));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .mas-score-circle::before {
-            content: '';
-            position: absolute;
-            width: 85%;
-            height: 85%;
-            border-radius: 50%;
-            background: var(--bg);
-        }
-
-        .mas-score-text {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-        }
-
-        .mas-score-value {
-            font-size: 56px;
-            font-weight: 800;
-            display: block;
-        }
-
-        .mas-score-outof {
-            font-size: 14px;
-            color: var(--text-muted);
-            display: block;
-        }
-
-        .mas-score-label {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent);
-            margin-top: 12px;
-        }
-
-        .mas-score-description {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 8px;
-            max-width: 400px;
-        }
-
-        .mas-sections-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 24px;
-            margin-bottom: 56px;
-        }
-
-        .mas-section-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-        }
-
-        .mas-section-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
-        }
-
-        .mas-section-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .mas-section-score {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-
-        .mas-progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 12px;
-        }
-
-        .mas-progress-bar-fill {
-            height: 100%;
-            background: var(--success);
-            border-radius: 4px;
-            transition: all 0.6s ease;
-        }
-
-        .mas-progress-bar-fill.yellow-green {
-            background: #84CC16;
-        }
-
-        .mas-progress-bar-fill.yellow {
-            background: var(--warning);
-        }
-
-        .mas-progress-bar-fill.red {
-            background: var(--error);
-        }
-
-        .mas-progress-label {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .mas-recommendations {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 48px;
-        }
-
-        .mas-recommendations-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
-        }
-
-        .mas-recommendation-section {
-            margin-bottom: 32px;
-        }
-
-        .mas-recommendation-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .mas-recommendation-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            cursor: pointer;
-            padding: 12px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .mas-recommendation-header:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .mas-recommendation-toggle {
-            color: var(--accent);
-            font-size: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .mas-recommendation-toggle.open {
-            transform: rotate(90deg);
-        }
-
-        .mas-recommendation-label {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .mas-recommendation-score {
-            margin-left: auto;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .mas-recommendation-score.needs-work {
-            color: var(--error);
-        }
-
-        .mas-recommendation-items {
-            display: none;
-            padding-left: 32px;
-            border-left: 2px solid var(--border);
-        }
-
-        .mas-recommendation-items.open {
-            display: block;
-        }
-
-        .mas-recommendation-item {
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .mas-recommendation-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .mas-recommendation-item p {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text-muted);
-        }
-
-        .mas-roadmap {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 48px;
-        }
-
-        .mas-roadmap-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 28px;
-        }
-
-        .mas-roadmap-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .mas-roadmap-action {
-            display: flex;
-            gap: 16px;
-            align-items: flex-start;
-        }
-
-        .mas-action-rank {
-            width: 32px;
-            height: 32px;
-            background: var(--accent);
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .mas-action-content h4 {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .mas-action-content p {
-            font-size: 13px;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .mas-matrix {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px;
-            margin-bottom: 48px;
-        }
-
-        .mas-matrix-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 32px;
-        }
-
-        .mas-2x2 {
-            position: relative;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            aspect-ratio: 1;
-        }
-
-        .mas-2x2-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-            gap: 2px;
-            width: 100%;
-            height: 100%;
-            background: var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .mas-2x2-quadrant {
-            background: rgba(255, 255, 255, 0.04);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .mas-2x2-quadrant.active {
-            background: rgba(255, 102, 0, 0.15);
-            border: 2px solid var(--accent);
-        }
-
-        .mas-2x2-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .mas-2x2-text {
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-
-        .mas-2x2-axes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .mas-axis-label {
-            position: absolute;
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .mas-axis-label.x {
-            bottom: -28px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .mas-axis-label.y {
-            left: -140px;
-            top: 50%;
-            transform: translateY(-50%) rotate(-90deg);
-            transform-origin: center;
-        }
-
-        .mas-cta-section {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .mas-cta-buttons {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .mas-btn-large {
-            padding: 14px 32px;
-            font-size: 15px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mas-btn-book {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .mas-btn-book:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .mas-btn-retake {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-
-        .mas-btn-retake:hover {
-            border-color: var(--accent);
-            background: rgba(255, 102, 0, 0.05);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .mas-nav {
-                padding: 0 16px;
-            }
-
-            .mas-welcome h1 {
-                font-size: 32px;
-            }
-
-            .mas-question-text {
-                font-size: 22px;
-            }
-
-            .mas-preview-cards {
-                grid-template-columns: 1fr;
-            }
-
-            .mas-sections-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .mas-button-group {
-                flex-direction: column;
-            }
-
-            .mas-btn {
-                width: 100%;
-            }
-
-            .mas-cta-buttons {
-                flex-direction: column;
-            }
-
-            .mas-btn-large {
-                width: 100%;
-            }
-        }
-
-        .mas-score-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: var(--accent);
-            color: #000;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 12px;
-        }
-
-        /* Contact Form */
-        .mas-contact-screen { display: none; text-align: center; }
-        .mas-contact-screen.active { display: block; }
-        .mas-contact-form { max-width: 480px; margin: 0 auto; }
-        .mas-contact-form h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-        .mas-contact-form p { color: var(--text-muted); margin-bottom: 32px; font-size: 15px; }
-        .mas-form-group { margin-bottom: 16px; text-align: left; }
-        .mas-form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
-        .mas-form-group input { width: 100%; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.3s; }
-        .mas-form-group input:focus { outline: none; border-color: var(--accent); }
-        .mas-form-group input::placeholder { color: #666; }
-
-        /* Loading Overlay */
-        .mas-loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 24px; }
-        .mas-loading-overlay.active { display: flex; }
-        .mas-spinner { width: 48px; height: 48px; border: 4px solid rgba(255,102,0,0.2); border-top-color: var(--accent); border-radius: 50%; animation: mas-spin 0.8s linear infinite; }
-        @keyframes mas-spin { to { transform: rotate(360deg); } }
-        .mas-loading-text { color: var(--text); font-size: 16px; font-weight: 500; }
-        .mas-loading-sub { color: var(--text-muted); font-size: 13px; }
-
-        /* AI Analysis Sections */
-        .mas-ai-insight { background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(255,102,0,0.05)); border: 1px solid rgba(255,102,0,0.3); border-radius: 12px; padding: 24px 32px; margin-bottom: 32px; text-align: center; }
-        .mas-ai-insight h3 { font-size: 14px; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-        .mas-ai-insight p { font-size: 18px; font-weight: 500; line-height: 1.6; }
-        .mas-ai-strength { color: var(--success); font-size: 13px; margin: 4px 0; }
-        .mas-ai-weakness { color: var(--error); font-size: 13px; margin: 4px 0; }
-        .mas-ai-30day { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 48px; }
-        .mas-ai-30day h3 { font-size: 24px; font-weight: 700; margin-bottom: 24px; }
-        .mas-ai-week { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
-        .mas-ai-week:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-        .mas-ai-week h4 { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
-        .mas-ai-week ul { list-style: none; padding: 0; }
-        .mas-ai-week li { font-size: 14px; color: var(--text-muted); padding: 4px 0 4px 16px; position: relative; }
-        .mas-ai-week li::before { content: '\2192'; position: absolute; left: 0; color: var(--accent); }
-        .mas-saved-badge { display: none; background: var(--success); color: #000; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-top: 16px; text-align: center; }
-        .mas-saved-badge.visible { display: inline-block; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EO MicroSaaS — Market Attractiveness Scoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --eo-dark: #1A1A2E;
+    --eo-orange: #E94D1B;
+    --eo-beige: #FAF5EF;
+    --eo-card-bg: #FFFFFF;
+    --eo-gray-text: #6B7280;
+    --eo-gray-border: #E5E7EB;
+    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --eo-radius: 12px;
+    --eo-radius-sm: 8px;
+    --eo-transition: 300ms ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--eo-beige);
+    color: var(--eo-dark);
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.eo-header {
+    text-align: center;
+    padding: 28px 20px 12px;
+}
+.eo-header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--eo-dark);
+}
+.eo-header h1 span { color: var(--eo-orange); }
+
+/* Section Label */
+.section-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--eo-gray-text);
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Progress Bar */
+.progress-wrapper {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+}
+.progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.progress-meta .section-label { margin-bottom: 0; text-align: left; }
+.progress-counter {
+    font-size: 13px;
+    color: var(--eo-gray-text);
+    font-weight: 500;
+}
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: var(--eo-gray-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: var(--eo-orange);
+    border-radius: 4px;
+    transition: width var(--eo-transition);
+    width: 0%;
+}
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Email Capture */
+.email-capture {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+.email-capture h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    margin-bottom: 8px;
+}
+.email-capture p {
+    color: var(--eo-gray-text);
+    margin-bottom: 28px;
+    font-size: 15px;
+}
+.email-capture input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--eo-transition);
+    margin-bottom: 16px;
+}
+.email-capture input:focus { border-color: var(--eo-orange); }
+.email-capture .btn-primary { width: 100%; }
+
+/* Question Card */
+.question-card {
+    background: var(--eo-card-bg);
+    border-radius: var(--eo-radius);
+    box-shadow: var(--eo-shadow);
+    padding: 32px;
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+}
+.question-card.shake {
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+
+.question-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    text-align: center;
+    margin-bottom: 28px;
+    line-height: 1.35;
+}
+
+/* Options */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.option-card {
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--eo-dark);
+    transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
+    user-select: none;
+    line-height: 1.4;
+}
+.option-card:hover {
+    border-color: var(--eo-orange);
+}
+.option-card.selected {
+    background: var(--eo-orange);
+    border-color: var(--eo-orange);
+    color: #FFFFFF;
+}
+.option-card.focused {
+    outline: 2px solid var(--eo-orange);
+    outline-offset: 2px;
+}
+
+/* Nav Buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+    gap: 12px;
+}
+.btn {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    cursor: pointer;
+    transition: all var(--eo-transition);
+    border: none;
+    outline: none;
+}
+.btn-prev {
+    background: transparent;
+    border: 2px solid var(--eo-dark);
+    color: var(--eo-dark);
+}
+.btn-prev:hover { background: var(--eo-dark); color: #fff; }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
+.btn-next {
+    background: var(--eo-dark);
+    color: #FFFFFF;
+}
+.btn-next:hover { background: #2d2d4a; }
+.btn-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.btn-primary {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border: none;
+    border-radius: var(--eo-radius-sm);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+}
+.btn-primary:hover { background: #d4441a; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--eo-dark);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    transition: transform 0.4s ease;
+    white-space: nowrap;
+}
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Contact Form */
+.contact-screen {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.contact-card {
+    background: var(--eo-card-bg);
+    border-radius: var(--eo-radius);
+    box-shadow: var(--eo-shadow);
+    padding: 32px;
+}
+.contact-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    text-align: center;
+    margin-bottom: 6px;
+}
+.contact-card .subtitle {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    text-align: center;
+    margin-bottom: 24px;
+}
+.form-group {
+    margin-bottom: 16px;
+}
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--eo-dark);
+    margin-bottom: 6px;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--eo-transition);
+}
+.form-group input:focus { border-color: var(--eo-orange); }
+.contact-card .btn-primary { width: 100%; margin-top: 8px; }
+.skip-link {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: inherit;
+}
+.skip-link:hover { color: var(--eo-dark); }
+
+/* Loading Overlay */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(250, 245, 239, 0.95);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--eo-gray-border);
+    border-top-color: var(--eo-orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-overlay p {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--eo-dark);
+}
+
+/* Results Screen */
+.results-screen {
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+}
+
+.score-hero {
+    background: var(--eo-card-bg);
+    border-radius: var(--eo-radius);
+    box-shadow: var(--eo-shadow);
+    padding: 40px 32px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    border: 6px solid;
+}
+.score-circle .score-number {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+}
+.score-circle .score-total {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--eo-gray-text);
+}
+.score-circle-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.band-label {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.band-subtitle {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+}
+.band-description {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    margin-top: 12px;
+    line-height: 1.6;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Band Colors */
+.band-strong .score-circle { border-color: #22C55E; }
+.band-strong .band-label { color: #22C55E; }
+.band-strong .score-number { color: #22C55E; }
+
+.band-viable .score-circle { border-color: #84CC16; }
+.band-viable .band-label { color: #84CC16; }
+.band-viable .score-number { color: #84CC16; }
+
+.band-weak .score-circle { border-color: #F59E0B; }
+.band-weak .band-label { color: #F59E0B; }
+.band-weak .score-number { color: #F59E0B; }
+
+.band-highrisk .score-circle { border-color: #EF4444; }
+.band-highrisk .band-label { color: #EF4444; }
+.band-highrisk .score-number { color: #EF4444; }
+
+.band-nomarket .score-circle { border-color: #991B1B; }
+.band-nomarket .band-label { color: #991B1B; }
+.band-nomarket .score-number { color: #991B1B; }
+
+/* Section Bars */
+.results-card {
+    background: var(--eo-card-bg);
+    border-radius: var(--eo-radius);
+    box-shadow: var(--eo-shadow);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+.results-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 20px;
+}
+.section-bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    gap: 12px;
+}
+.section-bar-label {
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 90px;
+    color: var(--eo-dark);
+}
+.section-bar-track {
+    flex: 1;
+    height: 12px;
+    background: var(--eo-gray-border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+.section-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.6s ease;
+}
+.section-bar-score {
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 50px;
+    text-align: right;
+    color: var(--eo-gray-text);
+}
+
+/* Recommendations */
+.reco-section {
+    margin-bottom: 20px;
+}
+.reco-section:last-child { margin-bottom: 0; }
+.reco-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.reco-icon {
+    font-size: 16px;
+}
+.reco-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--eo-dark);
+}
+.reco-list {
+    list-style: none;
+    padding: 0;
+}
+.reco-list li {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    padding: 6px 0 6px 24px;
+    position: relative;
+    line-height: 1.5;
+}
+.reco-list li::before {
+    content: '\2022';
+    position: absolute;
+    left: 8px;
+    color: var(--eo-orange);
+    font-weight: 700;
+}
+
+/* AI Section */
+.ai-section {
+    background: var(--eo-card-bg);
+    border-radius: var(--eo-radius);
+    box-shadow: var(--eo-shadow);
+    padding: 28px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--eo-orange);
+}
+.ai-section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 12px;
+}
+.ai-badge {
+    display: inline-block;
+    background: var(--eo-orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.ai-insight {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--eo-dark);
+    margin-bottom: 16px;
+}
+.ai-plan h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 8px;
+}
+.ai-plan p, .ai-plan li {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    line-height: 1.6;
+}
+.ai-plan ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+.ai-week {
+    margin-bottom: 16px;
+}
+.ai-week h5 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 4px;
+}
+.ai-week .milestone {
+    font-size: 13px;
+    font-style: italic;
+    color: var(--eo-orange);
+    margin-top: 4px;
+}
+.ai-reco-list {
+    list-style: none;
+    padding: 0;
+}
+.ai-reco-list li {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    padding: 8px 0 8px 20px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--eo-gray-border);
+}
+.ai-reco-list li:last-child { border-bottom: none; }
+.ai-reco-list li::before {
+    content: '\2794';
+    position: absolute;
+    left: 0;
+    color: var(--eo-orange);
+}
+
+/* CTA */
+.results-cta {
+    text-align: center;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+.results-cta .btn-primary { min-width: 280px; }
+.results-cta .btn-retake {
+    background: transparent;
+    border: 2px solid var(--eo-dark);
+    color: var(--eo-dark);
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-retake:hover { background: var(--eo-dark); color: #fff; }
+
+/* Mobile */
+@media (max-width: 680px) {
+    .question-card { margin: 0 16px; padding: 24px 20px; }
+    .nav-buttons { padding: 0 16px; }
+    .question-text { font-size: 19px; }
+    .progress-wrapper { padding: 0 16px; }
+}
+@media (max-width: 400px) {
+    .nav-buttons { flex-direction: column; }
+    .btn-prev.hidden { display: none; }
+    .option-card { padding: 14px 16px; font-size: 14px; }
+    .question-text { font-size: 18px; }
+}
+</style>
 </head>
 <body>
-    <div id="mas-scorer">
-        <!-- Navigation -->
-        <nav class="mas-nav">
-            <div class="mas-nav-brand">EO<span>MAS</span></div>
-            <div class="mas-nav-right">
-                <span id="mas-nav-section" style="display: none;"></span>
-                <span id="mas-nav-progress" style="display: none;"></span>
-            </div>
-            <div class="mas-progress-bar" id="mas-progress-bar"></div>
-        </nav>
 
-        <!-- Main Content -->
-        <div class="mas-container">
-            <div class="mas-content">
-                <!-- Welcome Screen -->
-                <div id="mas-welcome" class="mas-welcome">
-                    <h1>How Strong Is Your Market?</h1>
-                    <p>A 5-minute assessment of your market attractiveness and founder readiness</p>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-                    <div class="mas-stats">
-                        <div class="mas-stat">
-                            <div class="mas-stat-number">20</div>
-                            <div class="mas-stat-label">Questions</div>
-                        </div>
-                        <div class="mas-stat">
-                            <div class="mas-stat-number">4</div>
-                            <div class="mas-stat-label">Sections</div>
-                        </div>
-                        <div class="mas-stat">
-                            <div class="mas-stat-number">5</div>
-                            <div class="mas-stat-label">Minutes</div>
-                        </div>
-                        <!-- points stat hidden -->
-                    </div>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Generating your AI-enhanced analysis...</p>
+</div>
 
-                    <div class="mas-preview-cards">
-                        <div class="mas-preview-card">
-                            <div class="mas-preview-card-icon">😣</div>
-                            <h3>Pain Reality</h3>
-                            <p>How real and urgent is your buyer's problem?</p>
-                        </div>
-                        <div class="mas-preview-card">
-                            <div class="mas-preview-card-icon">💰</div>
-                            <h3>Purchasing Power</h3>
-                            <p>Can they actually afford and buy your solution?</p>
-                        </div>
-                        <div class="mas-preview-card">
-                            <div class="mas-preview-card-icon">🚀</div>
-                            <h3>Market Momentum</h3>
-                            <p>Are tailwinds pushing growth in your space?</p>
-                        </div>
-                        <div class="mas-preview-card">
-                            <div class="mas-preview-card-icon">⚔️</div>
-                            <h3>Competitive Advantage</h3>
-                            <p>Why should buyers choose you over alternatives?</p>
-                        </div>
-                    </div>
+<!-- Header -->
+<div class="eo-header">
+    <h1>EO <span>MicroSaaS</span></h1>
+</div>
 
-                    <button class="mas-cta-button" onclick="startAssessment()">Start Assessment</button>
-                </div>
+<!-- Screen 1: Email Capture -->
+<div class="screen active" id="screenEmail">
+    <div class="email-capture">
+        <h2>Market Attractiveness Scorecard</h2>
+        <p>Discover how attractive your target market really is. 20 questions, 5 minutes, actionable insights.</p>
+        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
+        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
+    </div>
+</div>
 
-                <!-- Question Screens -->
-                <div id="mas-questions"></div>
-
-                <!-- Results Screen -->
-                <div id="mas-results" class="mas-results-screen">
-                    <div class="mas-results-header">
-                        <h2 class="mas-results-title">Your Market Assessment</h2>
-                        <div class="mas-score-display">
-                            <div class="mas-circular-score">
-                                <div class="mas-score-circle" id="mas-score-circle">
-                                    <div class="mas-score-text">
-                                        <span class="mas-score-value" id="mas-final-score">--</span>
-                                        <span class="mas-score-outof">/100</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mas-score-label" id="mas-score-label">Assessing...</div>
-                            <p class="mas-score-description" id="mas-score-description"></p>
-                        </div>
-                    </div>
-
-                    <div class="mas-sections-grid" id="mas-sections-results" style="display:none;"></div>
-
-                    <div class="mas-recommendations" id="mas-recommendations-container"></div>
-
-                    <div class="mas-roadmap">
-                        <h3 class="mas-roadmap-title">Top 5 Actions by Impact</h3>
-                        <div class="mas-roadmap-actions" id="mas-roadmap-actions"></div>
-                    </div>
-
-                    <div class="mas-matrix">
-                        <h3 class="mas-matrix-title">Market Strength vs Execution Readiness</h3>
-                        <div class="mas-2x2" id="mas-2x2-matrix"></div>
-                    </div>
-
-                    <div class="mas-cta-section">
-                        <div class="mas-cta-buttons">
-                            <button class="mas-btn-large mas-btn-book" onclick="bookCall()">Book Your Free Hour</button>
-                            <button class="mas-btn-large mas-btn-retake" onclick="resetAssessment()">Retake Assessment</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Form Screen -->
-                <div id="mas-contact" class="mas-contact-screen" style="display:none;">
-                    <h2>Get Your AI-Powered Market Analysis</h2>
-                    <p>Enter your details to receive personalized AI recommendations from our strategy engine.</p>
-                    <form class="mas-contact-form" onsubmit="submitToWebhook(event)">
-                        <div class="mas-form-group">
-                            <label for="mas-contact-name">Full Name</label>
-                            <input type="text" id="mas-contact-name" placeholder="Your name" required>
-                        </div>
-                        <div class="mas-form-group">
-                            <label for="mas-contact-email">Email</label>
-                            <input type="email" id="mas-contact-email" placeholder="you@company.com" required>
-                        </div>
-                        <div class="mas-form-group">
-                            <label for="mas-contact-company">Company</label>
-                            <input type="text" id="mas-contact-company" placeholder="Your company name" required>
-                        </div>
-                        <button type="submit" class="mas-cta-button">Get My AI Analysis</button>
-                        <button type="button" class="mas-btn mas-btn-secondary" style="width:100%;margin-top:8px;" onclick="showResults()">Skip — Show Basic Results</button>
-                    </form>
-                </div>
-
-                <!-- Loading Overlay -->
-                <div id="mas-loading" class="mas-loading-overlay" style="display:none;">
-                    <div class="mas-spinner"></div>
-                    <div class="mas-loading-text">Analyzing your market with AI...</div>
-                    <div class="mas-loading-text" style="font-size:14px;opacity:0.7;margin-top:8px;">This takes 10-15 seconds</div>
-                </div>
-            </div>
+<!-- Screen 2: Stepper Questions -->
+<div class="screen" id="screenStepper">
+    <div class="progress-wrapper">
+        <div class="progress-meta">
+            <div class="section-label" id="sectionLabel">Section A: PAIN REALITY</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
+        </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
+    <div class="question-card" id="questionCard">
+        <div class="question-text" id="questionText"></div>
+        <div class="options-list" id="optionsList"></div>
+    </div>
+    <div class="nav-buttons">
+        <button class="btn btn-prev hidden" id="btnPrev">Previous</button>
+        <button class="btn btn-next" id="btnNext" disabled>Next</button>
+    </div>
+</div>
 
-    <script>
-        const QUESTIONS = {
-            A: {
-                title: 'Pain Reality',
-                subtitle: 'Understanding Your Buyer\'s Problem',
-                questions: [
-                    {
-                        text: "Can you describe the exact moment your buyer feels this pain?",
-                        options: [
-                            { label: "Yes — I can describe the specific moment, time, and trigger", score: 5 },
-                            { label: "I know the general pain but not the exact moment", score: 3 },
-                            { label: "I think they have this pain based on my research", score: 1 },
-                            { label: "I'm not sure how they experience it", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "How often does your buyer experience this pain?",
-                        options: [
-                            { label: "Daily — it disrupts their workflow every day", score: 5 },
-                            { label: "Weekly — it's a recurring frustration", score: 4 },
-                            { label: "Monthly — it surfaces periodically", score: 3 },
-                            { label: "Quarterly or less — it's occasional", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Can your buyer put a dollar/AED amount on this pain?",
-                        options: [
-                            { label: "Yes — they can quote the exact cost", score: 5 },
-                            { label: "They can estimate the cost range", score: 3 },
-                            { label: "They acknowledge it costs money but can't quantify", score: 1 },
-                            { label: "No — they haven't connected it to money", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "What are they currently doing to solve this problem?",
-                        options: [
-                            { label: "Paying for an inferior solution they hate", score: 5 },
-                            { label: "Using a painful manual process", score: 4 },
-                            { label: "Using free tools or spreadsheets", score: 2 },
-                            { label: "Nothing — they've accepted the pain", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "If you solved this tomorrow, how fast would they buy?",
-                        options: [
-                            { label: "Same day — they'd sign immediately", score: 5 },
-                            { label: "Within a week — minimal decision process", score: 4 },
-                            { label: "Within a month — some evaluation needed", score: 3 },
-                            { label: "Eventually — no urgency to switch", score: 1 }
-                        ]
-                    }
-                ]
-            },
-            B: {
-                title: 'Purchasing Power',
-                subtitle: 'Can They Actually Buy?',
-                questions: [
-                    {
-                        text: "Does your buyer control the purchase budget?",
-                        options: [
-                            { label: "Sole decision maker — signs and pays", score: 5 },
-                            { label: "Needs one approval above them", score: 4 },
-                            { label: "Committee decision — multiple approvers", score: 2 },
-                            { label: "No budget authority — needs to request", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "How does your price compare to the pain cost?",
-                        options: [
-                            { label: "10x+ ROI — price is a no-brainer", score: 5 },
-                            { label: "5x ROI — clearly worth it", score: 4 },
-                            { label: "2-3x ROI — reasonable but needs justification", score: 3 },
-                            { label: "Break-even or unclear ROI", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Can your buyer actually pay you easily?",
-                        options: [
-                            { label: "Credit card or instant payment — frictionless", score: 5 },
-                            { label: "Bank transfer — some process but doable", score: 4 },
-                            { label: "Invoice/PO required — procurement process", score: 3 },
-                            { label: "Significant payment friction (cash market, no digital)", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Are they already paying for solutions in this category?",
-                        options: [
-                            { label: "Yes — spending $1,000+/month on similar tools", score: 5 },
-                            { label: "Yes — spending $100-1,000/month", score: 4 },
-                            { label: "Yes — but under $100/month", score: 3 },
-                            { label: "Only using free tools", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Have buyers expressed willingness to pay?",
-                        options: [
-                            { label: "Sent deposit, PO, or signed LOI", score: 5 },
-                            { label: "Verbal commitment with specific budget", score: 4 },
-                            { label: "Said 'sounds interesting, send pricing'", score: 2 },
-                            { label: "No buying signal yet", score: 0 }
-                        ]
-                    }
-                ]
-            },
-            C: {
-                title: 'Market Momentum',
-                subtitle: 'Is Your Market Growing?',
-                questions: [
-                    {
-                        text: "What direction is your target market heading?",
-                        options: [
-                            { label: "Explosive growth — 30%+ YoY expansion", score: 5 },
-                            { label: "Strong growth — 15-30% YoY", score: 4 },
-                            { label: "Stable — maintaining current size", score: 3 },
-                            { label: "Plateauing or declining", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Are there macro forces pushing this market?",
-                        options: [
-                            { label: "Regulation mandating adoption", score: 5 },
-                            { label: "Technology shift creating new demand (AI, automation)", score: 4 },
-                            { label: "Cultural or behavioral trend supporting it", score: 3 },
-                            { label: "No specific external forces", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "What's the investment activity in your space?",
-                        options: [
-                            { label: "Multiple competitors raised $10M+ rounds", score: 5 },
-                            { label: "Series A/B activity in the space", score: 4 },
-                            { label: "Seed-stage activity", score: 3 },
-                            { label: "No funding activity — all bootstrapped", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Are people actively searching for your type of solution?",
-                        options: [
-                            { label: "Google Trends up 50%+ in 12 months", score: 5 },
-                            { label: "Growing search volume steadily", score: 4 },
-                            { label: "Stable search volume", score: 3 },
-                            { label: "Low or declining search interest", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "Is the MENA market specifically ready for this?",
-                        options: [
-                            { label: "Confirmed Arabic SaaS gap — no local solution exists", score: 5 },
-                            { label: "Regional regulation creating specific demand", score: 4 },
-                            { label: "Growing SME digitization wave supports it", score: 3 },
-                            { label: "MENA market is still cash-heavy / resistant", score: 1 }
-                        ]
-                    }
-                ]
-            },
-            D: {
-                title: 'Competitive Advantage',
-                subtitle: 'Why Should Buyers Choose You?',
-                questions: [
-                    {
-                        text: "Can you explain why you're different in one sentence?",
-                        options: [
-                            { label: "Crystal clear — tested and validated with buyers", score: 5 },
-                            { label: "Clear to me but not yet tested", score: 3 },
-                            { label: "Still working on positioning", score: 1 },
-                            { label: "Not differentiated yet", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "Can you reach 1,000 target prospects in 30 days?",
-                        options: [
-                            { label: "Yes — have the list AND the channel", score: 5 },
-                            { label: "Have the channel, building the list", score: 4 },
-                            { label: "Know which channel but haven't built it", score: 3 },
-                            { label: "No clear path to reach them", score: 1 }
-                        ]
-                    },
-                    {
-                        text: "What do you have that competitors can't easily copy?",
-                        options: [
-                            { label: "Deep domain expertise + relationships + data", score: 5 },
-                            { label: "Technical moat or proprietary technology", score: 4 },
-                            { label: "First-mover advantage only", score: 2 },
-                            { label: "Nothing defensible yet", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "Does Arabic localization create defensibility?",
-                        options: [
-                            { label: "Arabic-first with deep cultural integration", score: 5 },
-                            { label: "Arabic translation with regional adaptation", score: 3 },
-                            { label: "English-only for now", score: 1 },
-                            { label: "Arabic not relevant to my market", score: 0 }
-                        ]
-                    },
-                    {
-                        text: "How fast can a new customer see results?",
-                        options: [
-                            { label: "Same day — instant value visible", score: 5 },
-                            { label: "Within a week — quick onboarding", score: 4 },
-                            { label: "Within 30 days — some setup required", score: 3 },
-                            { label: "90+ days before value is clear", score: 1 }
-                        ]
-                    }
-                ]
+<!-- Screen 3: Contact Form -->
+<div class="screen" id="screenContact">
+    <div class="contact-screen">
+        <div class="contact-card">
+            <h2>Get Your AI Analysis</h2>
+            <p class="subtitle">Provide your details for a personalized AI-enhanced report</p>
+            <div class="form-group">
+                <label for="contactName">Full Name *</label>
+                <input type="text" id="contactName" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="contactEmail">Email *</label>
+                <input type="email" id="contactEmail" placeholder="john@company.com" required>
+            </div>
+            <div class="form-group">
+                <label for="contactCompany">Company *</label>
+                <input type="text" id="contactCompany" placeholder="Acme Corp" required>
+            </div>
+            <button class="btn-primary" id="btnSubmitContact">Get My AI Analysis</button>
+            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Basic Results</button>
+        </div>
+    </div>
+</div>
+
+<!-- Screen 4: Results -->
+<div class="screen" id="screenResults">
+    <div class="results-screen" id="resultsContent"></div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    /* ═══════════════════════════════════
+       QUESTIONS DATA
+       ═══════════════════════════════════ */
+    var SECTIONS = [
+        { id: 'A', name: 'PAIN REALITY', fullName: 'Understanding Your Buyer\u2019s Problem' },
+        { id: 'B', name: 'PURCHASING POWER', fullName: 'Can They Actually Buy?' },
+        { id: 'C', name: 'MARKET MOMENTUM', fullName: 'Is Your Market Growing?' },
+        { id: 'D', name: 'COMPETITIVE ADVANTAGE', fullName: 'Why Should Buyers Choose You?' }
+    ];
+
+    var SECTION_MAXES = { 'A': 25, 'B': 25, 'C': 25, 'D': 25 };
+
+    var SECTION_THRESHOLDS = { 'A': 15, 'B': 15, 'C': 15, 'D': 15 };
+
+    var SECTION_NAME_MAP = { 'A': 'pain_reality', 'B': 'purchasing_power', 'C': 'market_momentum', 'D': 'competitive_advantage' };
+
+    var RECOMMENDATIONS = {
+        'A': [
+            "Interview 5 buyers this week. Ask: \u2018Walk me through the last time this problem cost you money.\u2019",
+            "Build a pain quantification calculator to help buyers see the dollar impact",
+            "Look for trigger events that make the pain urgent (regulation, seasonal, competitive pressure)"
+        ],
+        'B': [
+            "Find the economic buyer \u2014 in MENA that\u2019s usually the owner/GM, not department head",
+            "Add flexible payment options: Tabby/Tamara installments, annual prepaid discounts",
+            "Create a compelling ROI calculator showing 5x+ return"
+        ],
+        'C': [
+            "If the market is flat, niche harder \u2014 target the 3% early adopters",
+            "Build urgency through limited-time offers and founding member pricing",
+            "Search for Arabic keywords your buyers would use \u2014 MENA SEO is underserved"
+        ],
+        'D': [
+            "Answer in one sentence: What do competitors do worse than you?",
+            "Build 3 case studies with before/after metrics",
+            "Arabic-first localization is still the strongest moat in MENA SaaS"
+        ]
+    };
+
+    var BAND_DESCRIPTIONS = {
+        'strong': 'Your market shows strong fundamentals. Buyers have clear pain, purchasing power, and there are tailwinds supporting growth. Focus on execution and rapid scaling.',
+        'viable': 'Your market is viable with some clear strengths. Address the weaker areas \u2014 they\u2019re blocking faster growth and validation.',
+        'weak': 'Your market has potential but needs significant validation. The gaps below suggest you need deeper customer research before major investment.',
+        'highrisk': 'Your market assessment shows risks that need immediate attention. This doesn\u2019t mean you should quit \u2014 it means get in the field and validate.',
+        'nomarket': 'Your current market positioning has significant challenges. Consider pivoting to a different segment or problem where buyers show stronger fundamentals.'
+    };
+
+    var allQuestions = [
+        /* Section A: PAIN REALITY (5 questions) */
+        {
+            id: 'q1', sectionId: 'A', sectionIndex: 0,
+            text: 'Can you describe the exact moment your buyer feels this pain?',
+            options: [
+                { label: 'Yes \u2014 I can describe the specific moment, time, and trigger', score: 5 },
+                { label: 'I know the general pain but not the exact moment', score: 3 },
+                { label: 'I think they have this pain based on my research', score: 1 },
+                { label: 'I\u2019m not sure how they experience it', score: 0 }
+            ]
+        },
+        {
+            id: 'q2', sectionId: 'A', sectionIndex: 0,
+            text: 'How often does your buyer experience this pain?',
+            options: [
+                { label: 'Daily \u2014 it disrupts their workflow every day', score: 5 },
+                { label: 'Weekly \u2014 it\u2019s a recurring frustration', score: 4 },
+                { label: 'Monthly \u2014 it surfaces periodically', score: 3 },
+                { label: 'Quarterly or less \u2014 it\u2019s occasional', score: 1 }
+            ]
+        },
+        {
+            id: 'q3', sectionId: 'A', sectionIndex: 0,
+            text: 'Can your buyer put a dollar/AED amount on this pain?',
+            options: [
+                { label: 'Yes \u2014 they can quote the exact cost', score: 5 },
+                { label: 'They can estimate the cost range', score: 3 },
+                { label: 'They acknowledge it costs money but can\u2019t quantify', score: 1 },
+                { label: 'No \u2014 they haven\u2019t connected it to money', score: 0 }
+            ]
+        },
+        {
+            id: 'q4', sectionId: 'A', sectionIndex: 0,
+            text: 'What are they currently doing to solve this problem?',
+            options: [
+                { label: 'Paying for an inferior solution they hate', score: 5 },
+                { label: 'Using a painful manual process', score: 4 },
+                { label: 'Using free tools or spreadsheets', score: 2 },
+                { label: 'Nothing \u2014 they\u2019ve accepted the pain', score: 0 }
+            ]
+        },
+        {
+            id: 'q5', sectionId: 'A', sectionIndex: 0,
+            text: 'If you solved this tomorrow, how fast would they buy?',
+            options: [
+                { label: 'Same day \u2014 they\u2019d sign immediately', score: 5 },
+                { label: 'Within a week \u2014 minimal decision process', score: 4 },
+                { label: 'Within a month \u2014 some evaluation needed', score: 3 },
+                { label: 'Eventually \u2014 no urgency to switch', score: 1 }
+            ]
+        },
+        /* Section B: PURCHASING POWER (5 questions) */
+        {
+            id: 'q6', sectionId: 'B', sectionIndex: 1,
+            text: 'Does your buyer control the purchase budget?',
+            options: [
+                { label: 'Sole decision maker \u2014 signs and pays', score: 5 },
+                { label: 'Needs one approval above them', score: 4 },
+                { label: 'Committee decision \u2014 multiple approvers', score: 2 },
+                { label: 'No budget authority \u2014 needs to request', score: 0 }
+            ]
+        },
+        {
+            id: 'q7', sectionId: 'B', sectionIndex: 1,
+            text: 'How does your price compare to the pain cost?',
+            options: [
+                { label: '10x+ ROI \u2014 price is a no-brainer', score: 5 },
+                { label: '5x ROI \u2014 clearly worth it', score: 4 },
+                { label: '2-3x ROI \u2014 reasonable but needs justification', score: 3 },
+                { label: 'Break-even or unclear ROI', score: 1 }
+            ]
+        },
+        {
+            id: 'q8', sectionId: 'B', sectionIndex: 1,
+            text: 'Can your buyer actually pay you easily?',
+            options: [
+                { label: 'Credit card or instant payment \u2014 frictionless', score: 5 },
+                { label: 'Bank transfer \u2014 some process but doable', score: 4 },
+                { label: 'Invoice/PO required \u2014 procurement process', score: 3 },
+                { label: 'Significant payment friction (cash market, no digital)', score: 1 }
+            ]
+        },
+        {
+            id: 'q9', sectionId: 'B', sectionIndex: 1,
+            text: 'Are they already paying for solutions in this category?',
+            options: [
+                { label: 'Yes \u2014 spending $1,000+/month on similar tools', score: 5 },
+                { label: 'Yes \u2014 spending $100-1,000/month', score: 4 },
+                { label: 'Yes \u2014 but under $100/month', score: 3 },
+                { label: 'Only using free tools', score: 1 }
+            ]
+        },
+        {
+            id: 'q10', sectionId: 'B', sectionIndex: 1,
+            text: 'Have buyers expressed willingness to pay?',
+            options: [
+                { label: 'Sent deposit, PO, or signed LOI', score: 5 },
+                { label: 'Verbal commitment with specific budget', score: 4 },
+                { label: 'Said \u201Csounds interesting, send pricing\u201D', score: 2 },
+                { label: 'No buying signal yet', score: 0 }
+            ]
+        },
+        /* Section C: MARKET MOMENTUM (5 questions) */
+        {
+            id: 'q11', sectionId: 'C', sectionIndex: 2,
+            text: 'What direction is your target market heading?',
+            options: [
+                { label: 'Explosive growth \u2014 30%+ YoY expansion', score: 5 },
+                { label: 'Strong growth \u2014 15-30% YoY', score: 4 },
+                { label: 'Stable \u2014 maintaining current size', score: 3 },
+                { label: 'Plateauing or declining', score: 1 }
+            ]
+        },
+        {
+            id: 'q12', sectionId: 'C', sectionIndex: 2,
+            text: 'Are there macro forces pushing this market?',
+            options: [
+                { label: 'Regulation mandating adoption', score: 5 },
+                { label: 'Technology shift creating new demand (AI, automation)', score: 4 },
+                { label: 'Cultural or behavioral trend supporting it', score: 3 },
+                { label: 'No specific external forces', score: 1 }
+            ]
+        },
+        {
+            id: 'q13', sectionId: 'C', sectionIndex: 2,
+            text: 'What\u2019s the investment activity in your space?',
+            options: [
+                { label: 'Multiple competitors raised $10M+ rounds', score: 5 },
+                { label: 'Series A/B activity in the space', score: 4 },
+                { label: 'Seed-stage activity', score: 3 },
+                { label: 'No funding activity \u2014 all bootstrapped', score: 1 }
+            ]
+        },
+        {
+            id: 'q14', sectionId: 'C', sectionIndex: 2,
+            text: 'Are people actively searching for your type of solution?',
+            options: [
+                { label: 'Google Trends up 50%+ in 12 months', score: 5 },
+                { label: 'Growing search volume steadily', score: 4 },
+                { label: 'Stable search volume', score: 3 },
+                { label: 'Low or declining search interest', score: 1 }
+            ]
+        },
+        {
+            id: 'q15', sectionId: 'C', sectionIndex: 2,
+            text: 'Is the MENA market specifically ready for this?',
+            options: [
+                { label: 'Confirmed Arabic SaaS gap \u2014 no local solution exists', score: 5 },
+                { label: 'Regional regulation creating specific demand', score: 4 },
+                { label: 'Growing SME digitization wave supports it', score: 3 },
+                { label: 'MENA market is still cash-heavy / resistant', score: 1 }
+            ]
+        },
+        /* Section D: COMPETITIVE ADVANTAGE (5 questions) */
+        {
+            id: 'q16', sectionId: 'D', sectionIndex: 3,
+            text: 'Can you explain why you\u2019re different in one sentence?',
+            options: [
+                { label: 'Crystal clear \u2014 tested and validated with buyers', score: 5 },
+                { label: 'Clear to me but not yet tested', score: 3 },
+                { label: 'Still working on positioning', score: 1 },
+                { label: 'Not differentiated yet', score: 0 }
+            ]
+        },
+        {
+            id: 'q17', sectionId: 'D', sectionIndex: 3,
+            text: 'Can you reach 1,000 target prospects in 30 days?',
+            options: [
+                { label: 'Yes \u2014 have the list AND the channel', score: 5 },
+                { label: 'Have the channel, building the list', score: 4 },
+                { label: 'Know which channel but haven\u2019t built it', score: 3 },
+                { label: 'No clear path to reach them', score: 1 }
+            ]
+        },
+        {
+            id: 'q18', sectionId: 'D', sectionIndex: 3,
+            text: 'What do you have that competitors can\u2019t easily copy?',
+            options: [
+                { label: 'Deep domain expertise + relationships + data', score: 5 },
+                { label: 'Technical moat or proprietary technology', score: 4 },
+                { label: 'First-mover advantage only', score: 2 },
+                { label: 'Nothing defensible yet', score: 0 }
+            ]
+        },
+        {
+            id: 'q19', sectionId: 'D', sectionIndex: 3,
+            text: 'Does Arabic localization create defensibility?',
+            options: [
+                { label: 'Arabic-first with deep cultural integration', score: 5 },
+                { label: 'Arabic translation with regional adaptation', score: 3 },
+                { label: 'English-only for now', score: 1 },
+                { label: 'Arabic not relevant to my market', score: 0 }
+            ]
+        },
+        {
+            id: 'q20', sectionId: 'D', sectionIndex: 3,
+            text: 'How fast can a new customer see results?',
+            options: [
+                { label: 'Same day \u2014 instant value visible', score: 5 },
+                { label: 'Within a week \u2014 quick onboarding', score: 4 },
+                { label: 'Within 30 days \u2014 some setup required', score: 3 },
+                { label: '90+ days before value is clear', score: 1 }
+            ]
+        }
+    ];
+
+    /* ═══════════════════════════════════
+       STATE
+       ═══════════════════════════════════ */
+    var STORAGE_KEY = 'eo_market-attractiveness_answers';
+    var answers = {};
+    var currentIndex = 0;
+    var autoAdvanceTimer = null;
+    var focusedOptionIndex = -1;
+    var capturedEmail = '';
+    var aiData = null;
+
+    /* ═══════════════════════════════════
+       DOM REFS
+       ═══════════════════════════════════ */
+    var $sectionLabel, $progressCounter, $progressFill, $questionText;
+    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
+    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
+    var $loadingOverlay, $resultsContent;
+
+    /* ═══════════════════════════════════
+       INIT
+       ═══════════════════════════════════ */
+    function init() {
+        $sectionLabel = document.getElementById('sectionLabel');
+        $progressCounter = document.getElementById('progressCounter');
+        $progressFill = document.getElementById('progressFill');
+        $questionText = document.getElementById('questionText');
+        $optionsList = document.getElementById('optionsList');
+        $questionCard = document.getElementById('questionCard');
+        $btnPrev = document.getElementById('btnPrev');
+        $btnNext = document.getElementById('btnNext');
+        $toast = document.getElementById('toast');
+        $emailInput = document.getElementById('emailInput');
+        $btnStart = document.getElementById('btnStartAssessment');
+        $btnSubmitContact = document.getElementById('btnSubmitContact');
+        $btnSkipContact = document.getElementById('btnSkipContact');
+        $loadingOverlay = document.getElementById('loadingOverlay');
+        $resultsContent = document.getElementById('resultsContent');
+
+        loadAnswers();
+        bindEvents();
+    }
+
+    function loadAnswers() {
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                answers = JSON.parse(saved);
             }
-        };
+        } catch (e) {
+            answers = {};
+        }
+    }
 
-        const RECOMMENDATIONS = {
-            A: {
-                title: 'Pain Reality',
-                below15: [
-                    "Interview 5 buyers this week. Ask: 'Walk me through the last time this problem cost you money.'",
-                    "Build a pain quantification calculator to help buyers see the dollar impact",
-                    "Look for trigger events that make the pain urgent (regulation, seasonal, competitive pressure)"
-                ]
-            },
-            B: {
-                title: 'Purchasing Power',
-                below15: [
-                    "Find the economic buyer — in MENA that's usually the owner/GM, not department head",
-                    "Add flexible payment options: Tabby/Tamara installments, annual prepaid discounts",
-                    "Create a compelling ROI calculator showing 5x+ return"
-                ]
-            },
-            C: {
-                title: 'Market Momentum',
-                below15: [
-                    "If the market is flat, niche harder — target the 3% early adopters",
-                    "Build urgency through limited-time offers and founding member pricing",
-                    "Search for Arabic keywords your buyers would use — MENA SEO is underserved"
-                ]
-            },
-            D: {
-                title: 'Competitive Advantage',
-                below15: [
-                    "Answer in one sentence: What do competitors do worse than you?",
-                    "Build 3 case studies with before/after metrics",
-                    "Arabic-first localization is still the strongest moat in MENA SaaS"
-                ]
+    function saveAnswers() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+        } catch (e) { /* silent */ }
+    }
+
+    function findFirstUnanswered() {
+        for (var i = 0; i < allQuestions.length; i++) {
+            if (!(allQuestions[i].id in answers)) return i;
+        }
+        return allQuestions.length - 1;
+    }
+
+    /* ═══════════════════════════════════
+       EVENT BINDING
+       ═══════════════════════════════════ */
+    function bindEvents() {
+        $btnStart.addEventListener('click', startAssessment);
+        $btnPrev.addEventListener('click', prevQuestion);
+        $btnNext.addEventListener('click', nextQuestion);
+        $btnSubmitContact.addEventListener('click', submitContact);
+        $btnSkipContact.addEventListener('click', skipContact);
+
+        $emailInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
+        });
+
+        document.addEventListener('keydown', handleKeyboard);
+    }
+
+    /* ═══════════════════════════════════
+       SCREEN NAVIGATION
+       ═══════════════════════════════════ */
+    function showScreen(id) {
+        var screens = document.querySelectorAll('.screen');
+        for (var i = 0; i < screens.length; i++) {
+            screens[i].classList.remove('active');
+        }
+        document.getElementById(id).classList.add('active');
+    }
+
+    /* ═══════════════════════════════════
+       TOAST
+       ═══════════════════════════════════ */
+    function showToast(msg) {
+        $toast.textContent = msg;
+        $toast.classList.add('show');
+        setTimeout(function() { $toast.classList.remove('show'); }, 3000);
+    }
+
+    /* ═══════════════════════════════════
+       EMAIL CAPTURE
+       ═══════════════════════════════════ */
+    function startAssessment() {
+        var email = $emailInput.value.trim().toLowerCase();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $emailInput.style.borderColor = '#EF4444';
+            $emailInput.focus();
+            return;
+        }
+        capturedEmail = email;
+        $emailInput.style.borderColor = '';
+
+        if (Object.keys(answers).length > 0) {
+            currentIndex = findFirstUnanswered();
+            showToast('Welcome back! Resuming where you left off.');
+        } else {
+            currentIndex = 0;
+        }
+
+        showScreen('screenStepper');
+        renderQuestion();
+    }
+
+    /* ═══════════════════════════════════
+       RENDER QUESTION
+       ═══════════════════════════════════ */
+    function renderQuestion() {
+        var q = allQuestions[currentIndex];
+        var section = SECTIONS[q.sectionIndex];
+        focusedOptionIndex = -1;
+
+        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' \u2014 ' + section.fullName;
+        $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
+        $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
+        $questionText.textContent = q.text;
+
+        $optionsList.innerHTML = '';
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) {
+                div.classList.add('selected');
             }
-        };
+            div.addEventListener('click', function() { selectOption(idx); });
+            $optionsList.appendChild(div);
+        });
 
-        let state = {
-            currentScreen: 'welcome',
-            currentSection: null,
-            currentQuestion: 0,
-            answers: {}
-        };
+        if (currentIndex === 0) {
+            $btnPrev.classList.add('hidden');
+        } else {
+            $btnPrev.classList.remove('hidden');
+        }
 
-        function startAssessment() {
-            state.currentScreen = 'questions';
-            state.currentSection = 'A';
-            state.currentQuestion = 0;
-            document.getElementById('mas-welcome').style.display = 'none';
-            document.getElementById('mas-questions').style.display = 'block';
+        var isLast = currentIndex === allQuestions.length - 1;
+        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+        $btnNext.disabled = !(q.id in answers);
+    }
+
+    /* ═══════════════════════════════════
+       SELECT OPTION
+       ═══════════════════════════════════ */
+    function selectOption(idx) {
+        var q = allQuestions[currentIndex];
+        answers[q.id] = idx;
+        saveAnswers();
+
+        var cards = $optionsList.querySelectorAll('.option-card');
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('selected');
+        }
+        cards[idx].classList.add('selected');
+        focusedOptionIndex = idx;
+
+        $btnNext.disabled = false;
+
+        var isLast = currentIndex === allQuestions.length - 1;
+        if (!isLast) {
+            clearAutoAdvance();
+            autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300);
+        }
+    }
+
+    function clearAutoAdvance() {
+        if (autoAdvanceTimer) {
+            clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+        }
+    }
+
+    /* ═══════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════ */
+    function nextQuestion() {
+        var q = allQuestions[currentIndex];
+        if (!(q.id in answers)) {
+            $questionCard.classList.add('shake');
+            setTimeout(function() { $questionCard.classList.remove('shake'); }, 400);
+            return;
+        }
+
+        if (currentIndex === allQuestions.length - 1) {
+            showScreen('screenContact');
+            if (capturedEmail) {
+                document.getElementById('contactEmail').value = capturedEmail;
+            }
+            return;
+        }
+
+        currentIndex++;
+        renderQuestion();
+    }
+
+    function prevQuestion() {
+        clearAutoAdvance();
+        if (currentIndex > 0) {
+            currentIndex--;
             renderQuestion();
         }
+    }
 
-        function renderQuestion() {
-            const section = QUESTIONS[state.currentSection];
-            const question = section.questions[state.currentQuestion];
-            const totalQuestions = 20;
-            const sectionKeys = Object.keys(QUESTIONS);
-            const sectionIdx = sectionKeys.indexOf(state.currentSection);
-            const currentQuestionNumber = sectionKeys.slice(0, sectionIdx).reduce((sum, s) => sum + QUESTIONS[s].questions.length, 0) + state.currentQuestion + 1;
+    /* ═══════════════════════════════════
+       KEYBOARD
+       ═══════════════════════════════════ */
+    function handleKeyboard(e) {
+        if (!document.getElementById('screenStepper').classList.contains('active')) return;
 
-            const progressPercent = (currentQuestionNumber / totalQuestions) * 100;
-            document.getElementById('mas-progress-bar').style.width = progressPercent + '%';
+        var cards = $optionsList.querySelectorAll('.option-card');
+        var numOpts = cards.length;
+        if (numOpts === 0) return;
 
-            const navSection = document.getElementById('mas-nav-section');
-            const navProgress = document.getElementById('mas-nav-progress');
-            navSection.style.display = 'inline';
-            navProgress.style.display = 'inline';
-            navSection.textContent = `Section ${sectionIdx + 1}/4`;
-            navProgress.textContent = `Question ${currentQuestionNumber}/20`;
-
-            const answerKey = `${state.currentSection}-${state.currentQuestion}`;
-            const isLastQuestion = sectionIdx === sectionKeys.length - 1 && state.currentQuestion === section.questions.length - 1;
-
-            let html = `
-                <div class="mas-question-screen active">
-                    <div class="mas-question-header">
-                        <div class="mas-section-label">Section ${sectionIdx + 1}/4 • ${section.title}</div>
-                        <div class="mas-question-number">Question ${currentQuestionNumber}/20</div>
-                        <h2 class="mas-question-text">${question.text}</h2>
-                    </div>
-                    <div class="mas-options">`;
-
-            question.options.forEach((option, idx) => {
-                const isSelected = state.answers[answerKey] === idx;
-                html += `
-                    <label class="mas-option${isSelected ? ' selected' : ''}">
-                        <input type="radio" name="question-${answerKey}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer('${answerKey}', ${idx}, ${option.score})">
-                        <div class="mas-option-text">
-                            <div class="mas-option-label">${option.label}</div>
-                            <!-- score hidden from user -->
-                        </div>
-                    </label>`;
-            });
-
-            html += `
-                    </div>
-                    <div class="mas-button-group">
-                        <button class="mas-btn mas-btn-secondary" onclick="previousQuestion()">← Back</button>
-                        <button class="mas-btn mas-btn-primary" onclick="nextQuestion()" ${state.answers[answerKey] === undefined ? 'disabled' : ''}>${isLastQuestion ? 'Submit' : 'Next →'}</button>
-                    </div>
-                </div>`;
-
-            document.getElementById('mas-questions').innerHTML = html;
-        }
-
-        function selectAnswer(answerKey, optionIdx, score) {
-            state.answers[answerKey] = optionIdx;
-            const nextBtn = document.querySelector('.mas-btn-primary');
-            if (nextBtn) nextBtn.disabled = false;
-        }
-
-        function nextQuestion() {
-            const totalSections = Object.keys(QUESTIONS).length;
-            const totalQuestionsInSection = QUESTIONS[state.currentSection].questions.length;
-
-            if (state.currentQuestion < totalQuestionsInSection - 1) {
-                state.currentQuestion++;
-            } else if (Object.keys(QUESTIONS).indexOf(state.currentSection) < totalSections - 1) {
-                state.currentSection = Object.keys(QUESTIONS)[Object.keys(QUESTIONS).indexOf(state.currentSection) + 1];
-                state.currentQuestion = 0;
-            } else {
-                showContactForm();
-                return;
-            }
-
-            renderQuestion();
-        }
-
-        function previousQuestion() {
-            if (state.currentQuestion > 0) {
-                state.currentQuestion--;
-            } else if (Object.keys(QUESTIONS).indexOf(state.currentSection) > 0) {
-                state.currentSection = Object.keys(QUESTIONS)[Object.keys(QUESTIONS).indexOf(state.currentSection) - 1];
-                state.currentQuestion = QUESTIONS[state.currentSection].questions.length - 1;
-            }
-            renderQuestion();
-        }
-
-        function getScore(answerKey) {
-            const [section, questionIdx] = answerKey.split('-');
-            const optionIdx = state.answers[answerKey];
-            if (optionIdx === undefined) return 0;
-            return QUESTIONS[section].questions[questionIdx].options[optionIdx].score;
-        }
-
-        function getSectionScore(section) {
-            let score = 0;
-            for (let i = 0; i < QUESTIONS[section].questions.length; i++) {
-                score += getScore(`${section}-${i}`);
-            }
-            return score;
-        }
-
-        function getTotalScore() {
-            let total = 0;
-            for (const section of Object.keys(QUESTIONS)) {
-                total += getSectionScore(section);
-            }
-            return total;
-        }
-
-        function getScoreLabel(score) {
-            if (score >= 80) return 'Strong Market';
-            if (score >= 65) return 'Viable Market';
-            if (score >= 50) return 'Weak Market';
-            if (score >= 35) return 'High Risk';
-            return 'No Market';
-        }
-
-        function getScoreDescription(score) {
-            if (score >= 80) return 'Your market shows strong fundamentals. Buyers have clear pain, purchasing power, and there are tailwinds supporting growth. Focus on execution and rapid scaling.';
-            if (score >= 65) return 'Your market is viable with some clear strengths. Address the weaker areas — they\'re blocking faster growth and validation.';
-            if (score >= 50) return 'Your market has potential but needs significant validation. The gaps below suggest you need deeper customer research before major investment.';
-            if (score >= 35) return 'Your market assessment shows risks that need immediate attention. This doesn\'t mean you should quit — it means get in the field and validate.';
-            return 'Your current market positioning has significant challenges. Consider pivoting to a different segment or problem where buyers show stronger fundamentals.';
-        }
-
-        function getColorClass(score) {
-            if (score >= 20) return '';
-            if (score >= 15) return 'yellow-green';
-            if (score >= 10) return 'yellow';
-            return 'red';
-        }
-
-        function showResults(aiData) {
-            state.currentScreen = 'results';
-
-            // Hide contact form and loading overlay
-            var contactEl = document.getElementById('mas-contact');
-            if (contactEl) contactEl.style.display = 'none';
-            var loadingEl = document.getElementById('mas-loading');
-            if (loadingEl) loadingEl.style.display = 'none';
-
-            // Update nav
-            document.getElementById('mas-nav-section').style.display = 'none';
-            document.getElementById('mas-nav-progress').style.display = 'none';
-            document.getElementById('mas-progress-bar').style.width = '100%';
-
-            // Hide welcome and questions
-            document.getElementById('mas-welcome').style.display = 'none';
-            document.getElementById('mas-questions').style.display = 'none';
-
-            const totalScore = getTotalScore();
-            const scoreLabel = getScoreLabel(totalScore);
-            const scoreDescription = getScoreDescription(totalScore);
-
-            // Animate score
-            document.getElementById('mas-final-score').textContent = totalScore;
-            document.getElementById('mas-score-label').textContent = scoreLabel;
-            document.getElementById('mas-score-description').textContent = scoreDescription;
-
-            const rotation = (totalScore / 100) * 360;
-            document.getElementById('mas-score-circle').style.setProperty('--rotation', rotation + 'deg');
-
-            // Section cards
-            let sectionsHtml = '';
-            for (const [section, data] of Object.entries(QUESTIONS)) {
-                const score = getSectionScore(section);
-                const colorClass = getColorClass(score);
-                sectionsHtml += `
-                    <div class="mas-section-card">
-                        <div class="mas-section-name">Section ${Object.keys(QUESTIONS).indexOf(section) + 1}</div>
-                        <h3 class="mas-section-title">${data.title}</h3>
-                        <div class="mas-section-score">${score}/25</div>
-                        <div class="mas-progress-bar-container">
-                            <div class="mas-progress-bar-fill ${colorClass}" style="width: ${(score / 25) * 100}%"></div>
-                        </div>
-                        <div class="mas-progress-label">${score >= 20 ? '✓ Strong' : score >= 15 ? '~ OK' : score >= 10 ? '! Needs Work' : '✗ Critical'}</div>
-                    </div>`;
-            }
-            document.getElementById('mas-sections-results').innerHTML = sectionsHtml;
-
-            // Recommendations
-            let recsHtml = '<h3 class="mas-recommendations-title">Improvement Opportunities</h3>';
-            let hasRecommendations = false;
-
-            for (const section of Object.keys(QUESTIONS)) {
-                const score = getSectionScore(section);
-                if (score < 15) {
-                    hasRecommendations = true;
-                    const rec = RECOMMENDATIONS[section];
-                    recsHtml += `
-                        <div class="mas-recommendation-section">
-                            <div class="mas-recommendation-header" onclick="toggleRecommendation(this)">
-                                <span class="mas-recommendation-toggle">›</span>
-                                <span class="mas-recommendation-label">${rec.title}</span>
-                                <div class="mas-recommendation-score needs-work">${score}/25</div>
-                            </div>
-                            <div class="mas-recommendation-items">
-                                ${rec.below15.map(item => `<div class="mas-recommendation-item"><p>• ${item}</p></div>`).join('')}
-                            </div>
-                        </div>`;
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                focusedOptionIndex = (focusedOptionIndex + 1) % numOpts;
+                updateFocus(cards);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                focusedOptionIndex = focusedOptionIndex <= 0 ? numOpts - 1 : focusedOptionIndex - 1;
+                updateFocus(cards);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (focusedOptionIndex >= 0 && focusedOptionIndex < numOpts) {
+                    selectOption(focusedOptionIndex);
                 }
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                nextQuestion();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                prevQuestion();
+                break;
+        }
+    }
+
+    function updateFocus(cards) {
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('focused');
+        }
+        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) {
+            cards[focusedOptionIndex].classList.add('focused');
+            cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    /* ═══════════════════════════════════
+       SCORING
+       ═══════════════════════════════════ */
+    function calculateScores() {
+        var sectionScores = {};
+        var total = 0;
+        Object.keys(SECTION_MAXES).forEach(function(s) { sectionScores[s] = 0; });
+
+        allQuestions.forEach(function(q) {
+            if (q.id in answers) {
+                var score = q.options[answers[q.id]].score;
+                sectionScores[q.sectionId] += score;
+                total += score;
+            }
+        });
+        return { sectionScores: sectionScores, total: total };
+    }
+
+    function getBand(score) {
+        if (score >= 80) return { label: 'Strong Market', className: 'band-strong', key: 'strong' };
+        if (score >= 65) return { label: 'Viable Market', className: 'band-viable', key: 'viable' };
+        if (score >= 50) return { label: 'Weak Market', className: 'band-weak', key: 'weak' };
+        if (score >= 35) return { label: 'High Risk', className: 'band-highrisk', key: 'highrisk' };
+        return { label: 'No Market', className: 'band-nomarket', key: 'nomarket' };
+    }
+
+    function getWebhookBand(score) {
+        if (score >= 80) return 'STRONG';
+        if (score >= 60) return 'VIABLE';
+        if (score >= 40) return 'WEAK';
+        return 'RISK';
+    }
+
+    function getBarColor(score, max) {
+        var pct = (score / max) * 100;
+        if (pct >= 80) return '#22C55E';
+        if (pct >= 60) return '#3B82F6';
+        if (pct >= 40) return '#F59E0B';
+        return '#EF4444';
+    }
+
+    /* ═══════════════════════════════════
+       WEBHOOK PAYLOAD
+       ═══════════════════════════════════ */
+    function buildWebhookPayload(contact) {
+        var result = calculateScores();
+        var sectionScores = result.sectionScores;
+        var total = result.total;
+
+        var answersMap = {};
+        var sectionCounters = {};
+        allQuestions.forEach(function(q) {
+            var secLower = q.sectionId.toLowerCase();
+            if (!(secLower in sectionCounters)) sectionCounters[secLower] = 0;
+            sectionCounters[secLower]++;
+            if (q.id in answers) {
+                answersMap[secLower + sectionCounters[secLower]] = q.options[answers[q.id]].score;
+            }
+        });
+
+        var sectionScoresNamed = {};
+        Object.keys(SECTION_NAME_MAP).forEach(function(key) {
+            sectionScoresNamed[SECTION_NAME_MAP[key]] = sectionScores[key] || 0;
+        });
+
+        return {
+            assessment: 'market-attractiveness',
+            answers: answersMap,
+            section_scores: sectionScoresNamed,
+            total_score: total,
+            band: getWebhookBand(total),
+            contact: contact
+        };
+    }
+
+    /* ═══════════════════════════════════
+       CONTACT FORM
+       ═══════════════════════════════════ */
+    function submitContact() {
+        var nameEl = document.getElementById('contactName');
+        var emailEl = document.getElementById('contactEmail');
+        var companyEl = document.getElementById('contactCompany');
+        var name = nameEl.value.trim();
+        var email = emailEl.value.trim().toLowerCase();
+        var company = companyEl.value.trim();
+
+        var valid = true;
+        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
+        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
+        if (!valid) return;
+
+        var contact = { name: name, email: email, company: company };
+        var payload = buildWebhookPayload(contact);
+
+        $loadingOverlay.classList.add('active');
+
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-mas-score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(resp) { return resp.json(); })
+        .then(function(data) {
+            aiData = data;
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        })
+        .catch(function() {
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        });
+    }
+
+    function skipContact() {
+        aiData = null;
+        showResults();
+    }
+
+    /* ═══════════════════════════════════
+       RESULTS DISPLAY
+       ═══════════════════════════════════ */
+    function showResults() {
+        var result = calculateScores();
+        var sectionScores = result.sectionScores;
+        var total = result.total;
+        var band = getBand(total);
+
+        var html = '';
+
+        /* Score Hero */
+        html += '<div class="score-hero ' + band.className + '">';
+        html += '<div class="score-circle">';
+        html += '<div class="score-circle-inner">';
+        html += '<span class="score-number">' + total + '</span>';
+        html += '<span class="score-total">/ 100</span>';
+        html += '</div></div>';
+        html += '<div class="band-label">' + band.label + '</div>';
+        html += '<div class="band-subtitle">Market Attractiveness Score</div>';
+        html += '<div class="band-description">' + escapeHtml(BAND_DESCRIPTIONS[band.key]) + '</div>';
+        html += '</div>';
+
+        /* Gap Analysis */
+        html += '<div class="results-card">';
+        html += '<h3>Gap Analysis by Section</h3>';
+        var sectionOrder = ['A', 'B', 'C', 'D'];
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) {
+                if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
+            }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            var pct = Math.round((score / max) * 100);
+            var color = getBarColor(score, max);
+            html += '<div class="section-bar-row">';
+            html += '<div class="section-bar-label">' + sec.name + '</div>';
+            html += '<div class="section-bar-track">';
+            html += '<div class="section-bar-fill" style="width:' + pct + '%;background:' + color + '"></div>';
+            html += '</div>';
+            html += '<div class="section-bar-score">' + score + ' / ' + max + '</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* Recommendations */
+        html += '<div class="results-card">';
+        html += '<h3>Recommendations</h3>';
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) {
+                if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
+            }
+            var score = sectionScores[sid] || 0;
+            var threshold = SECTION_THRESHOLDS[sid];
+            var belowThreshold = score < threshold;
+            var icon = belowThreshold ? '\u26A0\uFE0F' : '\u2705';
+
+            html += '<div class="reco-section">';
+            html += '<div class="reco-header">';
+            html += '<span class="reco-icon">' + icon + '</span>';
+            html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')</span>';
+            html += '</div>';
+            if (belowThreshold) {
+                html += '<ul class="reco-list">';
+                RECOMMENDATIONS[sid].forEach(function(r) {
+                    html += '<li>' + escapeHtml(r) + '</li>';
+                });
+                html += '</ul>';
+            }
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* AI Enhanced Section */
+        if (aiData) {
+            var ai = aiData;
+            /* Check for nested results structure */
+            if (ai.data && ai.data.results && ai.data.results.ai_analysis) {
+                ai = ai.data.results.ai_analysis;
+            } else if (ai.results && ai.results.ai_analysis) {
+                ai = ai.results.ai_analysis;
+            } else if (ai.ai_analysis) {
+                ai = ai.ai_analysis;
             }
 
-            if (!hasRecommendations) {
-                recsHtml += '<p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 32px 0;">Great work! All sections are strong. Focus on execution and market validation.</p>';
+            html += '<div class="ai-section">';
+            html += '<span class="ai-badge">AI-Enhanced Analysis</span>';
+
+            if (ai.key_insight || ai.keyInsight) {
+                html += '<h3>Key Insight</h3>';
+                html += '<p class="ai-insight">' + escapeHtml(ai.key_insight || ai.keyInsight) + '</p>';
             }
 
-            document.getElementById('mas-recommendations-container').innerHTML = recsHtml;
-
-            // Top 5 actions
-            const actions = getTopActions();
-            let actionsHtml = '';
-            actions.forEach((action, idx) => {
-                actionsHtml += `
-                    <div class="mas-roadmap-action">
-                        <div class="mas-action-rank">${idx + 1}</div>
-                        <div class="mas-action-content">
-                            <h4>${action.title}</h4>
-                            <p>${action.description}</p>
-                        </div>
-                    </div>`;
-            });
-            document.getElementById('mas-roadmap-actions').innerHTML = actionsHtml;
-
-            // 2x2 Matrix
-            const marketStrength = (getSectionScore('A') + getSectionScore('C')) / 10;
-            const executionReadiness = (getSectionScore('B') + getSectionScore('D')) / 10;
-
-            let matrixHtml = `
-                <div class="mas-2x2-axes">
-                    <span class="mas-axis-label x">Market Strength →</span>
-                    <span class="mas-axis-label y">Execution Readiness →</span>
-                </div>
-                <div class="mas-2x2-grid">
-                    <div class="mas-2x2-quadrant">
-                        <div class="mas-2x2-label">Strong Market</div>
-                        <div class="mas-2x2-label">Low Readiness</div>
-                        <div class="mas-2x2-text">Find Co-founder</div>
-                    </div>
-                    <div class="mas-2x2-quadrant${marketStrength >= 5 && executionReadiness >= 5 ? ' active' : ''}">
-                        <div class="mas-2x2-label">Strong Market</div>
-                        <div class="mas-2x2-label">Strong Readiness</div>
-                        <div class="mas-2x2-text">ACCELERATE</div>
-                    </div>
-                    <div class="mas-2x2-quadrant">
-                        <div class="mas-2x2-label">Weak Market</div>
-                        <div class="mas-2x2-label">Low Readiness</div>
-                        <div class="mas-2x2-text">Pivot or Pause</div>
-                    </div>
-                    <div class="mas-2x2-quadrant${marketStrength < 5 && executionReadiness >= 5 ? ' active' : ''}">
-                        <div class="mas-2x2-label">Weak Market</div>
-                        <div class="mas-2x2-label">Strong Readiness</div>
-                        <div class="mas-2x2-text">Niche Harder</div>
-                    </div>
-                </div>`;
-            document.getElementById('mas-2x2-matrix').innerHTML = matrixHtml;
-
-            document.getElementById('mas-results').classList.add('active');
-
-            // AI-enhanced content (if webhook returned data)
-            if (aiData) {
-                // Key insight banner
-                if (aiData.keyInsight) {
-                    var insightDiv = document.createElement('div');
-                    insightDiv.className = 'mas-ai-insight';
-                    insightDiv.innerHTML = '<strong>AI Insight:</strong> ' + aiData.keyInsight;
-                    document.querySelector('.mas-score-display').appendChild(insightDiv);
-                }
-
-                // Section-level strengths and weaknesses
-                if (aiData.sectionAnalysis) {
-                    var sectionKeyMap = ['pain_reality', 'purchasing_power', 'market_momentum', 'competitive_advantage'];
-                    var cards = document.querySelectorAll('.mas-section-card');
-                    cards.forEach(function(card, idx) {
-                        var analysis = aiData.sectionAnalysis[sectionKeyMap[idx]];
-                        if (analysis) {
-                            if (analysis.strength) {
-                                var s = document.createElement('div');
-                                s.className = 'mas-ai-strength';
-                                s.textContent = '\u2713 ' + analysis.strength;
-                                card.appendChild(s);
-                            }
-                            if (analysis.weakness) {
-                                var w = document.createElement('div');
-                                w.className = 'mas-ai-weakness';
-                                w.textContent = '\u26A0 ' + analysis.weakness;
-                                card.appendChild(w);
-                            }
-                        }
+            if (ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan']) {
+                var plan = ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan'];
+                html += '<div class="ai-plan">';
+                html += '<h4>30-Day Action Plan</h4>';
+                if (typeof plan === 'string') {
+                    html += '<p>' + escapeHtml(plan) + '</p>';
+                } else if (Array.isArray(plan)) {
+                    html += '<ul>';
+                    plan.forEach(function(item) {
+                        html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>';
                     });
-                }
-
-                // AI 30-day action plan
-                if (aiData.thirtyDayPlan) {
-                    var planHtml = '<div class="mas-ai-30day"><h3>Your AI-Generated 30-Day Action Plan</h3>';
+                    html += '</ul>';
+                } else if (typeof plan === 'object') {
+                    /* Handle week1, week2, week3, week4 structure */
                     var weeks = ['week1', 'week2', 'week3', 'week4'];
-                    var weekLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                    for (var w = 0; w < weeks.length; w++) {
-                        var weekData = aiData.thirtyDayPlan[weeks[w]];
-                        if (weekData) {
-                            planHtml += '<div class="mas-ai-week"><strong>' + weekLabels[w] + ': ' + (weekData.focus || '') + '</strong>';
-                            if (weekData.actions && weekData.actions.length > 0) {
-                                planHtml += '<ul>';
-                                weekData.actions.forEach(function(a) { planHtml += '<li>' + a + '</li>'; });
-                                planHtml += '</ul>';
+                    weeks.forEach(function(weekKey, idx) {
+                        var week = plan[weekKey];
+                        if (week) {
+                            html += '<div class="ai-week">';
+                            html += '<h5>Week ' + (idx + 1) + (week.focus ? ': ' + escapeHtml(week.focus) : '') + '</h5>';
+                            if (week.actions && Array.isArray(week.actions)) {
+                                html += '<ul>';
+                                week.actions.forEach(function(action) {
+                                    html += '<li>' + escapeHtml(typeof action === 'string' ? action : (action.text || JSON.stringify(action))) + '</li>';
+                                });
+                                html += '</ul>';
                             }
-                            if (weekData.milestone) {
-                                planHtml += '<div style="color:#22C55E;font-size:13px;margin-top:4px;">\u2713 Milestone: ' + weekData.milestone + '</div>';
+                            if (week.milestone) {
+                                html += '<p class="milestone">Milestone: ' + escapeHtml(week.milestone) + '</p>';
                             }
-                            planHtml += '</div>';
+                            html += '</div>';
                         }
-                    }
-                    planHtml += '</div>';
-                    var recsContainer = document.getElementById('mas-recommendations-container');
-                    recsContainer.insertAdjacentHTML('afterend', planHtml);
-                }
-
-                // AI recommendations override
-                if (aiData.recommendations && aiData.recommendations.length > 0) {
-                    var aiRecsHtml = '<h3 class="mas-recommendations-title">AI Recommendations</h3>';
-                    aiData.recommendations.forEach(function(rec) {
-                        var title = typeof rec === 'string' ? rec : (rec.title || '');
-                        var detail = typeof rec === 'object' ? (rec.detail || '') : '';
-                        aiRecsHtml += '<div class="mas-recommendation-section">';
-                        aiRecsHtml += '<div class="mas-recommendation-header" onclick="toggleRecommendation(this)">';
-                        aiRecsHtml += '<span class="mas-recommendation-toggle">\u203A</span>';
-                        aiRecsHtml += '<span class="mas-recommendation-label">' + title + '</span></div>';
-                        if (detail) {
-                            aiRecsHtml += '<div class="mas-recommendation-items"><div class="mas-recommendation-item"><p>' + detail + '</p></div></div>';
-                        }
-                        aiRecsHtml += '</div>';
                     });
-                    document.getElementById('mas-recommendations-container').insertAdjacentHTML('beforeend', aiRecsHtml);
                 }
-
-                // Saved badge
-                var badge = document.createElement('div');
-                badge.className = 'mas-saved-badge';
-                badge.textContent = '\u2713 Results saved to your profile';
-                document.querySelector('.mas-results-header').appendChild(badge);
-            }
-        }
-
-        function getTopActions() {
-            const actions = [];
-
-            const scoreA = getSectionScore('A');
-            const scoreB = getSectionScore('B');
-            const scoreC = getSectionScore('C');
-            const scoreD = getSectionScore('D');
-
-            if (scoreA < 20) {
-                actions.push({
-                    title: 'Conduct 5 Deep Customer Interviews',
-                    description: 'Find out exactly when and how your buyers experience the pain. Quantify it in dollars.',
-                    impact: Math.max(0, 20 - scoreA)
-                });
+                html += '</div>';
             }
 
-            if (scoreB < 20) {
-                actions.push({
-                    title: 'Find & Interview the Economic Buyer',
-                    description: 'In MENA, usually the owner or GM. Validate budget authority and purchasing process.',
-                    impact: Math.max(0, 20 - scoreB)
-                });
-            }
-
-            if (scoreC < 20) {
-                actions.push({
-                    title: 'Build Your Distribution Channel',
-                    description: 'Identify how to reach 1,000 target prospects. Test and optimize.',
-                    impact: Math.max(0, 20 - scoreC)
-                });
-            }
-
-            if (scoreD < 20) {
-                actions.push({
-                    title: 'Clarify Your Differentiation',
-                    description: 'Why are you better? Test this with 10 buyers. Get validation or pivot.',
-                    impact: Math.max(0, 20 - scoreD)
-                });
-            }
-
-            actions.push({
-                title: 'Build 3 Case Studies',
-                description: 'Document your best customer wins with before/after metrics and quotes.',
-                impact: 10
-            });
-
-            return actions.sort((a, b) => b.impact - a.impact).slice(0, 5);
-        }
-
-        function toggleRecommendation(header) {
-            const items = header.nextElementSibling;
-            const toggle = header.querySelector('.mas-recommendation-toggle');
-            items.classList.toggle('open');
-            toggle.classList.toggle('open');
-        }
-
-        function bookCall() {
-            alert('Booking a call would redirect to a scheduling system. In a real app, this would open Calendly or similar.');
-        }
-
-        function resetAssessment() {
-            state = {
-                currentScreen: 'welcome',
-                currentSection: null,
-                currentQuestion: 0,
-                answers: {}
-            };
-            document.getElementById('mas-welcome').style.display = 'block';
-            document.getElementById('mas-questions').style.display = 'none';
-            document.getElementById('mas-results').classList.remove('active');
-            var contactEl = document.getElementById('mas-contact');
-            if (contactEl) contactEl.style.display = 'none';
-            var loadingEl = document.getElementById('mas-loading');
-            if (loadingEl) loadingEl.style.display = 'none';
-            var savedBadge = document.querySelector('.mas-saved-badge');
-            if (savedBadge) savedBadge.remove();
-            var aiPlan = document.querySelector('.mas-ai-30day');
-            if (aiPlan) aiPlan.remove();
-            document.getElementById('mas-nav-section').style.display = 'none';
-            document.getElementById('mas-nav-progress').style.display = 'none';
-            document.getElementById('mas-progress-bar').style.width = '0%';
-        }
-        // ============================================================
-        // WEBHOOK INTEGRATION
-        // ============================================================
-        var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-mas-score';
-
-        function showContactForm() {
-            state.currentScreen = 'contact';
-            document.getElementById('mas-welcome').style.display = 'none';
-            document.getElementById('mas-questions').style.display = 'none';
-            document.getElementById('mas-results').classList.remove('active');
-            document.getElementById('mas-contact').style.display = 'block';
-            document.getElementById('mas-nav-section').style.display = 'none';
-            document.getElementById('mas-nav-progress').style.display = 'none';
-            document.getElementById('mas-progress-bar').style.width = '100%';
-        }
-
-        function buildWebhookPayload() {
-            var answers = {};
-            var sections = Object.keys(QUESTIONS);
-            sections.forEach(function(sectionKey) {
-                var questions = QUESTIONS[sectionKey].questions;
-                questions.forEach(function(q, qIdx) {
-                    var answerKey = sectionKey + '-' + qIdx;
-                    var optionIdx = state.answers[answerKey];
-                    var score = (optionIdx !== undefined) ? q.options[optionIdx].score : 0;
-                    var fieldKey = sectionKey.toLowerCase() + (qIdx + 1);
-                    answers[fieldKey] = score;
-                });
-            });
-
-            var sectionKeyMap = { A: 'pain_reality', B: 'purchasing_power', C: 'market_momentum', D: 'competitive_advantage' };
-            var sectionScores = {};
-            Object.keys(QUESTIONS).forEach(function(s) {
-                sectionScores[sectionKeyMap[s]] = getSectionScore(s);
-            });
-
-            var totalScore = getTotalScore();
-            var band = totalScore >= 80 ? 'STRONG' : totalScore >= 60 ? 'VIABLE' : totalScore >= 40 ? 'WEAK' : 'RISK';
-
-            return {
-                assessment: 'market-attractiveness',
-                answers: answers,
-                section_scores: sectionScores,
-                total_score: totalScore,
-                band: band,
-                contact: {
-                    name: document.getElementById('mas-contact-name').value,
-                    email: document.getElementById('mas-contact-email').value.trim().toLowerCase(),
-                    company: document.getElementById('mas-contact-company').value
+            if (ai.recommendations || ai.ai_recommendations) {
+                var aiRecs = ai.recommendations || ai.ai_recommendations;
+                html += '<h3>AI Recommendations</h3>';
+                html += '<ul class="ai-reco-list">';
+                if (Array.isArray(aiRecs)) {
+                    aiRecs.forEach(function(r) {
+                        if (typeof r === 'string') {
+                            html += '<li>' + escapeHtml(r) + '</li>';
+                        } else if (r.title && r.detail) {
+                            html += '<li><strong>' + escapeHtml(r.title) + ':</strong> ' + escapeHtml(r.detail) + '</li>';
+                        } else {
+                            html += '<li>' + escapeHtml(r.text || r.recommendation || JSON.stringify(r)) + '</li>';
+                        }
+                    });
                 }
-            };
+                html += '</ul>';
+            }
+
+            if (ai.saved || ai.badge || (aiData.saved || aiData.badge)) {
+                html += '<p style="margin-top:16px;font-size:13px;color:var(--eo-gray-text);">Your results have been saved for your records.</p>';
+            }
+
+            html += '</div>';
         }
 
-        function submitToWebhook(event) {
-            event.preventDefault();
-            var payload = buildWebhookPayload();
+        /* CTA */
+        html += '<div class="results-cta">';
+        html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
+        html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
+        html += '</div>';
 
-            // Show loading
-            document.getElementById('mas-contact').style.display = 'none';
-            document.getElementById('mas-loading').style.display = 'flex';
+        $resultsContent.innerHTML = html;
+        showScreen('screenResults');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            })
-            .then(function(response) {
-                if (!response.ok) throw new Error('Webhook returned ' + response.status);
-                return response.json();
-            })
-            .then(function(data) {
-                if (data && data.success && data.results && data.results.ai_analysis) {
-                    showResults(data.results.ai_analysis);
-                } else {
-                    showResults();
-                }
-            })
-            .catch(function(err) {
-                console.error('Webhook error:', err);
-                showResults();
-            });
-        }
-    </script>
+        /* Bind retake */
+        document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+    }
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text));
+        return div.innerHTML;
+    }
+
+    function retakeAssessment() {
+        answers = {};
+        currentIndex = 0;
+        aiData = null;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        $emailInput.value = '';
+        showScreen('screenEmail');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ═══════════════════════════════════
+       BOOT
+       ═══════════════════════════════════ */
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
 </body>
 </html>
