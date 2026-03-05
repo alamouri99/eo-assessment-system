@@ -1478,7 +1478,7 @@ https://salesMfast.com/eo-assessment
 
         // Fetch scores from backend
         async function fetchMyScores() {
-            const email = document.getElementById('lookup-email').value.trim();
+            const email = document.getElementById('lookup-email').value.trim().toLowerCase();
             const statusEl = document.getElementById('lookup-status');
 
             if (!email || !email.includes('@')) {

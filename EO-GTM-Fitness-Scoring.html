@@ -334,7 +334,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: conic-gradient(var(--accent) 0deg, var(--accent) var(--score-angle), var(--bg-card) var(--score-angle));
+            background: conic-gradient(var(--accent) 0deg, var(--accent) var(--score-angle), #4A5568 var(--score-angle));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -866,7 +866,7 @@
                         <div class="gtm-score-circle" id="gtm-score-circle" style="--score-angle: 0deg;">
                             <div class="gtm-score-circle-inner">
                                 <div class="gtm-score-number" id="gtm-score-number">0</div>
-                                <div class="gtm-score-label">GTM Score</div>
+                                <div class="gtm-score-label">/ 100</div>
                             </div>
                         </div>
                         <div class="gtm-score-band" id="gtm-score-band"></div>
@@ -1749,7 +1749,7 @@
                     band: band,
                     contact: {
                         name: document.getElementById('gtm-contact-name').value,
-                        email: document.getElementById('gtm-contact-email').value,
+                        email: document.getElementById('gtm-contact-email').value.trim().toLowerCase(),
                         company: document.getElementById('gtm-contact-company').value
                     }
                 };

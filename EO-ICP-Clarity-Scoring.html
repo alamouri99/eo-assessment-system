@@ -876,11 +876,11 @@
                     <div class="icp-score-band" id="score-band"></div>
                 </div>
 
-                <div class="icp-sections-breakdown" id="sections-breakdown"></div>
+                <div class="icp-sections-breakdown" id="sections-breakdown" style="display:none;"></div>
 
                 <div class="icp-recommendations" id="recommendations-container"></div>
 
-                <div class="icp-gap-analysis" id="gap-analysis-container"></div>
+                <div class="icp-gap-analysis" id="gap-analysis-container" style="display:none;"></div>
 
                 <div class="icp-results-cta">
                     <div class="icp-cta-card">
@@ -1586,7 +1586,7 @@
                 band: band,
                 contact: {
                     name: document.getElementById('icp-contact-name').value,
-                    email: document.getElementById('icp-contact-email').value,
+                    email: document.getElementById('icp-contact-email').value.trim().toLowerCase(),
                     company: document.getElementById('icp-contact-company').value
                 }
             };

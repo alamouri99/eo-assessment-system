@@ -1260,7 +1260,7 @@
 
     function submitAndShowResults() {
       var name = document.getElementById('contactName').value.trim();
-      var email = document.getElementById('contactEmail').value.trim();
+      var email = document.getElementById('contactEmail').value.trim().toLowerCase();
       var company = document.getElementById('contactCompany').value.trim();
 
       if (!email) {
@@ -1395,9 +1395,9 @@
       html += '</div>';
       html += '</div>';
 
-      // Score Breakdown
-      html += '<div style="margin-top:0.5rem;margin-bottom:1rem;"><span class="question-eyebrow">Dimension Scores</span></div>';
-      html += '<div class="scores-grid fade-in stagger-3">';
+      // Score Breakdown (hidden from user, kept for data)
+      html += '<div style="display:none;">';
+      html += '<div class="scores-grid">';
       questions.forEach(function(q, qi) {
         var s = dimScores[qi];
         html += '<div class="score-dimension">';
@@ -1405,6 +1405,7 @@
         html += '<span class="score-dim-value">' + s + '<span class="score-dim-max"> / 5</span></span>';
         html += '</div>';
       });
+      html += '</div>';
       html += '</div>';
 
       // 2x2 Matrix

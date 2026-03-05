@@ -957,7 +957,7 @@
                         </div>
                     </div>
 
-                    <div class="mas-sections-grid" id="mas-sections-results"></div>
+                    <div class="mas-sections-grid" id="mas-sections-results" style="display:none;"></div>
 
                     <div class="mas-recommendations" id="mas-recommendations-container"></div>
 
@@ -1272,7 +1272,9 @@
             const section = QUESTIONS[state.currentSection];
             const question = section.questions[state.currentQuestion];
             const totalQuestions = 20;
-            const currentQuestionNumber = Object.keys(QUESTIONS).slice(0, Object.keys(QUESTIONS).indexOf(state.currentSection)).reduce((sum, s) => sum + QUESTIONS[s].questions.length, 0) + state.currentQuestion + 1;
+            const sectionKeys = Object.keys(QUESTIONS);
+            const sectionIdx = sectionKeys.indexOf(state.currentSection);
+            const currentQuestionNumber = sectionKeys.slice(0, sectionIdx).reduce((sum, s) => sum + QUESTIONS[s].questions.length, 0) + state.currentQuestion + 1;
 
             const progressPercent = (currentQuestionNumber / totalQuestions) * 100;
             document.getElementById('mas-progress-bar').style.width = progressPercent + '%';
@@ -1281,87 +1283,42 @@
             const navProgress = document.getElementById('mas-nav-progress');
             navSection.style.display = 'inline';
             navProgress.style.display = 'inline';
-            navSection.textContent = `Section ${Object.keys(QUESTIONS).indexOf(state.currentSection) + 1}/4`;
+            navSection.textContent = `Section ${sectionIdx + 1}/4`;
             navProgress.textContent = `Question ${currentQuestionNumber}/20`;
 
-            let questionsHtml = '';
-            for (const [sectionKey, sectionData] of Object.entries(QUESTIONS)) {
-                const isActive = sectionKey === state.currentSection && state.currentQuestion === 0;
-                let sectionHtml = `<div id="mas-question-screen-${sectionKey}" class="mas-question-screen${sectionKey === state.currentSection ? ' active' : ''}">
+            const answerKey = `${state.currentSection}-${state.currentQuestion}`;
+            const isLastQuestion = sectionIdx === sectionKeys.length - 1 && state.currentQuestion === section.questions.length - 1;
+
+            let html = `
+                <div class="mas-question-screen active">
                     <div class="mas-question-header">
-                        <div class="mas-section-label">${sectionKey === 'A' ? 'Section 1/4' : sectionKey === 'B' ? 'Section 2/4' : sectionKey === 'C' ? 'Section 3/4' : 'Section 4/4'} • ${sectionData.title}</div>
+                        <div class="mas-section-label">Section ${sectionIdx + 1}/4 • ${section.title}</div>
                         <div class="mas-question-number">Question ${currentQuestionNumber}/20</div>
                         <h2 class="mas-question-text">${question.text}</h2>
                     </div>
                     <div class="mas-options">`;
 
-                question.options.forEach((option, idx) => {
-                    const answerKey = `${sectionKey}-${state.currentQuestion}`;
-                    const isSelected = state.answers[answerKey] === idx;
-                    sectionHtml += `
-                        <label class="mas-option${isSelected ? ' selected' : ''}">
-                            <input type="radio" name="question-${sectionKey}-${state.currentQuestion}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer('${answerKey}', ${idx}, ${option.score})">
-                            <div class="mas-option-text">
-                                <div class="mas-option-label">${option.label}</div>
-                                <div class="mas-option-score">${option.score} point${option.score !== 1 ? 's' : ''}</div>
-                            </div>
-                        </label>`;
-                });
+            question.options.forEach((option, idx) => {
+                const isSelected = state.answers[answerKey] === idx;
+                html += `
+                    <label class="mas-option${isSelected ? ' selected' : ''}">
+                        <input type="radio" name="question-${answerKey}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer('${answerKey}', ${idx}, ${option.score})">
+                        <div class="mas-option-text">
+                            <div class="mas-option-label">${option.label}</div>
+                            <div class="mas-option-score">${option.score} point${option.score !== 1 ? 's' : ''}</div>
+                        </div>
+                    </label>`;
+            });
 
-                sectionHtml += `
+            html += `
                     </div>
                     <div class="mas-button-group">
                         <button class="mas-btn mas-btn-secondary" onclick="previousQuestion()">← Back</button>
-                        <button class="mas-btn mas-btn-primary" onclick="nextQuestion()" ${state.answers[`${state.currentSection}-${state.currentQuestion}`] === undefined ? 'disabled' : ''}>Next →</button>
+                        <button class="mas-btn mas-btn-primary" onclick="nextQuestion()" ${state.answers[answerKey] === undefined ? 'disabled' : ''}>${isLastQuestion ? 'Submit' : 'Next →'}</button>
                     </div>
                 </div>`;
 
-                if (!document.getElementById(`mas-questions`)) return;
-                if (sectionKey === 'A' && state.currentQuestion === 0) {
-                    document.getElementById('mas-questions').innerHTML = sectionHtml;
-                }
-            }
-
-            if (!document.getElementById(`mas-question-screen-${state.currentSection}`)) {
-                let allHtml = '';
-                for (const [sectionKey, sectionData] of Object.entries(QUESTIONS)) {
-                    allHtml += `<div id="mas-question-screen-${sectionKey}" class="mas-question-screen${sectionKey === state.currentSection ? ' active' : ''}">`;
-
-                    sectionData.questions.forEach((q, qIdx) => {
-                        const answerKey = `${sectionKey}-${qIdx}`;
-                        allHtml += `<div style="display: ${sectionKey === state.currentSection && qIdx === state.currentQuestion ? 'block' : 'none'}" class="mas-question-screen-item">
-                            <div class="mas-question-header">
-                                <div class="mas-section-label">${sectionKey === 'A' ? 'Section 1/4' : sectionKey === 'B' ? 'Section 2/4' : sectionKey === 'C' ? 'Section 3/4' : 'Section 4/4'} • ${sectionData.title}</div>
-                                <div class="mas-question-number">Question ${Object.keys(QUESTIONS).slice(0, Object.keys(QUESTIONS).indexOf(sectionKey)).reduce((sum, s) => sum + QUESTIONS[s].questions.length, 0) + qIdx + 1}/20</div>
-                                <h2 class="mas-question-text">${q.text}</h2>
-                            </div>
-                            <div class="mas-options">`;
-
-                        q.options.forEach((option, idx) => {
-                            const isSelected = state.answers[answerKey] === idx;
-                            allHtml += `
-                                <label class="mas-option${isSelected ? ' selected' : ''}">
-                                    <input type="radio" name="question-${answerKey}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="selectAnswer('${answerKey}', ${idx}, ${option.score})">
-                                    <div class="mas-option-text">
-                                        <div class="mas-option-label">${option.label}</div>
-                                        <div class="mas-option-score">${option.score} point${option.score !== 1 ? 's' : ''}</div>
-                                    </div>
-                                </label>`;
-                        });
-
-                        allHtml += `
-                            </div>
-                            <div class="mas-button-group">
-                                <button class="mas-btn mas-btn-secondary" onclick="previousQuestion()">← Back</button>
-                                <button class="mas-btn mas-btn-primary" onclick="nextQuestion()" ${state.answers[answerKey] === undefined ? 'disabled' : ''}>Next →</button>
-                            </div>
-                        </div>`;
-                    });
-
-                    allHtml += `</div>`;
-                }
-                document.getElementById('mas-questions').innerHTML = allHtml;
-            }
+            document.getElementById('mas-questions').innerHTML = html;
         }
 
         function selectAnswer(answerKey, optionIdx, score) {
@@ -1783,7 +1740,7 @@
                 band: band,
                 contact: {
                     name: document.getElementById('mas-contact-name').value,
-                    email: document.getElementById('mas-contact-email').value,
+                    email: document.getElementById('mas-contact-email').value.trim().toLowerCase(),
                     company: document.getElementById('mas-contact-company').value
                 }
             };
