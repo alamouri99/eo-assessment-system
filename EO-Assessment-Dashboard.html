@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EO Founder Assessment Suite | SalesMfast</title>
+    <title>EO Founder Assessment Suite | EO MicroSaaS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -755,7 +755,7 @@
                     <div class="eo-logo-mark">EO</div>
                     <div class="eo-logo-text">
                         <div class="eo-logo-main">EO Founder Assessment</div>
-                        <div class="eo-logo-sub">by SalesMfast</div>
+                        <div class="eo-logo-sub">by EO MicroSaaS</div>
                     </div>
                 </div>
                 <div class="eo-nav">
@@ -812,7 +812,7 @@
                         <div class="eo-card-badge">DEEP DIVE</div>
                         <div class="eo-card-title">GTM Fitness Scoring</div>
                         <div class="eo-card-desc">Evaluate your readiness across 13 GTM motions</div>
-                        <div class="eo-card-source">Based on SalesMfast GTM Matrix</div>
+                        <div class="eo-card-source">Based on EO MicroSaaS GTM Matrix</div>
                         <button class="eo-card-btn" onclick="openTool('gtm')">Score Your GTM →</button>
                     </div>
                 </div>
@@ -1039,7 +1039,7 @@
                 <!-- CTA Section -->
                 <div class="eo-cta">
                     <div class="eo-cta-title">Ready to Move Forward?</div>
-                    <button class="eo-cta-button" onclick="alert('Book your Free Hour call to get personalized guidance.')">Book Your Free Hour →</button>
+                    <button class="eo-cta-button" onclick="alert('Join the MENA MicroSaaS Movement — 91+ founders on the same journey.')">Join MENA MicroSaaS Movement →</button>
                     <button class="eo-cta-button" onclick="alert('Join the EO Community: 91+ MENA founders on the same journey.')">Join EO Community →</button>
                     <button class="eo-cta-button" onclick="downloadScorecard()">Download Your Scorecard</button>
                 </div>
@@ -1281,7 +1281,7 @@
             let content = '';
 
             if (scores.mas >= 60 && scores.icp >= 60 && scores.gtm >= 60) {
-                content = '✓ You\'re ready for the 8-Week MicroSaaS Sprint. Book your Free Hour to get started on execution.';
+                content = '✓ You\'re ready for the 8-Week MicroSaaS Sprint. Join the MENA MicroSaaS Movement to get started on execution.';
             } else if (scores.mas >= 60 && (scores.icp < 60 || scores.gtm < 60)) {
                 content = '✓ Strong market signal. Invest 2 weeks in ICP research and GTM validation before launching heavy campaigns.';
             } else if (scores.gtm >= 60 && scores.mas < 60) {
@@ -1448,7 +1448,7 @@ NEXT STEPS:
 ${document.getElementById('nextsteps-content').textContent}
 
 Download full assessment dashboard at:
-https://salesMfast.com/eo-assessment
+https://eomicro.saas/eo-assessment
             `;
 
             const element = document.createElement('a');
@@ -1478,7 +1478,7 @@ https://salesMfast.com/eo-assessment
 
         // Fetch scores from backend
         async function fetchMyScores() {
-            const email = document.getElementById('lookup-email').value.trim();
+            const email = document.getElementById('lookup-email').value.trim().toLowerCase();
             const statusEl = document.getElementById('lookup-status');
 
             if (!email || !email.includes('@')) {

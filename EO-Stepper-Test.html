@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EO Stepper Engine — Test</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --eo-dark: #1A1A2E;
+            --eo-orange: #E94D1B;
+            --eo-beige: #FAF5EF;
+            --eo-card-bg: #FFFFFF;
+            --eo-gray-text: #6B7280;
+            --eo-gray-border: #E5E7EB;
+            --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            --eo-radius: 12px;
+            --eo-radius-sm: 8px;
+            --eo-transition: 300ms ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--eo-beige);
+            color: var(--eo-dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        .stepper-header {
+            max-width: 640px;
+            margin: 0 auto 24px;
+            text-align: center;
+        }
+        .stepper-header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--eo-dark);
+        }
+        .stepper-header h1 span {
+            color: var(--eo-orange);
+        }
+
+        /* Email Capture */
+        .email-capture {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .email-capture .question-card {
+            text-align: center;
+        }
+        .email-capture h2 {
+            color: var(--eo-orange);
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .email-capture p {
+            color: var(--eo-gray-text);
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .email-capture input[type="email"] {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--eo-gray-border);
+            border-radius: var(--eo-radius-sm);
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            color: var(--eo-dark);
+            margin-bottom: 16px;
+            transition: border-color var(--eo-transition);
+        }
+        .email-capture input[type="email"]:focus {
+            outline: none;
+            border-color: var(--eo-orange);
+        }
+        .email-capture .btn-start {
+            width: 100%;
+            padding: 14px 24px;
+            background: var(--eo-dark);
+            color: white;
+            border: none;
+            border-radius: var(--eo-radius-sm);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: opacity var(--eo-transition);
+        }
+        .email-capture .btn-start:hover {
+            opacity: 0.9;
+        }
+
+        /* Section Label */
+        .section-label {
+            max-width: 640px;
+            margin: 0 auto 12px;
+            font-size: 14px;
+            color: var(--eo-gray-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            max-width: 640px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .progress-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--eo-gray-border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--eo-orange);
+            border-radius: 4px;
+            transition: width var(--eo-transition);
+            width: 0%;
+        }
+        .progress-text {
+            font-size: 14px;
+            color: var(--eo-gray-text);
+            white-space: nowrap;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        /* Question Card */
+        .question-card {
+            max-width: 640px;
+            margin: 0 auto;
+            background: var(--eo-card-bg);
+            border-radius: var(--eo-radius);
+            box-shadow: var(--eo-shadow);
+            padding: 32px;
+        }
+        .question-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--eo-orange);
+            text-align: center;
+            margin-bottom: 28px;
+            line-height: 1.35;
+        }
+
+        /* Option Cards */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option-card {
+            padding: 16px 20px;
+            border: 2px solid var(--eo-gray-border);
+            border-radius: var(--eo-radius-sm);
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--eo-dark);
+            transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+        .option-card:hover {
+            border-color: var(--eo-orange);
+        }
+        .option-card.selected {
+            background: var(--eo-orange);
+            border-color: var(--eo-orange);
+            color: white;
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            max-width: 640px;
+            margin: 24px auto 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .btn-prev, .btn-next {
+            height: 44px;
+            min-width: 120px;
+            border-radius: var(--eo-radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: opacity var(--eo-transition);
+        }
+        .btn-prev {
+            background: transparent;
+            border: 1px solid var(--eo-dark);
+            color: var(--eo-dark);
+        }
+        .btn-prev:hover { opacity: 0.7; }
+        .btn-prev.hidden { visibility: hidden; }
+        .btn-next {
+            background: var(--eo-dark);
+            border: none;
+            color: white;
+        }
+        .btn-next:hover { opacity: 0.9; }
+        .btn-next:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-6px); }
+            80% { transform: translateX(6px); }
+        }
+        .shake {
+            animation: shake 0.4s ease;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--eo-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--eo-radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity var(--eo-transition);
+            pointer-events: none;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .toast.visible {
+            opacity: 1;
+        }
+
+        /* Results */
+        .results-container {
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .results-container h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .results-score {
+            font-size: 64px;
+            font-weight: 800;
+            color: var(--eo-orange);
+        }
+        .results-label {
+            font-size: 18px;
+            color: var(--eo-gray-text);
+            margin-bottom: 24px;
+        }
+        .results-cta {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+        }
+        .results-cta button {
+            padding: 12px 24px;
+            border-radius: var(--eo-radius-sm);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Mobile */
+        @media (max-width: 400px) {
+            .nav-buttons {
+                flex-direction: column;
+            }
+            .btn-prev, .btn-next {
+                width: 100%;
+            }
+            .question-text {
+                font-size: 18px;
+            }
+            .question-card {
+                padding: 24px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Header -->
+    <div class="stepper-header">
+        <h1>EO <span>MicroSaaS</span> — Test Scorecard</h1>
+    </div>
+
+    <!-- Email Capture (shows first) -->
+    <div id="email-capture" class="email-capture">
+        <div class="question-card">
+            <h2>Let's get started</h2>
+            <p>Enter your email to begin (or resume) your assessment.</p>
+            <input type="email" id="student-email" placeholder="you@company.com" />
+            <button class="btn-start" onclick="startAssessment()">Begin Assessment →</button>
+        </div>
+    </div>
+
+    <!-- Stepper Container (hidden until email entered) -->
+    <div id="stepper-container" style="display:none;">
+        <div class="section-label" id="section-label"></div>
+        <div class="progress-container">
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+            </div>
+            <span class="progress-text" id="progress-text"></span>
+        </div>
+        <div class="question-card" id="question-card">
+            <div class="question-text" id="question-text"></div>
+            <div class="options-list" id="options-list"></div>
+        </div>
+        <div class="nav-buttons">
+            <button class="btn-prev" id="btn-prev" onclick="prevQuestion()">← Previous</button>
+            <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next →</button>
+        </div>
+    </div>
+
+    <!-- Results Container (hidden until submit) -->
+    <div id="results-container" class="results-container" style="display:none;">
+        <!-- Populated by submitAssessment() -->
+    </div>
+
+    <script>
+        // ========== STEPPER CONFIG (TEST DATA — 5 questions, 2 sections) ==========
+        const STEPPER_CONFIG = {
+            scorecardId: 'stepper-test',
+            title: 'Test Scorecard',
+            sections: [
+                {
+                    id: 'demo-a',
+                    label: 'SECTION A — Demo Questions',
+                    questions: [
+                        {
+                            id: 'q1',
+                            text: 'How confident are you in your product idea?',
+                            options: [
+                                { label: 'Very confident — validated with customers', score: 5 },
+                                { label: 'Somewhat confident — some research done', score: 3 },
+                                { label: 'Not confident — just an idea', score: 1 }
+                            ]
+                        },
+                        {
+                            id: 'q2',
+                            text: 'Have you built a prototype or MVP?',
+                            options: [
+                                { label: 'Yes — live product with users', score: 5 },
+                                { label: 'Yes — prototype but no users', score: 3 },
+                                { label: 'No — still planning', score: 1 }
+                            ]
+                        },
+                        {
+                            id: 'q3',
+                            text: 'How well do you know your target customer?',
+                            options: [
+                                { label: 'Can name 5+ specific people', score: 5 },
+                                { label: 'General persona defined', score: 3 },
+                                { label: 'Not sure who the customer is', score: 1 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'demo-b',
+                    label: 'SECTION B — More Demo Questions',
+                    questions: [
+                        {
+                            id: 'q4',
+                            text: 'What is your go-to-market approach?',
+                            options: [
+                                { label: 'Direct sales with proven channel', score: 5 },
+                                { label: 'Content marketing / inbound', score: 3 },
+                                { label: 'No GTM plan yet', score: 1 }
+                            ]
+                        },
+                        {
+                            id: 'q5',
+                            text: 'How much runway do you have?',
+                            options: [
+                                { label: '12+ months of funding', score: 5 },
+                                { label: '3-6 months', score: 3 },
+                                { label: 'Need revenue immediately', score: 1 }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // ========== STEPPER ENGINE ==========
+        let currentIndex = 0;
+        let answers = {};
+        let autoAdvanceTimer = null;
+        const allQuestions = [];
+
+        // Flatten sections into allQuestions
+        STEPPER_CONFIG.sections.forEach(function(section) {
+            section.questions.forEach(function(q) {
+                allQuestions.push({
+                    id: q.id,
+                    text: q.text,
+                    options: q.options,
+                    sectionLabel: section.label,
+                    sectionId: section.id
+                });
+            });
+        });
+
+        function showToast(message) {
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('visible');
+            setTimeout(function() {
+                toast.classList.remove('visible');
+            }, 3000);
+        }
+
+        function startAssessment() {
+            var email = document.getElementById('student-email').value.trim();
+            if (!email || email.indexOf('@') === -1) {
+                document.getElementById('student-email').style.borderColor = '#EF4444';
+                return;
+            }
+            document.getElementById('email-capture').style.display = 'none';
+            document.getElementById('stepper-container').style.display = 'block';
+            initStepper();
+        }
+
+        function initStepper() {
+            // Restore from localStorage
+            var saved = localStorage.getItem('eo_' + STEPPER_CONFIG.scorecardId + '_answers');
+            if (saved) {
+                try {
+                    answers = JSON.parse(saved);
+                    // Find first unanswered question
+                    var firstUnanswered = allQuestions.findIndex(function(q) {
+                        return !(q.id in answers);
+                    });
+                    if (firstUnanswered === -1) {
+                        currentIndex = allQuestions.length - 1;
+                    } else {
+                        currentIndex = firstUnanswered;
+                    }
+                    showToast('Welcome back! Resuming from Question ' + (currentIndex + 1) + ' of ' + allQuestions.length + '.');
+                } catch (e) {
+                    answers = {};
+                    currentIndex = 0;
+                }
+            }
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            var q = allQuestions[currentIndex];
+
+            // Section label
+            document.getElementById('section-label').textContent = q.sectionLabel;
+
+            // Progress bar
+            var pct = ((currentIndex + 1) / allQuestions.length) * 100;
+            document.getElementById('progress-bar-fill').style.width = pct + '%';
+            document.getElementById('progress-text').textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
+
+            // Question text
+            document.getElementById('question-text').textContent = q.text;
+
+            // Options
+            var optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            q.options.forEach(function(opt, idx) {
+                var div = document.createElement('div');
+                div.className = 'option-card';
+                if (answers[q.id] === idx) {
+                    div.classList.add('selected');
+                }
+                div.textContent = opt.label;
+                div.setAttribute('tabindex', '0');
+                div.setAttribute('role', 'radio');
+                div.setAttribute('aria-checked', answers[q.id] === idx ? 'true' : 'false');
+                div.onclick = function() { selectOption(q.id, idx); };
+                div.onkeydown = function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectOption(q.id, idx);
+                    }
+                };
+                optionsList.appendChild(div);
+            });
+
+            // Nav buttons
+            var prevBtn = document.getElementById('btn-prev');
+            var nextBtn = document.getElementById('btn-next');
+
+            // Hide Previous on first question
+            if (currentIndex === 0) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            // Change Next label on last question
+            if (currentIndex === allQuestions.length - 1) {
+                nextBtn.textContent = 'Submit Assessment';
+            } else {
+                nextBtn.textContent = 'Next →';
+            }
+
+            // Disable Next if no answer
+            nextBtn.disabled = !(q.id in answers);
+        }
+
+        function selectOption(questionId, optionIndex) {
+            answers[questionId] = optionIndex;
+            localStorage.setItem('eo_' + STEPPER_CONFIG.scorecardId + '_answers', JSON.stringify(answers));
+            renderQuestion();
+
+            // Auto-advance after 300ms
+            clearTimeout(autoAdvanceTimer);
+            if (currentIndex < allQuestions.length - 1) {
+                autoAdvanceTimer = setTimeout(function() {
+                    nextQuestion();
+                }, 300);
+            }
+        }
+
+        function nextQuestion() {
+            clearTimeout(autoAdvanceTimer);
+            var q = allQuestions[currentIndex];
+            if (!(q.id in answers)) {
+                shakeCard();
+                return;
+            }
+            if (currentIndex >= allQuestions.length - 1) {
+                submitAssessment();
+                return;
+            }
+            currentIndex++;
+            renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevQuestion() {
+            clearTimeout(autoAdvanceTimer);
+            if (currentIndex <= 0) return;
+            currentIndex--;
+            renderQuestion();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shakeCard() {
+            var card = document.getElementById('question-card');
+            card.classList.remove('shake');
+            void card.offsetWidth; // Force reflow
+            card.classList.add('shake');
+        }
+
+        function submitAssessment() {
+            // Calculate score
+            var totalScore = 0;
+            allQuestions.forEach(function(q) {
+                if (q.id in answers) {
+                    totalScore += q.options[answers[q.id]].score;
+                }
+            });
+
+            var maxScore = 0;
+            allQuestions.forEach(function(q) {
+                var maxOpt = 0;
+                q.options.forEach(function(opt) {
+                    if (opt.score > maxOpt) maxOpt = opt.score;
+                });
+                maxScore += maxOpt;
+            });
+
+            // Clear localStorage
+            localStorage.removeItem('eo_' + STEPPER_CONFIG.scorecardId + '_answers');
+
+            // Hide stepper, show results
+            document.getElementById('stepper-container').style.display = 'none';
+            var results = document.getElementById('results-container');
+            results.style.display = 'block';
+            results.innerHTML = '<h2>Assessment Complete!</h2>' +
+                '<div class="results-score">' + totalScore + '/' + maxScore + '</div>' +
+                '<div class="results-label">Your test score</div>' +
+                '<p style="color: var(--eo-gray-text); margin-bottom: 24px;">This is the stepper engine test. In real scorecards, the existing scoring logic and results display will be used here.</p>' +
+                '<div class="results-cta">' +
+                '<button style="background: var(--eo-dark); color: white; border: none;" onclick="location.reload()">Retake Assessment</button>' +
+                '</div>';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('stepper-container').style.display === 'none') return;
+
+            if (e.key === 'ArrowLeft') {
+                prevQuestion();
+            } else if (e.key === 'ArrowRight') {
+                nextQuestion();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                var options = document.querySelectorAll('.option-card');
+                var focused = document.activeElement;
+                var idx = Array.from(options).indexOf(focused);
+                if (e.key === 'ArrowDown') {
+                    idx = Math.min(idx + 1, options.length - 1);
+                } else {
+                    idx = Math.max(idx - 1, 0);
+                }
+                if (idx >= 0) options[idx].focus();
+            }
+        });
+    </script>
+</body>
+</html>
