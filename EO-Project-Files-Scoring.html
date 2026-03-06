@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EO MicroSaaS — Market Attractiveness Scoring</title>
+<title>EO MicroSaaS — Project Files Readiness Scoring</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -94,7 +94,7 @@ body {
 .email-capture {
     max-width: 480px;
     margin: 60px auto;
-    padding: 0 20px;
+    padding: 40px;
     text-align: center;
     background: var(--eo-beige);
     border-radius: var(--eo-radius);
@@ -212,7 +212,7 @@ body {
     border: 2px solid #FFFFFF;
     color: #FFFFFF;
 }
-.btn-prev:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.btn-prev:hover { background: rgba(255,255,255,0.15); }
 .btn-prev.hidden { visibility: hidden; pointer-events: none; }
 .btn-next {
     background: var(--eo-orange);
@@ -396,36 +396,23 @@ body {
     font-size: 14px;
     color: var(--eo-gray-text);
 }
-.band-description {
-    font-size: 14px;
-    color: var(--eo-gray-text);
-    margin-top: 12px;
-    line-height: 1.6;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 /* Band Colors */
-.band-strong .score-circle { border-color: #22C55E; }
-.band-strong .band-label { color: #22C55E; }
-.band-strong .score-number { color: #22C55E; }
+.band-ready .score-circle { border-color: #22C55E; }
+.band-ready .band-label { color: #22C55E; }
+.band-ready .score-number { color: #22C55E; }
 
-.band-viable .score-circle { border-color: #84CC16; }
-.band-viable .band-label { color: #84CC16; }
-.band-viable .score-number { color: #84CC16; }
+.band-partial .score-circle { border-color: #3B82F6; }
+.band-partial .band-label { color: #3B82F6; }
+.band-partial .score-number { color: #3B82F6; }
 
-.band-weak .score-circle { border-color: #F59E0B; }
-.band-weak .band-label { color: #F59E0B; }
-.band-weak .score-number { color: #F59E0B; }
+.band-gaps .score-circle { border-color: #F59E0B; }
+.band-gaps .band-label { color: #F59E0B; }
+.band-gaps .score-number { color: #F59E0B; }
 
-.band-highrisk .score-circle { border-color: #EF4444; }
-.band-highrisk .band-label { color: #EF4444; }
-.band-highrisk .score-number { color: #EF4444; }
-
-.band-nomarket .score-circle { border-color: #991B1B; }
-.band-nomarket .band-label { color: #991B1B; }
-.band-nomarket .score-number { color: #991B1B; }
+.band-startover .score-circle { border-color: #EF4444; }
+.band-startover .band-label { color: #EF4444; }
+.band-startover .score-number { color: #EF4444; }
 
 /* Section Bars */
 .results-card {
@@ -560,21 +547,6 @@ body {
     padding-left: 20px;
     margin-bottom: 12px;
 }
-.ai-week {
-    margin-bottom: 16px;
-}
-.ai-week h5 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--eo-dark);
-    margin-bottom: 4px;
-}
-.ai-week .milestone {
-    font-size: 13px;
-    font-style: italic;
-    color: var(--eo-orange);
-    margin-top: 4px;
-}
 .ai-reco-list {
     list-style: none;
     padding: 0;
@@ -593,6 +565,27 @@ body {
     position: absolute;
     left: 0;
     color: var(--eo-orange);
+}
+
+/* Gate Warning */
+.gate-warning {
+    background: #FEF2F2;
+    border: 2px solid #EF4444;
+    border-radius: var(--eo-radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.gate-warning h3 {
+    color: #EF4444;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.gate-warning p {
+    color: var(--eo-gray-text);
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 /* CTA */
@@ -618,7 +611,7 @@ body {
     transition: all var(--eo-transition);
     min-width: 280px;
 }
-.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
 .results-cta .btn-download-md {
     background: transparent;
     border: 2px solid var(--eo-orange);
@@ -671,8 +664,8 @@ body {
 <!-- Screen 1: Email Capture -->
 <div class="screen active" id="screenEmail">
     <div class="email-capture">
-        <h2>Market Attractiveness Scorecard</h2>
-        <p>Discover how attractive your target market really is. 20 questions, 5 minutes, actionable insights.</p>
+        <h2>MicroSaaS Project Files Scorecard</h2>
+        <p>Assess your file readiness for Claude Desktop. 20 questions, 5 minutes, actionable insights.</p>
         <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
@@ -682,7 +675,7 @@ body {
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: PAIN REALITY</div>
+            <div class="section-label" id="sectionLabel">Section A: Brand Foundation Files</div>
             <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
         </div>
         <div class="progress-track">
@@ -732,264 +725,306 @@ body {
 (function() {
     'use strict';
 
-    /* ═══════════════════════════════════
+    /* ===================================
        QUESTIONS DATA
-       ═══════════════════════════════════ */
+       =================================== */
     var SECTIONS = [
-        { id: 'A', name: 'PAIN REALITY', fullName: 'Understanding Your Buyer\u2019s Problem' },
-        { id: 'B', name: 'PURCHASING POWER', fullName: 'Can They Actually Buy?' },
-        { id: 'C', name: 'MARKET MOMENTUM', fullName: 'Is Your Market Growing?' },
-        { id: 'D', name: 'COMPETITIVE ADVANTAGE', fullName: 'Why Should Buyers Choose You?' }
+        { id: 'A', name: 'BRAND', fullName: 'Brand Foundation Files' },
+        { id: 'B', name: 'PRICING', fullName: 'Pricing & Offer Files' },
+        { id: 'C', name: 'ICP', fullName: 'ICP & Market Files' },
+        { id: 'D', name: 'PRODUCT', fullName: 'Product & Tech Files' },
+        { id: 'E', name: 'GTM', fullName: 'GTM & Content Files' }
     ];
 
-    var SECTION_MAXES = { 'A': 25, 'B': 25, 'C': 25, 'D': 25 };
+    var SECTION_NAMES = {
+        'A': 'Brand Foundation Files',
+        'B': 'Pricing & Offer Files',
+        'C': 'ICP & Market Files',
+        'D': 'Product & Tech Files',
+        'E': 'GTM & Content Files'
+    };
 
-    var SECTION_THRESHOLDS = { 'A': 15, 'B': 15, 'C': 15, 'D': 15 };
+    var SECTION_MAXES = { 'A': 20, 'B': 20, 'C': 20, 'D': 20, 'E': 20 };
 
-    var SECTION_NAME_MAP = { 'A': 'pain_reality', 'B': 'purchasing_power', 'C': 'market_momentum', 'D': 'competitive_advantage' };
+    var SECTION_THRESHOLDS = { 'A': 12, 'B': 12, 'C': 12, 'D': 12, 'E': 12 };
+
+    var SECTION_NAME_MAP = { 'A': 'brand', 'B': 'pricing', 'C': 'icp', 'D': 'product', 'E': 'gtm' };
 
     var RECOMMENDATIONS = {
         'A': [
-            "Interview 5 buyers this week. Ask: \u2018Walk me through the last time this problem cost you money.\u2019",
-            "Build a pain quantification calculator to help buyers see the dollar impact",
-            "Look for trigger events that make the pain urgent (regulation, seasonal, competitive pressure)"
+            'Help me create a brand identity document for my [product type] targeting [ICP]',
+            'Write my founder origin story connecting my experience in [domain] to the problem of [problem]'
         ],
         'B': [
-            "Find the economic buyer \u2014 in MENA that\u2019s usually the owner/GM, not department head",
-            "Add flexible payment options: Tabby/Tamara installments, annual prepaid discounts",
-            "Create a compelling ROI calculator showing 5x+ return"
+            'Design a pricing strategy document with 3 tiers for my [product type]',
+            'Help me create a Grand Slam Offer stack with bonuses, guarantees, and urgency elements'
         ],
         'C': [
-            "If the market is flat, niche harder \u2014 target the 3% early adopters",
-            "Build urgency through limited-time offers and founding member pricing",
-            "Search for Arabic keywords your buyers would use \u2014 MENA SEO is underserved"
+            'Create a detailed ICP definition document for [target market]',
+            'Build a customer journey map for a B2B SaaS product'
         ],
         'D': [
-            "Answer in one sentence: What do competitors do worse than you?",
-            "Build 3 case studies with before/after metrics",
-            "Arabic-first localization is still the strongest moat in MENA SaaS"
+            'Write a PRD for my [product description] with user stories and MVP scope',
+            'Create a technical architecture document for a [tech stack] application'
+        ],
+        'E': [
+            'Build a go-to-market launch plan for a MicroSaaS targeting [market]',
+            'Create a content strategy and editorial calendar for [product type]'
         ]
     };
 
-    var BAND_DESCRIPTIONS = {
-        'strong': 'Your market shows strong fundamentals. Buyers have clear pain, purchasing power, and there are tailwinds supporting growth. Focus on execution and rapid scaling.',
-        'viable': 'Your market is viable with some clear strengths. Address the weaker areas \u2014 they\u2019re blocking faster growth and validation.',
-        'weak': 'Your market has potential but needs significant validation. The gaps below suggest you need deeper customer research before major investment.',
-        'highrisk': 'Your market assessment shows risks that need immediate attention. This doesn\u2019t mean you should quit \u2014 it means get in the field and validate.',
-        'nomarket': 'Your current market positioning has significant challenges. Consider pivoting to a different segment or problem where buyers show stronger fundamentals.'
-    };
-
     var allQuestions = [
-        /* Section A: PAIN REALITY (5 questions) */
+        /* Section A: BRAND FOUNDATION FILES (Q1-Q4) */
         {
             id: 'q1', sectionId: 'A', sectionIndex: 0,
-            text: 'Can you describe the exact moment your buyer feels this pain?',
+            text: 'Do you have a document that defines your brand name, tagline, visual identity (colors, fonts, logo), and brand voice/tone?',
             options: [
-                { label: 'Yes \u2014 I can describe the specific moment, time, and trigger', score: 5 },
-                { label: 'I know the general pain but not the exact moment', score: 3 },
-                { label: 'I think they have this pain based on my research', score: 1 },
-                { label: 'I\u2019m not sure how they experience it', score: 0 }
+                { label: 'Yes \u2014 polished brand guide with logo, colors, fonts, voice guidelines, and examples', score: 5 },
+                { label: 'Yes \u2014 covers most elements but could use refinement', score: 4 },
+                { label: 'I have a rough brand doc with basic elements defined', score: 3 },
+                { label: 'Scattered notes about my brand in various places', score: 2 },
+                { label: 'I have a name and maybe a logo, nothing documented', score: 1 },
+                { label: 'No brand identity work done at all', score: 0 }
             ]
         },
         {
             id: 'q2', sectionId: 'A', sectionIndex: 0,
-            text: 'How often does your buyer experience this pain?',
+            text: 'Do you have a written narrative explaining WHY you\u2019re building this, your personal journey, and what makes you credible to solve this problem?',
             options: [
-                { label: 'Daily \u2014 it disrupts their workflow every day', score: 5 },
-                { label: 'Weekly \u2014 it\u2019s a recurring frustration', score: 4 },
-                { label: 'Monthly \u2014 it surfaces periodically', score: 3 },
-                { label: 'Quarterly or less \u2014 it\u2019s occasional', score: 1 }
+                { label: 'Battle-tested narrative I\u2019ve used in pitches, content, and sales with proven resonance', score: 5 },
+                { label: 'Polished founder story that clearly connects my experience to the problem', score: 4 },
+                { label: 'Written draft that covers the basics but needs refinement', score: 3 },
+                { label: 'I can tell the story verbally but haven\u2019t written it down properly', score: 2 },
+                { label: 'Vague idea of my story but nothing structured', score: 1 },
+                { label: 'Haven\u2019t thought about my founder narrative', score: 0 }
             ]
         },
         {
             id: 'q3', sectionId: 'A', sectionIndex: 0,
-            text: 'Can your buyer put a dollar/AED amount on this pain?',
+            text: 'Do you have a document mapping your competitive landscape \u2014 who the alternatives are, why you\u2019re different, and your unique positioning angle?',
             options: [
-                { label: 'Yes \u2014 they can quote the exact cost', score: 5 },
-                { label: 'They can estimate the cost range', score: 3 },
-                { label: 'They acknowledge it costs money but can\u2019t quantify', score: 1 },
-                { label: 'No \u2014 they haven\u2019t connected it to money', score: 0 }
+                { label: 'Detailed competitive matrix with clear differentiation, tested with prospects', score: 5 },
+                { label: 'Good competitive analysis with my positioning clearly defined', score: 4 },
+                { label: 'Basic comparison of 3-5 competitors with some positioning notes', score: 3 },
+                { label: 'I know who competitors are but haven\u2019t documented my positioning', score: 2 },
+                { label: 'Vague awareness of competition, nothing written', score: 1 },
+                { label: 'Haven\u2019t analyzed the competitive landscape', score: 0 }
             ]
         },
         {
             id: 'q4', sectionId: 'A', sectionIndex: 0,
-            text: 'What are they currently doing to solve this problem?',
+            text: 'Do you have clear, written mission (what you do today) and vision (where you\u2019re going) statements?',
             options: [
-                { label: 'Paying for an inferior solution they hate', score: 5 },
-                { label: 'Using a painful manual process', score: 4 },
-                { label: 'Using free tools or spreadsheets', score: 2 },
-                { label: 'Nothing \u2014 they\u2019ve accepted the pain', score: 0 }
+                { label: 'Refined statements actively used in marketing, hiring, and decision-making', score: 5 },
+                { label: 'Clear statements that guide our strategy', score: 4 },
+                { label: 'Written drafts that capture the essence', score: 3 },
+                { label: 'General idea but not formally written', score: 2 },
+                { label: 'Vague thoughts about our direction', score: 1 },
+                { label: 'No mission or vision defined', score: 0 }
             ]
         },
+        /* Section B: PRICING & OFFER FILES (Q5-Q8) */
         {
-            id: 'q5', sectionId: 'A', sectionIndex: 0,
-            text: 'If you solved this tomorrow, how fast would they buy?',
+            id: 'q5', sectionId: 'B', sectionIndex: 1,
+            text: 'Do you have a document defining your pricing tiers, packaging, and the reasoning behind your pricing decisions?',
             options: [
-                { label: 'Same day \u2014 they\u2019d sign immediately', score: 5 },
-                { label: 'Within a week \u2014 minimal decision process', score: 4 },
-                { label: 'Within a month \u2014 some evaluation needed', score: 3 },
-                { label: 'Eventually \u2014 no urgency to switch', score: 1 }
+                { label: 'Tested pricing with conversion data, clear tier logic, and upsell paths documented', score: 5 },
+                { label: 'Well-defined pricing tiers with rationale and packaging strategy', score: 4 },
+                { label: 'Basic pricing defined but packaging needs work', score: 3 },
+                { label: 'I have a price but haven\u2019t documented the strategy behind it', score: 2 },
+                { label: 'Rough idea of what I\u2019d charge', score: 1 },
+                { label: 'No pricing work done', score: 0 }
             ]
         },
-        /* Section B: PURCHASING POWER (5 questions) */
         {
             id: 'q6', sectionId: 'B', sectionIndex: 1,
-            text: 'Does your buyer control the purchase budget?',
+            text: 'Do you have a written \u2018Grand Slam Offer\u2019 \u2014 the core offer plus bonuses, guarantees, urgency/scarcity elements, and risk reversal?',
             options: [
-                { label: 'Sole decision maker \u2014 signs and pays', score: 5 },
-                { label: 'Needs one approval above them', score: 4 },
-                { label: 'Committee decision \u2014 multiple approvers', score: 2 },
-                { label: 'No budget authority \u2014 needs to request', score: 0 }
+                { label: 'Complete offer stack tested with real customers, optimized based on feedback', score: 5 },
+                { label: 'Detailed offer with bonuses, guarantee, and scarcity elements defined', score: 4 },
+                { label: 'Core offer defined but missing supporting elements (bonuses, guarantees)', score: 3 },
+                { label: 'I know what I\u2019m selling but haven\u2019t packaged it as a complete offer', score: 2 },
+                { label: 'Vague idea of my offer', score: 1 },
+                { label: 'No offer design done', score: 0 }
             ]
         },
         {
             id: 'q7', sectionId: 'B', sectionIndex: 1,
-            text: 'How does your price compare to the pain cost?',
+            text: 'Do you have written sales copy (headline, subhead, benefits, social proof, CTA) for your primary offer?',
             options: [
-                { label: '10x+ ROI \u2014 price is a no-brainer', score: 5 },
-                { label: '5x ROI \u2014 clearly worth it', score: 4 },
-                { label: '2-3x ROI \u2014 reasonable but needs justification', score: 3 },
-                { label: 'Break-even or unclear ROI', score: 1 }
+                { label: 'Conversion-tested copy with proven metrics (CTR, conversion rate)', score: 5 },
+                { label: 'Complete sales copy that\u2019s been reviewed and refined', score: 4 },
+                { label: 'Draft copy that covers the main elements', score: 3 },
+                { label: 'Bullet points and rough messaging but not structured copy', score: 2 },
+                { label: 'Some notes about what to say on a sales page', score: 1 },
+                { label: 'No sales copy written', score: 0 }
             ]
         },
         {
             id: 'q8', sectionId: 'B', sectionIndex: 1,
-            text: 'Can your buyer actually pay you easily?',
+            text: 'Do you have a document showing your revenue model (MRR projections, LTV, CAC, churn targets, break-even analysis)?',
             options: [
-                { label: 'Credit card or instant payment \u2014 frictionless', score: 5 },
-                { label: 'Bank transfer \u2014 some process but doable', score: 4 },
-                { label: 'Invoice/PO required \u2014 procurement process', score: 3 },
-                { label: 'Significant payment friction (cash market, no digital)', score: 1 }
+                { label: 'Detailed financial model validated against real data', score: 5 },
+                { label: 'Comprehensive model with reasonable assumptions documented', score: 4 },
+                { label: 'Basic projections and key metrics defined', score: 3 },
+                { label: 'Back-of-napkin calculations, not formally documented', score: 2 },
+                { label: 'Rough revenue guesses', score: 1 },
+                { label: 'No financial modeling done', score: 0 }
+            ]
+        },
+        /* Section C: ICP & MARKET FILES (Q9-Q12) */
+        {
+            id: 'q9', sectionId: 'C', sectionIndex: 2,
+            text: 'Do you have a detailed Ideal Customer Profile \u2014 demographics, firmographics, psychographics, buying triggers, objections, and watering holes?',
+            options: [
+                { label: 'Data-validated ICP with real customer interviews informing every field', score: 5 },
+                { label: 'Comprehensive ICP based on market research and initial customer conversations', score: 4 },
+                { label: 'Written ICP that covers basics (who they are, what they need)', score: 3 },
+                { label: 'General idea of my target customer but not formally documented', score: 2 },
+                { label: '\u2018Everyone\u2019 or vague segment description', score: 1 },
+                { label: 'No ICP work done', score: 0 }
             ]
         },
         {
-            id: 'q9', sectionId: 'B', sectionIndex: 1,
-            text: 'Are they already paying for solutions in this category?',
+            id: 'q10', sectionId: 'C', sectionIndex: 2,
+            text: 'Do you have a document mapping the buyer\u2019s journey from unaware to problem-aware to solution-aware to your-product-aware to customer to advocate?',
             options: [
-                { label: 'Yes \u2014 spending $1,000+/month on similar tools', score: 5 },
-                { label: 'Yes \u2014 spending $100-1,000/month', score: 4 },
-                { label: 'Yes \u2014 but under $100/month', score: 3 },
-                { label: 'Only using free tools', score: 1 }
+                { label: 'Detailed journey map with touchpoints, content, and conversion triggers at each stage', score: 5 },
+                { label: 'Complete journey map covering all stages with content strategy', score: 4 },
+                { label: 'Basic journey map with main stages defined', score: 3 },
+                { label: 'I understand the general flow but haven\u2019t mapped it', score: 2 },
+                { label: 'Vague idea of how customers find and buy from me', score: 1 },
+                { label: 'No journey mapping done', score: 0 }
             ]
         },
-        {
-            id: 'q10', sectionId: 'B', sectionIndex: 1,
-            text: 'Have buyers expressed willingness to pay?',
-            options: [
-                { label: 'Sent deposit, PO, or signed LOI', score: 5 },
-                { label: 'Verbal commitment with specific budget', score: 4 },
-                { label: 'Said \u201Csounds interesting, send pricing\u201D', score: 2 },
-                { label: 'No buying signal yet', score: 0 }
-            ]
-        },
-        /* Section C: MARKET MOMENTUM (5 questions) */
         {
             id: 'q11', sectionId: 'C', sectionIndex: 2,
-            text: 'What direction is your target market heading?',
+            text: 'Do you have market research documenting your Total Addressable Market, Serviceable Market, and realistic initial target?',
             options: [
-                { label: 'Explosive growth \u2014 30%+ YoY expansion', score: 5 },
-                { label: 'Strong growth \u2014 15-30% YoY', score: 4 },
-                { label: 'Stable \u2014 maintaining current size', score: 3 },
-                { label: 'Plateauing or declining', score: 1 }
+                { label: 'Research-backed market sizing with data sources, validated through sales', score: 5 },
+                { label: 'Detailed market analysis with clear TAM/SAM/SOM and data sources', score: 4 },
+                { label: 'Basic market sizing with reasonable estimates', score: 3 },
+                { label: 'General sense of market size but nothing documented', score: 2 },
+                { label: '\u2018The market is huge\u2019 without any numbers', score: 1 },
+                { label: 'No market research done', score: 0 }
             ]
         },
         {
             id: 'q12', sectionId: 'C', sectionIndex: 2,
-            text: 'Are there macro forces pushing this market?',
+            text: 'Do you have a collection of actual customer quotes, pain points in their words, objections, and buying triggers gathered from interviews or conversations?',
             options: [
-                { label: 'Regulation mandating adoption', score: 5 },
-                { label: 'Technology shift creating new demand (AI, automation)', score: 4 },
-                { label: 'Cultural or behavioral trend supporting it', score: 3 },
-                { label: 'No specific external forces', score: 1 }
+                { label: 'Extensive VoC library from 20+ conversations, organized by theme, actively updated', score: 5 },
+                { label: 'Solid collection from 10+ conversations with clear patterns identified', score: 4 },
+                { label: 'Notes from 5+ conversations with key themes', score: 3 },
+                { label: 'A few informal conversations, not systematically captured', score: 2 },
+                { label: 'Assumptions about what customers think/say', score: 1 },
+                { label: 'No customer conversations conducted', score: 0 }
+            ]
+        },
+        /* Section D: PRODUCT & TECH FILES (Q13-Q16) */
+        {
+            id: 'q13', sectionId: 'D', sectionIndex: 3,
+            text: 'Do you have a PRD or feature spec defining what your product does \u2014 user stories, feature list, MVP scope, and prioritization?',
+            options: [
+                { label: 'Detailed PRD with user stories, acceptance criteria, prioritized backlog, and technical specs', score: 5 },
+                { label: 'Comprehensive feature spec with clear MVP definition and priorities', score: 4 },
+                { label: 'Basic feature list with MVP scope defined', score: 3 },
+                { label: 'Ideas about features but not organized into a proper spec', score: 2 },
+                { label: 'Vague product vision without specifics', score: 1 },
+                { label: 'No product spec written', score: 0 }
             ]
         },
         {
-            id: 'q13', sectionId: 'C', sectionIndex: 2,
-            text: 'What\u2019s the investment activity in your space?',
+            id: 'q14', sectionId: 'D', sectionIndex: 3,
+            text: 'Do you have a document describing your tech stack, system architecture, data model, API design, and infrastructure decisions?',
             options: [
-                { label: 'Multiple competitors raised $10M+ rounds', score: 5 },
-                { label: 'Series A/B activity in the space', score: 4 },
-                { label: 'Seed-stage activity', score: 3 },
-                { label: 'No funding activity \u2014 all bootstrapped', score: 1 }
+                { label: 'Complete architecture doc with diagrams, data models, API specs, and deployment plan', score: 5 },
+                { label: 'Good technical overview covering stack, architecture, and key decisions', score: 4 },
+                { label: 'Basic tech stack decisions documented with rationale', score: 3 },
+                { label: 'I know what technologies I want to use but haven\u2019t documented the architecture', score: 2 },
+                { label: 'Vague ideas about technology', score: 1 },
+                { label: 'No technical planning done', score: 0 }
             ]
         },
         {
-            id: 'q14', sectionId: 'C', sectionIndex: 2,
-            text: 'Are people actively searching for your type of solution?',
+            id: 'q15', sectionId: 'D', sectionIndex: 3,
+            text: 'Do you have wireframes, user flow diagrams, or UI mockups showing how users navigate your product?',
             options: [
-                { label: 'Google Trends up 50%+ in 12 months', score: 5 },
-                { label: 'Growing search volume steadily', score: 4 },
-                { label: 'Stable search volume', score: 3 },
-                { label: 'Low or declining search interest', score: 1 }
+                { label: 'High-fidelity mockups or working prototype with user flow diagrams', score: 5 },
+                { label: 'Detailed wireframes for all major screens and flows', score: 4 },
+                { label: 'Basic wireframes or sketches for key screens', score: 3 },
+                { label: 'Mental model of the UI but nothing visual', score: 2 },
+                { label: 'Rough idea of what screens exist', score: 1 },
+                { label: 'No UI/UX work done', score: 0 }
             ]
         },
-        {
-            id: 'q15', sectionId: 'C', sectionIndex: 2,
-            text: 'Is the MENA market specifically ready for this?',
-            options: [
-                { label: 'Confirmed Arabic SaaS gap \u2014 no local solution exists', score: 5 },
-                { label: 'Regional regulation creating specific demand', score: 4 },
-                { label: 'Growing SME digitization wave supports it', score: 3 },
-                { label: 'MENA market is still cash-heavy / resistant', score: 1 }
-            ]
-        },
-        /* Section D: COMPETITIVE ADVANTAGE (5 questions) */
         {
             id: 'q16', sectionId: 'D', sectionIndex: 3,
-            text: 'Can you explain why you\u2019re different in one sentence?',
+            text: 'Do you have a document listing what data your product needs, external integrations (APIs, webhooks, third-party services), and data flow requirements?',
             options: [
-                { label: 'Crystal clear \u2014 tested and validated with buyers', score: 5 },
-                { label: 'Clear to me but not yet tested', score: 3 },
-                { label: 'Still working on positioning', score: 1 },
-                { label: 'Not differentiated yet', score: 0 }
+                { label: 'Detailed integration spec with API documentation, data schemas, and webhook designs', score: 5 },
+                { label: 'Comprehensive list of integrations with requirements for each', score: 4 },
+                { label: 'Basic list of integrations needed with general requirements', score: 3 },
+                { label: 'I know I need to connect to some services but haven\u2019t specified requirements', score: 2 },
+                { label: 'Vague awareness of integration needs', score: 1 },
+                { label: 'No data/integration planning done', score: 0 }
+            ]
+        },
+        /* Section E: GTM & CONTENT FILES (Q17-Q20) */
+        {
+            id: 'q17', sectionId: 'E', sectionIndex: 4,
+            text: 'Do you have a written launch plan \u2014 channels, sequence, timeline, budget, and success metrics for getting your first customers?',
+            options: [
+                { label: 'Detailed GTM playbook tested through soft launch with metrics and iteration notes', score: 5 },
+                { label: 'Comprehensive launch plan with channels, timeline, and KPIs defined', score: 4 },
+                { label: 'Basic launch plan covering main channels and timeline', score: 3 },
+                { label: 'General idea of how I\u2019ll launch but not documented', score: 2 },
+                { label: '\u2018I\u2019ll post on social media and see what happens\u2019', score: 1 },
+                { label: 'No launch planning done', score: 0 }
             ]
         },
         {
-            id: 'q17', sectionId: 'D', sectionIndex: 3,
-            text: 'Can you reach 1,000 target prospects in 30 days?',
+            id: 'q18', sectionId: 'E', sectionIndex: 4,
+            text: 'Do you have a content strategy document defining themes, formats, channels, frequency, and an editorial calendar?',
             options: [
-                { label: 'Yes \u2014 have the list AND the channel', score: 5 },
-                { label: 'Have the channel, building the list', score: 4 },
-                { label: 'Know which channel but haven\u2019t built it', score: 3 },
-                { label: 'No clear path to reach them', score: 1 }
+                { label: 'Active content machine with documented strategy, proven topics, and consistent execution', score: 5 },
+                { label: 'Detailed content strategy with editorial calendar for 3+ months', score: 4 },
+                { label: 'Basic content plan with topics and channels identified', score: 3 },
+                { label: 'I know I need to create content but haven\u2019t planned it', score: 2 },
+                { label: 'Random content ideas without structure', score: 1 },
+                { label: 'No content strategy', score: 0 }
             ]
         },
         {
-            id: 'q18', sectionId: 'D', sectionIndex: 3,
-            text: 'What do you have that competitors can\u2019t easily copy?',
+            id: 'q19', sectionId: 'E', sectionIndex: 4,
+            text: 'Do you have a document defining your outbound sales process \u2014 ICP targeting criteria, channel strategy, messaging templates, and follow-up sequences?',
             options: [
-                { label: 'Deep domain expertise + relationships + data', score: 5 },
-                { label: 'Technical moat or proprietary technology', score: 4 },
-                { label: 'First-mover advantage only', score: 2 },
-                { label: 'Nothing defensible yet', score: 0 }
+                { label: 'Battle-tested playbook with proven sequences, response rates, and optimization history', score: 5 },
+                { label: 'Complete playbook with templates, sequences, and channel strategy', score: 4 },
+                { label: 'Basic outbound approach with some message templates', score: 3 },
+                { label: 'I\u2019ve done some outreach but nothing systematic or documented', score: 2 },
+                { label: 'Planning to do outbound but haven\u2019t started', score: 1 },
+                { label: 'No outbound/sales process defined', score: 0 }
             ]
         },
         {
-            id: 'q19', sectionId: 'D', sectionIndex: 3,
-            text: 'Does Arabic localization create defensibility?',
+            id: 'q20', sectionId: 'E', sectionIndex: 4,
+            text: 'Do you have a document defining what success looks like \u2014 key metrics (MRR, churn, NPS, CAC, LTV), targets, and how you\u2019ll track them?',
             options: [
-                { label: 'Arabic-first with deep cultural integration', score: 5 },
-                { label: 'Arabic translation with regional adaptation', score: 3 },
-                { label: 'English-only for now', score: 1 },
-                { label: 'Arabic not relevant to my market', score: 0 }
-            ]
-        },
-        {
-            id: 'q20', sectionId: 'D', sectionIndex: 3,
-            text: 'How fast can a new customer see results?',
-            options: [
-                { label: 'Same day \u2014 instant value visible', score: 5 },
-                { label: 'Within a week \u2014 quick onboarding', score: 4 },
-                { label: 'Within 30 days \u2014 some setup required', score: 3 },
-                { label: '90+ days before value is clear', score: 1 }
+                { label: 'Live dashboard tracking all metrics with targets, alerts, and weekly review cadence', score: 5 },
+                { label: 'Comprehensive metrics framework with targets and tracking method defined', score: 4 },
+                { label: 'Key metrics identified with basic targets', score: 3 },
+                { label: 'I know metrics matter but haven\u2019t defined mine', score: 2 },
+                { label: '\u2018Revenue\u2019 is my only metric', score: 1 },
+                { label: 'No metrics framework defined', score: 0 }
             ]
         }
     ];
 
-    /* ═══════════════════════════════════
+    /* ===================================
        STATE
-       ═══════════════════════════════════ */
-    var STORAGE_KEY = 'eo_market-attractiveness_answers';
+       =================================== */
+    var STORAGE_KEY = 'eo_project-files_answers';
     var answers = {};
     var currentIndex = 0;
     var autoAdvanceTimer = null;
@@ -997,17 +1032,17 @@ body {
     var capturedEmail = '';
     var aiData = null;
 
-    /* ═══════════════════════════════════
+    /* ===================================
        DOM REFS
-       ═══════════════════════════════════ */
+       =================================== */
     var $sectionLabel, $progressCounter, $progressFill, $questionText;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
     var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
     var $loadingOverlay, $resultsContent;
 
-    /* ═══════════════════════════════════
+    /* ===================================
        INIT
-       ═══════════════════════════════════ */
+       =================================== */
     function init() {
         $sectionLabel = document.getElementById('sectionLabel');
         $progressCounter = document.getElementById('progressCounter');
@@ -1053,9 +1088,9 @@ body {
         return allQuestions.length - 1;
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        EVENT BINDING
-       ═══════════════════════════════════ */
+       =================================== */
     function bindEvents() {
         $btnStart.addEventListener('click', startAssessment);
         $btnPrev.addEventListener('click', prevQuestion);
@@ -1070,9 +1105,9 @@ body {
         document.addEventListener('keydown', handleKeyboard);
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        SCREEN NAVIGATION
-       ═══════════════════════════════════ */
+       =================================== */
     function showScreen(id) {
         var screens = document.querySelectorAll('.screen');
         for (var i = 0; i < screens.length; i++) {
@@ -1081,18 +1116,18 @@ body {
         document.getElementById(id).classList.add('active');
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        TOAST
-       ═══════════════════════════════════ */
+       =================================== */
     function showToast(msg) {
         $toast.textContent = msg;
         $toast.classList.add('show');
         setTimeout(function() { $toast.classList.remove('show'); }, 3000);
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        EMAIL CAPTURE
-       ═══════════════════════════════════ */
+       =================================== */
     function startAssessment() {
         var email = $emailInput.value.trim().toLowerCase();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -1114,9 +1149,9 @@ body {
         renderQuestion();
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        RENDER QUESTION
-       ═══════════════════════════════════ */
+       =================================== */
     function renderQuestion() {
         var q = allQuestions[currentIndex];
         var section = SECTIONS[q.sectionIndex];
@@ -1151,9 +1186,9 @@ body {
         $btnNext.disabled = !(q.id in answers);
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        SELECT OPTION
-       ═══════════════════════════════════ */
+       =================================== */
     function selectOption(idx) {
         var q = allQuestions[currentIndex];
         answers[q.id] = idx;
@@ -1182,9 +1217,9 @@ body {
         }
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        NAVIGATION
-       ═══════════════════════════════════ */
+       =================================== */
     function nextQuestion() {
         var q = allQuestions[currentIndex];
         if (!(q.id in answers)) {
@@ -1213,9 +1248,9 @@ body {
         }
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        KEYBOARD
-       ═══════════════════════════════════ */
+       =================================== */
     function handleKeyboard(e) {
         if (!document.getElementById('screenStepper').classList.contains('active')) return;
 
@@ -1261,9 +1296,9 @@ body {
         }
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        SCORING
-       ═══════════════════════════════════ */
+       =================================== */
     function calculateScores() {
         var sectionScores = {};
         var total = 0;
@@ -1280,18 +1315,17 @@ body {
     }
 
     function getBand(score) {
-        if (score >= 80) return { label: 'Strong Market', className: 'band-strong', key: 'strong' };
-        if (score >= 65) return { label: 'Viable Market', className: 'band-viable', key: 'viable' };
-        if (score >= 50) return { label: 'Weak Market', className: 'band-weak', key: 'weak' };
-        if (score >= 35) return { label: 'High Risk', className: 'band-highrisk', key: 'highrisk' };
-        return { label: 'No Market', className: 'band-nomarket', key: 'nomarket' };
+        if (score >= 80) return { label: 'Ready', className: 'band-ready' };
+        if (score >= 60) return { label: 'Partial', className: 'band-partial' };
+        if (score >= 40) return { label: 'Gaps', className: 'band-gaps' };
+        return { label: 'Start Over', className: 'band-startover' };
     }
 
     function getWebhookBand(score) {
-        if (score >= 80) return 'STRONG';
-        if (score >= 60) return 'VIABLE';
-        if (score >= 40) return 'WEAK';
-        return 'RISK';
+        if (score >= 80) return 'READY';
+        if (score >= 60) return 'PARTIAL';
+        if (score >= 40) return 'GAPS';
+        return 'START_OVER';
     }
 
     function getBarColor(score, max) {
@@ -1302,9 +1336,9 @@ body {
         return '#EF4444';
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        WEBHOOK PAYLOAD
-       ═══════════════════════════════════ */
+       =================================== */
     function buildWebhookPayload(contact) {
         var result = calculateScores();
         var sectionScores = result.sectionScores;
@@ -1327,7 +1361,7 @@ body {
         });
 
         return {
-            assessment: 'market-attractiveness',
+            assessment: 'project-files',
             answers: answersMap,
             section_scores: sectionScoresNamed,
             total_score: total,
@@ -1336,9 +1370,9 @@ body {
         };
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        CONTACT FORM
-       ═══════════════════════════════════ */
+       =================================== */
     function submitContact() {
         var nameEl = document.getElementById('contactName');
         var emailEl = document.getElementById('contactEmail');
@@ -1358,7 +1392,7 @@ body {
 
         $loadingOverlay.classList.add('active');
 
-        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-mas-score', {
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-files', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -1380,9 +1414,9 @@ body {
         showResults();
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        RESULTS DISPLAY
-       ═══════════════════════════════════ */
+       =================================== */
     function showResults() {
         var result = calculateScores();
         var sectionScores = result.sectionScores;
@@ -1399,14 +1433,21 @@ body {
         html += '<span class="score-total">/ 100</span>';
         html += '</div></div>';
         html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">Market Attractiveness Score</div>';
-        html += '<div class="band-description">' + escapeHtml(BAND_DESCRIPTIONS[band.key]) + '</div>';
+        html += '<div class="band-subtitle">Project Files Readiness Score</div>';
         html += '</div>';
 
-        /* Gap Analysis */
+        /* Gate Warning */
+        if (total < 60) {
+            html += '<div class="gate-warning">';
+            html += '<h3>NOT READY for Claude Desktop</h3>';
+            html += '<p>Your project files score of ' + total + '/100 indicates significant gaps in your documentation. Claude Desktop works best when it has comprehensive project files to reference. Focus on creating the missing files identified below before starting your build.</p>';
+            html += '</div>';
+        }
+
+        /* Section Breakdown */
         html += '<div class="results-card">';
-        html += '<h3>Gap Analysis by Section</h3>';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
+        html += '<h3>Section Breakdown</h3>';
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) {
@@ -1426,57 +1467,55 @@ body {
         });
         html += '</div>';
 
-        /* Recommendations */
-        html += '<div class="results-card">';
-        html += '<h3>Recommendations</h3>';
+        /* Gap Analysis with Claude Prompts */
+        var hasGaps = false;
         sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) {
-                if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
-            }
             var score = sectionScores[sid] || 0;
-            var threshold = SECTION_THRESHOLDS[sid];
-            var belowThreshold = score < threshold;
-            var icon = belowThreshold ? '\u26A0\uFE0F' : '\u2705';
-
-            html += '<div class="reco-section">';
-            html += '<div class="reco-header">';
-            html += '<span class="reco-icon">' + icon + '</span>';
-            html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')</span>';
-            html += '</div>';
-            if (belowThreshold) {
-                html += '<ul class="reco-list">';
-                RECOMMENDATIONS[sid].forEach(function(r) {
-                    html += '<li>' + escapeHtml(r) + '</li>';
-                });
-                html += '</ul>';
-            }
-            html += '</div>';
+            if (score < SECTION_THRESHOLDS[sid]) hasGaps = true;
         });
-        html += '</div>';
+
+        if (hasGaps) {
+            html += '<div class="results-card">';
+            html += '<h3>Files To Create \u2014 Claude Prompts</h3>';
+            sectionOrder.forEach(function(sid) {
+                var sec = null;
+                for (var i = 0; i < SECTIONS.length; i++) {
+                    if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
+                }
+                var score = sectionScores[sid] || 0;
+                var threshold = SECTION_THRESHOLDS[sid];
+                var belowThreshold = score < threshold;
+                var icon = belowThreshold ? '\u26A0\uFE0F' : '\u2705';
+
+                html += '<div class="reco-section">';
+                html += '<div class="reco-header">';
+                html += '<span class="reco-icon">' + icon + '</span>';
+                html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')</span>';
+                html += '</div>';
+                if (belowThreshold) {
+                    html += '<ul class="reco-list">';
+                    RECOMMENDATIONS[sid].forEach(function(r) {
+                        html += '<li>' + escapeHtml(r) + '</li>';
+                    });
+                    html += '</ul>';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+        }
 
         /* AI Enhanced Section */
         if (aiData) {
-            var ai = aiData;
-            /* Check for nested results structure */
-            if (ai.data && ai.data.results && ai.data.results.ai_analysis) {
-                ai = ai.data.results.ai_analysis;
-            } else if (ai.results && ai.results.ai_analysis) {
-                ai = ai.results.ai_analysis;
-            } else if (ai.ai_analysis) {
-                ai = ai.ai_analysis;
-            }
-
             html += '<div class="ai-section">';
             html += '<span class="ai-badge">AI-Enhanced Analysis</span>';
 
-            if (ai.key_insight || ai.keyInsight) {
+            if (aiData.key_insight || aiData.keyInsight) {
                 html += '<h3>Key Insight</h3>';
-                html += '<p class="ai-insight">' + escapeHtml(ai.key_insight || ai.keyInsight) + '</p>';
+                html += '<p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
             }
 
-            if (ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan']) {
-                var plan = ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan'];
+            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
+                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
                 html += '<div class="ai-plan">';
                 html += '<h4>30-Day Action Plan</h4>';
                 if (typeof plan === 'string') {
@@ -1487,50 +1526,23 @@ body {
                         html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>';
                     });
                     html += '</ul>';
-                } else if (typeof plan === 'object') {
-                    /* Handle week1, week2, week3, week4 structure */
-                    var weeks = ['week1', 'week2', 'week3', 'week4'];
-                    weeks.forEach(function(weekKey, idx) {
-                        var week = plan[weekKey];
-                        if (week) {
-                            html += '<div class="ai-week">';
-                            html += '<h5>Week ' + (idx + 1) + (week.focus ? ': ' + escapeHtml(week.focus) : '') + '</h5>';
-                            if (week.actions && Array.isArray(week.actions)) {
-                                html += '<ul>';
-                                week.actions.forEach(function(action) {
-                                    html += '<li>' + escapeHtml(typeof action === 'string' ? action : (action.text || JSON.stringify(action))) + '</li>';
-                                });
-                                html += '</ul>';
-                            }
-                            if (week.milestone) {
-                                html += '<p class="milestone">Milestone: ' + escapeHtml(week.milestone) + '</p>';
-                            }
-                            html += '</div>';
-                        }
-                    });
                 }
                 html += '</div>';
             }
 
-            if (ai.recommendations || ai.ai_recommendations) {
-                var aiRecs = ai.recommendations || ai.ai_recommendations;
+            if (aiData.recommendations || aiData.ai_recommendations) {
+                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
                 html += '<h3>AI Recommendations</h3>';
                 html += '<ul class="ai-reco-list">';
                 if (Array.isArray(aiRecs)) {
                     aiRecs.forEach(function(r) {
-                        if (typeof r === 'string') {
-                            html += '<li>' + escapeHtml(r) + '</li>';
-                        } else if (r.title && r.detail) {
-                            html += '<li><strong>' + escapeHtml(r.title) + ':</strong> ' + escapeHtml(r.detail) + '</li>';
-                        } else {
-                            html += '<li>' + escapeHtml(r.text || r.recommendation || JSON.stringify(r)) + '</li>';
-                        }
+                        html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>';
                     });
                 }
                 html += '</ul>';
             }
 
-            if (ai.saved || ai.badge || (aiData.saved || aiData.badge)) {
+            if (aiData.saved || aiData.badge) {
                 html += '<p style="margin-top:16px;font-size:13px;color:var(--eo-gray-text);">Your results have been saved for your records.</p>';
             }
 
@@ -1548,7 +1560,7 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake + download */
+        /* Bind retake */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
     }
@@ -1573,20 +1585,27 @@ body {
             String(today.getDate()).padStart(2, '0');
 
         var md = '';
-        md += '# Market Attractiveness Scorecard Results\n\n';
+        md += '# Project Files Readiness Scorecard Results\n\n';
         md += '**Student:** ' + capturedEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**Score:** ' + total + '/100 — ' + band.label + '\n';
         md += '\n';
 
+        /* NOT READY warning */
+        if (total < 60) {
+            md += '> **NOT READY for Claude Desktop**\n';
+            md += '> Your project files score of ' + total + '/100 indicates significant gaps in your documentation. Claude Desktop works best when it has comprehensive project files to reference. Focus on creating the missing files identified below before starting your build.\n\n';
+        }
+
         /* Answers by section */
         md += '## Answers\n\n';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E'];
         var sectionFullNames = {
-            'A': 'PAIN REALITY — Understanding Your Buyer\u2019s Problem',
-            'B': 'PURCHASING POWER — Can They Actually Buy?',
-            'C': 'MARKET MOMENTUM — Is Your Market Growing?',
-            'D': 'COMPETITIVE ADVANTAGE — Why Should Buyers Choose You?'
+            'A': 'BRAND — Brand Foundation Files',
+            'B': 'PRICING — Pricing & Offer Files',
+            'C': 'ICP — ICP & Market Files',
+            'D': 'PRODUCT — Product & Tech Files',
+            'E': 'GTM — GTM & Content Files'
         };
         var qCounter = 0;
         sectionOrder.forEach(function(sid) {
@@ -1598,7 +1617,7 @@ body {
                 var opt = q.options[selectedIdx];
                 var label = opt ? opt.label : 'No answer';
                 var score = opt ? opt.score : 0;
-                md += '- Q' + qCounter + ': ' + q.text + ' \u2192 ' + label + ' (Score: ' + score + '/5)\n';
+                md += '- Q' + qCounter + ': ' + q.text + ' → ' + label + ' (Score: ' + score + '/5)\n';
             });
             md += '\n';
         });
@@ -1612,11 +1631,11 @@ body {
             }
             var score = sectionScores[sid] || 0;
             var max = SECTION_MAXES[sid];
-            md += '- ' + sec.name + ': ' + sec.fullName + ' \u2014 ' + score + '/' + max + '\n';
+            md += '- ' + sec.name + ': ' + sec.fullName + ' — ' + score + '/' + max + '\n';
         });
         md += '\n';
 
-        /* Recommended Improvements for sections below 60% */
+        /* Recommended Improvements for sections below threshold (12/20) */
         md += '## Recommended Improvements\n\n';
         var hasRecos = false;
         sectionOrder.forEach(function(sid) {
@@ -1625,18 +1644,18 @@ body {
                 if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
             }
             var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            if (score < max * 0.6) {
+            var threshold = SECTION_THRESHOLDS[sid];
+            if (score < threshold) {
                 hasRecos = true;
-                md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')\n\n';
+                md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')\n\n';
                 RECOMMENDATIONS[sid].forEach(function(r) {
                     md += '- ' + r + '\n';
                 });
-                md += '\n**Claude Prompt:** "I scored ' + score + '/' + max + ' on the ' + sec.name + ' (' + sec.fullName + ') section of the Market Attractiveness Scorecard. Help me improve my ' + sec.fullName.toLowerCase() + ' strategy with specific, actionable steps for a MENA-based MicroSaaS founder."\n\n';
+                md += '\n**Claude Prompt:** "I scored ' + score + '/' + SECTION_MAXES[sid] + ' on the ' + sec.name + ' (' + sec.fullName + ') section of the Project Files Readiness Scorecard. Help me create the missing ' + sec.fullName.toLowerCase() + ' with specific, actionable templates for a MENA-based MicroSaaS founder."\n\n';
             }
         });
         if (!hasRecos) {
-            md += 'All sections scored above 60%. Great work!\n\n';
+            md += 'All sections scored above the threshold. Great work!\n\n';
         }
 
         /* Create and trigger download */
@@ -1644,7 +1663,7 @@ body {
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'market-attractiveness-results-' + dateStr + '.md';
+        a.download = 'project-files-results-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1661,9 +1680,9 @@ body {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* ═══════════════════════════════════
+    /* ===================================
        BOOT
-       ═══════════════════════════════════ */
+       =================================== */
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {

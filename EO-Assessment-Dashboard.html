@@ -536,9 +536,9 @@
             background: #0f0f0f;
             border: 1px solid #2a2a2a;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1rem;
             text-align: center;
-            aspect-ratio: 1;
+            min-height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -771,19 +771,19 @@
                 <!-- Intro -->
                 <div class="eo-intro">
                     <h1 class="eo-title">EO Founder Assessment Suite</h1>
-                    <p class="eo-subtitle">Four tools. One system. Know exactly where you stand.</p>
+                    <p class="eo-subtitle">Five tools. One system. Know exactly where you stand.</p>
                 </div>
 
                 <!-- Tool Cards -->
                 <div class="eo-grid">
-                    <!-- Card 1: Strategy Selector -->
+                    <!-- Card 1: ICP Clarity -->
                     <div class="eo-card">
-                        <div class="eo-card-icon">🧭</div>
-                        <div class="eo-card-badge">QUICK START</div>
-                        <div class="eo-card-title">Strategy Selector Lite</div>
-                        <div class="eo-card-desc">Quick 3-minute diagnostic to find your best MicroSaaS strategy path</div>
-                        <div class="eo-card-source">7 questions · 4 strategy paths · Instant results</div>
-                        <button class="eo-card-btn" onclick="openTool('strategy')">Take the Quick Diagnostic →</button>
+                        <div class="eo-card-icon">👤</div>
+                        <div class="eo-card-badge">START HERE</div>
+                        <div class="eo-card-title">ICP Clarity Scoring</div>
+                        <div class="eo-card-desc">Comprehensive buyer clarity assessment using Brunson's frameworks</div>
+                        <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
+                        <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
                     </div>
 
                     <!-- Card 2: Market Attractiveness -->
@@ -796,14 +796,14 @@
                         <button class="eo-card-btn" onclick="openTool('market')">Score Your Market →</button>
                     </div>
 
-                    <!-- Card 3: ICP Clarity -->
+                    <!-- Card 3: Strategy Selector -->
                     <div class="eo-card">
-                        <div class="eo-card-icon">👤</div>
-                        <div class="eo-card-badge">DEEP DIVE</div>
-                        <div class="eo-card-title">ICP Clarity Scoring</div>
-                        <div class="eo-card-desc">Comprehensive buyer clarity assessment using Brunson's frameworks</div>
-                        <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
-                        <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
+                        <div class="eo-card-icon">🧭</div>
+                        <div class="eo-card-badge">STRATEGY</div>
+                        <div class="eo-card-title">Strategy Selector</div>
+                        <div class="eo-card-desc">Find your highest-probability MicroSaaS strategy path</div>
+                        <div class="eo-card-source">7 questions · 4 strategy paths · AI analysis</div>
+                        <button class="eo-card-btn" onclick="openTool('strategy')">Find Your Strategy →</button>
                     </div>
 
                     <!-- Card 4: GTM Fitness -->
@@ -815,21 +815,33 @@
                         <div class="eo-card-source">Based on EO MicroSaaS GTM Matrix</div>
                         <button class="eo-card-btn" onclick="openTool('gtm')">Score Your GTM →</button>
                     </div>
+
+                    <!-- Card 5: Project Files -->
+                    <div class="eo-card">
+                        <div class="eo-card-icon">🗂️</div>
+                        <div class="eo-card-badge">NEW</div>
+                        <div class="eo-card-title">MicroSaaS Project Files</div>
+                        <div class="eo-card-desc">Assess your file readiness for Claude Desktop. 20 questions.</div>
+                        <div class="eo-card-source">Based on EO MicroSaaS File Framework</div>
+                        <button class="eo-card-btn" onclick="openTool('projectFiles')">Score Your Files →</button>
+                    </div>
                 </div>
 
                 <!-- Flow Guide -->
                 <div class="eo-flow">
                     <div class="eo-flow-title">Assessment Flow Guide</div>
                     <div class="eo-flow-chart">
-                        <div class="eo-flow-step highlight">Strategy Selector</div>
+                        <div class="eo-flow-step highlight">ICP Clarity</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">Market Attractiveness</div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step">ICP Clarity</div>
+                        <div class="eo-flow-step">Strategy Selector</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">GTM Fitness</div>
+                        <div class="eo-flow-arrow">→</div>
+                        <div class="eo-flow-step">Project Files</div>
                     </div>
-                    <div class="eo-flow-desc">Start with the quick diagnostic. Then go deep on each dimension. Each assessment builds on the previous one.</div>
+                    <div class="eo-flow-desc">Start with ICP Clarity to define your buyer. Then validate your market, pick your strategy, and plan your GTM. Each assessment builds on the previous one.</div>
                 </div>
             </div>
 
@@ -1466,7 +1478,8 @@ https://eomicro.saas/eo-assessment
                 strategy: 'EO-Strategy-Selector.html',
                 market: 'EO-Market-Attractiveness-Scoring.html',
                 icp: 'EO-ICP-Clarity-Scoring.html',
-                gtm: 'EO-GTM-Fitness-Scoring.html'
+                gtm: 'EO-GTM-Fitness-Scoring.html',
+                projectFiles: 'EO-Project-Files-Scoring.html'
             };
             if (toolUrls[tool]) {
                 window.location.href = toolUrls[tool];

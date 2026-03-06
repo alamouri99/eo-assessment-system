@@ -23,8 +23,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-beige);
-    color: var(--eo-dark);
+    background: var(--eo-dark);
+    color: #FFFFFF;
     min-height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -38,7 +38,7 @@ body {
 .eo-header h1 {
     font-size: 22px;
     font-weight: 800;
-    color: var(--eo-dark);
+    color: #FFFFFF;
 }
 .eo-header h1 span { color: var(--eo-orange); }
 
@@ -48,7 +48,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     text-align: center;
     margin-bottom: 4px;
 }
@@ -68,13 +68,13 @@ body {
 .progress-meta .section-label { margin-bottom: 0; text-align: left; }
 .progress-counter {
     font-size: 13px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     font-weight: 500;
 }
 .progress-track {
     width: 100%;
     height: 8px;
-    background: var(--eo-gray-border);
+    background: #2D2D44;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -94,8 +94,11 @@ body {
 .welcome-screen {
     max-width: 520px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 40px;
     text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .welcome-screen h2 {
     font-size: 28px;
@@ -112,11 +115,47 @@ body {
 }
 .welcome-screen .btn-primary { min-width: 240px; }
 
+/* Email Capture */
+.email-capture {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 40px;
+    text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.email-capture h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    margin-bottom: 8px;
+}
+.email-capture p {
+    color: var(--eo-gray-text);
+    margin-bottom: 28px;
+    font-size: 15px;
+    line-height: 1.6;
+}
+.email-capture input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 16px;
+    font-family: inherit;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color var(--eo-transition);
+}
+.email-capture input:focus { border-color: var(--eo-orange); }
+.email-capture .btn-primary { width: 100%; }
+
 /* Question Card */
 .question-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
     max-width: 640px;
     margin: 0 auto;
@@ -180,9 +219,9 @@ body {
     padding: 0 20px;
 }
 .scoreboard-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 20px 24px;
 }
 .scoreboard-title {
@@ -254,16 +293,16 @@ body {
 }
 .btn-prev {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
-}
-.btn-prev:hover { background: var(--eo-dark); color: #fff; }
-.btn-prev.hidden { visibility: hidden; pointer-events: none; }
-.btn-next {
-    background: var(--eo-dark);
+    border: 2px solid #FFFFFF;
     color: #FFFFFF;
 }
-.btn-next:hover { background: #2d2d4a; }
+.btn-prev:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
+.btn-next {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+.btn-next:hover { background: #d4441a; }
 .btn-next:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -310,9 +349,9 @@ body {
     padding: 0 20px;
 }
 .contact-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
 }
 .contact-card h2 {
@@ -362,14 +401,14 @@ body {
     border: none;
     font-family: inherit;
 }
-.skip-link:hover { color: var(--eo-dark); }
+.skip-link:hover { color: #FFFFFF; }
 
 /* Loading Overlay */
 .loading-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(250, 245, 239, 0.95);
+    background: rgba(26, 26, 46, 0.95);
     z-index: 999;
     justify-content: center;
     align-items: center;
@@ -389,7 +428,7 @@ body {
 .loading-overlay p {
     font-size: 16px;
     font-weight: 600;
-    color: var(--eo-dark);
+    color: #FFFFFF;
 }
 
 /* Results Screen */
@@ -401,9 +440,9 @@ body {
 
 /* Path Card (Primary + Secondary) */
 .path-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
     margin-bottom: 24px;
 }
@@ -546,9 +585,9 @@ body {
 
 /* All Paths Ranked */
 .results-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 28px;
     margin-bottom: 24px;
 }
@@ -593,9 +632,9 @@ body {
 
 /* AI Section */
 .ai-section {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 28px;
     margin-bottom: 24px;
     border-left: 4px solid var(--eo-orange);
@@ -671,8 +710,8 @@ body {
 .results-cta .btn-primary { min-width: 280px; }
 .results-cta .btn-retake {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
     padding: 12px 28px;
     border-radius: var(--eo-radius-sm);
     font-size: 15px;
@@ -682,7 +721,24 @@ body {
     transition: all var(--eo-transition);
     min-width: 280px;
 }
-.results-cta .btn-retake:hover { background: var(--eo-dark); color: #fff; }
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.results-cta .btn-download-md {
+    background: transparent;
+    border: 2px solid var(--eo-orange);
+    color: var(--eo-orange);
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-md:hover {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -720,11 +776,12 @@ body {
     <h1>EO <span>MicroSaaS</span></h1>
 </div>
 
-<!-- Screen 1: Welcome -->
-<div class="screen active" id="screenWelcome">
-    <div class="welcome-screen">
+<!-- Screen 1: Email Capture -->
+<div class="screen active" id="screenEmail">
+    <div class="email-capture">
         <h2>MicroSaaS Strategy Selector</h2>
-        <p class="subtitle">7 questions. 4 strategy paths. Find your highest-probability path in under 3 minutes.</p>
+        <p>7 questions. 4 strategy paths. Find your highest-probability path in under 3 minutes.</p>
+        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
 </div>
@@ -928,13 +985,14 @@ body {
     var autoAdvanceTimer = null;
     var focusedOptionIndex = -1;
     var aiData = null;
+    var capturedEmail = '';
 
     /* =======================================
        DOM REFS
        ======================================= */
     var $sectionLabel, $progressCounter, $progressFill, $questionText;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
-    var $btnStart, $btnSubmitContact, $btnSkipContact;
+    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
     var $loadingOverlay, $resultsContent, $scoreboardBars;
 
     /* =======================================
@@ -950,6 +1008,7 @@ body {
         $btnPrev = document.getElementById('btnPrev');
         $btnNext = document.getElementById('btnNext');
         $toast = document.getElementById('toast');
+        $emailInput = document.getElementById('emailInput');
         $btnStart = document.getElementById('btnStartAssessment');
         $btnSubmitContact = document.getElementById('btnSubmitContact');
         $btnSkipContact = document.getElementById('btnSkipContact');
@@ -991,6 +1050,9 @@ body {
        ======================================= */
     function bindEvents() {
         $btnStart.addEventListener('click', startAssessment);
+        $emailInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
+        });
         $btnPrev.addEventListener('click', prevQuestion);
         $btnNext.addEventListener('click', nextQuestion);
         $btnSubmitContact.addEventListener('click', submitContact);
@@ -1023,6 +1085,15 @@ body {
        START ASSESSMENT
        ======================================= */
     function startAssessment() {
+        var email = $emailInput.value.trim().toLowerCase();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $emailInput.style.borderColor = '#EF4444';
+            $emailInput.focus();
+            return;
+        }
+        capturedEmail = email;
+        $emailInput.style.borderColor = '';
+
         if (Object.keys(answers).length > 0) {
             currentIndex = findFirstUnanswered();
             showToast('Welcome back! Resuming where you left off.');
@@ -1258,6 +1329,7 @@ body {
 
         return {
             assessment: 'strategy-selector',
+            email: capturedEmail,
             answers: answersArray,
             path_scores: {
                 replicate_localize: scores[0],
@@ -1446,6 +1518,7 @@ body {
         /* ---- CTA ---- */
         html += '<div class="results-cta">';
         html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
+        html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1453,8 +1526,9 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake */
+        /* Bind retake + download */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
     }
 
     function escapeHtml(text) {
@@ -1463,12 +1537,116 @@ body {
         return div.innerHTML;
     }
 
+    /* =======================================
+       MARKDOWN EXPORT
+       ======================================= */
+    function generateMarkdownExport() {
+        var ranked = getRankedPaths();
+        var primary = ranked[0];
+        var secondary = ranked[1];
+        var pd = PATH_DETAILS[primary.id];
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' +
+            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+            String(today.getDate()).padStart(2, '0');
+
+        var md = '';
+        md += '# Strategy Selector Scorecard Results\n\n';
+        md += '**Student:** ' + capturedEmail + '\n';
+        md += '**Date:** ' + dateStr + '\n\n';
+
+        /* Primary Path */
+        md += '## Primary Path: ' + primary.name + '\n\n';
+        md += '**Score:** ' + primary.score + ' / ' + primary.max + ' (' + primary.pct + '%)\n\n';
+        md += '**Description:** ' + pd.full + '\n\n';
+        md += '**Key Risk:** ' + pd.risk + '\n\n';
+        md += '**MENA Proof Points:**\n';
+        pd.proofs.forEach(function(p) {
+            md += '- ' + p.name + ' \u2014 ' + p.desc + ' (' + p.metric + ')\n';
+        });
+        md += '\n';
+
+        /* Secondary Path */
+        var sd = PATH_DETAILS[secondary.id];
+        md += '## Secondary Path: ' + secondary.name + '\n\n';
+        md += '**Score:** ' + secondary.score + ' / ' + secondary.max + ' (' + secondary.pct + '%)\n\n';
+        md += '**Description:** ' + sd.full + '\n\n';
+
+        /* All Paths Ranked */
+        md += '## All Paths Ranked\n\n';
+        md += '| Rank | Path | Score | Percentage |\n';
+        md += '|------|------|-------|------------|\n';
+        ranked.forEach(function(r, idx) {
+            md += '| ' + (idx + 1) + ' | ' + r.name + ' | ' + r.score + ' / ' + r.max + ' | ' + r.pct + '% |\n';
+        });
+        md += '\n';
+
+        /* Answers */
+        md += '## Answers\n\n';
+        QUESTIONS.forEach(function(q, idx) {
+            var selectedIdx = answers[q.id];
+            var opt = (selectedIdx !== undefined && selectedIdx !== null) ? q.options[selectedIdx] : null;
+            var label = opt ? opt.label : 'No answer';
+            md += '- Q' + (idx + 1) + ': ' + q.text + ' \u2192 ' + label + '\n';
+        });
+        md += '\n';
+
+        /* Claude Prompt */
+        md += '## Claude Prompt for Strategy Refinement\n\n';
+        md += '"My Strategy Selector results show **' + primary.name + '** as my primary path (' + primary.pct + '%) and **' + secondary.name + '** as my secondary path (' + secondary.pct + '%). ';
+        md += 'Help me build a 30-day action plan to validate and launch using the ' + primary.name + ' strategy as a MENA-based MicroSaaS founder. ';
+        md += 'My key risk is: ' + pd.risk + '"\n\n';
+
+        /* AI-Enhanced Section if available */
+        if (aiData) {
+            md += '## AI-Enhanced Analysis\n\n';
+            if (aiData.key_insight || aiData.keyInsight) {
+                md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
+            }
+            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
+                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
+                md += '### 30-Day Action Plan\n\n';
+                if (typeof plan === 'string') {
+                    md += plan + '\n\n';
+                } else if (Array.isArray(plan)) {
+                    plan.forEach(function(item) {
+                        md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n';
+                    });
+                    md += '\n';
+                }
+            }
+            if (aiData.recommendations || aiData.ai_recommendations) {
+                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
+                md += '### AI Recommendations\n\n';
+                if (Array.isArray(aiRecs)) {
+                    aiRecs.forEach(function(r) {
+                        md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n';
+                    });
+                    md += '\n';
+                }
+            }
+        }
+
+        /* Create and trigger download */
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'strategy-selector-results-' + dateStr + '.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
     function retakeAssessment() {
         answers = {};
         currentIndex = 0;
         aiData = null;
+        capturedEmail = '';
         try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        showScreen('screenWelcome');
+        $emailInput.value = '';
+        showScreen('screenEmail');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 

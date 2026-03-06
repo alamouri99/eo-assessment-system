@@ -23,8 +23,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-beige);
-    color: var(--eo-dark);
+    background: var(--eo-dark);
+    color: #FFFFFF;
     min-height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -38,7 +38,7 @@ body {
 .eo-header h1 {
     font-size: 22px;
     font-weight: 800;
-    color: var(--eo-dark);
+    color: #FFFFFF;
 }
 .eo-header h1 span { color: var(--eo-orange); }
 
@@ -48,7 +48,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     text-align: center;
     margin-bottom: 4px;
 }
@@ -68,13 +68,13 @@ body {
 .progress-meta .section-label { margin-bottom: 0; text-align: left; }
 .progress-counter {
     font-size: 13px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     font-weight: 500;
 }
 .progress-track {
     width: 100%;
     height: 8px;
-    background: var(--eo-gray-border);
+    background: #2D2D44;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -96,6 +96,9 @@ body {
     margin: 60px auto;
     padding: 0 20px;
     text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .email-capture h2 {
     font-size: 26px;
@@ -124,9 +127,9 @@ body {
 
 /* Question Card */
 .question-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
     max-width: 640px;
     margin: 0 auto;
@@ -206,16 +209,16 @@ body {
 }
 .btn-prev {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
-}
-.btn-prev:hover { background: var(--eo-dark); color: #fff; }
-.btn-prev.hidden { visibility: hidden; pointer-events: none; }
-.btn-next {
-    background: var(--eo-dark);
+    border: 2px solid #FFFFFF;
     color: #FFFFFF;
 }
-.btn-next:hover { background: #2d2d4a; }
+.btn-prev:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
+.btn-next {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+.btn-next:hover { background: #d4441a; }
 .btn-next:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -262,9 +265,9 @@ body {
     padding: 0 20px;
 }
 .contact-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
 }
 .contact-card h2 {
@@ -314,14 +317,14 @@ body {
     border: none;
     font-family: inherit;
 }
-.skip-link:hover { color: var(--eo-dark); }
+.skip-link:hover { color: var(--eo-orange); }
 
 /* Loading Overlay */
 .loading-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(250, 245, 239, 0.95);
+    background: rgba(26, 26, 46, 0.95);
     z-index: 999;
     justify-content: center;
     align-items: center;
@@ -341,7 +344,7 @@ body {
 .loading-overlay p {
     font-size: 16px;
     font-weight: 600;
-    color: var(--eo-dark);
+    color: #FFFFFF;
 }
 
 /* Results Screen */
@@ -353,9 +356,9 @@ body {
 
 /* Score Hero */
 .score-hero {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 40px 32px;
     text-align: center;
     margin-bottom: 24px;
@@ -423,9 +426,9 @@ body {
 
 /* Motion Cards */
 .results-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 28px;
     margin-bottom: 24px;
 }
@@ -488,9 +491,9 @@ body {
 
 /* AI Section */
 .ai-section {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 28px;
     margin-bottom: 24px;
     border-left: 4px solid var(--eo-orange);
@@ -566,8 +569,8 @@ body {
 .results-cta .btn-primary { min-width: 280px; }
 .results-cta .btn-retake {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
     padding: 12px 28px;
     border-radius: var(--eo-radius-sm);
     font-size: 15px;
@@ -577,7 +580,24 @@ body {
     transition: all var(--eo-transition);
     min-width: 280px;
 }
-.results-cta .btn-retake:hover { background: var(--eo-dark); color: #fff; }
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.results-cta .btn-download-md {
+    background: transparent;
+    border: 2px solid var(--eo-orange);
+    color: var(--eo-orange);
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-md:hover {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -1585,6 +1605,7 @@ body {
         /* CTA */
         html += '<div class="results-cta">';
         html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
+        html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1592,14 +1613,129 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake */
+        /* Bind retake + download */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
     }
 
     function escapeHtml(text) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(text));
         return div.innerHTML;
+    }
+
+    /* ═══════════════════════════════════
+       MARKDOWN EXPORT
+       ═══════════════════════════════════ */
+    function generateMarkdownExport() {
+        var totalScore = getOverallScore();
+        var band = getBand(totalScore);
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' +
+            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+            String(today.getDate()).padStart(2, '0');
+
+        var md = '';
+        md += '# GTM Fitness Scorecard Results\n\n';
+        md += '**Student:** ' + capturedEmail + '\n';
+        md += '**Date:** ' + dateStr + '\n';
+        md += '**Composite Score:** ' + totalScore + '/100 — ' + band.label + '\n';
+        md += '**Scoring Formula:** Fit x 0.4 + Readiness x 0.3 + MENA x 0.3\n';
+        md += '\n';
+
+        md += '> ' + BAND_DESCRIPTIONS[band.label] + '\n\n';
+
+        /* Top 3 GTM Motions */
+        var ranked = MOTIONS.map(function(m) {
+            return {
+                id: m.id,
+                name: m.name,
+                fit: scores[m.id].fit,
+                readiness: scores[m.id].readiness,
+                mena: scores[m.id].mena,
+                composite: scores[m.id].composite
+            };
+        }).sort(function(a, b) { return b.composite - a.composite; });
+
+        var top3 = ranked.slice(0, 3);
+        md += '## Top 3 GTM Motions\n\n';
+        top3.forEach(function(m, idx) {
+            var pct = Math.round(m.composite / 5 * 100);
+            md += '### ' + (idx + 1) + '. ' + m.name + ' — ' + pct + '%\n\n';
+            md += '| Component | Score |\n';
+            md += '|-----------|-------|\n';
+            md += '| Fit       | ' + (Math.round(m.fit * 100) / 100) + '/5 |\n';
+            md += '| Readiness | ' + (Math.round(m.readiness * 100) / 100) + '/5 |\n';
+            md += '| MENA      | ' + (Math.round(m.mena * 100) / 100) + '/5 |\n';
+            md += '| **Composite** | **' + (Math.round(m.composite * 100) / 100) + '/5** |\n\n';
+            md += '- **Why:** ' + (MOTION_WHY[m.id] || '') + '\n';
+            md += '- **30-Day Plan:** ' + (MOTION_PLANS[m.id] || '') + '\n';
+            md += '- **Tools:** ' + (MOTION_TOOLS[m.id] || '') + '\n';
+            md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n\n';
+        });
+
+        /* All 14 Questions with Selected Answers */
+        md += '## Answers\n\n';
+        var sectionNames = ['BUSINESS PROFILE', 'CAPABILITY PROFILE'];
+        var qCounter = 0;
+        SECTIONS.forEach(function(sec) {
+            md += '### Section ' + sec.id + ': ' + sec.name + '\n\n';
+            allQuestions.forEach(function(q) {
+                if (q.sectionIdx !== (sec.id === 'A' ? 0 : 1)) return;
+                qCounter++;
+                var selectedIdx = answers[q.id];
+                var opt = (selectedIdx !== undefined) ? q.options[selectedIdx] : null;
+                var label = opt ? opt.label : 'No answer';
+                var value = opt ? opt.value : '-';
+                md += '- Q' + qCounter + ': ' + q.text + ' → ' + label + '\n';
+            });
+            md += '\n';
+        });
+
+        /* Full Motion Rankings */
+        md += '## All Motion Rankings\n\n';
+        md += '| Rank | Motion | Composite | Fit | Readiness | MENA |\n';
+        md += '|------|--------|-----------|-----|-----------|------|\n';
+        ranked.forEach(function(m, idx) {
+            md += '| ' + (idx + 1) + ' | ' + m.name + ' | ' +
+                (Math.round(m.composite * 100) / 100) + ' | ' +
+                (Math.round(m.fit * 100) / 100) + ' | ' +
+                (Math.round(m.readiness * 100) / 100) + ' | ' +
+                (Math.round(m.mena * 100) / 100) + ' |\n';
+        });
+        md += '\n';
+
+        /* Recommended Improvements for weak motions in top 3 */
+        md += '## Recommended Improvements\n\n';
+        var hasRecos = false;
+        top3.forEach(function(m) {
+            var weakAreas = [];
+            if (m.fit < 3) weakAreas.push('Fit (' + (Math.round(m.fit * 100) / 100) + '/5)');
+            if (m.readiness < 3) weakAreas.push('Readiness (' + (Math.round(m.readiness * 100) / 100) + '/5)');
+            if (m.mena < 3) weakAreas.push('MENA (' + (Math.round(m.mena * 100) / 100) + '/5)');
+            if (weakAreas.length > 0) {
+                hasRecos = true;
+                md += '### ' + m.name + '\n\n';
+                md += '- **Weak areas:** ' + weakAreas.join(', ') + '\n';
+                md += '- **Action:** ' + (MOTION_PLANS[m.id] || '') + '\n';
+                md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n';
+                md += '\n**Claude Prompt:** "My top GTM motion is ' + m.name + ' but I scored low on ' + weakAreas.join(' and ') + '. Help me build a 30-day improvement plan for a MENA-based MicroSaaS founder."\n\n';
+            }
+        });
+        if (!hasRecos) {
+            md += 'All top 3 motions scored above 3/5 on every component. Great work!\n\n';
+        }
+
+        /* Create and trigger download */
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'gtm-fitness-results-' + dateStr + '.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
     function retakeAssessment() {
