@@ -598,6 +598,23 @@ body {
     background: var(--eo-orange);
     color: #FFFFFF;
 }
+.results-cta .btn-download-pdf {
+    background: transparent;
+    border: 2px solid #6B7280;
+    color: #6B7280;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-pdf:hover {
+    background: #6B7280;
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -1657,6 +1674,7 @@ body {
         html += '<div class="results-cta">';
         html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
         html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
+        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1664,9 +1682,10 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake + download */
+        /* Bind retake + downloads */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
     }
 
     function escapeHtml(text) {
@@ -1756,25 +1775,57 @@ body {
         });
         md += '\n';
 
-        /* Recommended Improvements for weak motions in top 3 */
-        md += '## Recommended Improvements\n\n';
-        var hasRecos = false;
+        /* Detailed Recommendations for ALL top 3 motions */
+        md += '## Detailed Motion Recommendations\n\n';
         top3.forEach(function(m) {
             var weakAreas = [];
             if (m.fit < 3) weakAreas.push('Fit (' + (Math.round(m.fit * 100) / 100) + '/5)');
             if (m.readiness < 3) weakAreas.push('Readiness (' + (Math.round(m.readiness * 100) / 100) + '/5)');
             if (m.mena < 3) weakAreas.push('MENA (' + (Math.round(m.mena * 100) / 100) + '/5)');
-            if (weakAreas.length > 0) {
-                hasRecos = true;
-                md += '### ' + m.name + '\n\n';
-                md += '- **Weak areas:** ' + weakAreas.join(', ') + '\n';
-                md += '- **Action:** ' + (MOTION_PLANS[m.id] || '') + '\n';
-                md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n';
-                md += '\n**Claude Prompt:** "My top GTM motion is ' + m.name + ' but I scored low on ' + weakAreas.join(' and ') + '. Help me build a 30-day improvement plan for a MENA-based MicroSaaS founder."\n\n';
-            }
+            var strength = weakAreas.length === 0 ? '✅ Strong across all components' : '⚠️ Weak areas: ' + weakAreas.join(', ');
+            md += '### ' + m.name + ' — ' + strength + '\n\n';
+            md += '- **Why this motion:** ' + (MOTION_WHY[m.id] || '') + '\n';
+            md += '- **30-Day Plan:** ' + (MOTION_PLANS[m.id] || '') + '\n';
+            md += '- **Tools:** ' + (MOTION_TOOLS[m.id] || '') + '\n';
+            md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n';
+            md += '\n**Claude Prompt:** "My top GTM motion is ' + m.name + ' (Fit: ' + (Math.round(m.fit * 100) / 100) + ', Readiness: ' + (Math.round(m.readiness * 100) / 100) + ', MENA: ' + (Math.round(m.mena * 100) / 100) + '). Help me build a 30-day execution plan for a MENA-based MicroSaaS founder."\n\n';
         });
-        if (!hasRecos) {
-            md += 'All top 3 motions scored above 3/5 on every component. Great work!\n\n';
+
+        /* Advanced Analysis from AI (if available) */
+        if (aiData) {
+            md += '## Advanced Analysis & Recommendation\n\n';
+            if (aiData.keyInsight || aiData.key_insight) {
+                md += '### Key Insight\n\n' + (aiData.keyInsight || aiData.key_insight) + '\n\n';
+            }
+            if (aiData.sequencing) {
+                md += '### Sequencing\n\n' + aiData.sequencing + '\n\n';
+            }
+            if (aiData.primaryMotions && Array.isArray(aiData.primaryMotions)) {
+                md += '### Recommended Primary Motions\n\n';
+                aiData.primaryMotions.forEach(function(m) {
+                    if (typeof m === 'string') {
+                        md += '- ' + m + '\n';
+                    } else {
+                        md += '- **' + (m.name || m.motion || '') + '**: ' + (m.why || m.plan || JSON.stringify(m)) + '\n';
+                    }
+                });
+                md += '\n';
+            }
+            if (aiData.menaInsight || aiData.mena_insight) {
+                md += '### MENA Insight\n\n' + (aiData.menaInsight || aiData.mena_insight) + '\n\n';
+            }
+            if (aiData.recommendations || aiData.ai_recommendations) {
+                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
+                md += '### AI Recommendations\n\n';
+                if (typeof aiRecs === 'string') {
+                    md += aiRecs + '\n\n';
+                } else if (Array.isArray(aiRecs)) {
+                    aiRecs.forEach(function(r) {
+                        md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n';
+                    });
+                    md += '\n';
+                }
+            }
         }
 
         /* Create and trigger download */
@@ -1787,6 +1838,24 @@ body {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+
+    /* ═══════════════════════════════════
+       PDF EXPORT
+       ═══════════════════════════════════ */
+    function generatePdfExport() {
+        var el = document.getElementById('resultsContent');
+        if (!el) return;
+        var dateStr = new Date().toISOString().split('T')[0];
+        var opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'gtm-fitness-results-' + dateStr + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FAF5EF' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+        html2pdf().set(opt).from(el).save();
     }
 
     function retakeAssessment() {
@@ -1811,5 +1880,6 @@ body {
 
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

@@ -867,6 +867,9 @@
                     <button onclick="generateProjectBrief()" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #FF6600, #CC5200); color: #FFFFFF; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(255,102,0,0.3);">
                         📄 Generate Project Brief (MD)
                     </button>
+                    <button onclick="generateProjectBriefPdf()" style="padding: 1rem 2.5rem; background: transparent; border: 2px solid #FF6600; color: #FF6600; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; margin-left: 12px;">
+                        📄 Generate Project Brief (PDF)
+                    </button>
                     <p style="color: #A3A3A3; font-size: 13px; margin-top: 0.5rem;">All 5 assessments complete! Download your consolidated project brief.</p>
                 </div>
 
@@ -1103,7 +1106,8 @@
                     <div class="eo-cta-title">Ready to Move Forward?</div>
                     <button class="eo-cta-button" onclick="alert('Join the MENA MicroSaaS Movement — 91+ founders on the same journey.')">Join MENA MicroSaaS Movement →</button>
                     <button class="eo-cta-button" onclick="alert('Join the EO Community: 91+ MENA founders on the same journey.')">Join EO Community →</button>
-                    <button class="eo-cta-button" onclick="downloadScorecard()">Download Your Scorecard</button>
+                    <button class="eo-cta-button" onclick="generateProjectBrief()">Download Scorecard (MD)</button>
+                    <button class="eo-cta-button" onclick="generateProjectBriefPdf()">Download Scorecard (PDF)</button>
                 </div>
 
                 <!-- Score History -->
@@ -1135,6 +1139,7 @@
             icp: 0,
             gtm: 0
         };
+        let dashboardAiData = null;
 
         let history = JSON.parse(localStorage.getItem('eo-history')) || [];
 
@@ -1671,6 +1676,7 @@ https://eomicro.saas/eo-assessment
 
                 // Render AI analysis if available
                 if (data.ai_analysis) {
+                    dashboardAiData = data.ai_analysis;
                     renderAIAnalysis(data.ai_analysis);
                 }
 
@@ -1833,6 +1839,74 @@ https://eomicro.saas/eo-assessment
             }
             md += '\n';
 
+            /* Deep Analysis from AI (if available) */
+            if (dashboardAiData && dashboardAiData.keyInsight) {
+                md += '## Deep Analysis\n\n';
+
+                if (dashboardAiData.archetype) {
+                    md += '### Founder Archetype\n\n';
+                    md += '**' + (dashboardAiData.archetype.name || 'Unknown') + '** — ' + (dashboardAiData.archetype.strategy || '') + '\n\n';
+                }
+
+                md += '### Key Strategic Insight\n\n';
+                md += dashboardAiData.keyInsight + '\n\n';
+
+                if (dashboardAiData.gtmPrescription) {
+                    var gtmRx = dashboardAiData.gtmPrescription;
+                    md += '### GTM Motion Prescription\n\n';
+
+                    if (gtmRx.primary && gtmRx.primary.length > 0) {
+                        md += '**Primary Motions:**\n';
+                        gtmRx.primary.forEach(function(m) {
+                            md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n';
+                        });
+                        md += '\n';
+                    }
+                    if (gtmRx.secondary && gtmRx.secondary.length > 0) {
+                        md += '**Secondary Motions:**\n';
+                        gtmRx.secondary.forEach(function(m) {
+                            md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n';
+                        });
+                        md += '\n';
+                    }
+                    if (gtmRx.avoid && gtmRx.avoid.length > 0) {
+                        md += '**Avoid:**\n';
+                        gtmRx.avoid.forEach(function(m) {
+                            md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n';
+                        });
+                        md += '\n';
+                    }
+                    if (gtmRx.sequencing) {
+                        md += '**Sequencing:** ' + gtmRx.sequencing + '\n\n';
+                    }
+                }
+
+                if (dashboardAiData.ninetyDayPlan) {
+                    var plan90 = dashboardAiData.ninetyDayPlan;
+                    md += '### 90-Day Roadmap\n\n';
+                    ['month1', 'month2', 'month3'].forEach(function(key, idx) {
+                        var month = plan90[key];
+                        if (!month) return;
+                        md += '**Month ' + (idx + 1) + ': ' + (month.theme || '') + '**\n';
+                        if (month.actions && month.actions.length > 0) {
+                            md += 'Actions:\n';
+                            month.actions.forEach(function(a) {
+                                md += '- ' + a + '\n';
+                            });
+                        }
+                        if (month.kpis && month.kpis.length > 0) {
+                            md += 'KPIs: ' + month.kpis.join(', ') + '\n';
+                        }
+                        md += '\n';
+                    });
+                }
+
+                if (dashboardAiData.menaAdjustments) {
+                    md += '### MENA Market Adjustments\n\n';
+                    md += dashboardAiData.menaAdjustments + '\n\n';
+                }
+            }
+
             md += '## Claude Prompt for Build Phase\n\n';
             md += '"I am a MENA-based MicroSaaS founder. My assessment scores are: MAS ' + scores.mas + '/100, ICP ' + scores.icp + '/100, GTM ' + scores.gtm + '/100 (Overall: ' + overall + '/100 — ' + bandInfo.band + '). ';
             if (status.strategy && status.strategy.path) {
@@ -1852,6 +1926,22 @@ https://eomicro.saas/eo-assessment
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        // Generate PDF from the My Scorecard section
+        function generateProjectBriefPdf() {
+            var el = document.getElementById('scorecard-screen');
+            if (!el) return;
+            var dateStr = new Date().toISOString().split('T')[0];
+            var opt = {
+                margin: [10, 10, 10, 10],
+                filename: 'project-brief-' + dateStr + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#1A1A2E' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(el).save();
         }
 
         // Check URL params for pre-loaded scores (from assessment completion redirects)
@@ -1887,5 +1977,6 @@ https://eomicro.saas/eo-assessment
             updateHubStates(status);
         })();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
