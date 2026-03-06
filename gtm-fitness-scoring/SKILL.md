@@ -145,7 +145,7 @@ Not every founder should use every motion. This assessment identifies the **2-3 
 - **Team Requirement**: Founder (relationship owner)
 - **Budget**: $1-2K (gifting, time)
 - **MENA Viability**: **THIS IS THE MENA STRATEGY**. Relationship-based market = Dream 100 on steroids. Personal trust > brand. In Gulf, this is default sales mode
-- **Competitors Using This**: B2B founders, Russell Brunson, SalesMfast methodology
+- **Competitors Using This**: B2B founders, Russell Brunson, Entrepreneurs Oasis MENA methodology
 - **Common Pitfalls**: Poorly targeted list, generic outreach, no follow-up
 
 ---
@@ -738,11 +738,11 @@ NEXT STEP: Pick your #1 primary motion and commit to 30-day sprint.
 - **Platform**: Use Zoom with Arabic chat moderation
 
 **2. Build-in-Public:**
-- **Adapt**: LinkedIn still strong for B2B. Consider building community in Slack/Discord alongside Twitter
+- **Adapt**: LinkedIn still strong for B2B. Consider building community in Telegram/Discord alongside Twitter
 - **Language**: Build in Arabic on LinkedIn to capture Arabic GTM audience
 
 **3. Authority Education:**
-- **Adapt**: Bundle education + community (Slack, WhatsApp group). Offer Arabic-language course
+- **Adapt**: Bundle education + community (Telegram, WhatsApp group). Offer Arabic-language course
 - **Pricing**: Price lower than Western equivalents; higher volume, lower ACV
 
 **4. Wave Riding:**
@@ -784,7 +784,7 @@ NEXT STEP: Pick your #1 primary motion and commit to 30-day sprint.
 **12. Value Trust Engine:**
 - **Adapt**: This is proven. Bootcamps, certification, training → SaaS conversion works
 - **Language**: Arabic bootcamp + English product = strong combo
-- **Community**: Build WhatsApp/Slack community post-training for ongoing engagement
+- **Community**: Build WhatsApp/Telegram community post-training for ongoing engagement
 
 **13. Paid VSL:**
 - **Adapt**: Facebook/Instagram ads work. Create Arabic VSL
@@ -858,7 +858,7 @@ NEXT STEP: Pick your #1 primary motion and commit to 30-day sprint.
 - Email: Apollo, Instantly
 
 **Value Trust Engine:**
-- Community: Slack, Circle, Mighty Networks
+- Community: Telegram, Circle, Mighty Networks
 - Courses: Kajabi, Teachable, Thinkific
 - Email: ConvertKit, ActiveCampaign
 

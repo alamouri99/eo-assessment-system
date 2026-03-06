@@ -47,7 +47,7 @@ paths:
     description: "You have deep domain expertise and existing client relationships. Instead of guessing what to build, you start with consulting — solving the problem manually. When you find the repeatable part, you productize it. This is the lowest-risk path because you generate revenue from day 1."
     risk: "Getting stuck in service mode and never shipping the product."
     proofs:
-      - name: "SalesMfast"
+      - name: "Entrepreneurs Oasis MENA"
         desc: "Mamoun's journey: Avaya/Cisco consulting to signal engine product"
         metric: "$3,500/mo engine"
       - name: "SparkLine"

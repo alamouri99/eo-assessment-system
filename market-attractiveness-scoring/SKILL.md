@@ -350,7 +350,7 @@ The goal is clarity, not judgment.
 **MENA Note:** Arabic search demand may differ from English. Check both if relevant.
 
 **If Scoring Below 3:**
-→ **RECOMMENDATION:** "No one is Googling for this solution. You'll need outbound + education. Budget 6 months for category creation. You can't rely on inbound. Strategy: (1) Outbound SDR team, (2) Content marketing (blog, YouTube, podcast—create the conversation), (3) Partnerships (get other platforms to recommend you), (4) Communities (become the expert in relevant Slack groups, LinkedIn groups, forums)."
+→ **RECOMMENDATION:** "No one is Googling for this solution. You'll need outbound + education. Budget 6 months for category creation. You can't rely on inbound. Strategy: (1) Outbound SDR team, (2) Content marketing (blog, YouTube, podcast—create the conversation), (3) Partnerships (get other platforms to recommend you), (4) Communities (become the expert in relevant Telegram groups, LinkedIn groups, forums)."
 
 ---
 
@@ -430,7 +430,7 @@ The goal is clarity, not judgment.
 **Examples of Channels:**
 - Email lists (LinkedIn Sales Navigator, Apollo, ZoomInfo)
 - Paid ads (Google Ads, Facebook Ads, LinkedIn Ads)
-- Communities (Slack groups, Reddit, forums, WhatsApp groups)
+- Communities (Telegram groups, Reddit, forums, WhatsApp groups)
 - Partnerships (resellers, platform integrations, referrals)
 - Content (SEO, YouTube, TikTok, podcasts)
 - Sales teams (SDRs, Account Execs)

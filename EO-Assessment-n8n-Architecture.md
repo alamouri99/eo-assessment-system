@@ -1343,7 +1343,7 @@ Founder at {{company}} (omit name) has the following assessment scores:
    - Stage-based comparisons
 
 3. **Integration Expansions**
-   - Slack notifications on new qualified leads
+   - Telegram notifications on new qualified leads
    - Zapier integration for HubSpot
    - Direct calendar integration for Free Hour booking
 

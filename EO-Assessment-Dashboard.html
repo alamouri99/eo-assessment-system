@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EO Founder Assessment Suite | SalesMfast</title>
+    <title>EO Founder Assessment Suite | Entrepreneurs Oasis MENA</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -515,30 +515,64 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             border: 1px solid #2a2a2a;
             border-radius: 12px;
-            padding: 2rem;
+            padding: 1.25rem;
             margin-bottom: 2rem;
         }
 
         .eo-matrix-title {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #A3A3A3;
+        }
+
+        .eo-matrix-axes {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .eo-matrix-ylabel {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            padding-right: 0.25rem;
+        }
+
+        .eo-matrix-inner {
+            flex: 1;
         }
 
         .eo-matrix-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 0.5rem;
+        }
+
+        .eo-matrix-xlabel {
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
         }
 
         .eo-matrix-cell {
             background: #0f0f0f;
             border: 1px solid #2a2a2a;
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 0.75rem;
             text-align: center;
-            aspect-ratio: 1;
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -548,20 +582,21 @@
 
         .eo-matrix-cell.active {
             border-color: #FF6600;
-            background: rgba(255, 102, 0, 0.1);
-            box-shadow: 0 0 20px rgba(255, 102, 0, 0.2);
+            background: rgba(255, 102, 0, 0.12);
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.15);
         }
 
         .eo-matrix-label {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: #FF6600;
         }
 
         .eo-matrix-desc {
-            font-size: 12px;
+            font-size: 11px;
             color: #A3A3A3;
-            margin-top: 0.5rem;
+            margin-top: 0.25rem;
+            line-height: 1.3;
         }
 
         /* Next Steps */
@@ -755,7 +790,7 @@
                     <div class="eo-logo-mark">EO</div>
                     <div class="eo-logo-text">
                         <div class="eo-logo-main">EO Founder Assessment</div>
-                        <div class="eo-logo-sub">by SalesMfast</div>
+                        <div class="eo-logo-sub">by Entrepreneurs Oasis MENA</div>
                     </div>
                 </div>
                 <div class="eo-nav">
@@ -771,23 +806,23 @@
                 <!-- Intro -->
                 <div class="eo-intro">
                     <h1 class="eo-title">EO Founder Assessment Suite</h1>
-                    <p class="eo-subtitle">Four tools. One system. Know exactly where you stand.</p>
+                    <p class="eo-subtitle">Five tools. One system. Know exactly where you stand.</p>
                 </div>
 
                 <!-- Tool Cards -->
                 <div class="eo-grid">
-                    <!-- Card 1: Strategy Selector -->
-                    <div class="eo-card">
-                        <div class="eo-card-icon">🧭</div>
-                        <div class="eo-card-badge">QUICK START</div>
-                        <div class="eo-card-title">Strategy Selector Lite</div>
-                        <div class="eo-card-desc">Quick 3-minute diagnostic to find your best MicroSaaS strategy path</div>
-                        <div class="eo-card-source">7 questions · 4 strategy paths · Instant results</div>
-                        <button class="eo-card-btn" onclick="openTool('strategy')">Take the Quick Diagnostic →</button>
+                    <!-- Card 1: ICP Clarity -->
+                    <div class="eo-card" data-tool="icp">
+                        <div class="eo-card-icon">👤</div>
+                        <div class="eo-card-badge">START HERE</div>
+                        <div class="eo-card-title">ICP Clarity Scoring</div>
+                        <div class="eo-card-desc">Comprehensive buyer clarity assessment using Brunson's frameworks</div>
+                        <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
+                        <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
                     </div>
 
                     <!-- Card 2: Market Attractiveness -->
-                    <div class="eo-card">
+                    <div class="eo-card" data-tool="market">
                         <div class="eo-card-icon">🎯</div>
                         <div class="eo-card-badge">DEEP DIVE</div>
                         <div class="eo-card-title">Market Attractiveness Scoring</div>
@@ -796,40 +831,60 @@
                         <button class="eo-card-btn" onclick="openTool('market')">Score Your Market →</button>
                     </div>
 
-                    <!-- Card 3: ICP Clarity -->
-                    <div class="eo-card">
-                        <div class="eo-card-icon">👤</div>
-                        <div class="eo-card-badge">DEEP DIVE</div>
-                        <div class="eo-card-title">ICP Clarity Scoring</div>
-                        <div class="eo-card-desc">Comprehensive buyer clarity assessment using Brunson's frameworks</div>
-                        <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
-                        <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
+                    <!-- Card 3: Strategy Selector -->
+                    <div class="eo-card" data-tool="strategy">
+                        <div class="eo-card-icon">🧭</div>
+                        <div class="eo-card-badge">STRATEGY</div>
+                        <div class="eo-card-title">Strategy Selector</div>
+                        <div class="eo-card-desc">Find your highest-probability MicroSaaS strategy path</div>
+                        <div class="eo-card-source">7 questions · 4 strategy paths</div>
+                        <button class="eo-card-btn" onclick="openTool('strategy')">Find Your Strategy →</button>
                     </div>
 
                     <!-- Card 4: GTM Fitness -->
-                    <div class="eo-card">
+                    <div class="eo-card" data-tool="gtm">
                         <div class="eo-card-icon">🚀</div>
                         <div class="eo-card-badge">DEEP DIVE</div>
                         <div class="eo-card-title">GTM Fitness Scoring</div>
                         <div class="eo-card-desc">Evaluate your readiness across 13 GTM motions</div>
-                        <div class="eo-card-source">Based on SalesMfast GTM Matrix</div>
+                        <div class="eo-card-source">Based on Entrepreneurs Oasis MENA GTM Matrix</div>
                         <button class="eo-card-btn" onclick="openTool('gtm')">Score Your GTM →</button>
                     </div>
+
+                    <!-- Card 5: Project Files -->
+                    <div class="eo-card" data-tool="projectFiles">
+                        <div class="eo-card-icon">🗂️</div>
+                        <div class="eo-card-badge">FINAL STEP</div>
+                        <div class="eo-card-title">MicroSaaS Project Files</div>
+                        <div class="eo-card-desc">Assess your file readiness for Claude Desktop. 20 questions.</div>
+                        <div class="eo-card-source">Based on Entrepreneurs Oasis MENA File Framework</div>
+                        <button class="eo-card-btn" onclick="openTool('projectFiles')">Score Your Files →</button>
+                    </div>
+                </div>
+
+                <!-- Generate Project Brief (visible when all 5 complete) -->
+                <div id="btn-generate-brief" style="display:none; text-align:center; margin: 2rem 0;">
+                    <button onclick="generateProjectBrief()" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #FF6600, #CC5200); color: #FFFFFF; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(255,102,0,0.3);">
+                        📄 Generate Project Brief (MD)
+                    </button>
+                    <p style="color: #A3A3A3; font-size: 13px; margin-top: 0.5rem;">All 5 assessments complete! Download your consolidated project brief.</p>
                 </div>
 
                 <!-- Flow Guide -->
                 <div class="eo-flow">
                     <div class="eo-flow-title">Assessment Flow Guide</div>
                     <div class="eo-flow-chart">
-                        <div class="eo-flow-step highlight">Strategy Selector</div>
+                        <div class="eo-flow-step highlight">ICP Clarity</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">Market Attractiveness</div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step">ICP Clarity</div>
+                        <div class="eo-flow-step">Strategy Selector</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">GTM Fitness</div>
+                        <div class="eo-flow-arrow">→</div>
+                        <div class="eo-flow-step">Project Files</div>
                     </div>
-                    <div class="eo-flow-desc">Start with the quick diagnostic. Then go deep on each dimension. Each assessment builds on the previous one.</div>
+                    <div class="eo-flow-desc">Start with ICP Clarity to define your buyer. Then validate your market, pick your strategy, and plan your GTM. Each assessment builds on the previous one.</div>
                 </div>
             </div>
 
@@ -842,6 +897,7 @@
                     <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
                         <input type="email" id="lookup-email" placeholder="your@email.com" style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 6px; color: #FFFFFF; font-size: 14px; font-family: 'Inter', sans-serif; outline: none;" onfocus="this.style.borderColor='#FF6600'" onblur="this.style.borderColor='#2a2a2a'">
                         <button onclick="fetchMyScores()" style="padding: 0.75rem 1.5rem; background: #FF6600; color: #000; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap;">Fetch My Scores</button>
+                        <button onclick="loadFromLocalData()" style="padding: 0.75rem 1.5rem; background: transparent; color: #FF6600; border: 1px solid #FF6600; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap;">Load Local Data</button>
                     </div>
                     <div id="lookup-status" style="margin-top: 0.75rem; font-size: 13px; color: #A3A3A3;"></div>
                 </div>
@@ -1010,22 +1066,28 @@
                 <!-- 2x2 Matrix -->
                 <div class="eo-matrix" id="matrix-section" style="display: none;">
                     <div class="eo-matrix-title">Demand-First Matrix Position</div>
-                    <div class="eo-matrix-grid">
-                        <div class="eo-matrix-cell" id="matrix-cell-1">
-                            <div class="eo-matrix-label">SCALE</div>
-                            <div class="eo-matrix-desc">Strong market pull + strong execution. Go fast.</div>
-                        </div>
-                        <div class="eo-matrix-cell" id="matrix-cell-2">
-                            <div class="eo-matrix-label">VALIDATE</div>
-                            <div class="eo-matrix-desc">Market wants it, but you can't execute yet.</div>
-                        </div>
-                        <div class="eo-matrix-cell" id="matrix-cell-3">
-                            <div class="eo-matrix-label">OPTIMIZE</div>
-                            <div class="eo-matrix-desc">You can execute, but market pull is weak.</div>
-                        </div>
-                        <div class="eo-matrix-cell" id="matrix-cell-4">
-                            <div class="eo-matrix-label">BUILD</div>
-                            <div class="eo-matrix-desc">Both market pull and execution are weak.</div>
+                    <div class="eo-matrix-axes">
+                        <div class="eo-matrix-ylabel">Market Pull →</div>
+                        <div class="eo-matrix-inner">
+                            <div class="eo-matrix-grid">
+                                <div class="eo-matrix-cell" id="matrix-cell-1">
+                                    <div class="eo-matrix-label">SCALE</div>
+                                    <div class="eo-matrix-desc">Strong pull + execution</div>
+                                </div>
+                                <div class="eo-matrix-cell" id="matrix-cell-2">
+                                    <div class="eo-matrix-label">VALIDATE</div>
+                                    <div class="eo-matrix-desc">Market wants it, can't execute yet</div>
+                                </div>
+                                <div class="eo-matrix-cell" id="matrix-cell-3">
+                                    <div class="eo-matrix-label">OPTIMIZE</div>
+                                    <div class="eo-matrix-desc">Can execute, weak pull</div>
+                                </div>
+                                <div class="eo-matrix-cell" id="matrix-cell-4">
+                                    <div class="eo-matrix-label">BUILD</div>
+                                    <div class="eo-matrix-desc">Both weak, start here</div>
+                                </div>
+                            </div>
+                            <div class="eo-matrix-xlabel">Execution Readiness →</div>
                         </div>
                     </div>
                 </div>
@@ -1039,7 +1101,7 @@
                 <!-- CTA Section -->
                 <div class="eo-cta">
                     <div class="eo-cta-title">Ready to Move Forward?</div>
-                    <button class="eo-cta-button" onclick="alert('Book your Free Hour call to get personalized guidance.')">Book Your Free Hour →</button>
+                    <button class="eo-cta-button" onclick="alert('Join the MENA MicroSaaS Movement — 91+ founders on the same journey.')">Join MENA MicroSaaS Movement →</button>
                     <button class="eo-cta-button" onclick="alert('Join the EO Community: 91+ MENA founders on the same journey.')">Join EO Community →</button>
                     <button class="eo-cta-button" onclick="downloadScorecard()">Download Your Scorecard</button>
                 </div>
@@ -1281,7 +1343,7 @@
             let content = '';
 
             if (scores.mas >= 60 && scores.icp >= 60 && scores.gtm >= 60) {
-                content = '✓ You\'re ready for the 8-Week MicroSaaS Sprint. Book your Free Hour to get started on execution.';
+                content = '✓ You\'re ready for the 8-Week MicroSaaS Sprint. Join the MENA MicroSaaS Movement to get started on execution.';
             } else if (scores.mas >= 60 && (scores.icp < 60 || scores.gtm < 60)) {
                 content = '✓ Strong market signal. Invest 2 weeks in ICP research and GTM validation before launching heavy campaigns.';
             } else if (scores.gtm >= 60 && scores.mas < 60) {
@@ -1407,9 +1469,17 @@
             ctx.fillText('GTM', width - 50, height - 10);
         }
 
-        // Load scores from localStorage
+        // Load scores from localStorage (eo_completion_status saved by each scorecard)
         function loadScores() {
+            // First try eo_completion_status (saved by individual scorecards)
+            const status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
             const saved = JSON.parse(localStorage.getItem('eo-scores')) || { mas: 0, icp: 0, gtm: 0 };
+
+            // Merge: completion_status takes priority over manual slider values
+            if (status.mas && status.mas.score > 0) saved.mas = status.mas.score;
+            if (status.icp && status.icp.score > 0) saved.icp = status.icp.score;
+            if (status.gtm && status.gtm.score > 0) saved.gtm = status.gtm.score;
+
             scores = saved;
 
             document.getElementById('mas-slider').value = scores.mas;
@@ -1417,11 +1487,80 @@
             document.getElementById('gtm-slider').value = scores.gtm;
 
             updateScores();
+
+            // Update hub completion states
+            updateHubStates(status);
         }
 
         // Save scores
         function saveScores() {
             localStorage.setItem('eo-scores', JSON.stringify(scores));
+        }
+
+        // Get completion status for all assessments
+        function getCompletionStatus() {
+            return JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+        }
+
+        // Update hub card states based on completion
+        function updateHubStates(status) {
+            const cards = {
+                icp: document.querySelector('[data-tool="icp"]'),
+                market: document.querySelector('[data-tool="market"]'),
+                strategy: document.querySelector('[data-tool="strategy"]'),
+                gtm: document.querySelector('[data-tool="gtm"]'),
+                projectFiles: document.querySelector('[data-tool="projectFiles"]')
+            };
+
+            const statusMap = {
+                icp: status.icp,
+                market: status.mas,
+                strategy: status.strategy,
+                gtm: status.gtm,
+                projectFiles: status.pf
+            };
+
+            Object.keys(cards).forEach(function(key) {
+                const card = cards[key];
+                if (!card) return;
+                const badge = card.querySelector('.eo-card-badge');
+                if (statusMap[key] && statusMap[key].score > 0) {
+                    if (badge) {
+                        badge.textContent = '✅ DONE (' + statusMap[key].score + ')';
+                        badge.style.background = '#22C55E';
+                        badge.style.color = '#FFFFFF';
+                    }
+                }
+            });
+
+            // Show "Generate Project Brief" button if all 5 complete
+            const allComplete = status.icp && status.mas && status.strategy && status.gtm && status.pf;
+            const briefBtn = document.getElementById('btn-generate-brief');
+            if (briefBtn) {
+                briefBtn.style.display = allComplete ? 'block' : 'none';
+            }
+        }
+
+        // Load from local assessment data (fallback when webhook fails)
+        function loadFromLocalData() {
+            const status = getCompletionStatus();
+            const statusEl = document.getElementById('lookup-status');
+
+            if (!status || Object.keys(status).length === 0) {
+                statusEl.textContent = 'No local assessment data found. Complete at least one assessment first.';
+                statusEl.style.color = '#F59E0B';
+                return;
+            }
+
+            if (status.mas) { scores.mas = status.mas.score; document.getElementById('mas-slider').value = scores.mas; document.getElementById('mas-display').textContent = scores.mas; }
+            if (status.icp) { scores.icp = status.icp.score; document.getElementById('icp-slider').value = scores.icp; document.getElementById('icp-display').textContent = scores.icp; }
+            if (status.gtm) { scores.gtm = status.gtm.score; document.getElementById('gtm-slider').value = scores.gtm; document.getElementById('gtm-display').textContent = scores.gtm; }
+
+            renderDashboard();
+
+            const count = [status.icp, status.mas, status.gtm].filter(function(s) { return s && s.score > 0; }).length;
+            statusEl.textContent = 'Loaded ' + count + '/3 pillar scores from local data.';
+            statusEl.style.color = '#22C55E';
         }
 
         // Download scorecard
@@ -1448,7 +1587,7 @@ NEXT STEPS:
 ${document.getElementById('nextsteps-content').textContent}
 
 Download full assessment dashboard at:
-https://salesMfast.com/eo-assessment
+https://eomicro.saas/eo-assessment
             `;
 
             const element = document.createElement('a');
@@ -1466,7 +1605,8 @@ https://salesMfast.com/eo-assessment
                 strategy: 'EO-Strategy-Selector.html',
                 market: 'EO-Market-Attractiveness-Scoring.html',
                 icp: 'EO-ICP-Clarity-Scoring.html',
-                gtm: 'EO-GTM-Fitness-Scoring.html'
+                gtm: 'EO-GTM-Fitness-Scoring.html',
+                projectFiles: 'EO-Project-Files-Scoring.html'
             };
             if (toolUrls[tool]) {
                 window.location.href = toolUrls[tool];
@@ -1478,7 +1618,7 @@ https://salesMfast.com/eo-assessment
 
         // Fetch scores from backend
         async function fetchMyScores() {
-            const email = document.getElementById('lookup-email').value.trim();
+            const email = document.getElementById('lookup-email').value.trim().toLowerCase();
             const statusEl = document.getElementById('lookup-status');
 
             if (!email || !email.includes('@')) {
@@ -1487,7 +1627,7 @@ https://salesMfast.com/eo-assessment
                 return;
             }
 
-            statusEl.textContent = 'Fetching your scores... (this may take 30-60 seconds for AI analysis)';
+            statusEl.textContent = 'Fetching your scores... (this may take 30-60 seconds)';
             statusEl.style.color = '#FF6600';
 
             try {
@@ -1539,8 +1679,10 @@ https://salesMfast.com/eo-assessment
                 statusEl.style.color = '#22C55E';
 
             } catch (err) {
-                statusEl.textContent = 'Error fetching scores: ' + err.message + '. Try again or use manual sliders.';
-                statusEl.style.color = '#EF4444';
+                statusEl.textContent = 'Could not reach server. Loading from local data instead...';
+                statusEl.style.color = '#F59E0B';
+                // Fallback to local data
+                setTimeout(function() { loadFromLocalData(); }, 500);
             }
         }
 
@@ -1610,6 +1752,108 @@ https://salesMfast.com/eo-assessment
             }
         }
 
+        // Generate consolidated project-brief.md
+        function generateProjectBrief() {
+            const status = getCompletionStatus();
+            const today = new Date();
+            const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+            const overall = getOverallScore();
+            const bandInfo = getBandInfo(overall);
+
+            let md = '';
+            md += '# Entrepreneurs Oasis MENA — Founder Project Brief\n\n';
+            md += '**Generated:** ' + dateStr + '\n';
+            md += '**Overall Readiness:** ' + overall + '/100 — ' + bandInfo.band + '\n\n';
+            md += '> ' + bandInfo.desc + '\n\n';
+
+            md += '## Pillar Scores\n\n';
+            md += '| Pillar | Score | Band |\n';
+            md += '|--------|-------|------|\n';
+            md += '| Market Attractiveness (MAS) | ' + scores.mas + '/100 | ' + getPillarBand(scores.mas) + ' |\n';
+            md += '| ICP Clarity | ' + scores.icp + '/100 | ' + getPillarBand(scores.icp) + ' |\n';
+            md += '| GTM Fitness | ' + scores.gtm + '/100 | ' + getPillarBand(scores.gtm) + ' |\n';
+
+            if (status.strategy) {
+                md += '| Strategy Path | ' + (status.strategy.path || 'N/A') + ' | ' + (status.strategy.score || 'N/A') + '% |\n';
+            }
+            if (status.pf) {
+                md += '| Project Files | ' + status.pf.score + '/100 | ' + (status.pf.score >= 80 ? 'Ready' : status.pf.score >= 60 ? 'Partial' : 'Gaps') + ' |\n';
+            }
+            md += '\n';
+
+            md += '## Demand-First Matrix Position\n\n';
+            const execReady = Math.round((scores.icp + scores.gtm) / 2);
+            const marketPull = scores.mas;
+            let quadrant = 'BUILD';
+            if (marketPull >= 60 && execReady >= 60) quadrant = 'SCALE';
+            else if (marketPull >= 60) quadrant = 'VALIDATE';
+            else if (execReady >= 60) quadrant = 'OPTIMIZE';
+            md += '- **Market Pull:** ' + marketPull + ' | **Execution Readiness:** ' + execReady + '\n';
+            md += '- **Quadrant:** ' + quadrant + '\n\n';
+
+            md += '## Bottleneck Analysis\n\n';
+            const lowest = Math.min(scores.mas, scores.icp, scores.gtm);
+            if (lowest === scores.mas) md += 'Your **Market Attractiveness** is the biggest bottleneck. Focus on validating buyer pain and willingness to pay.\n\n';
+            else if (lowest === scores.icp) md += 'Your **ICP Clarity** is the biggest bottleneck. Sharpen your ideal customer definition before scaling GTM.\n\n';
+            else md += 'Your **GTM Fitness** is the biggest bottleneck. Build your go-to-market infrastructure before investing in product.\n\n';
+
+            md += '## Individual Assessment Scores\n\n';
+            const assessmentKeys = [
+                { key: 'icp', name: 'ICP Clarity', storageKey: 'eo_icp-clarity_answers' },
+                { key: 'mas', name: 'Market Attractiveness', storageKey: 'eo_market-attractiveness_answers' },
+                { key: 'strategy', name: 'Strategy Selector', storageKey: 'eo_strategy-selector_answers' },
+                { key: 'gtm', name: 'GTM Fitness', storageKey: 'eo_gtm-fitness_answers' },
+                { key: 'pf', name: 'Project Files', storageKey: 'eo_project-files_answers' }
+            ];
+
+            assessmentKeys.forEach(function(a) {
+                const s = status[a.key];
+                if (s) {
+                    md += '### ' + a.name + '\n';
+                    md += '- **Score:** ' + s.score + (a.key === 'strategy' ? '%' : '/100') + '\n';
+                    md += '- **Date:** ' + (s.date || 'N/A') + '\n';
+                    if (s.path) md += '- **Primary Path:** ' + s.path + '\n';
+                    md += '\n';
+                }
+            });
+
+            md += '## Next Steps\n\n';
+            if (overall >= 80) {
+                md += '1. Execute your GTM strategy with your top motions\n';
+                md += '2. Build your MicroSaaS MVP using Claude Desktop with your project files\n';
+                md += '3. Target first 10 paying customers within 30 days\n';
+            } else if (overall >= 60) {
+                md += '1. Address your weakest pillar (' + (lowest === scores.mas ? 'Market' : lowest === scores.icp ? 'ICP' : 'GTM') + ') before scaling\n';
+                md += '2. Complete any missing project files\n';
+                md += '3. Run 5+ customer validation conversations\n';
+            } else {
+                md += '1. Start with ICP clarity — talk to 10+ potential buyers\n';
+                md += '2. Validate market demand before building product\n';
+                md += '3. Build project files as you learn\n';
+            }
+            md += '\n';
+
+            md += '## Claude Prompt for Build Phase\n\n';
+            md += '"I am a MENA-based MicroSaaS founder. My assessment scores are: MAS ' + scores.mas + '/100, ICP ' + scores.icp + '/100, GTM ' + scores.gtm + '/100 (Overall: ' + overall + '/100 — ' + bandInfo.band + '). ';
+            if (status.strategy && status.strategy.path) {
+                md += 'My primary strategy path is ' + status.strategy.path + '. ';
+            }
+            md += 'Help me build a 90-day action plan to move from my current position to LAUNCH READY, prioritizing my weakest area first."\n\n';
+            md += '---\n';
+            md += '*Generated by Entrepreneurs Oasis MENA Founder Assessment Suite*\n';
+
+            // Download
+            const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'project-brief-' + dateStr + '.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
         // Check URL params for pre-loaded scores (from assessment completion redirects)
         function checkUrlParams() {
             const params = new URLSearchParams(window.location.search);
@@ -1625,6 +1869,23 @@ https://salesMfast.com/eo-assessment
         window.addEventListener('beforeunload', saveScores);
         loadScores();
         checkUrlParams();
+
+        // Auto-fill email from shared localStorage
+        (function() {
+            try {
+                const storedEmail = localStorage.getItem('eo_user_email');
+                const lookupEl = document.getElementById('lookup-email');
+                if (storedEmail && lookupEl && !lookupEl.value) {
+                    lookupEl.value = storedEmail;
+                }
+            } catch (e) { /* silent */ }
+        })();
+
+        // Auto-update hub states on page load
+        (function() {
+            const status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            updateHubStates(status);
+        })();
     </script>
 </body>
 </html>

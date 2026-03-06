@@ -1,1762 +1,1815 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTM Fitness Scoring — SalesMfast</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        #gtm-scorer {
-            --bg: #000000;
-            --bg-alt: #0A0A0A;
-            --bg-card: rgba(255,255,255,0.04);
-            --accent: #FF6600;
-            --accent-hover: #CC5200;
-            --text: #FFFFFF;
-            --text-muted: #A3A3A3;
-            --border: rgba(255,255,255,0.08);
-            --success: #22C55E;
-            --error: #EF4444;
-            --warning: #F59E0B;
-        }
-
-        #gtm-scorer {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* NAVIGATION */
-        .gtm-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 72px;
-            background: var(--bg-alt);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            z-index: 100;
-            gap: 40px;
-        }
-
-        .gtm-logo {
-            font-weight: 700;
-            font-size: 18px;
-            letter-spacing: -0.5px;
-            min-width: 180px;
-        }
-
-        .gtm-logo span {
-            color: var(--accent);
-        }
-
-        .gtm-progress-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            max-width: 400px;
-        }
-
-        .gtm-progress-bar {
-            flex: 1;
-            height: 4px;
-            background: var(--bg-card);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .gtm-progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #FF8833);
-            width: 0%;
-            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .gtm-progress-text {
-            font-size: 13px;
-            color: var(--text-muted);
-            min-width: 45px;
-            text-align: right;
-        }
-
-        .gtm-nav-actions {
-            display: flex;
-            gap: 12px;
-        }
-
-        .gtm-btn-nav {
-            padding: 8px 16px;
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text);
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .gtm-btn-nav:hover {
-            background: var(--bg-card);
-            border-color: var(--accent);
-        }
-
-        /* MAIN CONTENT */
-        .gtm-container {
-            margin-top: 72px;
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-screen {
-            display: none;
-            animation: fadeIn 0.4s ease-in;
-        }
-
-        .gtm-screen.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* WELCOME SCREEN */
-        .gtm-welcome {
-            text-align: center;
-        }
-
-        .gtm-welcome h1 {
-            font-size: 42px;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
-        }
-
-        .gtm-welcome p {
-            font-size: 16px;
-            color: var(--text-muted);
-            margin-bottom: 48px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-motions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 12px;
-            margin-bottom: 48px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-motion-preview {
-            padding: 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            text-align: center;
-            cursor: default;
-            transition: all 0.3s ease;
-            color: var(--text);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .gtm-motion-preview:hover {
-            background: rgba(255, 102, 0, 0.08);
-            border-color: var(--accent);
-        }
-
-        .gtm-welcome-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 48px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-stat {
-            padding: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-        }
-
-        .gtm-stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .gtm-stat-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
-
-        /* FORMS */
-        .gtm-phase {
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-phase h2 {
-            font-size: 32px;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .gtm-phase-subtitle {
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-size: 14px;
-        }
-
-        .gtm-question {
-            margin-bottom: 40px;
-        }
-
-        .gtm-question-label {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            display: block;
-            color: var(--text);
-        }
-
-        .gtm-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .gtm-option {
-            padding: 16px;
-            background: var(--bg-card);
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            color: var(--text);
-        }
-
-        .gtm-option:hover {
-            background: rgba(255, 102, 0, 0.08);
-            border-color: var(--accent);
-        }
-
-        .gtm-option.selected {
-            background: rgba(255, 102, 0, 0.15);
-            border-color: var(--accent);
-        }
-
-        .gtm-option input[type="radio"] {
-            display: none;
-        }
-
-        /* BUTTONS */
-        .gtm-btn-primary {
-            padding: 12px 32px;
-            background: var(--accent);
-            border: none;
-            border-radius: 6px;
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .gtm-btn-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .gtm-btn-primary:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .gtm-form-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-
-        /* RESULTS */
-        .gtm-results {
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .gtm-score-card {
-            text-align: center;
-            margin-bottom: 60px;
-            padding: 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
-
-        .gtm-score-circle {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: conic-gradient(var(--accent) 0deg, var(--accent) var(--score-angle), var(--bg-card) var(--score-angle));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            box-shadow: 0 20px 60px rgba(255, 102, 0, 0.15);
-            animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes scaleIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .gtm-score-circle-inner {
-            text-align: center;
-        }
-
-        .gtm-score-number {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .gtm-score-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .gtm-score-band {
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 16px;
-            color: var(--text);
-        }
-
-        .gtm-band-primary { color: var(--success); }
-        .gtm-band-secondary { color: var(--warning); }
-        .gtm-band-conditional { color: #FF8833; }
-        .gtm-band-skip { color: var(--text-muted); }
-
-        /* MOTIONS LIST */
-        .gtm-motions-list {
-            margin-bottom: 60px;
-        }
-
-        .gtm-motions-list h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            font-weight: 700;
-        }
-
-        .gtm-motion-card {
-            padding: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .gtm-motion-card:hover {
-            background: rgba(255, 102, 0, 0.08);
-            border-color: var(--accent);
-        }
-
-        .gtm-motion-card.expanded {
-            background: rgba(255, 102, 0, 0.12);
-        }
-
-        .gtm-motion-header {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .gtm-motion-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .gtm-motion-badge {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-
-        .gtm-badge-primary {
-            background: rgba(34, 197, 94, 0.2);
-            color: var(--success);
-        }
-
-        .gtm-badge-secondary {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-        }
-
-        .gtm-badge-conditional {
-            background: rgba(255, 136, 51, 0.2);
-            color: #FF8833;
-        }
-
-        .gtm-badge-skip {
-            background: rgba(163, 163, 163, 0.2);
-            color: var(--text-muted);
-        }
-
-        .gtm-motion-metrics {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .gtm-metric {
-            flex: 1;
-        }
-
-        .gtm-metric-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .gtm-metric-bar {
-            height: 6px;
-            background: var(--border);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .gtm-metric-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 3px;
-        }
-
-        .gtm-motion-description {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 12px;
-        }
-
-        .gtm-motion-expanded {
-            display: none;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-            margin-top: 16px;
-        }
-
-        .gtm-motion-card.expanded .gtm-motion-expanded {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .gtm-recommendation {
-            font-size: 13px;
-            line-height: 1.6;
-            color: var(--text);
-        }
-
-        /* TOP 3 SECTION */
-        .gtm-top-three {
-            margin-bottom: 60px;
-        }
-
-        .gtm-top-three h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            font-weight: 700;
-        }
-
-        .gtm-top-three-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .gtm-top-card {
-            padding: 24px;
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(255, 102, 0, 0.05));
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 8px;
-        }
-
-        .gtm-top-card h4 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--success);
-        }
-
-        .gtm-top-card-section {
-            margin-bottom: 16px;
-            font-size: 13px;
-        }
-
-        .gtm-top-card-section strong {
-            color: var(--text);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .gtm-top-card-section p {
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        /* SPECIAL INSIGHT */
-        .gtm-special-insight {
-            padding: 24px;
-            background: linear-gradient(135deg, rgba(255, 102, 0, 0.15), rgba(255, 102, 0, 0.05));
-            border-left: 4px solid var(--accent);
-            border-radius: 8px;
-            margin-bottom: 60px;
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--text);
-        }
-
-        .gtm-special-insight strong {
-            color: var(--accent);
-        }
-
-        /* IMPROVEMENTS */
-        .gtm-improvements {
-            margin-bottom: 60px;
-        }
-
-        .gtm-improvements h3 {
-            font-size: 20px;
-            margin-bottom: 24px;
-            font-weight: 700;
-        }
-
-        .gtm-improvement-item {
-            padding: 20px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .gtm-improvement-motion {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-
-        .gtm-improvement-detail {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .gtm-improvement-actions {
-            font-size: 12px;
-            color: var(--accent);
-            margin-top: 8px;
-        }
-
-        /* CTA SECTION */
-        .gtm-cta-section {
-            text-align: center;
-            padding: 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 40px;
-        }
-
-        .gtm-cta-section h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .gtm-cta-section p {
-            color: var(--text-muted);
-            margin-bottom: 24px;
-        }
-
-        .gtm-cta-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .gtm-btn-cta {
-            padding: 12px 28px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            font-size: 14px;
-        }
-
-        .gtm-btn-cta-primary {
-            background: var(--accent);
-            color: var(--text);
-        }
-
-        .gtm-btn-cta-primary:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .gtm-btn-cta-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .gtm-btn-cta-secondary:hover {
-            background: var(--bg-card);
-            border-color: var(--accent);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .gtm-nav {
-                padding: 0 20px;
-                gap: 20px;
-            }
-
-            .gtm-container {
-                padding: 40px 20px;
-            }
-
-            .gtm-welcome h1 {
-                font-size: 28px;
-            }
-
-            .gtm-motions-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-
-            .gtm-welcome-stats {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-
-            .gtm-motion-metrics {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .gtm-top-three-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .gtm-progress-wrapper {
-                max-width: none;
-            }
-        }
-
-        /* CONTACT FORM */
-        .gtm-contact-screen { display: none; text-align: center; padding-top: 100px; }
-        .gtm-contact-form { max-width: 480px; margin: 0 auto; }
-        .gtm-contact-form h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-        .gtm-contact-form p { color: var(--text-muted); margin-bottom: 32px; font-size: 15px; }
-        .gtm-contact-form .gtm-form-group { margin-bottom: 20px; text-align: left; }
-        .gtm-contact-form label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .gtm-contact-form input { width: 100%; padding: 14px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 15px; font-family: 'Inter', sans-serif; transition: border-color 0.3s; }
-        .gtm-contact-form input:focus { outline: none; border-color: var(--accent); }
-        .gtm-contact-form input::placeholder { color: rgba(255,255,255,0.25); }
-        .gtm-contact-form button[type="submit"] { width: 100%; margin-top: 12px; }
-        .gtm-skip-link { display: block; margin-top: 16px; color: var(--text-muted); font-size: 13px; cursor: pointer; text-decoration: underline; }
-        .gtm-skip-link:hover { color: var(--text); }
-
-        /* LOADING OVERLAY */
-        .gtm-loading-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; flex-direction: column; gap: 24px; }
-        .gtm-loading-spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top: 4px solid var(--accent); border-radius: 50%; animation: gtmSpin 1s linear infinite; }
-        @keyframes gtmSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .gtm-loading-text { color: var(--text); font-size: 16px; font-weight: 500; }
-
-        /* AI ENHANCED SECTIONS */
-        .gtm-ai-insight { background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(255,102,0,0.05)); border: 1px solid rgba(255,102,0,0.3); border-radius: 12px; padding: 24px 32px; margin-bottom: 32px; text-align: center; }
-        .gtm-ai-insight strong { color: var(--accent); }
-        .gtm-ai-insight p { font-size: 18px; font-weight: 500; line-height: 1.6; margin-top: 8px; }
-        .gtm-ai-sequencing { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
-        .gtm-ai-sequencing h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
-        .gtm-ai-sequencing p { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
-        .gtm-ai-avoid { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 24px; margin-bottom: 40px; }
-        .gtm-ai-avoid h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: var(--error); }
-        .gtm-ai-avoid p { font-size: 14px; line-height: 1.6; color: var(--text-muted); }
-        .gtm-saved-badge { display: inline-block; background: var(--success); color: #000; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-top: 16px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrepreneurs Oasis MENA — GTM Fitness Scoring</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --eo-dark: #1A1A2E;
+    --eo-orange: #E94D1B;
+    --eo-beige: #FAF5EF;
+    --eo-card-bg: #FFFFFF;
+    --eo-gray-text: #6B7280;
+    --eo-gray-border: #E5E7EB;
+    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --eo-radius: 12px;
+    --eo-radius-sm: 8px;
+    --eo-transition: 300ms ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--eo-dark);
+    color: #FFFFFF;
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.eo-header {
+    text-align: center;
+    padding: 28px 20px 12px;
+}
+.eo-header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
+}
+.eo-header h1 span { color: var(--eo-orange); }
+
+/* Section Label */
+.section-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #9CA3AF;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Progress Bar */
+.progress-wrapper {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+}
+.progress-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.progress-meta .section-label { margin-bottom: 0; text-align: left; }
+.progress-counter {
+    font-size: 13px;
+    color: #9CA3AF;
+    font-weight: 500;
+}
+.progress-track {
+    width: 100%;
+    height: 8px;
+    background: #2D2D44;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background: var(--eo-orange);
+    border-radius: 4px;
+    transition: width var(--eo-transition);
+    width: 0%;
+}
+
+/* Screens */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Welcome / Email Capture */
+.email-capture {
+    max-width: 480px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+.email-capture h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    margin-bottom: 8px;
+}
+.email-capture p {
+    color: var(--eo-gray-text);
+    margin-bottom: 28px;
+    font-size: 15px;
+}
+.email-capture input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--eo-transition);
+    margin-bottom: 16px;
+}
+.email-capture input:focus { border-color: var(--eo-orange); }
+.email-capture .btn-primary { width: 100%; }
+
+/* Question Card */
+.question-card {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 32px;
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+}
+.question-card.shake {
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+
+.question-text {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    text-align: center;
+    margin-bottom: 28px;
+    line-height: 1.35;
+}
+
+/* Options */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.option-card {
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--eo-dark);
+    transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
+    user-select: none;
+    line-height: 1.4;
+}
+.option-card:hover {
+    border-color: var(--eo-orange);
+}
+.option-card.selected {
+    background: var(--eo-orange);
+    border-color: var(--eo-orange);
+    color: #FFFFFF;
+}
+.option-card.focused {
+    outline: 2px solid var(--eo-orange);
+    outline-offset: 2px;
+}
+
+/* Nav Buttons */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+    gap: 12px;
+}
+.btn {
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    cursor: pointer;
+    transition: all var(--eo-transition);
+    border: none;
+    outline: none;
+}
+.btn-prev {
+    background: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+}
+.btn-prev:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
+.btn-next {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+.btn-next:hover { background: #d4441a; }
+.btn-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+.btn-primary {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 14px 32px;
+    border: none;
+    border-radius: var(--eo-radius-sm);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+}
+.btn-primary:hover { background: #d4441a; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Toast */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--eo-dark);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    transition: transform 0.4s ease;
+    white-space: nowrap;
+}
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Contact Form */
+.contact-screen {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.contact-card {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 32px;
+}
+.contact-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    text-align: center;
+    margin-bottom: 6px;
+}
+.contact-card .subtitle {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    text-align: center;
+    margin-bottom: 24px;
+}
+.form-group {
+    margin-bottom: 16px;
+}
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--eo-dark);
+    margin-bottom: 6px;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--eo-transition);
+}
+.form-group input:focus { border-color: var(--eo-orange); }
+.contact-card .btn-primary { width: 100%; margin-top: 8px; }
+.skip-link {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: inherit;
+}
+.skip-link:hover { color: var(--eo-orange); }
+
+/* Loading Overlay */
+.loading-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 26, 46, 0.95);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--eo-gray-border);
+    border-top-color: var(--eo-orange);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-overlay p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+/* Results Screen */
+.results-screen {
+    max-width: 640px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+}
+
+/* Score Hero */
+.score-hero {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 40px 32px;
+    text-align: center;
+    margin-bottom: 24px;
+}
+.score-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    border: 6px solid;
+}
+.score-circle .score-number {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+}
+.score-circle .score-total {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--eo-gray-text);
+}
+.score-circle-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.band-label {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.band-subtitle {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+}
+.band-desc {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    margin-top: 12px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Band Colors */
+.band-elite .score-circle { border-color: #22C55E; }
+.band-elite .band-label { color: #22C55E; }
+.band-elite .score-number { color: #22C55E; }
+
+.band-strong .score-circle { border-color: #3B82F6; }
+.band-strong .band-label { color: #3B82F6; }
+.band-strong .score-number { color: #3B82F6; }
+
+.band-emerging .score-circle { border-color: #F59E0B; }
+.band-emerging .band-label { color: #F59E0B; }
+.band-emerging .score-number { color: #F59E0B; }
+
+.band-weak .score-circle { border-color: #EF4444; }
+.band-weak .band-label { color: #EF4444; }
+.band-weak .score-number { color: #EF4444; }
+
+/* Motion Cards */
+.results-card {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+.results-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 20px;
+}
+
+.motion-rank {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.motion-rank-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--eo-orange);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+.motion-rank-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--eo-dark);
+}
+.motion-rank-score {
+    margin-left: auto;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--eo-orange);
+}
+
+.motion-detail-section {
+    margin-bottom: 16px;
+}
+.motion-detail-section:last-child { margin-bottom: 0; }
+.motion-detail-section strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.motion-detail-section p {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    line-height: 1.6;
+}
+
+/* AI Section */
+.ai-section {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 28px;
+    margin-bottom: 24px;
+    border-left: 4px solid var(--eo-orange);
+}
+.ai-section h3 {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 12px;
+}
+.ai-badge {
+    display: inline-block;
+    background: var(--eo-orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.ai-insight {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--eo-dark);
+    margin-bottom: 16px;
+}
+.ai-plan h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--eo-dark);
+    margin-bottom: 8px;
+}
+.ai-plan p, .ai-plan li {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    line-height: 1.6;
+}
+.ai-plan ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+}
+.ai-reco-list {
+    list-style: none;
+    padding: 0;
+}
+.ai-reco-list li {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    padding: 8px 0 8px 20px;
+    position: relative;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--eo-gray-border);
+}
+.ai-reco-list li:last-child { border-bottom: none; }
+.ai-reco-list li::before {
+    content: '\2794';
+    position: absolute;
+    left: 0;
+    color: var(--eo-orange);
+}
+
+/* CTA */
+.results-cta {
+    text-align: center;
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+.results-cta .btn-primary { min-width: 280px; }
+.results-cta .btn-retake {
+    background: transparent;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.results-cta .btn-download-md {
+    background: transparent;
+    border: 2px solid var(--eo-orange);
+    color: var(--eo-orange);
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-md:hover {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+    .question-card { margin: 0 16px; padding: 24px 20px; }
+    .nav-buttons { padding: 0 16px; }
+    .question-text { font-size: 19px; }
+    .progress-wrapper { padding: 0 16px; }
+}
+@media (max-width: 400px) {
+    .nav-buttons { flex-direction: column; }
+    .btn-prev.hidden { display: none; }
+    .option-card { padding: 14px 16px; font-size: 14px; }
+    .question-text { font-size: 18px; }
+}
+</style>
 </head>
 <body>
-    <div id="gtm-scorer">
-        <!-- NAVIGATION -->
-        <nav class="gtm-nav">
-            <div class="gtm-logo">Sales<span>Mfast</span></div>
-            <div class="gtm-progress-wrapper">
-                <div class="gtm-progress-bar">
-                    <div class="gtm-progress-bar-fill"></div>
-                </div>
-                <div class="gtm-progress-text"><span id="gtm-progress-num">0</span>%</div>
-            </div>
-            <div class="gtm-nav-actions">
-                <button class="gtm-btn-nav" id="gtm-btn-reset">Reset</button>
-            </div>
-        </nav>
 
-        <!-- WELCOME SCREEN -->
-        <div class="gtm-screen active" id="gtm-welcome">
-            <div class="gtm-container">
-                <div class="gtm-welcome">
-                    <h1>Which GTM Motions Will Drive Your Growth?</h1>
-                    <p>Assess your product fit across 13 proven go-to-market strategies. Get a personalized roadmap in minutes.</p>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-                    <div class="gtm-motions-grid" id="gtm-motions-preview">
-                        <!-- Populated by JS -->
-                    </div>
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Analyzing your GTM motions...</p>
+</div>
 
-                    <div class="gtm-welcome-stats">
-                        <div class="gtm-stat">
-                            <div class="gtm-stat-value">13</div>
-                            <div class="gtm-stat-label">GTM Motions</div>
-                        </div>
-                        <div class="gtm-stat">
-                            <div class="gtm-stat-value">14</div>
-                            <div class="gtm-stat-label">Questions</div>
-                        </div>
-                        <div class="gtm-stat">
-                            <div class="gtm-stat-value">3D</div>
-                            <div class="gtm-stat-label">Scoring</div>
-                        </div>
-                    </div>
+<!-- Header -->
+<div class="eo-header">
+    <h1>Entrepreneurs <span>Oasis MENA</span></h1>
+</div>
 
-                    <button class="gtm-btn-primary" onclick="gApp.startAssessment()">Start Assessment</button>
-                </div>
-            </div>
+<!-- Screen 1: Email Capture / Welcome -->
+<div class="screen active" id="screenEmail">
+    <div class="email-capture">
+        <h2>GTM Fitness Scorecard</h2>
+        <p>14 questions. 13 GTM motions. 3D scoring. Find your highest-probability go-to-market motions.</p>
+        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
+        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
+    </div>
+</div>
+
+<!-- Screen 2: Stepper Questions -->
+<div class="screen" id="screenStepper">
+    <div class="progress-wrapper">
+        <div class="progress-meta">
+            <div class="section-label" id="sectionLabel">Section A: BUSINESS PROFILE</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 14</div>
         </div>
-
-        <!-- PHASE 1: BUSINESS PROFILE -->
-        <div class="gtm-screen" id="gtm-phase1">
-            <div class="gtm-container">
-                <div class="gtm-phase">
-                    <h2>Business Profile</h2>
-                    <p class="gtm-phase-subtitle">Let's understand your product and market dynamics.</p>
-
-                    <div id="gtm-phase1-questions">
-                        <!-- Populated by JS -->
-                    </div>
-
-                    <div class="gtm-form-actions">
-                        <button class="gtm-btn-primary" onclick="gApp.prevPhase()">Back</button>
-                        <button class="gtm-btn-primary" id="gtm-phase1-next" onclick="gApp.nextPhase()" disabled>Continue</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PHASE 2: CAPABILITY PROFILE -->
-        <div class="gtm-screen" id="gtm-phase2">
-            <div class="gtm-container">
-                <div class="gtm-phase">
-                    <h2>Capability Profile</h2>
-                    <p class="gtm-phase-subtitle">What resources and infrastructure do you have?</p>
-
-                    <div id="gtm-phase2-questions">
-                        <!-- Populated by JS -->
-                    </div>
-
-                    <div class="gtm-form-actions">
-                        <button class="gtm-btn-primary" onclick="gApp.prevPhase()">Back</button>
-                        <button class="gtm-btn-primary" id="gtm-phase2-next" onclick="gApp.calculateResults()" disabled>See Results</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- CONTACT FORM -->
-        <div id="gtm-contact" class="gtm-contact-screen" style="display:none;">
-            <div class="gtm-container">
-                <form class="gtm-contact-form" onsubmit="gApp.submitContact(event)">
-                    <h2>Get Your AI-Powered GTM Playbook</h2>
-                    <p>Enter your details to receive personalized motion sequencing and 30-day activation plans from our AI analyst.</p>
-                    <div class="gtm-form-group">
-                        <label for="gtm-contact-name">Full Name</label>
-                        <input type="text" id="gtm-contact-name" placeholder="Your name" required>
-                    </div>
-                    <div class="gtm-form-group">
-                        <label for="gtm-contact-email">Email</label>
-                        <input type="email" id="gtm-contact-email" placeholder="you@company.com" required>
-                    </div>
-                    <div class="gtm-form-group">
-                        <label for="gtm-contact-company">Company</label>
-                        <input type="text" id="gtm-contact-company" placeholder="Your company name" required>
-                    </div>
-                    <button type="submit" class="gtm-btn-primary">Get My GTM Playbook</button>
-                    <span class="gtm-skip-link" onclick="gApp.skipContact()">Skip — show results without AI analysis</span>
-                </form>
-            </div>
-        </div>
-
-        <!-- LOADING OVERLAY -->
-        <div id="gtm-loading" class="gtm-loading-overlay" style="display:none;">
-            <div class="gtm-loading-spinner"></div>
-            <div class="gtm-loading-text">Analyzing your GTM motions with AI...</div>
-            <div class="gtm-loading-text" style="font-size:14px;opacity:0.7;margin-top:8px;">This takes 10-15 seconds</div>
-        </div>
-
-        <!-- RESULTS SCREEN -->
-        <div class="gtm-screen" id="gtm-results">
-            <div class="gtm-container">
-                <div class="gtm-results">
-                    <!-- Score Card -->
-                    <div class="gtm-score-card">
-                        <div class="gtm-score-circle" id="gtm-score-circle" style="--score-angle: 0deg;">
-                            <div class="gtm-score-circle-inner">
-                                <div class="gtm-score-number" id="gtm-score-number">0</div>
-                                <div class="gtm-score-label">GTM Score</div>
-                            </div>
-                        </div>
-                        <div class="gtm-score-band" id="gtm-score-band"></div>
-                    </div>
-
-                    <!-- All Motions Ranked -->
-                    <div class="gtm-motions-list">
-                        <h3>13-Motion Ranked List</h3>
-                        <div id="gtm-all-motions">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Top 3 Section -->
-                    <div class="gtm-top-three">
-                        <h3>Top 3 Primary Motions — 30-Day Activation</h3>
-                        <div class="gtm-top-three-grid" id="gtm-top-three">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- Special MENA Insight -->
-                    <div id="gtm-special-insight-container"></div>
-
-                    <!-- Improvements -->
-                    <div class="gtm-improvements">
-                        <h3>Unlock Conditional & Skip Motions</h3>
-                        <div id="gtm-improvements-list">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-
-                    <!-- CTA -->
-                    <div class="gtm-cta-section">
-                        <h3>Ready to Execute?</h3>
-                        <p>Get personalized playbooks, tools, and sequencing from our GTM experts.</p>
-                        <div class="gtm-cta-actions">
-                            <button class="gtm-btn-cta gtm-btn-cta-primary" onclick="alert('Booking integration would go here')">Book Your Free Hour</button>
-                            <button class="gtm-btn-cta gtm-btn-cta-secondary" onclick="gApp.reset()">Retake Assessment</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
-
-    <script>
-        const MOTIONS = [
-            { id: 'dream100', name: 'Dream 100', description: 'Personalized outreach to 100 high-value targets' },
-            { id: 'x7x4x11', name: '7x4x11', description: 'Rapid multi-touch sequence across channels' },
-            { id: 'signalsniper', name: 'Signal Sniper', description: 'Trigger-based outreach on buying signals' },
-            { id: 'authorityedu', name: 'Authority Education', description: 'Educational content as thought leadership' },
-            { id: 'outcomeDemo', name: 'Outcome Demo', description: 'Results-focused product demonstrations' },
-            { id: 'bofu', name: 'BOFU SEO', description: 'High-intent bottom-funnel SEO optimization' },
-            { id: 'buildin', name: 'Build-in-Public', description: 'Transparent journey sharing and community' },
-            { id: 'waveride', name: 'Wave Riding', description: 'Capitalize on trending topics and events' },
-            { id: 'ltd', name: 'LTD', description: 'Limited-time offer urgency campaigns' },
-            { id: 'waitlist', name: 'Waitlist', description: 'Pre-launch audience building and momentum' },
-            { id: 'paid', name: 'Paid VSL', description: 'Paid video sales letter campaigns' },
-            { id: 'hammering', name: 'Hammering Deep', description: 'Aggressive sequential targeting focus' },
-            { id: 'trust', name: 'Value Trust Engine', description: 'Relationship and trust-based selling' }
-        ];
-
-        const QUESTIONS = [
-            // Phase 1: Business Profile
-            {
-                phase: 1,
-                question: 'What type of product are you building?',
-                options: [
-                    { label: 'B2B SaaS for enterprise ($1000+/mo ACV)', value: 'enterprise' },
-                    { label: 'B2B SaaS for SME ($50-500/mo ACV)', value: 'sme' },
-                    { label: 'B2C or prosumer ($10-50/mo)', value: 'b2c' },
-                    { label: 'Marketplace or platform', value: 'marketplace' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'What\'s your current sales cycle length?',
-                options: [
-                    { label: 'Same-day close — transactional', value: 'transactional' },
-                    { label: '1-2 weeks', value: 'short' },
-                    { label: '1-3 months — consultative', value: 'medium' },
-                    { label: '6+ months — enterprise', value: 'long' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'How does your buyer discover solutions?',
-                options: [
-                    { label: 'They search Google for solutions', value: 'search' },
-                    { label: 'They ask peers and trusted advisors', value: 'peers' },
-                    { label: 'They browse social media and content', value: 'social' },
-                    { label: 'They attend events and webinars', value: 'events' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'Does your product have a strong visual before/after?',
-                options: [
-                    { label: 'Yes — dramatic visual transformation', value: 'dramatic' },
-                    { label: 'Yes — dashboard/metrics improvement', value: 'metrics' },
-                    { label: 'Not really — the value is operational', value: 'operational' },
-                    { label: 'It\'s conceptual / educational', value: 'conceptual' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'What\'s your team size?',
-                options: [
-                    { label: 'Solo founder', value: 'solo' },
-                    { label: '2-3 people', value: 'small' },
-                    { label: '4-10 people', value: 'medium' },
-                    { label: '10+ people', value: 'large' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'What\'s your monthly GTM budget?',
-                options: [
-                    { label: 'Under $500/month', value: 'minimal' },
-                    { label: '$500-2,000/month', value: 'moderate' },
-                    { label: '$2,000-10,000/month', value: 'substantial' },
-                    { label: '$10,000+/month', value: 'unlimited' }
-                ]
-            },
-            {
-                phase: 1,
-                question: 'What\'s your primary target geography?',
-                options: [
-                    { label: 'UAE/KSA primarily', value: 'mena-primary' },
-                    { label: 'MENA broadly', value: 'mena-broad' },
-                    { label: 'Global with MENA focus', value: 'global-mena' },
-                    { label: 'US/EU primarily', value: 'global-west' }
-                ]
-            },
-            // Phase 2: Capability Profile
-            {
-                phase: 2,
-                question: 'Do you have an existing audience or email list?',
-                options: [
-                    { label: 'Yes — 5,000+ engaged subscribers/followers', value: 'large' },
-                    { label: 'Yes — 1,000-5,000', value: 'medium' },
-                    { label: 'Growing — under 1,000', value: 'small' },
-                    { label: 'Starting from zero', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have outbound infrastructure (Instantly, HeyReach, Clay, etc.)?',
-                options: [
-                    { label: 'Full stack operational — sending now', value: 'operational' },
-                    { label: 'Partially set up', value: 'partial' },
-                    { label: 'Know the tools but haven\'t set up', value: 'knowledge' },
-                    { label: 'No outbound infrastructure', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have case studies or demos ready?',
-                options: [
-                    { label: 'Multiple published case studies with metrics', value: 'full' },
-                    { label: '1-2 basic case studies', value: 'partial' },
-                    { label: 'Demo exists but no case studies', value: 'demo' },
-                    { label: 'Neither', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have a content creation habit?',
-                options: [
-                    { label: 'Publish 3+ pieces/week consistently', value: 'prolific' },
-                    { label: 'Publish weekly', value: 'regular' },
-                    { label: 'Sporadic content', value: 'sporadic' },
-                    { label: 'No content creation', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have industry relationships/network?',
-                options: [
-                    { label: '20+ named contacts in my target market', value: 'strong' },
-                    { label: '10-20 contacts', value: 'moderate' },
-                    { label: 'A few contacts', value: 'weak' },
-                    { label: 'Starting fresh — no network', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have paid advertising experience?',
-                options: [
-                    { label: 'Running profitable campaigns now', value: 'proven' },
-                    { label: 'Have run campaigns before', value: 'experienced' },
-                    { label: 'Know the platforms but haven\'t run ads', value: 'knowledge' },
-                    { label: 'No ad experience', value: 'none' }
-                ]
-            },
-            {
-                phase: 2,
-                question: 'Do you have a landing page / funnel ready?',
-                options: [
-                    { label: 'Full funnel with conversion tracking', value: 'complete' },
-                    { label: 'Landing page exists', value: 'partial' },
-                    { label: 'Working on it', value: 'wip' },
-                    { label: 'No landing page', value: 'none' }
-                ]
-            }
-        ];
-
-        // MENA BASE VIABILITY
-        const MENA_BASE = {
-            waitlist: 4, buildin: 3, authorityedu: 5, waveride: 3, ltd: 3,
-            signalsniper: 4, outcomeDemo: 5, hammering: 3, bofu: 5,
-            dream100: 5, x7x4x11: 4, trust: 5, paid: 4
-        };
-
-        // ============================================================
-        // WEBHOOK INTEGRATION
-        // ============================================================
-        // UPDATE THIS URL to your n8n webhook URL
-        // For n8n cloud: https://YOUR-SUBDOMAIN.app.n8n.cloud/webhook/eo-gtm-score
-        // For self-hosted: https://your-n8n-domain.com/webhook/eo-gtm-score
-        var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-gtm-score';
-
-        class GTMApp {
-            constructor() {
-                this.currentPhase = 'welcome';
-                this.answers = {};
-                this.scores = {};
-                this.aiData = null;
-                this.init();
-            }
-
-            init() {
-                this.renderWelcome();
-                document.getElementById('gtm-btn-reset').addEventListener('click', () => this.reset());
-            }
-
-            renderWelcome() {
-                const grid = document.getElementById('gtm-motions-preview');
-                grid.innerHTML = MOTIONS.map(m =>
-                    `<div class="gtm-motion-preview">${m.name}</div>`
-                ).join('');
-            }
-
-            startAssessment() {
-                this.showScreen('phase1');
-                this.renderPhase(1);
-            }
-
-            renderPhase(phase) {
-                const containerId = `gtm-phase${phase}-questions`;
-                const container = document.getElementById(containerId);
-                const phaseQuestions = QUESTIONS.filter(q => q.phase === phase);
-
-                container.innerHTML = phaseQuestions.map((q, idx) => `
-                    <div class="gtm-question" id="q-${phase}-${idx}">
-                        <label class="gtm-question-label">${q.question}</label>
-                        <div class="gtm-options">
-                            ${q.options.map(opt => `
-                                <label class="gtm-option">
-                                    <input type="radio" name="q-${phase}-${idx}" value="${opt.value}"
-                                        onchange="gApp.answerQuestion(${phase}, ${idx}, '${opt.value}')" />
-                                    ${opt.label}
-                                </label>
-                            `).join('')}
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            answerQuestion(phase, idx, value) {
-                this.answers[`q${phase}-${idx}`] = value;
-                this.updateProgress();
-                const nextBtn = document.getElementById(`gtm-phase${phase}-next`);
-                if (nextBtn) nextBtn.disabled = !this.isPhaseComplete(phase);
-                document.querySelectorAll(`[name="q-${phase}-${idx}"]`).forEach(input => {
-                    input.closest('.gtm-option').classList.toggle('selected', input.checked);
-                });
-            }
-
-            isPhaseComplete(phase) {
-                const phaseQuestions = QUESTIONS.filter(q => q.phase === phase).length;
-                let answered = 0;
-                for (let i = 0; i < phaseQuestions; i++) {
-                    if (this.answers[`q${phase}-${i}`]) answered++;
-                }
-                return answered === phaseQuestions;
-            }
-
-            updateProgress() {
-                const totalQuestions = QUESTIONS.length;
-                const answered = Object.keys(this.answers).length;
-                const progress = Math.round((answered / totalQuestions) * 100);
-                document.getElementById('gtm-progress-num').textContent = progress;
-                document.querySelector('.gtm-progress-bar-fill').style.width = progress + '%';
-            }
-
-            nextPhase() {
-                if (this.currentPhase === 'phase1') {
-                    this.showScreen('phase2');
-                    this.renderPhase(2);
-                }
-            }
-
-            prevPhase() {
-                if (this.currentPhase === 'phase2') {
-                    this.showScreen('phase1');
-                }
-            }
-
-            calculateResults() {
-                this.scoreAllMotions();
-                // Show contact form instead of going straight to results
-                document.querySelectorAll('.gtm-screen').forEach(s => s.classList.remove('active'));
-                document.getElementById('gtm-contact').style.display = 'block';
-                this.currentPhase = 'contact';
-            }
-
-            scoreAllMotions() {
-                MOTIONS.forEach(motion => {
-                    const fit = this.calculateFit(motion.id);
-                    const readiness = this.calculateReadiness(motion.id);
-                    const mena = this.calculateMENA(motion.id);
-                    const composite = (fit * 0.4) + (readiness * 0.3) + (mena * 0.3);
-
-                    this.scores[motion.id] = { fit, readiness, mena, composite };
-                });
-            }
-
-            calculateFit(motionId) {
-                // Map answers to fit scores for each motion
-                const answers = this.answers;
-                let fitScore = 2.5; // baseline
-
-                // Q0: Product Type
-                const productType = answers['q1-0'];
-                if (productType === 'enterprise') {
-                    fitScore = { dream100: 5, x7x4x11: 4.5, signalsniper: 4, trust: 4.5 }[motionId] || fitScore;
-                } else if (productType === 'sme') {
-                    fitScore = { authorityedu: 4.5, outcomeDemo: 4.5, bofu: 4, signalsniper: 4 }[motionId] || fitScore;
-                } else if (productType === 'b2c') {
-                    fitScore = { paid: 4.5, waveride: 4, buildin: 4.5, waitlist: 4 }[motionId] || fitScore;
-                } else if (productType === 'marketplace') {
-                    fitScore = { ltd: 4, waitlist: 4.5, hammering: 3.5, waveride: 4 }[motionId] || fitScore;
-                }
-
-                // Q1: Sales Cycle
-                const cycle = answers['q1-1'];
-                if (cycle === 'transactional') {
-                    const trans = { outcomeDemo: 4.5, paid: 4.5, ltd: 4.5, waitlist: 4 };
-                    fitScore = trans[motionId] !== undefined ? Math.max(fitScore, trans[motionId]) : fitScore;
-                } else if (cycle === 'short') {
-                    const short = { signalsniper: 4.5, buildin: 4, authorityedu: 4 };
-                    fitScore = short[motionId] !== undefined ? Math.max(fitScore, short[motionId]) : fitScore;
-                } else if (cycle === 'medium') {
-                    const med = { dream100: 4.5, x7x4x11: 4.5, trust: 4.5 };
-                    fitScore = med[motionId] !== undefined ? Math.max(fitScore, med[motionId]) : fitScore;
-                } else if (cycle === 'long') {
-                    const long = { dream100: 5, x7x4x11: 4.5, trust: 4 };
-                    fitScore = long[motionId] !== undefined ? Math.max(fitScore, long[motionId]) : fitScore;
-                }
-
-                // Q2: Discovery Method
-                const discovery = answers['q1-2'];
-                if (discovery === 'search') {
-                    fitScore = { bofu: 4.8, paid: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { bofu: 4.8, paid: 4.2 }[motionId]) : fitScore;
-                } else if (discovery === 'peers') {
-                    fitScore = { dream100: 4.8, trust: 4.5 }[motionId] !== undefined ? Math.max(fitScore, { dream100: 4.8, trust: 4.5 }[motionId]) : fitScore;
-                } else if (discovery === 'social') {
-                    fitScore = { buildin: 4.5, authorityedu: 4.5, waveride: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.5, authorityedu: 4.5, waveride: 4.2 }[motionId]) : fitScore;
-                } else if (discovery === 'events') {
-                    fitScore = { waitlist: 4.2, authorityedu: 4 }[motionId] !== undefined ? Math.max(fitScore, { waitlist: 4.2, authorityedu: 4 }[motionId]) : fitScore;
-                }
-
-                // Q3: Visual Before/After
-                const visual = answers['q1-3'];
-                if (visual === 'dramatic' || visual === 'metrics') {
-                    fitScore = { outcomeDemo: 4.8, paid: 4.3 }[motionId] !== undefined ? Math.max(fitScore, { outcomeDemo: 4.8, paid: 4.3 }[motionId]) : fitScore;
-                } else if (visual === 'operational' || visual === 'conceptual') {
-                    fitScore = { dream100: 4, x7x4x11: 4, signalsniper: 3.8, trust: 4, authorityedu: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { dream100: 4, x7x4x11: 4, signalsniper: 3.8, trust: 4, authorityedu: 4.2 }[motionId]) : fitScore;
-                }
-
-                // Q4: Team Size
-                const team = answers['q1-4'];
-                if (team === 'solo') {
-                    fitScore = { buildin: 4.8, authorityedu: 4.5, bofu: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.8, authorityedu: 4.5, bofu: 4.2 }[motionId]) : fitScore;
-                } else if (team === 'small') {
-                    fitScore = { signalsniper: 4.2, outcomeDemo: 4.2, waitlist: 4 }[motionId] !== undefined ? Math.max(fitScore, { signalsniper: 4.2, outcomeDemo: 4.2, waitlist: 4 }[motionId]) : fitScore;
-                } else if (team === 'large') {
-                    fitScore = { x7x4x11: 4.8, dream100: 4.5, paid: 4.5 }[motionId] !== undefined ? Math.max(fitScore, { x7x4x11: 4.8, dream100: 4.5, paid: 4.5 }[motionId]) : fitScore;
-                }
-
-                // Q5: Budget
-                const budget = answers['q1-5'];
-                if (budget === 'minimal') {
-                    fitScore = { buildin: 4.8, bofu: 4.5, authorityedu: 4.3 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.8, bofu: 4.5, authorityedu: 4.3 }[motionId]) : fitScore;
-                } else if (budget === 'moderate') {
-                    fitScore = { signalsniper: 4.3, outcomeDemo: 4.2, ltd: 4 }[motionId] !== undefined ? Math.max(fitScore, { signalsniper: 4.3, outcomeDemo: 4.2, ltd: 4 }[motionId]) : fitScore;
-                } else if (budget === 'substantial') {
-                    fitScore = { paid: 4.5, waveride: 4.3, waitlist: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { paid: 4.5, waveride: 4.3, waitlist: 4.2 }[motionId]) : fitScore;
-                } else if (budget === 'unlimited') {
-                    fitScore = Math.max(fitScore, 4.5);
-                }
-
-                return Math.min(fitScore, 5);
-            }
-
-            calculateReadiness(motionId) {
-                const answers = this.answers;
-                let readinessScore = 2;
-
-                // Q7: Audience
-                const audience = answers['q2-0'];
-                const audienceBoosts = { dream100: 0.8, authorityedu: 1, buildin: 1, waitlist: 1, trust: 0.8 };
-                if (audience === 'large') readinessScore += (audienceBoosts[motionId] || 0);
-                else if (audience === 'medium') readinessScore += (audienceBoosts[motionId] || 0) * 0.6;
-                else if (audience === 'small') readinessScore += (audienceBoosts[motionId] || 0) * 0.3;
-
-                // Q8: Outbound Infrastructure
-                const outbound = answers['q2-1'];
-                const outboundBoosts = { signalsniper: 1, x7x4x11: 1, dream100: 0.8 };
-                if (outbound === 'operational') readinessScore += (outboundBoosts[motionId] || 0);
-                else if (outbound === 'partial') readinessScore += (outboundBoosts[motionId] || 0) * 0.5;
-
-                // Q9: Case Studies/Demos
-                const caseStudies = answers['q2-2'];
-                const caseBoosts = { outcomeDemo: 1, authorityedu: 0.8, trust: 0.8 };
-                if (caseStudies === 'full') readinessScore += (caseBoosts[motionId] || 0);
-                else if (caseStudies === 'partial') readinessScore += (caseBoosts[motionId] || 0) * 0.6;
-                else if (caseStudies === 'demo') readinessScore += (caseBoosts[motionId] || 0) * 0.3;
-
-                // Q10: Content Creation
-                const content = answers['q2-3'];
-                const contentBoosts = { buildin: 1.2, authorityedu: 1, waveride: 0.8 };
-                if (content === 'prolific') readinessScore += (contentBoosts[motionId] || 0);
-                else if (content === 'regular') readinessScore += (contentBoosts[motionId] || 0) * 0.7;
-                else if (content === 'sporadic') readinessScore += (contentBoosts[motionId] || 0) * 0.3;
-
-                // Q11: Network
-                const network = answers['q2-4'];
-                const networkBoosts = { dream100: 1, x7x4x11: 0.8, trust: 0.8 };
-                if (network === 'strong') readinessScore += (networkBoosts[motionId] || 0);
-                else if (network === 'moderate') readinessScore += (networkBoosts[motionId] || 0) * 0.6;
-                else if (network === 'weak') readinessScore += (networkBoosts[motionId] || 0) * 0.3;
-
-                // Q12: Paid Ads Experience
-                const adExp = answers['q2-5'];
-                const adBoosts = { paid: 1, waveride: 0.8 };
-                if (adExp === 'proven') readinessScore += (adBoosts[motionId] || 0);
-                else if (adExp === 'experienced') readinessScore += (adBoosts[motionId] || 0) * 0.7;
-                else if (adExp === 'knowledge') readinessScore += (adBoosts[motionId] || 0) * 0.3;
-
-                // Q13: Landing Page
-                const lp = answers['q2-6'];
-                const lpBoosts = { waitlist: 0.8, paid: 0.8, ltd: 0.8 };
-                if (lp === 'complete') readinessScore += (lpBoosts[motionId] || 0);
-                else if (lp === 'partial') readinessScore += (lpBoosts[motionId] || 0) * 0.5;
-
-                return Math.min(Math.max(readinessScore, 0), 5);
-            }
-
-            calculateMENA(motionId) {
-                const geo = this.answers['q1-6'];
-                let menaScore = MENA_BASE[motionId] || 3;
-
-                if (geo === 'mena-primary') return Math.min(menaScore + 1, 5);
-                if (geo === 'mena-broad') return Math.min(menaScore + 0.5, 5);
-                if (geo === 'global-west') return Math.max(menaScore - 1, 1);
-
-                return menaScore;
-            }
-
-            getTier(score) {
-                if (score >= 4) return 'PRIMARY';
-                if (score >= 3) return 'SECONDARY';
-                if (score >= 2) return 'CONDITIONAL';
-                return 'SKIP';
-            }
-
-            getTierClass(score) {
-                if (score >= 4) return 'gtm-badge-primary';
-                if (score >= 3) return 'gtm-badge-secondary';
-                if (score >= 2) return 'gtm-badge-conditional';
-                return 'gtm-badge-skip';
-            }
-
-            renderResults(aiData) {
-                // Overall Score
-                const allScores = Object.values(this.scores).map(s => s.composite);
-                const overallScore = (allScores.reduce((a, b) => a + b) / allScores.length) * 20;
-                const angle = (overallScore / 100) * 360;
-
-                document.getElementById('gtm-score-circle').style.setProperty('--score-angle', angle + 'deg');
-                document.getElementById('gtm-score-number').textContent = Math.round(overallScore);
-
-                const band = this.getTier((overallScore / 100) * 5);
-                const bandClass = this.getTierClass((overallScore / 100) * 5);
-                document.getElementById('gtm-score-band').textContent = band;
-                document.getElementById('gtm-score-band').className = 'gtm-score-band gtm-band-' + band.toLowerCase().replace(/ /g, '-');
-
-                // Rank motions
-                const ranked = MOTIONS.map(m => ({
-                    ...m,
-                    score: this.scores[m.id].composite,
-                    ...this.scores[m.id]
-                })).sort((a, b) => b.score - a.score);
-
-                const motionsHtml = ranked.map((m, idx) => {
-                    const tier = this.getTier(m.score);
-                    const tierClass = this.getTierClass(m.score);
-                    return `
-                        <div class="gtm-motion-card" onclick="this.classList.toggle('expanded')">
-                            <div class="gtm-motion-header">
-                                <div class="gtm-motion-title">${m.name}</div>
-                                <div class="gtm-motion-badge ${tierClass}">${tier}</div>
-                            </div>
-                            <div class="gtm-motion-metrics">
-                                <div class="gtm-metric">
-                                    <div class="gtm-metric-label">Composite</div>
-                                    <div class="gtm-metric-bar">
-                                        <div class="gtm-metric-fill" style="width: ${(m.score / 5) * 100}%"></div>
-                                    </div>
-                                </div>
-                                <div class="gtm-metric">
-                                    <div class="gtm-metric-label">Fit</div>
-                                    <div class="gtm-metric-bar">
-                                        <div class="gtm-metric-fill" style="width: ${(m.fit / 5) * 100}%"></div>
-                                    </div>
-                                </div>
-                                <div class="gtm-metric">
-                                    <div class="gtm-metric-label">Readiness</div>
-                                    <div class="gtm-metric-bar">
-                                        <div class="gtm-metric-fill" style="width: ${(m.readiness / 5) * 100}%"></div>
-                                    </div>
-                                </div>
-                                <div class="gtm-metric">
-                                    <div class="gtm-metric-label">MENA</div>
-                                    <div class="gtm-metric-bar">
-                                        <div class="gtm-metric-fill" style="width: ${(m.mena / 5) * 100}%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gtm-motion-description">${m.description}</div>
-                            <div class="gtm-motion-expanded">
-                                <div class="gtm-recommendation">${this.getRecommendation(m.id, m.score)}</div>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-
-                document.getElementById('gtm-all-motions').innerHTML = motionsHtml;
-
-                // Top 3
-                const top3 = ranked.filter(m => this.getTier(m.score) === 'PRIMARY').slice(0, 3);
-                if (top3.length > 0) {
-                    const top3Html = top3.map(m => `
-                        <div class="gtm-top-card">
-                            <h4>${m.name}</h4>
-                            <div class="gtm-top-card-section">
-                                <strong>30-Day Plan</strong>
-                                <p>${this.get30DayPlan(m.id)}</p>
-                            </div>
-                            <div class="gtm-top-card-section">
-                                <strong>Tools Needed</strong>
-                                <p>${this.getTools(m.id)}</p>
-                            </div>
-                            <div class="gtm-top-card-section">
-                                <strong>Expected Outcomes</strong>
-                                <p>${this.getOutcomes(m.id)}</p>
-                            </div>
-                            <div class="gtm-top-card-section">
-                                <strong>MENA Tips</strong>
-                                <p>${this.getMENATip(m.id)}</p>
-                            </div>
-                        </div>
-                    `).join('');
-                    document.querySelector('.gtm-top-three-grid').innerHTML = top3Html;
-                }
-
-                // Special MENA Insight
-                const dream100Tier = this.getTier(this.scores.dream100.composite);
-                if (dream100Tier === 'PRIMARY') {
-                    document.getElementById('gtm-special-insight-container').innerHTML = `
-                        <div class="gtm-special-insight">
-                            <strong>🇦🇪 Special MENA Insight:</strong> In MENA markets, Dream 100 is your foundational motion. Every other channel amplifies it but doesn't replace it. Prioritize building relationships with decision-makers in your target accounts—trust and personal connection are paramount in the region.
-                        </div>
-                    `;
-                }
-
-                // Improvements
-                const conditional = ranked.filter(m => ['CONDITIONAL', 'SKIP'].includes(this.getTier(m.score)));
-                if (conditional.length > 0) {
-                    const improvementsHtml = conditional.slice(0, 5).map(m => `
-                        <div class="gtm-improvement-item">
-                            <div class="gtm-improvement-motion">${m.name}</div>
-                            <div class="gtm-improvement-detail">Bottleneck: ${this.getBottleneck(m)}</div>
-                            <div class="gtm-improvement-actions">To make PRIMARY: ${this.getImprovementActions(m.id)}</div>
-                        </div>
-                    `).join('');
-                    document.getElementById('gtm-improvements-list').innerHTML = improvementsHtml;
-                }
-
-                // AI-enhanced content
-                if (aiData) {
-                    // Key insight banner
-                    if (aiData.keyInsight) {
-                        var insightDiv = document.createElement('div');
-                        insightDiv.className = 'gtm-ai-insight';
-                        insightDiv.innerHTML = '<strong>AI Insight:</strong><p>' + aiData.keyInsight + '</p>';
-                        var scoreCard = document.querySelector('.gtm-score-card');
-                        scoreCard.parentNode.insertBefore(insightDiv, scoreCard.nextSibling);
-                    }
-
-                    // AI primary motion plans override top 3
-                    if (aiData.primaryMotions && aiData.primaryMotions.length > 0) {
-                        var aiTop3Html = aiData.primaryMotions.map(function(m) {
-                            return '<div class="gtm-top-card"><h4>' + m.name + '</h4>' +
-                                '<div class="gtm-top-card-section"><strong>Why This Motion</strong><p>' + (m.why || '') + '</p></div>' +
-                                '<div class="gtm-top-card-section"><strong>30-Day Plan</strong><p>' + (m.plan || '') + '</p></div>' +
-                                '</div>';
-                        }).join('');
-                        document.querySelector('.gtm-top-three-grid').innerHTML = aiTop3Html;
-                    }
-
-                    // Sequencing
-                    if (aiData.sequencing) {
-                        var seqDiv = document.createElement('div');
-                        seqDiv.className = 'gtm-ai-sequencing';
-                        seqDiv.innerHTML = '<h3>Recommended Sequencing</h3><p>' + aiData.sequencing + '</p>';
-                        var topThreeSection = document.querySelector('.gtm-top-three');
-                        topThreeSection.parentNode.insertBefore(seqDiv, topThreeSection.nextSibling);
-                    }
-
-                    // MENA insight override
-                    if (aiData.menaInsight) {
-                        document.getElementById('gtm-special-insight-container').innerHTML =
-                            '<div class="gtm-special-insight"><strong>MENA Insight:</strong> ' + aiData.menaInsight + '</div>';
-                    }
-
-                    // AI improvements override
-                    if (aiData.improvements && aiData.improvements.length > 0) {
-                        var aiImpHtml = aiData.improvements.map(function(imp) {
-                            return '<div class="gtm-improvement-item">' +
-                                '<div class="gtm-improvement-motion">' + imp.motion + '</div>' +
-                                '<div class="gtm-improvement-detail">Bottleneck: ' + (imp.bottleneck || '') + '</div>' +
-                                '<div class="gtm-improvement-actions">' + (imp.action || '') + '</div>' +
-                                '</div>';
-                        }).join('');
-                        document.getElementById('gtm-improvements-list').innerHTML = aiImpHtml;
-                    }
-
-                    // Avoid list
-                    if (aiData.avoidList) {
-                        var avoidDiv = document.createElement('div');
-                        avoidDiv.className = 'gtm-ai-avoid';
-                        avoidDiv.innerHTML = '<h3>What NOT To Do</h3><p>' + aiData.avoidList + '</p>';
-                        var improvements = document.querySelector('.gtm-improvements');
-                        improvements.parentNode.insertBefore(avoidDiv, improvements.nextSibling);
-                    }
-
-                    // Saved badge
-                    var badge = document.createElement('div');
-                    badge.className = 'gtm-saved-badge';
-                    badge.textContent = '\u2713 Results saved to your profile';
-                    document.querySelector('.gtm-score-card').appendChild(badge);
-                }
-            }
-
-            getRecommendation(motionId, score) {
-                const recs = {
-                    dream100: 'Focus on building a list of 100 high-value target accounts. Create personalized outreach sequences and track engagement metrics closely.',
-                    x7x4x11: 'Use a multi-touch sequence combining email, LinkedIn, and calls. Automate the cadence to save time while maintaining personalization.',
-                    signalsniper: 'Set up trigger-based workflows that respond to buying signals like website visits, pricing page views, or content downloads.',
-                    authorityedu: 'Build authority through educational content—webinars, guides, case studies. Use SEO to capture organic traffic.',
-                    outcomeDemo: 'Develop demo that showcases before/after results. Record multiple versions for different buyer personas.',
-                    bofu: 'Target high-intent keywords like "best," "vs," and "[solution] for [use case]." Build comparison content.',
-                    buildin: 'Share your journey transparently on Twitter, LinkedIn, or Substack. Post regularly about milestones, learnings, and behind-the-scenes updates.',
-                    waveride: 'Monitor trending topics, viral moments, and industry news. Respond quickly with relevant content or commentary.',
-                    ltd: 'Create urgency with limited-time offers or exclusive launch pricing. Communicate scarcity clearly.',
-                    waitlist: 'Build a waitlist pre-launch. Use referral incentives and early-access tiers to drive signups.',
-                    paid: 'Test video sales letter campaigns on YouTube, Facebook, or TikTok. Optimize for ROAS.',
-                    hammering: 'Pick 1-2 accounts and target them aggressively across all touchpoints. Overwhelm with presence.',
-                    trust: 'Build long-term relationships through regular check-ins, value-first outreach, and genuine interest in customer success.'
-                };
-                return recs[motionId] || 'Focus on this motion with the resources available.';
-            }
-
-            get30DayPlan(motionId) {
-                const plans = {
-                    dream100: 'Week 1: List building. Week 2-3: Personalized messaging. Week 4: Follow-up sequences.',
-                    x7x4x11: 'Week 1: Set up sequences. Week 2-4: Execute cadence, track metrics.',
-                    signalsniper: 'Week 1: Define signals. Week 2: Set up automation. Week 3-4: Test and optimize.',
-                    authorityedu: 'Week 1: Plan content. Week 2-3: Create & publish. Week 4: Promote and measure.',
-                    outcomeDemo: 'Week 1: Identify use cases. Week 2-3: Create demo variants. Week 4: A/B test with prospects.',
-                    bofu: 'Week 1: Keyword research. Week 2-3: Content creation. Week 4: On-page SEO optimization.',
-                    buildin: 'Week 1: Choose platform. Week 2-4: Create and share content consistently.',
-                    waveride: 'Week 1: Set up alerts. Week 2-4: Monitor and create reactive content.',
-                    ltd: 'Week 1: Design offer. Week 2: Build landing page. Week 3-4: Launch and promote.',
-                    waitlist: 'Week 1: Set up page. Week 2-3: Drive traffic. Week 4: Manage expectations.',
-                    paid: 'Week 1: Create VSL. Week 2-3: Set up campaigns. Week 4: Optimize and scale.',
-                    hammering: 'Week 1: Account selection. Week 2-4: Multi-channel blitz.',
-                    trust: 'Week 1: Relationship audit. Week 2-4: Regular outreach and value delivery.'
-                };
-                return plans[motionId] || 'Execute in phases over 30 days.';
-            }
-
-            getTools(motionId) {
-                const tools = {
-                    dream100: 'LinkedIn Sales Navigator, Clay, Instantly',
-                    x7x4x11: 'Instantly, HeyReach, Apollo',
-                    signalsniper: 'Clearbit, Terminus, 6sense',
-                    authorityedu: 'WordPress, ConvertKit, Webinar platform',
-                    outcomeDemo: 'Loom, Descript, Figma',
-                    bofu: 'Ahrefs, SEMrush, Rank Tracker',
-                    buildin: 'Twitter, LinkedIn, Substack',
-                    waveride: 'Twitter, TweetDeck, Hootsuite',
-                    ltd: 'Unbounce, ConvertKit, Stripe',
-                    waitlist: 'Waitlist platform (LaunchList, Notify)',
-                    paid: 'Facebook Ads Manager, YouTube Ads',
-                    hammering: 'LinkedIn, email, Calendly',
-                    trust: 'CRM, email, Slack'
-                };
-                return tools[motionId] || 'Standard marketing stack';
-            }
-
-            getOutcomes(motionId) {
-                return 'Expected: 5-10% response rate, 2-3 qualified leads, $XX MRR first month.';
-            }
-
-            getMENATip(motionId) {
-                const tips = {
-                    dream100: 'Respect relationship protocols. Personal introduction through mutual connection is golden.',
-                    x7x4x11: 'Avoid aggressive cold outreach. Build rapport first.',
-                    signalsniper: 'Personalization is critical—generic triggers won\'t work.',
-                    authorityedu: 'Arabic content may yield better results depending on target market.',
-                    outcomeDemo: 'Visual credibility matters. Case studies in Arabic strengthen trust.',
-                    bofu: 'Arabic keyword research essential for Gulf markets.',
-                    buildin: 'Transparency valued. Share authentic progress and learnings.',
-                    waveride: 'Understand local events and holidays for timing.',
-                    ltd: 'Scarcity works well if positioned as exclusivity, not desperation.',
-                    waitlist: 'Build community vibes. Offer referral bonuses.',
-                    paid: 'Test messaging around ROI and business outcomes.',
-                    hammering: 'Use warm intros. Cold hammering less effective in MENA.',
-                    trust: 'Invest in relationship-first approach. This is the foundation.'
-                };
-                return tips[motionId] || 'Adapt messaging for local market nuances.';
-            }
-
-            getBottleneck(motion) {
-                const fit = motion.fit;
-                const readiness = motion.readiness;
-                const mena = motion.mena;
-
-                if (fit < 2.5) return 'Product-market alignment weak';
-                if (readiness < 2.5) return 'Lacking resources or infrastructure';
-                if (mena < 2.5) return 'Lower MENA viability';
-                return 'Overall low score';
-            }
-
-            getImprovementActions(motionId) {
-                const actions = {
-                    dream100: 'Build network relationships',
-                    x7x4x11: 'Set up email automation',
-                    signalsniper: 'Integrate intent data tools',
-                    authorityedu: 'Commit to content calendar',
-                    outcomeDemo: 'Create case studies',
-                    bofu: 'Invest in SEO',
-                    buildin: 'Start daily content creation',
-                    waveride: 'Monitor social media closely',
-                    ltd: 'Design limited-time offer',
-                    waitlist: 'Build landing page',
-                    paid: 'Launch ad campaigns',
-                    hammering: 'Pick target accounts',
-                    trust: 'Nurture key relationships'
-                };
-                return actions[motionId] || 'Improve foundational capability';
-            }
-
-            showScreen(screen) {
-                document.querySelectorAll('.gtm-screen').forEach(s => s.classList.remove('active'));
-                document.getElementById(`gtm-${screen}`).classList.add('active');
-                this.currentPhase = screen;
-            }
-
-            reset() {
-                this.answers = {};
-                this.scores = {};
-                this.aiData = null;
-                this.currentPhase = 'welcome';
-                document.getElementById('gtm-progress-num').textContent = '0';
-                document.querySelector('.gtm-progress-bar-fill').style.width = '0%';
-                document.getElementById('gtm-contact').style.display = 'none';
-                document.getElementById('gtm-loading').style.display = 'none';
-                var contactName = document.getElementById('gtm-contact-name');
-                if (contactName) contactName.value = '';
-                var contactEmail = document.getElementById('gtm-contact-email');
-                if (contactEmail) contactEmail.value = '';
-                var contactCompany = document.getElementById('gtm-contact-company');
-                if (contactCompany) contactCompany.value = '';
-                // Remove AI-injected elements
-                var aiInsight = document.querySelector('.gtm-ai-insight');
-                if (aiInsight) aiInsight.remove();
-                var aiSeq = document.querySelector('.gtm-ai-sequencing');
-                if (aiSeq) aiSeq.remove();
-                var aiAvoid = document.querySelector('.gtm-ai-avoid');
-                if (aiAvoid) aiAvoid.remove();
-                var savedBadge = document.querySelector('.gtm-saved-badge');
-                if (savedBadge) savedBadge.remove();
-                this.showScreen('welcome');
-            }
-
-            submitContact(event) {
-                event.preventDefault();
-                var self = this;
-                var payload = this.buildWebhookPayload();
-
-                // Show loading
-                document.getElementById('gtm-contact').style.display = 'none';
-                document.getElementById('gtm-loading').style.display = 'flex';
-
-                fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                })
-                .then(function(response) {
-                    if (!response.ok) throw new Error('Webhook returned ' + response.status);
-                    return response.json();
-                })
-                .then(function(data) {
-                    document.getElementById('gtm-loading').style.display = 'none';
-                    if (data && data.success && data.results && data.results.ai_analysis) {
-                        self.aiData = data.results.ai_analysis;
-                    }
-                    self.renderResults(self.aiData);
-                    self.showScreen('results');
-                })
-                .catch(function(err) {
-                    console.error('Webhook error:', err);
-                    document.getElementById('gtm-loading').style.display = 'none';
-                    self.renderResults(null);
-                    self.showScreen('results');
-                });
-            }
-
-            skipContact() {
-                document.getElementById('gtm-contact').style.display = 'none';
-                this.renderResults(null);
-                this.showScreen('results');
-            }
-
-            buildWebhookPayload() {
-                var answers = {};
-                var reqKeys = ['q1-0','q1-1','q1-2','q1-3','q1-4','q1-5','q1-6','q2-0','q2-1','q2-2','q2-3','q2-4','q2-5','q2-6'];
-                for (var i = 0; i < reqKeys.length; i++) {
-                    answers[reqKeys[i]] = this.answers[reqKeys[i]] || '';
-                }
-
-                var motionScores = {};
-                MOTIONS.forEach(m => {
-                    var s = this.scores[m.id];
-                    motionScores[m.id] = {
-                        fit: Math.round(s.fit * 100) / 100,
-                        readiness: Math.round(s.readiness * 100) / 100,
-                        mena: Math.round(s.mena * 100) / 100,
-                        composite: Math.round(s.composite * 100) / 100
-                    };
-                });
-
-                var allScores = Object.values(this.scores).map(s => s.composite);
-                var avg = allScores.reduce((a, b) => a + b) / allScores.length;
-                var totalScore = Math.min(Math.round(avg * 20), 100);
-                var band = totalScore >= 80 ? 'ELITE' : totalScore >= 60 ? 'STRONG' : totalScore >= 40 ? 'EMERGING' : 'WEAK';
-
-                return {
-                    assessment: 'gtm-fitness',
-                    answers: answers,
-                    motion_scores: motionScores,
-                    total_score: totalScore,
-                    band: band,
-                    contact: {
-                        name: document.getElementById('gtm-contact-name').value,
-                        email: document.getElementById('gtm-contact-email').value,
-                        company: document.getElementById('gtm-contact-company').value
-                    }
-                };
-            }
+    <div class="question-card" id="questionCard">
+        <div class="question-text" id="questionText"></div>
+        <div class="options-list" id="optionsList"></div>
+    </div>
+    <div class="nav-buttons">
+        <button class="btn btn-prev hidden" id="btnPrev">Previous</button>
+        <button class="btn btn-next" id="btnNext" disabled>Next</button>
+    </div>
+</div>
+
+<!-- Screen 3: Contact Form -->
+<div class="screen" id="screenContact">
+    <div class="contact-screen">
+        <div class="contact-card">
+            <h2>Get Your GTM Playbook</h2>
+            <p class="subtitle">Provide your details for a personalized GTM report</p>
+            <div class="form-group">
+                <label for="contactName">Full Name *</label>
+                <input type="text" id="contactName" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="contactEmail">Email *</label>
+                <input type="email" id="contactEmail" placeholder="john@company.com" required>
+            </div>
+            <div class="form-group">
+                <label for="contactCompany">Company *</label>
+                <input type="text" id="contactCompany" placeholder="Acme Corp" required>
+            </div>
+            <button class="btn-primary" id="btnSubmitContact">Get My GTM Playbook</button>
+            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Results</button>
+        </div>
+    </div>
+</div>
+
+<!-- Screen 4: Results -->
+<div class="screen" id="screenResults">
+    <div class="results-screen" id="resultsContent"></div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    /* ================================================================
+       MOTIONS DATA
+       ================================================================ */
+    var MOTIONS = [
+        { id: 'dream100', name: 'Dream 100' },
+        { id: 'x7x4x11', name: '7x4x11' },
+        { id: 'signalsniper', name: 'Signal Sniper' },
+        { id: 'authorityedu', name: 'Authority Education' },
+        { id: 'outcomeDemo', name: 'Outcome Demo' },
+        { id: 'bofu', name: 'BOFU SEO' },
+        { id: 'buildin', name: 'Build-in-Public' },
+        { id: 'waveride', name: 'Wave Riding' },
+        { id: 'ltd', name: 'LTD' },
+        { id: 'waitlist', name: 'Waitlist' },
+        { id: 'paid', name: 'Paid VSL' },
+        { id: 'hammering', name: 'Hammering Deep' },
+        { id: 'trust', name: 'Value Trust Engine' }
+    ];
+
+    /* ================================================================
+       MENA BASE VIABILITY (exact copy from original)
+       ================================================================ */
+    var MENA_BASE = {
+        waitlist: 4, buildin: 3, authorityedu: 5, waveride: 3, ltd: 3,
+        signalsniper: 4, outcomeDemo: 5, hammering: 3, bofu: 5,
+        dream100: 5, x7x4x11: 4, trust: 5, paid: 4
+    };
+
+    /* ================================================================
+       SECTIONS
+       ================================================================ */
+    var SECTIONS = [
+        { id: 'A', name: 'BUSINESS PROFILE', range: [0, 6] },
+        { id: 'B', name: 'CAPABILITY PROFILE', range: [7, 13] }
+    ];
+
+    /* ================================================================
+       QUESTIONS DATA (14 questions with value tags)
+       ================================================================ */
+    var allQuestions = [
+        /* Section A: BUSINESS PROFILE (Q1-Q7) */
+        {
+            id: 'q1', sectionIdx: 0,
+            text: 'What type of product are you building?',
+            options: [
+                { label: 'B2B SaaS for enterprise ($1000+/mo ACV)', value: 'enterprise' },
+                { label: 'B2B SaaS for SME ($50-500/mo ACV)', value: 'sme' },
+                { label: 'B2C or prosumer ($10-50/mo)', value: 'b2c' },
+                { label: 'Marketplace or platform', value: 'marketplace' }
+            ]
+        },
+        {
+            id: 'q2', sectionIdx: 0,
+            text: 'What\'s your current sales cycle length?',
+            options: [
+                { label: 'Same-day close \u2014 transactional', value: 'transactional' },
+                { label: '1-2 weeks', value: 'short' },
+                { label: '1-3 months \u2014 consultative', value: 'medium' },
+                { label: '6+ months \u2014 enterprise', value: 'long' }
+            ]
+        },
+        {
+            id: 'q3', sectionIdx: 0,
+            text: 'How does your buyer discover solutions?',
+            options: [
+                { label: 'They search Google for solutions', value: 'search' },
+                { label: 'They ask peers and trusted advisors', value: 'peers' },
+                { label: 'They browse social media and content', value: 'social' },
+                { label: 'They attend events and webinars', value: 'events' }
+            ]
+        },
+        {
+            id: 'q4', sectionIdx: 0,
+            text: 'Does your product have a strong visual before/after?',
+            options: [
+                { label: 'Yes \u2014 dramatic visual transformation', value: 'dramatic' },
+                { label: 'Yes \u2014 dashboard/metrics improvement', value: 'metrics' },
+                { label: 'Not really \u2014 the value is operational', value: 'operational' },
+                { label: 'It\'s conceptual / educational', value: 'conceptual' }
+            ]
+        },
+        {
+            id: 'q5', sectionIdx: 0,
+            text: 'What\'s your team size?',
+            options: [
+                { label: 'Solo founder', value: 'solo' },
+                { label: '2-3 people', value: 'small' },
+                { label: '4-10 people', value: 'medium' },
+                { label: '10+ people', value: 'large' }
+            ]
+        },
+        {
+            id: 'q6', sectionIdx: 0,
+            text: 'What\'s your monthly GTM budget?',
+            options: [
+                { label: 'Under $500/month', value: 'minimal' },
+                { label: '$500-2,000/month', value: 'moderate' },
+                { label: '$2,000-10,000/month', value: 'substantial' },
+                { label: '$10,000+/month', value: 'unlimited' }
+            ]
+        },
+        {
+            id: 'q7', sectionIdx: 0,
+            text: 'What\'s your primary target geography?',
+            options: [
+                { label: 'Gulf', value: 'gulf' },
+                { label: 'Levant', value: 'levant' },
+                { label: 'North Africa', value: 'north-africa' },
+                { label: 'MENA Broadly', value: 'mena-broad' },
+                { label: 'Global', value: 'global' }
+            ]
+        },
+        /* Section B: CAPABILITY PROFILE (Q8-Q14) */
+        {
+            id: 'q8', sectionIdx: 1,
+            text: 'Do you have an existing audience or email list?',
+            options: [
+                { label: 'Yes \u2014 5,000+ engaged subscribers/followers', value: 'large' },
+                { label: 'Yes \u2014 1,000-5,000', value: 'medium' },
+                { label: 'Growing \u2014 under 1,000', value: 'small' },
+                { label: 'Starting from zero', value: 'none' }
+            ]
+        },
+        {
+            id: 'q9', sectionIdx: 1,
+            text: 'Do you have outbound infrastructure (Instantly, HeyReach, Clay, etc.)?',
+            options: [
+                { label: 'Full stack operational \u2014 sending now', value: 'operational' },
+                { label: 'Partially set up', value: 'partial' },
+                { label: 'Know the tools but haven\'t set up', value: 'knowledge' },
+                { label: 'No outbound infrastructure', value: 'none' }
+            ]
+        },
+        {
+            id: 'q10', sectionIdx: 1,
+            text: 'Do you have case studies or demos ready?',
+            options: [
+                { label: 'Multiple published case studies with metrics', value: 'full' },
+                { label: '1-2 basic case studies', value: 'partial' },
+                { label: 'Demo exists but no case studies', value: 'demo' },
+                { label: 'Neither', value: 'none' }
+            ]
+        },
+        {
+            id: 'q11', sectionIdx: 1,
+            text: 'Do you have a content creation habit?',
+            options: [
+                { label: 'Publish 3+ pieces/week consistently', value: 'prolific' },
+                { label: 'Publish weekly', value: 'regular' },
+                { label: 'Sporadic content', value: 'sporadic' },
+                { label: 'No content creation', value: 'none' }
+            ]
+        },
+        {
+            id: 'q12', sectionIdx: 1,
+            text: 'Do you have industry relationships/network?',
+            options: [
+                { label: '20+ named contacts in my target market', value: 'strong' },
+                { label: '10-20 contacts', value: 'moderate' },
+                { label: 'A few contacts', value: 'weak' },
+                { label: 'Starting fresh \u2014 no network', value: 'none' }
+            ]
+        },
+        {
+            id: 'q13', sectionIdx: 1,
+            text: 'Do you have paid advertising experience?',
+            options: [
+                { label: 'Running profitable campaigns now', value: 'proven' },
+                { label: 'Have run campaigns before', value: 'experienced' },
+                { label: 'Know the platforms but haven\'t run ads', value: 'knowledge' },
+                { label: 'No ad experience', value: 'none' }
+            ]
+        },
+        {
+            id: 'q14', sectionIdx: 1,
+            text: 'Do you have a landing page / funnel ready?',
+            options: [
+                { label: 'Full funnel with conversion tracking', value: 'complete' },
+                { label: 'Landing page exists', value: 'partial' },
+                { label: 'Working on it', value: 'wip' },
+                { label: 'No landing page', value: 'none' }
+            ]
+        }
+    ];
+
+    /* ================================================================
+       MOTION DESCRIPTIONS DATA
+       ================================================================ */
+    var MOTION_WHY = {
+        dream100: 'Focus on building a list of 100 high-value target accounts. Create personalized outreach sequences.',
+        x7x4x11: 'Use a multi-touch sequence combining email, LinkedIn, and calls.',
+        signalsniper: 'Set up trigger-based workflows that respond to buying signals.',
+        authorityedu: 'Build authority through educational content \u2014 webinars, guides, case studies.',
+        outcomeDemo: 'Develop demo that showcases before/after results.',
+        bofu: 'Target high-intent keywords like "best," "vs," and "[solution] for [use case]."',
+        buildin: 'Share your journey transparently on Twitter, LinkedIn, or Substack.',
+        waveride: 'Monitor trending topics, viral moments, and industry news.',
+        ltd: 'Create urgency with limited-time offers or exclusive launch pricing.',
+        waitlist: 'Build a waitlist pre-launch. Use referral incentives and early-access tiers.',
+        paid: 'Test video sales letter campaigns on YouTube, Facebook, or TikTok.',
+        hammering: 'Pick 1-2 accounts and target them aggressively across all touchpoints.',
+        trust: 'Build long-term relationships through regular check-ins, value-first outreach.'
+    };
+
+    var MOTION_PLANS = {
+        dream100: 'Week 1: List building. Week 2-3: Personalized messaging. Week 4: Follow-up sequences.',
+        x7x4x11: 'Week 1: Set up sequences. Week 2-4: Execute cadence, track metrics.',
+        signalsniper: 'Week 1: Define signals. Week 2: Set up automation. Week 3-4: Test and optimize.',
+        authorityedu: 'Week 1: Plan content. Week 2-3: Create & publish. Week 4: Promote and measure.',
+        outcomeDemo: 'Week 1: Identify use cases. Week 2-3: Create demo variants. Week 4: A/B test with prospects.',
+        bofu: 'Week 1: Keyword research. Week 2-3: Content creation. Week 4: On-page SEO optimization.',
+        buildin: 'Week 1: Choose platform. Week 2-4: Create and share content consistently.',
+        waveride: 'Week 1: Set up alerts. Week 2-4: Monitor and create reactive content.',
+        ltd: 'Week 1: Design offer. Week 2: Build landing page. Week 3-4: Launch and promote.',
+        waitlist: 'Week 1: Set up page. Week 2-3: Drive traffic. Week 4: Manage expectations.',
+        paid: 'Week 1: Create VSL. Week 2-3: Set up campaigns. Week 4: Optimize and scale.',
+        hammering: 'Week 1: Account selection. Week 2-4: Multi-channel blitz.',
+        trust: 'Week 1: Relationship audit. Week 2-4: Regular outreach and value delivery.'
+    };
+
+    var MOTION_TOOLS = {
+        dream100: 'LinkedIn Sales Navigator, Clay, Instantly',
+        x7x4x11: 'Instantly, HeyReach, Apollo',
+        signalsniper: 'Clearbit, Terminus, 6sense',
+        authorityedu: 'WordPress, ConvertKit, Webinar platform',
+        outcomeDemo: 'Loom, Descript, Figma',
+        bofu: 'Ahrefs, SEMrush, Rank Tracker',
+        buildin: 'Twitter, LinkedIn, Substack',
+        waveride: 'Twitter, TweetDeck, Hootsuite',
+        ltd: 'Unbounce, ConvertKit, Stripe',
+        waitlist: 'LaunchList, Notify',
+        paid: 'Facebook Ads Manager, YouTube Ads',
+        hammering: 'LinkedIn, email, Calendly',
+        trust: 'CRM, email, Telegram'
+    };
+
+    var MOTION_MENA_TIPS = {
+        dream100: 'Respect relationship protocols. Personal introduction through mutual connection is golden.',
+        x7x4x11: 'Avoid aggressive cold outreach. Build rapport first.',
+        signalsniper: 'Personalization is critical \u2014 generic triggers won\'t work.',
+        authorityedu: 'Arabic content may yield better results depending on target market.',
+        outcomeDemo: 'Visual credibility matters. Case studies in Arabic strengthen trust.',
+        bofu: 'Arabic keyword research essential for Gulf markets.',
+        buildin: 'Transparency valued. Share authentic progress and learnings.',
+        waveride: 'Understand local events and holidays for timing.',
+        ltd: 'Scarcity works well if positioned as exclusivity, not desperation.',
+        waitlist: 'Build community vibes. Offer referral bonuses.',
+        paid: 'Test messaging around ROI and business outcomes.',
+        hammering: 'Use warm intros. Cold hammering less effective in MENA.',
+        trust: 'Invest in relationship-first approach. This is the foundation.'
+    };
+
+    /* ================================================================
+       BAND DESCRIPTIONS
+       ================================================================ */
+    var BAND_DESCRIPTIONS = {
+        ELITE: 'Your GTM setup is firing on all cylinders. You have the infrastructure, skills, and market fit to execute multiple high-impact motions simultaneously.',
+        STRONG: 'Solid GTM foundation. You have clear strengths to build on. Focus your energy on your top 3 motions for maximum impact.',
+        EMERGING: 'Your GTM capabilities are developing. The top 3 motions below are your highest-probability plays \u2014 start there.',
+        WEAK: 'Your GTM infrastructure needs work. Focus on building one motion at a time, starting with the highest-scoring below.'
+    };
+
+    /* ================================================================
+       WEBHOOK
+       ================================================================ */
+    var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-gtm-score';
+
+    /* ================================================================
+       STATE
+       ================================================================ */
+    var STORAGE_KEY = 'eo_gtm-fitness_answers';
+    var answers = {};    // { q1: 0, q2: 2, ... q14: 3 } — stores option INDEX
+    var scores = {};     // { dream100: { fit, readiness, mena, composite }, ... }
+    var currentIndex = 0;
+    var autoAdvanceTimer = null;
+    var focusedOptionIndex = -1;
+    var capturedEmail = '';
+    var aiData = null;
+
+    /* ================================================================
+       DOM REFS
+       ================================================================ */
+    var $sectionLabel, $progressCounter, $progressFill, $questionText;
+    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
+    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
+    var $loadingOverlay, $resultsContent;
+
+    /* ================================================================
+       HELPER: Get answer VALUE TAG for a question index (0-based)
+       ================================================================ */
+    function getTag(qIdx) {
+        var qId = allQuestions[qIdx].id;
+        if (!(qId in answers)) return null;
+        return allQuestions[qIdx].options[answers[qId]].value;
+    }
+
+    /* ================================================================
+       SCORING ENGINE (exact copy of logic from original)
+       ================================================================ */
+    function scoreAllMotions() {
+        scores = {};
+        MOTIONS.forEach(function(motion) {
+            var fit = calculateFit(motion.id);
+            var readiness = calculateReadiness(motion.id);
+            var mena = calculateMENA(motion.id);
+            var composite = (fit * 0.4) + (readiness * 0.3) + (mena * 0.3);
+            scores[motion.id] = { fit: fit, readiness: readiness, mena: mena, composite: composite };
+        });
+    }
+
+    function calculateFit(motionId) {
+        var fitScore = 2.5; // baseline
+
+        // Q1 (index 0): Product Type
+        var productType = getTag(0);
+        if (productType === 'enterprise') {
+            fitScore = { dream100: 5, x7x4x11: 4.5, signalsniper: 4, trust: 4.5 }[motionId] || fitScore;
+        } else if (productType === 'sme') {
+            fitScore = { authorityedu: 4.5, outcomeDemo: 4.5, bofu: 4, signalsniper: 4 }[motionId] || fitScore;
+        } else if (productType === 'b2c') {
+            fitScore = { paid: 4.5, waveride: 4, buildin: 4.5, waitlist: 4 }[motionId] || fitScore;
+        } else if (productType === 'marketplace') {
+            fitScore = { ltd: 4, waitlist: 4.5, hammering: 3.5, waveride: 4 }[motionId] || fitScore;
         }
 
-        const gApp = new GTMApp();
-    </script>
+        // Q2 (index 1): Sales Cycle
+        var cycle = getTag(1);
+        if (cycle === 'transactional') {
+            var trans = { outcomeDemo: 4.5, paid: 4.5, ltd: 4.5, waitlist: 4 };
+            fitScore = trans[motionId] !== undefined ? Math.max(fitScore, trans[motionId]) : fitScore;
+        } else if (cycle === 'short') {
+            var short_ = { signalsniper: 4.5, buildin: 4, authorityedu: 4 };
+            fitScore = short_[motionId] !== undefined ? Math.max(fitScore, short_[motionId]) : fitScore;
+        } else if (cycle === 'medium') {
+            var med = { dream100: 4.5, x7x4x11: 4.5, trust: 4.5 };
+            fitScore = med[motionId] !== undefined ? Math.max(fitScore, med[motionId]) : fitScore;
+        } else if (cycle === 'long') {
+            var long_ = { dream100: 5, x7x4x11: 4.5, trust: 4 };
+            fitScore = long_[motionId] !== undefined ? Math.max(fitScore, long_[motionId]) : fitScore;
+        }
+
+        // Q3 (index 2): Discovery Method
+        var discovery = getTag(2);
+        if (discovery === 'search') {
+            fitScore = { bofu: 4.8, paid: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { bofu: 4.8, paid: 4.2 }[motionId]) : fitScore;
+        } else if (discovery === 'peers') {
+            fitScore = { dream100: 4.8, trust: 4.5 }[motionId] !== undefined ? Math.max(fitScore, { dream100: 4.8, trust: 4.5 }[motionId]) : fitScore;
+        } else if (discovery === 'social') {
+            fitScore = { buildin: 4.5, authorityedu: 4.5, waveride: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.5, authorityedu: 4.5, waveride: 4.2 }[motionId]) : fitScore;
+        } else if (discovery === 'events') {
+            fitScore = { waitlist: 4.2, authorityedu: 4 }[motionId] !== undefined ? Math.max(fitScore, { waitlist: 4.2, authorityedu: 4 }[motionId]) : fitScore;
+        }
+
+        // Q4 (index 3): Visual Before/After
+        var visual = getTag(3);
+        if (visual === 'dramatic' || visual === 'metrics') {
+            fitScore = { outcomeDemo: 4.8, paid: 4.3 }[motionId] !== undefined ? Math.max(fitScore, { outcomeDemo: 4.8, paid: 4.3 }[motionId]) : fitScore;
+        } else if (visual === 'operational' || visual === 'conceptual') {
+            fitScore = { dream100: 4, x7x4x11: 4, signalsniper: 3.8, trust: 4, authorityedu: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { dream100: 4, x7x4x11: 4, signalsniper: 3.8, trust: 4, authorityedu: 4.2 }[motionId]) : fitScore;
+        }
+
+        // Q5 (index 4): Team Size
+        var team = getTag(4);
+        if (team === 'solo') {
+            fitScore = { buildin: 4.8, authorityedu: 4.5, bofu: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.8, authorityedu: 4.5, bofu: 4.2 }[motionId]) : fitScore;
+        } else if (team === 'small') {
+            fitScore = { signalsniper: 4.2, outcomeDemo: 4.2, waitlist: 4 }[motionId] !== undefined ? Math.max(fitScore, { signalsniper: 4.2, outcomeDemo: 4.2, waitlist: 4 }[motionId]) : fitScore;
+        } else if (team === 'large') {
+            fitScore = { x7x4x11: 4.8, dream100: 4.5, paid: 4.5 }[motionId] !== undefined ? Math.max(fitScore, { x7x4x11: 4.8, dream100: 4.5, paid: 4.5 }[motionId]) : fitScore;
+        }
+
+        // Q6 (index 5): Budget
+        var budget = getTag(5);
+        if (budget === 'minimal') {
+            fitScore = { buildin: 4.8, bofu: 4.5, authorityedu: 4.3 }[motionId] !== undefined ? Math.max(fitScore, { buildin: 4.8, bofu: 4.5, authorityedu: 4.3 }[motionId]) : fitScore;
+        } else if (budget === 'moderate') {
+            fitScore = { signalsniper: 4.3, outcomeDemo: 4.2, ltd: 4 }[motionId] !== undefined ? Math.max(fitScore, { signalsniper: 4.3, outcomeDemo: 4.2, ltd: 4 }[motionId]) : fitScore;
+        } else if (budget === 'substantial') {
+            fitScore = { paid: 4.5, waveride: 4.3, waitlist: 4.2 }[motionId] !== undefined ? Math.max(fitScore, { paid: 4.5, waveride: 4.3, waitlist: 4.2 }[motionId]) : fitScore;
+        } else if (budget === 'unlimited') {
+            fitScore = Math.max(fitScore, 4.5);
+        }
+
+        return Math.min(fitScore, 5);
+    }
+
+    function calculateReadiness(motionId) {
+        var readinessScore = 2;
+
+        // Q8 (index 7): Audience
+        var audience = getTag(7);
+        var audienceBoosts = { dream100: 0.8, authorityedu: 1, buildin: 1, waitlist: 1, trust: 0.8 };
+        if (audience === 'large') readinessScore += (audienceBoosts[motionId] || 0);
+        else if (audience === 'medium') readinessScore += (audienceBoosts[motionId] || 0) * 0.6;
+        else if (audience === 'small') readinessScore += (audienceBoosts[motionId] || 0) * 0.3;
+
+        // Q9 (index 8): Outbound Infrastructure
+        var outbound = getTag(8);
+        var outboundBoosts = { signalsniper: 1, x7x4x11: 1, dream100: 0.8 };
+        if (outbound === 'operational') readinessScore += (outboundBoosts[motionId] || 0);
+        else if (outbound === 'partial') readinessScore += (outboundBoosts[motionId] || 0) * 0.5;
+
+        // Q10 (index 9): Case Studies/Demos
+        var caseStudies = getTag(9);
+        var caseBoosts = { outcomeDemo: 1, authorityedu: 0.8, trust: 0.8 };
+        if (caseStudies === 'full') readinessScore += (caseBoosts[motionId] || 0);
+        else if (caseStudies === 'partial') readinessScore += (caseBoosts[motionId] || 0) * 0.6;
+        else if (caseStudies === 'demo') readinessScore += (caseBoosts[motionId] || 0) * 0.3;
+
+        // Q11 (index 10): Content Creation
+        var content = getTag(10);
+        var contentBoosts = { buildin: 1.2, authorityedu: 1, waveride: 0.8 };
+        if (content === 'prolific') readinessScore += (contentBoosts[motionId] || 0);
+        else if (content === 'regular') readinessScore += (contentBoosts[motionId] || 0) * 0.7;
+        else if (content === 'sporadic') readinessScore += (contentBoosts[motionId] || 0) * 0.3;
+
+        // Q12 (index 11): Network
+        var network = getTag(11);
+        var networkBoosts = { dream100: 1, x7x4x11: 0.8, trust: 0.8 };
+        if (network === 'strong') readinessScore += (networkBoosts[motionId] || 0);
+        else if (network === 'moderate') readinessScore += (networkBoosts[motionId] || 0) * 0.6;
+        else if (network === 'weak') readinessScore += (networkBoosts[motionId] || 0) * 0.3;
+
+        // Q13 (index 12): Paid Ads Experience
+        var adExp = getTag(12);
+        var adBoosts = { paid: 1, waveride: 0.8 };
+        if (adExp === 'proven') readinessScore += (adBoosts[motionId] || 0);
+        else if (adExp === 'experienced') readinessScore += (adBoosts[motionId] || 0) * 0.7;
+        else if (adExp === 'knowledge') readinessScore += (adBoosts[motionId] || 0) * 0.3;
+
+        // Q14 (index 13): Landing Page
+        var lp = getTag(13);
+        var lpBoosts = { waitlist: 0.8, paid: 0.8, ltd: 0.8 };
+        if (lp === 'complete') readinessScore += (lpBoosts[motionId] || 0);
+        else if (lp === 'partial') readinessScore += (lpBoosts[motionId] || 0) * 0.5;
+
+        return Math.min(Math.max(readinessScore, 0), 5);
+    }
+
+    function calculateMENA(motionId) {
+        var geo = getTag(6); // Q7 (index 6): Geography
+        var menaScore = MENA_BASE[motionId] || 3;
+
+        if (geo === 'mena-primary') return Math.min(menaScore + 1, 5);
+        if (geo === 'mena-broad') return Math.min(menaScore + 0.5, 5);
+        if (geo === 'global-west') return Math.max(menaScore - 1, 1);
+
+        return menaScore;
+    }
+
+    /* ================================================================
+       OVERALL SCORE + BAND
+       ================================================================ */
+    function getOverallScore() {
+        var allScores = [];
+        MOTIONS.forEach(function(m) {
+            allScores.push(scores[m.id].composite);
+        });
+        var avg = allScores.reduce(function(a, b) { return a + b; }, 0) / allScores.length;
+        return Math.min(Math.round(avg * 20), 100);
+    }
+
+    function getBand(score) {
+        if (score >= 80) return { label: 'ELITE', className: 'band-elite' };
+        if (score >= 60) return { label: 'STRONG', className: 'band-strong' };
+        if (score >= 40) return { label: 'EMERGING', className: 'band-emerging' };
+        return { label: 'WEAK', className: 'band-weak' };
+    }
+
+    /* ================================================================
+       INIT
+       ================================================================ */
+    function checkPrerequisites() {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            if (!status.strategy) {
+                if (confirm('We recommend completing the Strategy Selector first. Go to the Assessment Dashboard?')) {
+                    window.location.href = 'EO-Assessment-Dashboard.html';
+                    return false;
+                }
+            }
+        } catch (e) { /* continue anyway */ }
+        return true;
+    }
+
+    function init() {
+        checkPrerequisites();
+
+        $sectionLabel = document.getElementById('sectionLabel');
+        $progressCounter = document.getElementById('progressCounter');
+        $progressFill = document.getElementById('progressFill');
+        $questionText = document.getElementById('questionText');
+        $optionsList = document.getElementById('optionsList');
+        $questionCard = document.getElementById('questionCard');
+        $btnPrev = document.getElementById('btnPrev');
+        $btnNext = document.getElementById('btnNext');
+        $toast = document.getElementById('toast');
+        $emailInput = document.getElementById('emailInput');
+        $btnStart = document.getElementById('btnStartAssessment');
+        $btnSubmitContact = document.getElementById('btnSubmitContact');
+        $btnSkipContact = document.getElementById('btnSkipContact');
+        $loadingOverlay = document.getElementById('loadingOverlay');
+        $resultsContent = document.getElementById('resultsContent');
+
+        loadAnswers();
+        bindEvents();
+
+        /* Auto-skip email screen if email already captured from previous scorecard */
+        try {
+            var storedEmail = localStorage.getItem('eo_user_email');
+            if (storedEmail) {
+                capturedEmail = storedEmail;
+                if ($emailInput) $emailInput.value = storedEmail;
+                /* Skip straight to stepper */
+                if (Object.keys(answers).length > 0) {
+                    currentIndex = findFirstUnanswered();
+                } else {
+                    currentIndex = 0;
+                }
+                showScreen('screenStepper');
+                renderQuestion();
+            }
+        } catch (e) { /* show email screen as fallback */ }
+    }
+
+    function loadAnswers() {
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                answers = JSON.parse(saved);
+            }
+        } catch (e) {
+            answers = {};
+        }
+    }
+
+    function saveAnswers() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+        } catch (e) { /* silent */ }
+    }
+
+    function findFirstUnanswered() {
+        for (var i = 0; i < allQuestions.length; i++) {
+            if (!(allQuestions[i].id in answers)) return i;
+        }
+        return allQuestions.length - 1;
+    }
+
+    /* ================================================================
+       EVENT BINDING
+       ================================================================ */
+    function bindEvents() {
+        $btnStart.addEventListener('click', startAssessment);
+        $btnPrev.addEventListener('click', prevQuestion);
+        $btnNext.addEventListener('click', nextQuestion);
+        $btnSubmitContact.addEventListener('click', submitContact);
+        $btnSkipContact.addEventListener('click', skipContact);
+
+        $emailInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
+        });
+
+        document.addEventListener('keydown', handleKeyboard);
+    }
+
+    /* ================================================================
+       SCREEN NAVIGATION
+       ================================================================ */
+    function showScreen(id) {
+        var screens = document.querySelectorAll('.screen');
+        for (var i = 0; i < screens.length; i++) {
+            screens[i].classList.remove('active');
+        }
+        document.getElementById(id).classList.add('active');
+    }
+
+    /* ================================================================
+       TOAST
+       ================================================================ */
+    function showToast(msg) {
+        $toast.textContent = msg;
+        $toast.classList.add('show');
+        setTimeout(function() { $toast.classList.remove('show'); }, 3000);
+    }
+
+    /* ================================================================
+       EMAIL CAPTURE
+       ================================================================ */
+    function startAssessment() {
+        var email = $emailInput.value.trim().toLowerCase();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $emailInput.style.borderColor = '#EF4444';
+            $emailInput.focus();
+            return;
+        }
+        capturedEmail = email;
+        $emailInput.style.borderColor = '';
+
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
+
+        if (Object.keys(answers).length > 0) {
+            currentIndex = findFirstUnanswered();
+            showToast('Welcome back! Resuming where you left off.');
+        } else {
+            currentIndex = 0;
+        }
+
+        showScreen('screenStepper');
+        renderQuestion();
+    }
+
+    /* ================================================================
+       RENDER QUESTION
+       ================================================================ */
+    function renderQuestion() {
+        var q = allQuestions[currentIndex];
+        var section = SECTIONS[q.sectionIdx];
+        focusedOptionIndex = -1;
+
+        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name;
+        $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
+        $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
+        $questionText.textContent = q.text;
+
+        $optionsList.innerHTML = '';
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) {
+                div.classList.add('selected');
+            }
+            div.addEventListener('click', function() { selectOption(idx); });
+            $optionsList.appendChild(div);
+        });
+
+        if (currentIndex === 0) {
+            $btnPrev.classList.add('hidden');
+        } else {
+            $btnPrev.classList.remove('hidden');
+        }
+
+        var isLast = currentIndex === allQuestions.length - 1;
+        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+        $btnNext.disabled = !(q.id in answers);
+    }
+
+    /* ================================================================
+       SELECT OPTION
+       ================================================================ */
+    function selectOption(idx) {
+        var q = allQuestions[currentIndex];
+        answers[q.id] = idx;
+        saveAnswers();
+
+        var cards = $optionsList.querySelectorAll('.option-card');
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('selected');
+        }
+        cards[idx].classList.add('selected');
+        focusedOptionIndex = idx;
+
+        $btnNext.disabled = false;
+
+        var isLast = currentIndex === allQuestions.length - 1;
+        if (!isLast) {
+            clearAutoAdvance();
+            autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300);
+        }
+    }
+
+    function clearAutoAdvance() {
+        if (autoAdvanceTimer) {
+            clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = null;
+        }
+    }
+
+    /* ================================================================
+       NAVIGATION
+       ================================================================ */
+    function nextQuestion() {
+        var q = allQuestions[currentIndex];
+        if (!(q.id in answers)) {
+            $questionCard.classList.add('shake');
+            setTimeout(function() { $questionCard.classList.remove('shake'); }, 400);
+            return;
+        }
+
+        if (currentIndex === allQuestions.length - 1) {
+            // Score before showing contact form
+            scoreAllMotions();
+            showScreen('screenContact');
+            if (capturedEmail) {
+                document.getElementById('contactEmail').value = capturedEmail;
+            }
+            return;
+        }
+
+        currentIndex++;
+        renderQuestion();
+    }
+
+    function prevQuestion() {
+        clearAutoAdvance();
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderQuestion();
+        }
+    }
+
+    /* ================================================================
+       KEYBOARD
+       ================================================================ */
+    function handleKeyboard(e) {
+        if (!document.getElementById('screenStepper').classList.contains('active')) return;
+
+        var cards = $optionsList.querySelectorAll('.option-card');
+        var numOpts = cards.length;
+        if (numOpts === 0) return;
+
+        switch (e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                focusedOptionIndex = (focusedOptionIndex + 1) % numOpts;
+                updateFocus(cards);
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                focusedOptionIndex = focusedOptionIndex <= 0 ? numOpts - 1 : focusedOptionIndex - 1;
+                updateFocus(cards);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (focusedOptionIndex >= 0 && focusedOptionIndex < numOpts) {
+                    selectOption(focusedOptionIndex);
+                }
+                break;
+            case 'ArrowRight':
+                e.preventDefault();
+                nextQuestion();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                prevQuestion();
+                break;
+        }
+    }
+
+    function updateFocus(cards) {
+        for (var i = 0; i < cards.length; i++) {
+            cards[i].classList.remove('focused');
+        }
+        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) {
+            cards[focusedOptionIndex].classList.add('focused');
+            cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    /* ================================================================
+       WEBHOOK PAYLOAD
+       ================================================================ */
+    function buildWebhookPayload(contact) {
+        var answersPayload = {};
+        allQuestions.forEach(function(q) {
+            if (q.id in answers) {
+                answersPayload[q.id] = q.options[answers[q.id]].value;
+            }
+        });
+
+        var motionScores = {};
+        MOTIONS.forEach(function(m) {
+            var s = scores[m.id];
+            motionScores[m.id] = {
+                fit: Math.round(s.fit * 100) / 100,
+                readiness: Math.round(s.readiness * 100) / 100,
+                mena: Math.round(s.mena * 100) / 100,
+                composite: Math.round(s.composite * 100) / 100
+            };
+        });
+
+        var totalScore = getOverallScore();
+        var band = getBand(totalScore);
+
+        return {
+            assessment: 'gtm-fitness',
+            answers: answersPayload,
+            motion_scores: motionScores,
+            total_score: totalScore,
+            band: band.label,
+            contact: contact
+        };
+    }
+
+    /* ================================================================
+       CONTACT FORM
+       ================================================================ */
+    function submitContact() {
+        var nameEl = document.getElementById('contactName');
+        var emailEl = document.getElementById('contactEmail');
+        var companyEl = document.getElementById('contactCompany');
+        var name = nameEl.value.trim();
+        var email = emailEl.value.trim().toLowerCase();
+        var company = companyEl.value.trim();
+
+        var valid = true;
+        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
+        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
+        if (!valid) return;
+
+        capturedEmail = email;
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
+        var contact = { name: name, email: email, company: company };
+        var payload = buildWebhookPayload(contact);
+
+        $loadingOverlay.classList.add('active');
+
+        fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(resp) {
+            if (!resp.ok) throw new Error('Webhook returned ' + resp.status);
+            return resp.json();
+        })
+        .then(function(data) {
+            if (data && data.success && data.results && data.results.ai_analysis) {
+                aiData = data.results.ai_analysis;
+            }
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        })
+        .catch(function(err) {
+            console.error('Webhook error:', err);
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        });
+    }
+
+    function skipContact() {
+        aiData = null;
+        showResults();
+    }
+
+    /* ================================================================
+       RESULTS DISPLAY
+       ================================================================ */
+    function saveCompletionStatus(scoreId, score) {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
+            localStorage.setItem('eo_completion_status', JSON.stringify(status));
+        } catch (e) { /* silent */ }
+    }
+
+    function showResults() {
+        var totalScore = getOverallScore();
+        var band = getBand(totalScore);
+
+        /* Save score for dashboard */
+        saveCompletionStatus('gtm', totalScore);
+
+        var html = '';
+
+        /* Score Hero */
+        html += '<div class="score-hero ' + band.className + '">';
+        html += '<div class="score-circle">';
+        html += '<div class="score-circle-inner">';
+        html += '<span class="score-number">' + totalScore + '</span>';
+        html += '<span class="score-total">/ 100</span>';
+        html += '</div></div>';
+        html += '<div class="band-label">' + band.label + '</div>';
+        html += '<div class="band-subtitle">GTM Fitness Score</div>';
+        html += '<p class="band-desc">' + escapeHtml(BAND_DESCRIPTIONS[band.label]) + '</p>';
+        html += '</div>';
+
+        /* Rank motions by composite score */
+        var ranked = MOTIONS.map(function(m) {
+            return {
+                id: m.id,
+                name: m.name,
+                fit: scores[m.id].fit,
+                readiness: scores[m.id].readiness,
+                mena: scores[m.id].mena,
+                composite: scores[m.id].composite
+            };
+        }).sort(function(a, b) { return b.composite - a.composite; });
+
+        /* Top 3 GTM Motions */
+        var top3 = ranked.slice(0, 3);
+        html += '<div class="results-card"><h3>Your Top 3 GTM Motions</h3>';
+        top3.forEach(function(m, idx) {
+            var pct = Math.round(m.composite / 5 * 100);
+            html += '<div style="margin-bottom:' + (idx < 2 ? '28px' : '0') + ';">';
+            html += '<div class="motion-rank">';
+            html += '<div class="motion-rank-number">' + (idx + 1) + '</div>';
+            html += '<div class="motion-rank-title">' + escapeHtml(m.name) + '</div>';
+            html += '<div class="motion-rank-score">' + pct + '%</div>';
+            html += '</div>';
+
+            html += '<div class="motion-detail-section"><strong>Why This Motion</strong>';
+            html += '<p>' + escapeHtml(MOTION_WHY[m.id] || '') + '</p></div>';
+
+            html += '<div class="motion-detail-section"><strong>30-Day Plan</strong>';
+            html += '<p>' + escapeHtml(MOTION_PLANS[m.id] || '') + '</p></div>';
+
+            html += '<div class="motion-detail-section"><strong>Tools</strong>';
+            html += '<p>' + escapeHtml(MOTION_TOOLS[m.id] || '') + '</p></div>';
+
+            html += '<div class="motion-detail-section"><strong>MENA Tip</strong>';
+            html += '<p>' + escapeHtml(MOTION_MENA_TIPS[m.id] || '') + '</p></div>';
+
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* AI Enhanced Section */
+        if (aiData) {
+            html += '<div class="ai-section">';
+            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
+
+            if (aiData.keyInsight || aiData.key_insight) {
+                html += '<h3>Key Insight</h3>';
+                html += '<p class="ai-insight">' + escapeHtml(aiData.keyInsight || aiData.key_insight) + '</p>';
+            }
+
+            if (aiData.sequencing) {
+                html += '<div class="ai-plan">';
+                html += '<h4>Recommended Sequencing</h4>';
+                html += '<p>' + escapeHtml(aiData.sequencing) + '</p>';
+                html += '</div>';
+            }
+
+            if (aiData.primaryMotions && aiData.primaryMotions.length > 0) {
+                html += '<h3>AI Motion Recommendations</h3>';
+                html += '<ul class="ai-reco-list">';
+                aiData.primaryMotions.forEach(function(m) {
+                    html += '<li><strong>' + escapeHtml(m.name || '') + '</strong>: ' + escapeHtml(m.why || m.plan || '') + '</li>';
+                });
+                html += '</ul>';
+            }
+
+            if (aiData.menaInsight || aiData.mena_insight) {
+                html += '<div class="ai-plan" style="margin-top:16px;">';
+                html += '<h4>MENA Insight</h4>';
+                html += '<p>' + escapeHtml(aiData.menaInsight || aiData.mena_insight) + '</p>';
+                html += '</div>';
+            }
+
+            html += '<p style="margin-top:16px;font-size:13px;color:var(--eo-gray-text);">Your results have been saved for your records.</p>';
+            html += '</div>';
+        }
+
+        /* CTA */
+        html += '<div class="results-cta">';
+        html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
+        html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
+        html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
+        html += '</div>';
+
+        $resultsContent.innerHTML = html;
+        showScreen('screenResults');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        /* Bind retake + download */
+        document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+    }
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text));
+        return div.innerHTML;
+    }
+
+    /* ═══════════════════════════════════
+       MARKDOWN EXPORT
+       ═══════════════════════════════════ */
+    function generateMarkdownExport() {
+        var totalScore = getOverallScore();
+        var band = getBand(totalScore);
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' +
+            String(today.getMonth() + 1).padStart(2, '0') + '-' +
+            String(today.getDate()).padStart(2, '0');
+
+        var md = '';
+        md += '# GTM Fitness Scorecard Results\n\n';
+        md += '**Student:** ' + capturedEmail + '\n';
+        md += '**Date:** ' + dateStr + '\n';
+        md += '**Composite Score:** ' + totalScore + '/100 — ' + band.label + '\n';
+        md += '**Scoring Formula:** Fit x 0.4 + Readiness x 0.3 + MENA x 0.3\n';
+        md += '\n';
+
+        md += '> ' + BAND_DESCRIPTIONS[band.label] + '\n\n';
+
+        /* Top 3 GTM Motions */
+        var ranked = MOTIONS.map(function(m) {
+            return {
+                id: m.id,
+                name: m.name,
+                fit: scores[m.id].fit,
+                readiness: scores[m.id].readiness,
+                mena: scores[m.id].mena,
+                composite: scores[m.id].composite
+            };
+        }).sort(function(a, b) { return b.composite - a.composite; });
+
+        var top3 = ranked.slice(0, 3);
+        md += '## Top 3 GTM Motions\n\n';
+        top3.forEach(function(m, idx) {
+            var pct = Math.round(m.composite / 5 * 100);
+            md += '### ' + (idx + 1) + '. ' + m.name + ' — ' + pct + '%\n\n';
+            md += '| Component | Score |\n';
+            md += '|-----------|-------|\n';
+            md += '| Fit       | ' + (Math.round(m.fit * 100) / 100) + '/5 |\n';
+            md += '| Readiness | ' + (Math.round(m.readiness * 100) / 100) + '/5 |\n';
+            md += '| MENA      | ' + (Math.round(m.mena * 100) / 100) + '/5 |\n';
+            md += '| **Composite** | **' + (Math.round(m.composite * 100) / 100) + '/5** |\n\n';
+            md += '- **Why:** ' + (MOTION_WHY[m.id] || '') + '\n';
+            md += '- **30-Day Plan:** ' + (MOTION_PLANS[m.id] || '') + '\n';
+            md += '- **Tools:** ' + (MOTION_TOOLS[m.id] || '') + '\n';
+            md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n\n';
+        });
+
+        /* All 14 Questions with Selected Answers */
+        md += '## Answers\n\n';
+        var sectionNames = ['BUSINESS PROFILE', 'CAPABILITY PROFILE'];
+        var qCounter = 0;
+        SECTIONS.forEach(function(sec) {
+            md += '### Section ' + sec.id + ': ' + sec.name + '\n\n';
+            allQuestions.forEach(function(q) {
+                if (q.sectionIdx !== (sec.id === 'A' ? 0 : 1)) return;
+                qCounter++;
+                var selectedIdx = answers[q.id];
+                var opt = (selectedIdx !== undefined) ? q.options[selectedIdx] : null;
+                var label = opt ? opt.label : 'No answer';
+                var value = opt ? opt.value : '-';
+                md += '- Q' + qCounter + ': ' + q.text + ' → ' + label + '\n';
+            });
+            md += '\n';
+        });
+
+        /* Full Motion Rankings */
+        md += '## All Motion Rankings\n\n';
+        md += '| Rank | Motion | Composite | Fit | Readiness | MENA |\n';
+        md += '|------|--------|-----------|-----|-----------|------|\n';
+        ranked.forEach(function(m, idx) {
+            md += '| ' + (idx + 1) + ' | ' + m.name + ' | ' +
+                (Math.round(m.composite * 100) / 100) + ' | ' +
+                (Math.round(m.fit * 100) / 100) + ' | ' +
+                (Math.round(m.readiness * 100) / 100) + ' | ' +
+                (Math.round(m.mena * 100) / 100) + ' |\n';
+        });
+        md += '\n';
+
+        /* Recommended Improvements for weak motions in top 3 */
+        md += '## Recommended Improvements\n\n';
+        var hasRecos = false;
+        top3.forEach(function(m) {
+            var weakAreas = [];
+            if (m.fit < 3) weakAreas.push('Fit (' + (Math.round(m.fit * 100) / 100) + '/5)');
+            if (m.readiness < 3) weakAreas.push('Readiness (' + (Math.round(m.readiness * 100) / 100) + '/5)');
+            if (m.mena < 3) weakAreas.push('MENA (' + (Math.round(m.mena * 100) / 100) + '/5)');
+            if (weakAreas.length > 0) {
+                hasRecos = true;
+                md += '### ' + m.name + '\n\n';
+                md += '- **Weak areas:** ' + weakAreas.join(', ') + '\n';
+                md += '- **Action:** ' + (MOTION_PLANS[m.id] || '') + '\n';
+                md += '- **MENA Tip:** ' + (MOTION_MENA_TIPS[m.id] || '') + '\n';
+                md += '\n**Claude Prompt:** "My top GTM motion is ' + m.name + ' but I scored low on ' + weakAreas.join(' and ') + '. Help me build a 30-day improvement plan for a MENA-based MicroSaaS founder."\n\n';
+            }
+        });
+        if (!hasRecos) {
+            md += 'All top 3 motions scored above 3/5 on every component. Great work!\n\n';
+        }
+
+        /* Create and trigger download */
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'gtm-fitness-results-' + dateStr + '.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function retakeAssessment() {
+        answers = {};
+        scores = {};
+        currentIndex = 0;
+        aiData = null;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        $emailInput.value = '';
+        showScreen('screenEmail');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ================================================================
+       BOOT
+       ================================================================ */
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
 </body>
 </html>
