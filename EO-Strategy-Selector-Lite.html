@@ -23,8 +23,8 @@
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-beige);
-    color: var(--eo-dark);
+    background: var(--eo-dark);
+    color: #FFFFFF;
     min-height: 100vh;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -38,7 +38,7 @@ body {
 .eo-header h1 {
     font-size: 22px;
     font-weight: 800;
-    color: var(--eo-dark);
+    color: #FFFFFF;
 }
 .eo-header h1 span { color: var(--eo-orange); }
 
@@ -48,7 +48,7 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     text-align: center;
     margin-bottom: 4px;
 }
@@ -68,13 +68,13 @@ body {
 .progress-meta .section-label { margin-bottom: 0; text-align: left; }
 .progress-counter {
     font-size: 13px;
-    color: var(--eo-gray-text);
+    color: #9CA3AF;
     font-weight: 500;
 }
 .progress-track {
     width: 100%;
     height: 8px;
-    background: var(--eo-gray-border);
+    background: #2D2D44;
     border-radius: 4px;
     overflow: hidden;
 }
@@ -94,8 +94,11 @@ body {
 .welcome-screen {
     max-width: 520px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 40px;
     text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .welcome-screen h2 {
     font-size: 28px;
@@ -114,9 +117,9 @@ body {
 
 /* Question Card */
 .question-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
     max-width: 640px;
     margin: 0 auto;
@@ -196,16 +199,16 @@ body {
 }
 .btn-prev {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
-}
-.btn-prev:hover { background: var(--eo-dark); color: #fff; }
-.btn-prev.hidden { visibility: hidden; pointer-events: none; }
-.btn-next {
-    background: var(--eo-dark);
+    border: 2px solid #FFFFFF;
     color: #FFFFFF;
 }
-.btn-next:hover { background: #2d2d4a; }
+.btn-prev:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
+.btn-next {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+.btn-next:hover { background: #d4441a; }
 .btn-next:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -234,9 +237,9 @@ body {
 
 /* Path Card (Primary + Secondary) */
 .path-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 32px;
     margin-bottom: 24px;
 }
@@ -379,9 +382,9 @@ body {
 
 /* All Paths Ranked */
 .results-card {
-    background: var(--eo-card-bg);
+    background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    box-shadow: var(--eo-shadow);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     padding: 28px;
     margin-bottom: 24px;
 }
@@ -436,8 +439,8 @@ body {
 .results-cta .btn-primary { min-width: 280px; }
 .results-cta .btn-retake {
     background: transparent;
-    border: 2px solid var(--eo-dark);
-    color: var(--eo-dark);
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
     padding: 12px 28px;
     border-radius: var(--eo-radius-sm);
     font-size: 15px;
@@ -447,7 +450,7 @@ body {
     transition: all var(--eo-transition);
     min-width: 280px;
 }
-.results-cta .btn-retake:hover { background: var(--eo-dark); color: #fff; }
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); color: #FFFFFF; }
 
 /* Mobile */
 @media (max-width: 680px) {
