@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EO MicroSaaS — ICP Clarity Scoring</title>
+<title>Entrepreneurs Oasis MENA — ICP Clarity Scoring</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -632,12 +632,12 @@ body {
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
-    <p>Generating your AI-enhanced analysis...</p>
+    <p>Generating your advanced analysis...</p>
 </div>
 
 <!-- Header -->
 <div class="eo-header">
-    <h1>EO <span>MicroSaaS</span></h1>
+    <h1>Entrepreneurs <span>Oasis MENA</span></h1>
 </div>
 
 <!-- Screen 1: Email Capture -->
@@ -675,8 +675,8 @@ body {
 <div class="screen" id="screenContact">
     <div class="contact-screen">
         <div class="contact-card">
-            <h2>Get Your AI Analysis</h2>
-            <p class="subtitle">Provide your details for a personalized AI-enhanced report</p>
+            <h2>Get Your Advanced Analysis & Recommendation</h2>
+            <p class="subtitle">Provide your details for a personalized advanced report</p>
             <div class="form-group">
                 <label for="contactName">Full Name *</label>
                 <input type="text" id="contactName" placeholder="John Doe" required>
@@ -689,8 +689,8 @@ body {
                 <label for="contactCompany">Company *</label>
                 <input type="text" id="contactCompany" placeholder="Acme Corp" required>
             </div>
-            <button class="btn-primary" id="btnSubmitContact">Get My AI Analysis</button>
-            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Basic Results</button>
+            <button class="btn-primary" id="btnSubmitContact">Get My Advanced Analysis</button>
+            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Results</button>
         </div>
     </div>
 </div>
@@ -1003,6 +1003,14 @@ body {
 
         loadAnswers();
         bindEvents();
+
+        /* Auto-fill email from shared localStorage */
+        try {
+            var storedEmail = localStorage.getItem('eo_user_email');
+            if (storedEmail && $emailInput) {
+                $emailInput.value = storedEmail;
+            }
+        } catch (e) { /* silent */ }
     }
 
     function loadAnswers() {
@@ -1078,6 +1086,9 @@ body {
         }
         capturedEmail = email;
         $emailInput.style.borderColor = '';
+
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
 
         if (Object.keys(answers).length > 0) {
             currentIndex = findFirstUnanswered();
@@ -1330,6 +1341,9 @@ body {
         if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
         if (!valid) return;
 
+        capturedEmail = email;
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
         var contact = { name: name, email: email, company: company };
         var payload = buildWebhookPayload(contact);
 
@@ -1360,11 +1374,22 @@ body {
     /* ═══════════════════════════════════
        RESULTS DISPLAY
        ═══════════════════════════════════ */
+    function saveCompletionStatus(scoreId, score) {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
+            localStorage.setItem('eo_completion_status', JSON.stringify(status));
+        } catch (e) { /* silent */ }
+    }
+
     function showResults() {
         var result = calculateScores();
         var sectionScores = result.sectionScores;
         var total = result.total;
         var band = getBand(total);
+
+        /* Save score for dashboard */
+        saveCompletionStatus('icp', total);
 
         var html = '';
 
@@ -1434,7 +1459,7 @@ body {
         /* AI Enhanced Section */
         if (aiData) {
             html += '<div class="ai-section">';
-            html += '<span class="ai-badge">AI-Enhanced Analysis</span>';
+            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
 
             if (aiData.key_insight || aiData.keyInsight) {
                 html += '<h3>Key Insight</h3>';
@@ -1515,11 +1540,20 @@ body {
         md += '# ICP Clarity Scorecard Results\n\n';
         md += '**Student:** ' + capturedEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
-        md += '**Score:** ' + total + '/100 — ' + band.label + '\n';
-        md += '\n';
+        md += '**Score:** ' + total + '/100 — ' + band.label + '\n\n';
 
-        /* Answers by section */
-        md += '## Answers\n\n';
+        /* Band description */
+        var ICP_BAND_DESCS = {
+            'Crystal Clear': 'Your ICP is razor-sharp. You know exactly who you\'re building for, where they gather, how to capture their attention, and what transformation they want. Execute with confidence.',
+            'Good Foundation': 'Your ICP definition has a solid foundation. You have clarity in key areas but some gaps remain — particularly in congregation points or capture mechanisms. Address the weak sections below to sharpen your targeting.',
+            'Fuzzy ICP': 'Your ICP needs significant work. You have a general idea of your buyer but lack the specifics needed for effective outreach. Focus on customer conversations and mapping their journey.',
+            'No Clarity': 'Your ICP is too vague to build effective marketing or sales around. Start with 10+ customer interviews and build your profile from real conversations.',
+            'Critical': 'You need to start from scratch on ICP definition. Do not build product or marketing until you can describe your buyer in specific, verifiable detail.'
+        };
+        md += '> ' + (ICP_BAND_DESCS[band.label] || '') + '\n\n';
+
+        /* Section Breakdown */
+        md += '## Section Breakdown\n\n';
         var sectionOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
         var sectionFullNames = {
             'A': 'WHO — Dream Customer',
@@ -1529,6 +1563,21 @@ body {
             'E': 'EPIPHANY — Bridge',
             'F': 'CHARACTER — Attractive Identity'
         };
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) {
+                if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
+            }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            var pct = Math.round((score / max) * 100);
+            var strength = pct >= 80 ? '✅ Strong' : pct >= 60 ? '🟡 Needs Work' : '⚠️ Weak';
+            md += '- ' + sec.name + ': ' + sec.fullName + ' — ' + score + '/' + max + ' (' + pct + '%) ' + strength + '\n';
+        });
+        md += '\n';
+
+        /* Answers by section */
+        md += '## Answers\n\n';
         var qCounter = 0;
         sectionOrder.forEach(function(sid) {
             md += '### Section ' + sid + ': ' + sectionFullNames[sid] + '\n\n';
@@ -1544,20 +1593,7 @@ body {
             md += '\n';
         });
 
-        /* Section Breakdown */
-        md += '## Section Breakdown\n\n';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) {
-                if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; }
-            }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            md += '- ' + sec.name + ': ' + sec.fullName + ' — ' + score + '/' + max + '\n';
-        });
-        md += '\n';
-
-        /* Recommended Improvements for sections below 60% */
+        /* Recommended Improvements for sections below threshold */
         md += '## Recommended Improvements\n\n';
         var hasRecos = false;
         sectionOrder.forEach(function(sid) {

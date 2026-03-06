@@ -171,7 +171,7 @@ If you don't know where they gather, you cannot reach them at scale.
 **Question:** Where are they online? Be specific with group names, not platforms.
 
 **Rubric:**
-- **5 points:** You've named specific communities AND you're active in them. Example: "The 'UAE Business Owners' LinkedIn Group (4,200 members), the Retail ME WhatsApp Group, and the MENA Founders Slack. I post 3x/week in the LinkedIn group."
+- **5 points:** You've named specific communities AND you're active in them. Example: "The 'UAE Business Owners' LinkedIn Group (4,200 members), the Retail ME WhatsApp Group, and the MENA Founders Telegram. I post 3x/week in the LinkedIn group."
 - **3 points:** You know some communities; you're not active. Example: "There's a LinkedIn group for UAE entrepreneurs, and they're on certain Facebook groups."
 - **2 points:** Platform-level thinking. Example: "They're on LinkedIn and WhatsApp."
 - **0 points:** No idea. "Probably social media somewhere."
@@ -184,7 +184,7 @@ If you don't know where they gather, you cannot reach them at scale.
 - LinkedIn: Search "[ICP title] + MENA" in groups. Look for active discussions.
 - WhatsApp/Telegram: Harder to find, but ask existing customers: "What groups are you in?"
 - Facebook: Industry groups, alumni networks, geographic groups
-- Slack: Industry-specific communities, sector communities
+- Telegram: Industry-specific communities, sector communities
 - Reddit: r/entrepreneurs, r/ecommerce, niche communities
 - Apify: Use to scrape LinkedIn group member lists and analyze patterns
 
@@ -871,7 +871,7 @@ Take notes. Look for patterns across 5+ calls:
 - "What conferences, trade shows, or in-person events does your ICP attend? Have you been to any of them?"
 
 **B.2: Digital Congregation**
-- "What specific LinkedIn groups, WhatsApp groups, Slack communities, or forums is your ICP active in?"
+- "What specific LinkedIn groups, WhatsApp groups, Telegram communities, or forums is your ICP active in?"
 
 **B.3: Content Consumption**
 - "What podcasts, YouTube channels, newsletters, or blogs does your ICP follow? Name specific creators."

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EO MicroSaaS — GTM Fitness Scoring</title>
+<title>Entrepreneurs Oasis MENA — GTM Fitness Scoring</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -627,7 +627,7 @@ body {
 
 <!-- Header -->
 <div class="eo-header">
-    <h1>EO <span>MicroSaaS</span></h1>
+    <h1>Entrepreneurs <span>Oasis MENA</span></h1>
 </div>
 
 <!-- Screen 1: Email Capture / Welcome -->
@@ -666,7 +666,7 @@ body {
     <div class="contact-screen">
         <div class="contact-card">
             <h2>Get Your GTM Playbook</h2>
-            <p class="subtitle">Provide your details for a personalized AI-enhanced GTM report</p>
+            <p class="subtitle">Provide your details for a personalized GTM report</p>
             <div class="form-group">
                 <label for="contactName">Full Name *</label>
                 <input type="text" id="contactName" placeholder="John Doe" required>
@@ -680,7 +680,7 @@ body {
                 <input type="text" id="contactCompany" placeholder="Acme Corp" required>
             </div>
             <button class="btn-primary" id="btnSubmitContact">Get My GTM Playbook</button>
-            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Basic Results</button>
+            <button class="skip-link" id="btnSkipContact">Skip &mdash; Show Results</button>
         </div>
     </div>
 </div>
@@ -799,10 +799,11 @@ body {
             id: 'q7', sectionIdx: 0,
             text: 'What\'s your primary target geography?',
             options: [
-                { label: 'UAE/KSA primarily', value: 'mena-primary' },
-                { label: 'MENA broadly', value: 'mena-broad' },
-                { label: 'Global with MENA focus', value: 'global-mena' },
-                { label: 'US/EU primarily', value: 'global-west' }
+                { label: 'Gulf', value: 'gulf' },
+                { label: 'Levant', value: 'levant' },
+                { label: 'North Africa', value: 'north-africa' },
+                { label: 'MENA Broadly', value: 'mena-broad' },
+                { label: 'Global', value: 'global' }
             ]
         },
         /* Section B: CAPABILITY PROFILE (Q8-Q14) */
@@ -926,7 +927,7 @@ body {
         waitlist: 'LaunchList, Notify',
         paid: 'Facebook Ads Manager, YouTube Ads',
         hammering: 'LinkedIn, email, Calendly',
-        trust: 'CRM, email, Slack'
+        trust: 'CRM, email, Telegram'
     };
 
     var MOTION_MENA_TIPS = {
@@ -1165,7 +1166,22 @@ body {
     /* ================================================================
        INIT
        ================================================================ */
+    function checkPrerequisites() {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            if (!status.strategy) {
+                if (confirm('We recommend completing the Strategy Selector first. Go to the Assessment Dashboard?')) {
+                    window.location.href = 'EO-Assessment-Dashboard.html';
+                    return false;
+                }
+            }
+        } catch (e) { /* continue anyway */ }
+        return true;
+    }
+
     function init() {
+        checkPrerequisites();
+
         $sectionLabel = document.getElementById('sectionLabel');
         $progressCounter = document.getElementById('progressCounter');
         $progressFill = document.getElementById('progressFill');
@@ -1184,6 +1200,23 @@ body {
 
         loadAnswers();
         bindEvents();
+
+        /* Auto-skip email screen if email already captured from previous scorecard */
+        try {
+            var storedEmail = localStorage.getItem('eo_user_email');
+            if (storedEmail) {
+                capturedEmail = storedEmail;
+                if ($emailInput) $emailInput.value = storedEmail;
+                /* Skip straight to stepper */
+                if (Object.keys(answers).length > 0) {
+                    currentIndex = findFirstUnanswered();
+                } else {
+                    currentIndex = 0;
+                }
+                showScreen('screenStepper');
+                renderQuestion();
+            }
+        } catch (e) { /* show email screen as fallback */ }
     }
 
     function loadAnswers() {
@@ -1259,6 +1292,9 @@ body {
         }
         capturedEmail = email;
         $emailInput.style.borderColor = '';
+
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
 
         if (Object.keys(answers).length > 0) {
             currentIndex = findFirstUnanswered();
@@ -1472,6 +1508,9 @@ body {
         if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
         if (!valid) return;
 
+        capturedEmail = email;
+        /* Persist email for cross-scorecard auth */
+        try { localStorage.setItem('eo_user_email', email); } catch (e) { /* silent */ }
         var contact = { name: name, email: email, company: company };
         var payload = buildWebhookPayload(contact);
 
@@ -1508,9 +1547,21 @@ body {
     /* ================================================================
        RESULTS DISPLAY
        ================================================================ */
+    function saveCompletionStatus(scoreId, score) {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
+            localStorage.setItem('eo_completion_status', JSON.stringify(status));
+        } catch (e) { /* silent */ }
+    }
+
     function showResults() {
         var totalScore = getOverallScore();
         var band = getBand(totalScore);
+
+        /* Save score for dashboard */
+        saveCompletionStatus('gtm', totalScore);
+
         var html = '';
 
         /* Score Hero */
@@ -1568,7 +1619,7 @@ body {
         /* AI Enhanced Section */
         if (aiData) {
             html += '<div class="ai-section">';
-            html += '<span class="ai-badge">AI-Enhanced Analysis</span>';
+            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
 
             if (aiData.keyInsight || aiData.key_insight) {
                 html += '<h3>Key Insight</h3>';
