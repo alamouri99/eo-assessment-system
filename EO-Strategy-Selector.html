@@ -739,6 +739,23 @@ body {
     background: var(--eo-orange);
     color: #FFFFFF;
 }
+.results-cta .btn-download-pdf {
+    background: transparent;
+    border: 2px solid #6B7280;
+    color: #6B7280;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-pdf:hover {
+    background: #6B7280;
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -1567,6 +1584,7 @@ body {
         html += '<div class="results-cta">';
         html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
         html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
+        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1574,9 +1592,10 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake + download */
+        /* Bind retake + downloads */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
     }
 
     function escapeHtml(text) {
@@ -1687,6 +1706,24 @@ body {
         URL.revokeObjectURL(url);
     }
 
+    /* ═══════════════════════════════════
+       PDF EXPORT
+       ═══════════════════════════════════ */
+    function generatePdfExport() {
+        var el = document.getElementById('resultsContent');
+        if (!el) return;
+        var dateStr = new Date().toISOString().split('T')[0];
+        var opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'strategy-selector-results-' + dateStr + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FAF5EF' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+        html2pdf().set(opt).from(el).save();
+    }
+
     function retakeAssessment() {
         answers = {};
         currentIndex = 0;
@@ -1711,5 +1748,6 @@ body {
 
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

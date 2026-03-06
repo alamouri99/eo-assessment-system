@@ -636,6 +636,23 @@ body {
     background: var(--eo-orange);
     color: #FFFFFF;
 }
+.results-cta .btn-download-pdf {
+    background: transparent;
+    border: 2px solid #6B7280;
+    color: #6B7280;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-pdf:hover {
+    background: #6B7280;
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -1590,6 +1607,7 @@ body {
         html += '<div class="results-cta">';
         html += '<a href="https://www.linkedin.com/groups/13121095/" target="_blank" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Join MENA MicroSaaS Movement</a>';
         html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
+        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1597,9 +1615,10 @@ body {
         showScreen('screenResults');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Bind retake + download */
+        /* Bind retake + downloads */
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
     }
 
     function escapeHtml(text) {
@@ -1669,9 +1688,8 @@ body {
             md += '\n';
         });
 
-        /* Recommended Improvements for sections below 60% */
-        md += '## Recommended Improvements\n\n';
-        var hasRecos = false;
+        /* Recommendations for ALL sections */
+        md += '## Recommendations by Section\n\n';
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) {
@@ -1679,17 +1697,70 @@ body {
             }
             var score = sectionScores[sid] || 0;
             var max = SECTION_MAXES[sid];
-            if (score < max * 0.6) {
-                hasRecos = true;
-                md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')\n\n';
-                RECOMMENDATIONS[sid].forEach(function(r) {
-                    md += '- ' + r + '\n';
-                });
-                md += '\n**Claude Prompt:** "I scored ' + score + '/' + max + ' on the ' + sec.name + ' (' + sec.fullName + ') section of the Market Attractiveness Scorecard. Help me improve my ' + sec.fullName.toLowerCase() + ' strategy with specific, actionable steps for a MENA-based MicroSaaS founder."\n\n';
-            }
+            var pct = Math.round((score / max) * 100);
+            var strength = pct >= 80 ? '✅ Strong' : pct >= 60 ? '🟡 Needs Work' : '⚠️ Weak';
+            md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ') — ' + strength + '\n\n';
+            RECOMMENDATIONS[sid].forEach(function(r) {
+                md += '- ' + r + '\n';
+            });
+            md += '\n**Claude Prompt:** "I scored ' + score + '/' + max + ' on the ' + sec.name + ' (' + sec.fullName + ') section of the Market Attractiveness Scorecard. Help me improve my ' + sec.fullName.toLowerCase() + ' strategy with specific, actionable steps for a MENA-based MicroSaaS founder."\n\n';
         });
-        if (!hasRecos) {
-            md += 'All sections scored above 60%. Great work!\n\n';
+
+        /* Advanced Analysis from AI (if available) */
+        if (aiData) {
+            var ai = aiData;
+            /* Unwrap nested structure */
+            if (ai.data && ai.data.results && ai.data.results.ai_analysis) {
+                ai = ai.data.results.ai_analysis;
+            } else if (ai.results && ai.results.ai_analysis) {
+                ai = ai.results.ai_analysis;
+            } else if (ai.ai_analysis) {
+                ai = ai.ai_analysis;
+            }
+
+            md += '## Advanced Analysis & Recommendation\n\n';
+            if (ai.key_insight || ai.keyInsight) {
+                md += '### Key Insight\n\n' + (ai.key_insight || ai.keyInsight) + '\n\n';
+            }
+            if (ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan']) {
+                var plan = ai.thirty_day_plan || ai.thirtyDayPlan || ai['30_day_plan'];
+                md += '### 30-Day Action Plan\n\n';
+                if (typeof plan === 'string') {
+                    md += plan + '\n\n';
+                } else if (Array.isArray(plan)) {
+                    plan.forEach(function(item) {
+                        md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n';
+                    });
+                    md += '\n';
+                } else if (typeof plan === 'object') {
+                    var weeks = ['week1', 'week2', 'week3', 'week4'];
+                    weeks.forEach(function(weekKey, idx) {
+                        var week = plan[weekKey];
+                        if (week) {
+                            md += '**Week ' + (idx + 1) + (week.focus ? ': ' + week.focus : '') + '**\n';
+                            if (week.actions && Array.isArray(week.actions)) {
+                                week.actions.forEach(function(action) {
+                                    md += '- ' + (typeof action === 'string' ? action : JSON.stringify(action)) + '\n';
+                                });
+                            }
+                            if (week.milestone) { md += '- *Milestone:* ' + week.milestone + '\n'; }
+                            md += '\n';
+                        }
+                    });
+                }
+            }
+            if (ai.recommendations || ai.ai_recommendations) {
+                var aiRecs = ai.recommendations || ai.ai_recommendations;
+                md += '### AI Recommendations\n\n';
+                if (typeof aiRecs === 'string') {
+                    md += aiRecs + '\n\n';
+                } else if (Array.isArray(aiRecs)) {
+                    aiRecs.forEach(function(r) {
+                        md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n';
+                    });
+                    md += '\n';
+                }
+            }
         }
 
         /* Create and trigger download */
@@ -1702,6 +1773,24 @@ body {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+
+    /* ═══════════════════════════════════
+       PDF EXPORT
+       ═══════════════════════════════════ */
+    function generatePdfExport() {
+        var el = document.getElementById('resultsContent');
+        if (!el) return;
+        var dateStr = new Date().toISOString().split('T')[0];
+        var opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'market-attractiveness-results-' + dateStr + '.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FAF5EF' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+        html2pdf().set(opt).from(el).save();
     }
 
     function retakeAssessment() {
@@ -1725,5 +1814,6 @@ body {
 
 })();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
