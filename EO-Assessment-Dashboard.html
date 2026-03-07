@@ -754,6 +754,29 @@
             }
         }
 
+        /* RTL Toggle */
+        .rtl-toggle {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 999;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .rtl-toggle:hover { background: rgba(255,255,255,0.2); }
+        body.rtl { direction: rtl; text-align: right; }
+        body.rtl .eo-header-content { flex-direction: row-reverse; }
+        body.rtl .eo-flow-chart { flex-direction: row-reverse; }
+        body.rtl .eo-nav { flex-direction: row-reverse; }
+
         /* Hide/Show */
         .hidden {
             display: none !important;
@@ -782,6 +805,7 @@
     </style>
 </head>
 <body>
+    <button class="rtl-toggle" onclick="toggleRTL()">EN / عربي</button>
     <div id="eo-dashboard">
         <!-- Header -->
         <div class="eo-header">
@@ -811,54 +835,54 @@
 
                 <!-- Tool Cards -->
                 <div class="eo-grid">
-                    <!-- Card 1: ICP Clarity -->
+                    <!-- Card 1: Project Definition -->
+                    <div class="eo-card" data-tool="pd">
+                        <div class="eo-card-icon">📋</div>
+                        <div class="eo-card-badge">START HERE</div>
+                        <div class="eo-card-title">Project Definition Scoring</div>
+                        <div class="eo-card-desc">Define your niche, positioning, and project scope. 21 questions across 6 sections.</div>
+                        <div class="eo-card-source">Foundation for all downstream assessments</div>
+                        <button class="eo-card-btn" onclick="openTool('pd')">Define Your Project →</button>
+                    </div>
+
+                    <!-- Card 2: ICP Clarity -->
                     <div class="eo-card" data-tool="icp">
                         <div class="eo-card-icon">👤</div>
-                        <div class="eo-card-badge">START HERE</div>
+                        <div class="eo-card-badge">SC2</div>
                         <div class="eo-card-title">ICP Clarity Scoring</div>
-                        <div class="eo-card-desc">Comprehensive buyer clarity assessment using Brunson's frameworks</div>
+                        <div class="eo-card-desc">Comprehensive buyer clarity assessment. 27 questions across 5 sections.</div>
                         <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
                         <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
                     </div>
 
-                    <!-- Card 2: Market Attractiveness -->
+                    <!-- Card 3: Market Attractiveness -->
                     <div class="eo-card" data-tool="market">
                         <div class="eo-card-icon">🎯</div>
-                        <div class="eo-card-badge">DEEP DIVE</div>
+                        <div class="eo-card-badge">SC3</div>
                         <div class="eo-card-title">Market Attractiveness Scoring</div>
-                        <div class="eo-card-desc">Deep 20-question assessment of your market opportunity strength</div>
+                        <div class="eo-card-desc">Deep 20-question assessment of your market opportunity strength.</div>
                         <div class="eo-card-source">Based on $100M Offers + Ultimate Sales Machine</div>
                         <button class="eo-card-btn" onclick="openTool('market')">Score Your Market →</button>
                     </div>
 
-                    <!-- Card 3: Strategy Selector -->
+                    <!-- Card 4: Strategy Selector -->
                     <div class="eo-card" data-tool="strategy">
                         <div class="eo-card-icon">🧭</div>
-                        <div class="eo-card-badge">STRATEGY</div>
+                        <div class="eo-card-badge">SC4</div>
                         <div class="eo-card-title">Strategy Selector</div>
-                        <div class="eo-card-desc">Find your highest-probability MicroSaaS strategy path</div>
-                        <div class="eo-card-source">7 questions · 4 strategy paths</div>
+                        <div class="eo-card-desc">Find your optimal strategy path. 20 questions, 4 strategy paths, dynamic execution questions.</div>
+                        <div class="eo-card-source">Synthesizes SC1-SC3 data for path recommendation</div>
                         <button class="eo-card-btn" onclick="openTool('strategy')">Find Your Strategy →</button>
                     </div>
 
-                    <!-- Card 4: GTM Fitness -->
+                    <!-- Card 5: GTM Fitness -->
                     <div class="eo-card" data-tool="gtm">
                         <div class="eo-card-icon">🚀</div>
-                        <div class="eo-card-badge">DEEP DIVE</div>
+                        <div class="eo-card-badge">FINAL</div>
                         <div class="eo-card-title">GTM Fitness Scoring</div>
-                        <div class="eo-card-desc">Evaluate your readiness across 13 GTM motions</div>
+                        <div class="eo-card-desc">Evaluate readiness across 13 GTM motions. Dynamic top-5 deep dive. 22 questions.</div>
                         <div class="eo-card-source">Based on Entrepreneurs Oasis MENA GTM Matrix</div>
                         <button class="eo-card-btn" onclick="openTool('gtm')">Score Your GTM →</button>
-                    </div>
-
-                    <!-- Card 5: Project Files -->
-                    <div class="eo-card" data-tool="projectFiles">
-                        <div class="eo-card-icon">🗂️</div>
-                        <div class="eo-card-badge">FINAL STEP</div>
-                        <div class="eo-card-title">MicroSaaS Project Files</div>
-                        <div class="eo-card-desc">Assess your file readiness for Claude Desktop. 20 questions.</div>
-                        <div class="eo-card-source">Based on Entrepreneurs Oasis MENA File Framework</div>
-                        <button class="eo-card-btn" onclick="openTool('projectFiles')">Score Your Files →</button>
                     </div>
                 </div>
 
@@ -870,24 +894,24 @@
                     <button onclick="generateProjectBriefPdf()" style="padding: 1rem 2.5rem; background: transparent; border: 2px solid #FF6600; color: #FF6600; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; margin-left: 12px;">
                         📄 Generate Project Brief (PDF)
                     </button>
-                    <p style="color: #A3A3A3; font-size: 13px; margin-top: 0.5rem;">All 5 assessments complete! Download your consolidated project brief.</p>
+                    <p style="color: #A3A3A3; font-size: 13px; margin-top: 0.5rem;">All assessments complete! Download your consolidated project brief.</p>
                 </div>
 
                 <!-- Flow Guide -->
                 <div class="eo-flow">
                     <div class="eo-flow-title">Assessment Flow Guide</div>
                     <div class="eo-flow-chart">
-                        <div class="eo-flow-step highlight">ICP Clarity</div>
+                        <div class="eo-flow-step highlight">Project Definition</div>
+                        <div class="eo-flow-arrow">→</div>
+                        <div class="eo-flow-step">ICP Clarity</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">Market Attractiveness</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">Strategy Selector</div>
                         <div class="eo-flow-arrow">→</div>
                         <div class="eo-flow-step">GTM Fitness</div>
-                        <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step">Project Files</div>
                     </div>
-                    <div class="eo-flow-desc">Start with ICP Clarity to define your buyer. Then validate your market, pick your strategy, and plan your GTM. Each assessment builds on the previous one.</div>
+                    <div class="eo-flow-desc">Start with Project Definition to set your niche and scope. Then define your buyer (ICP), validate market, pick strategy path, and plan GTM. Each assessment builds on the previous one — data flows downstream automatically.</div>
                 </div>
             </div>
 
@@ -1510,19 +1534,19 @@
         // Update hub card states based on completion
         function updateHubStates(status) {
             const cards = {
+                pd: document.querySelector('[data-tool="pd"]'),
                 icp: document.querySelector('[data-tool="icp"]'),
                 market: document.querySelector('[data-tool="market"]'),
                 strategy: document.querySelector('[data-tool="strategy"]'),
-                gtm: document.querySelector('[data-tool="gtm"]'),
-                projectFiles: document.querySelector('[data-tool="projectFiles"]')
+                gtm: document.querySelector('[data-tool="gtm"]')
             };
 
             const statusMap = {
+                pd: status.pd,
                 icp: status.icp,
                 market: status.mas,
                 strategy: status.strategy,
-                gtm: status.gtm,
-                projectFiles: status.pf
+                gtm: status.gtm
             };
 
             Object.keys(cards).forEach(function(key) {
@@ -1531,7 +1555,7 @@
                 const badge = card.querySelector('.eo-card-badge');
                 if (statusMap[key] && statusMap[key].score > 0) {
                     if (badge) {
-                        badge.textContent = '✅ DONE (' + statusMap[key].score + ')';
+                        badge.textContent = '\u2705 DONE (' + statusMap[key].score + ')';
                         badge.style.background = '#22C55E';
                         badge.style.color = '#FFFFFF';
                     }
@@ -1539,7 +1563,7 @@
             });
 
             // Show "Generate Project Brief" button if all 5 complete
-            const allComplete = status.icp && status.mas && status.strategy && status.gtm && status.pf;
+            const allComplete = status.pd && status.icp && status.mas && status.strategy && status.gtm;
             const briefBtn = document.getElementById('btn-generate-brief');
             if (briefBtn) {
                 briefBtn.style.display = allComplete ? 'block' : 'none';
@@ -1563,8 +1587,8 @@
 
             renderDashboard();
 
-            const count = [status.icp, status.mas, status.gtm].filter(function(s) { return s && s.score > 0; }).length;
-            statusEl.textContent = 'Loaded ' + count + '/3 pillar scores from local data.';
+            const count = [status.pd, status.icp, status.mas, status.strategy, status.gtm].filter(function(s) { return s && s.score > 0; }).length;
+            statusEl.textContent = 'Loaded ' + count + '/5 assessment scores from local data.';
             statusEl.style.color = '#22C55E';
         }
 
@@ -1607,11 +1631,11 @@ https://eomicro.saas/eo-assessment
         // Tool links (actual file names)
         function openTool(tool) {
             const toolUrls = {
-                strategy: 'EO-Strategy-Selector.html',
-                market: 'EO-Market-Attractiveness-Scoring.html',
+                pd: 'EO-Project-Definition-Scoring.html',
                 icp: 'EO-ICP-Clarity-Scoring.html',
-                gtm: 'EO-GTM-Fitness-Scoring.html',
-                projectFiles: 'EO-Project-Files-Scoring.html'
+                market: 'EO-Market-Attractiveness-Scoring.html',
+                strategy: 'EO-Strategy-Selector.html',
+                gtm: 'EO-GTM-Fitness-Scoring.html'
             };
             if (toolUrls[tool]) {
                 window.location.href = toolUrls[tool];
@@ -1772,19 +1796,14 @@ https://eomicro.saas/eo-assessment
             md += '**Overall Readiness:** ' + overall + '/100 — ' + bandInfo.band + '\n\n';
             md += '> ' + bandInfo.desc + '\n\n';
 
-            md += '## Pillar Scores\n\n';
-            md += '| Pillar | Score | Band |\n';
-            md += '|--------|-------|------|\n';
-            md += '| Market Attractiveness (MAS) | ' + scores.mas + '/100 | ' + getPillarBand(scores.mas) + ' |\n';
+            md += '## Assessment Scores\n\n';
+            md += '| Assessment | Score | Band |\n';
+            md += '|------------|-------|------|\n';
+            if (status.pd) md += '| Project Definition (PD) | ' + status.pd.score + '/100 | ' + getPillarBand(status.pd.score) + ' |\n';
             md += '| ICP Clarity | ' + scores.icp + '/100 | ' + getPillarBand(scores.icp) + ' |\n';
+            md += '| Market Attractiveness (MAS) | ' + scores.mas + '/100 | ' + getPillarBand(scores.mas) + ' |\n';
+            if (status.strategy) md += '| Strategy Selector | ' + status.strategy.score + '/100 | ' + getPillarBand(status.strategy.score) + ' |\n';
             md += '| GTM Fitness | ' + scores.gtm + '/100 | ' + getPillarBand(scores.gtm) + ' |\n';
-
-            if (status.strategy) {
-                md += '| Strategy Path | ' + (status.strategy.path || 'N/A') + ' | ' + (status.strategy.score || 'N/A') + '% |\n';
-            }
-            if (status.pf) {
-                md += '| Project Files | ' + status.pf.score + '/100 | ' + (status.pf.score >= 80 ? 'Ready' : status.pf.score >= 60 ? 'Partial' : 'Gaps') + ' |\n';
-            }
             md += '\n';
 
             md += '## Demand-First Matrix Position\n\n';
@@ -1805,11 +1824,11 @@ https://eomicro.saas/eo-assessment
 
             md += '## Individual Assessment Scores\n\n';
             const assessmentKeys = [
-                { key: 'icp', name: 'ICP Clarity', storageKey: 'eo_icp-clarity_answers' },
-                { key: 'mas', name: 'Market Attractiveness', storageKey: 'eo_market-attractiveness_answers' },
-                { key: 'strategy', name: 'Strategy Selector', storageKey: 'eo_strategy-selector_answers' },
-                { key: 'gtm', name: 'GTM Fitness', storageKey: 'eo_gtm-fitness_answers' },
-                { key: 'pf', name: 'Project Files', storageKey: 'eo_project-files_answers' }
+                { key: 'pd', name: 'Project Definition', storageKey: 'eo-project-definition' },
+                { key: 'icp', name: 'ICP Clarity', storageKey: 'eo-icp-clarity' },
+                { key: 'mas', name: 'Market Attractiveness', storageKey: 'eo-market-attractiveness' },
+                { key: 'strategy', name: 'Strategy Selector', storageKey: 'eo-strategy-selector' },
+                { key: 'gtm', name: 'GTM Fitness', storageKey: 'eo-gtm-fitness' }
             ];
 
             assessmentKeys.forEach(function(a) {
@@ -1954,6 +1973,20 @@ https://eomicro.saas/eo-assessment
                 fetchMyScores();
             }
         }
+
+        // RTL toggle
+        function toggleRTL() {
+            document.body.classList.toggle('rtl');
+            var isRTL = document.body.classList.contains('rtl');
+            document.documentElement.lang = isRTL ? 'ar' : 'en';
+            document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+            try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
+        }
+
+        // Restore RTL on load
+        (function() {
+            try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
+        })();
 
         // Initialize
         window.addEventListener('beforeunload', saveScores);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entrepreneurs Oasis MENA — Market Attractiveness Scoring</title>
+<title>Entrepreneurs Oasis MENA — Project Definition Scoring</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -92,24 +92,28 @@ body.rtl .option-card { text-align: right; }
     align-items: center;
     margin-bottom: 8px;
 }
+.progress-meta .section-label { margin-bottom: 0; text-align: left; }
 .progress-counter {
     font-size: 13px;
     color: #9CA3AF;
+    font-weight: 500;
 }
 .progress-track {
-    height: 6px;
+    width: 100%;
+    height: 8px;
     background: #2D2D44;
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
 }
 .progress-fill {
     height: 100%;
     background: var(--eo-orange);
-    border-radius: 3px;
-    transition: width 0.3s ease;
+    border-radius: 4px;
+    transition: width var(--eo-transition);
+    width: 0%;
 }
 
-/* Screen Management */
+/* Screens */
 .screen { display: none; }
 .screen.active { display: block; }
 
@@ -117,66 +121,82 @@ body.rtl .option-card { text-align: right; }
 .email-capture {
     max-width: 480px;
     margin: 60px auto;
-    padding: 0 20px;
+    padding: 40px;
     text-align: center;
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 .email-capture h2 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
+    color: var(--eo-dark);
     margin-bottom: 8px;
 }
 .email-capture p {
-    color: #9CA3AF;
-    font-size: 14px;
-    margin-bottom: 24px;
-    line-height: 1.5;
+    color: var(--eo-gray-text);
+    margin-bottom: 28px;
+    font-size: 15px;
 }
 .email-capture input {
     width: 100%;
     padding: 14px 16px;
-    border: 2px solid #2D2D44;
+    border: 2px solid var(--eo-gray-border);
     border-radius: var(--eo-radius-sm);
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     font-family: inherit;
     outline: none;
     transition: border-color var(--eo-transition);
     margin-bottom: 16px;
 }
 .email-capture input:focus { border-color: var(--eo-orange); }
-.email-capture input::placeholder { color: #6B7280; }
+.email-capture .btn-primary { width: 100%; }
 
 /* Question Card */
 .question-card {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 28px 24px;
     background: var(--eo-beige);
     border-radius: var(--eo-radius);
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 32px;
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
 }
+.question-card.shake {
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+}
+
 .question-text {
     font-size: 20px;
     font-weight: 700;
-    color: var(--eo-dark);
-    margin-bottom: 8px;
-    line-height: 1.4;
+    color: var(--eo-orange);
+    text-align: center;
+    margin-bottom: 12px;
+    line-height: 1.35;
 }
 .question-help {
     font-size: 13px;
     color: var(--eo-gray-text);
+    text-align: center;
     margin-bottom: 20px;
     line-height: 1.5;
     font-style: italic;
 }
+
+/* Options */
 .options-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 .option-card {
-    background: var(--eo-card-bg);
     border: 2px solid var(--eo-gray-border);
     border-radius: var(--eo-radius-sm);
     padding: 16px 20px;
@@ -204,125 +224,135 @@ body.rtl .option-card { text-align: right; }
 /* Free-text Input */
 .freetext-input {
     width: 100%;
-    min-height: 120px;
-    padding: 14px 16px;
+    padding: 16px;
     border: 2px solid var(--eo-gray-border);
     border-radius: var(--eo-radius-sm);
-    font-family: inherit;
     font-size: 15px;
-    color: var(--eo-dark);
+    font-family: inherit;
     resize: vertical;
+    min-height: 120px;
     outline: none;
-    background: var(--eo-card-bg);
-    line-height: 1.5;
     transition: border-color var(--eo-transition);
+    color: var(--eo-dark);
+    line-height: 1.5;
+    background: #FFFFFF;
 }
 .freetext-input:focus { border-color: var(--eo-orange); }
-.freetext-input::placeholder { color: #9CA3AF; }
+.freetext-input::placeholder { color: #9CA3AF; font-size: 14px; }
 
-/* Evidence */
+.char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-top: 6px;
+}
+.char-count.over { color: #EF4444; }
+
+/* Evidence Label */
 .evidence-label {
     font-size: 14px;
     font-weight: 600;
     color: var(--eo-dark);
-    margin-top: 16px;
+    margin-top: 20px;
     margin-bottom: 8px;
 }
 .evidence-input { min-height: 80px; }
-.char-count {
-    font-size: 12px;
-    color: var(--eo-gray-text);
-    text-align: right;
-    margin-top: 6px;
-}
-.char-count.over { color: #EF4444; font-weight: 600; }
 
-/* Navigation */
+/* Nav Buttons */
 .nav-buttons {
-    max-width: 640px;
-    margin: 20px auto 60px;
-    padding: 0 20px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    max-width: 640px;
+    margin: 24px auto 0;
+    padding: 0 20px;
     gap: 12px;
 }
 .btn {
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
+    font-family: inherit;
     font-size: 15px;
     font-weight: 600;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
     cursor: pointer;
-    font-family: inherit;
-    border: none;
     transition: all var(--eo-transition);
+    border: none;
+    outline: none;
 }
 .btn-prev {
-    background: rgba(255,255,255,0.1);
+    background: transparent;
+    border: 2px solid #FFFFFF;
     color: #FFFFFF;
-    border: 1px solid rgba(255,255,255,0.2);
 }
-.btn-prev:hover { background: rgba(255,255,255,0.2); }
-.btn-prev.hidden { visibility: hidden; }
+.btn-prev:hover { background: rgba(255,255,255,0.15); }
+.btn-prev.hidden { visibility: hidden; pointer-events: none; }
 .btn-next {
     background: var(--eo-orange);
     color: #FFFFFF;
-    margin-left: auto;
 }
-.btn-next:hover { background: #D4411A; }
-.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-next:hover { background: #d4441a; }
+.btn-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 .btn-primary {
     background: var(--eo-orange);
     color: #FFFFFF;
-    border: none;
-    padding: 14px 32px;
-    border-radius: var(--eo-radius-sm);
     font-size: 16px;
     font-weight: 700;
+    padding: 14px 32px;
+    border: none;
+    border-radius: var(--eo-radius-sm);
     cursor: pointer;
     font-family: inherit;
-    transition: background var(--eo-transition);
+    transition: all var(--eo-transition);
 }
-.btn-primary:hover { background: #D4411A; }
+.btn-primary:hover { background: #d4441a; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Toast */
 .toast {
     position: fixed;
-    bottom: 30px;
+    top: 20px;
     left: 50%;
-    transform: translateX(-50%) translateY(100px);
-    background: #1E293B;
-    color: #FFFFFF;
-    padding: 14px 28px;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--eo-dark);
+    color: #fff;
+    padding: 12px 24px;
     border-radius: var(--eo-radius-sm);
     font-size: 14px;
     font-weight: 500;
     z-index: 1000;
-    opacity: 0;
-    transition: all 0.3s ease;
+    transition: transform 0.4s ease;
+    white-space: nowrap;
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
 
 /* Contact Form */
 .contact-screen {
     max-width: 480px;
-    margin: 60px auto;
+    margin: 40px auto;
     padding: 0 20px;
 }
 .contact-card {
     background: var(--eo-beige);
     border-radius: var(--eo-radius);
-    padding: 32px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 32px;
 }
 .contact-card h2 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     color: var(--eo-dark);
-    margin-bottom: 4px;
+    text-align: center;
+    margin-bottom: 6px;
 }
 .contact-card .subtitle {
-    color: var(--eo-gray-text);
     font-size: 14px;
+    color: var(--eo-gray-text);
+    text-align: center;
     margin-bottom: 24px;
 }
 .form-group {
@@ -341,7 +371,6 @@ body.rtl .option-card { text-align: right; }
     border: 2px solid var(--eo-gray-border);
     border-radius: var(--eo-radius-sm);
     font-size: 15px;
-    color: var(--eo-dark);
     font-family: inherit;
     outline: none;
     transition: border-color var(--eo-transition);
@@ -575,90 +604,6 @@ body.rtl .option-card { text-align: right; }
     font-weight: 600;
 }
 
-/* Prerequisite Gate */
-.prereq-gate {
-    max-width: 480px;
-    margin: 80px auto;
-    padding: 0 20px;
-    text-align: center;
-}
-.prereq-card {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3);
-    border-radius: var(--eo-radius);
-    padding: 40px 32px;
-}
-.prereq-card h2 {
-    color: #EF4444;
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-.prereq-card p {
-    color: #D1D5DB;
-    font-size: 15px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-.prereq-card .btn-primary {
-    display: inline-block;
-    text-decoration: none;
-}
-
-/* Upstream Reference Panel */
-.upstream-ref {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--eo-radius-sm);
-    overflow: hidden;
-    margin-bottom: 12px;
-}
-.upstream-ref-toggle {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: #9CA3AF;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color var(--eo-transition);
-}
-.upstream-ref-toggle:hover { color: #D1D5DB; }
-.upstream-ref-toggle .arrow {
-    font-size: 10px;
-    transition: transform 0.2s ease;
-}
-.upstream-ref-toggle.open .arrow { transform: rotate(90deg); }
-.upstream-ref-content {
-    display: none;
-    padding: 0 16px 12px;
-}
-.upstream-ref-content.open { display: block; }
-.upstream-ref-item {
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.upstream-ref-item:last-child { border-bottom: none; }
-.upstream-ref-item .label {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--eo-orange);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-}
-.upstream-ref-item .value {
-    font-size: 13px;
-    color: #D1D5DB;
-    line-height: 1.4;
-}
-
 /* Gate Warning */
 .gate-warning {
     background: rgba(239,68,68,0.1);
@@ -729,14 +674,6 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 
-/* Shake animation */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-6px); }
-    40%, 80% { transform: translateX(6px); }
-}
-.shake { animation: shake 0.4s ease; }
-
 /* Mobile */
 @media (max-width: 680px) {
     .question-card { margin: 0 16px; padding: 24px 20px; }
@@ -772,22 +709,11 @@ body.rtl .option-card { text-align: right; }
     <h1>Entrepreneurs <span>Oasis MENA</span></h1>
 </div>
 
-<!-- Screen 0: Prerequisite Gate -->
-<div class="screen" id="screenPrereq">
-    <div class="prereq-gate">
-        <div class="prereq-card">
-            <h2>Prerequisites Required</h2>
-            <p>You must complete <strong>SC1: Project Definition</strong> and <strong>SC2: ICP Clarity</strong> before starting Market Attractiveness Scoring.<br><br>This assessment references your niche, positioning, pain statements, and congregation points from SC1 and SC2.</p>
-            <a href="EO-Assessment-Dashboard.html" class="btn-primary">Go to Dashboard →</a>
-        </div>
-    </div>
-</div>
-
 <!-- Screen 1: Email Capture -->
-<div class="screen" id="screenEmail">
+<div class="screen active" id="screenEmail">
     <div class="email-capture">
-        <h2>Market Attractiveness Scorecard</h2>
-        <p>Validate your market across 4 dimensions with 20 guided questions. Evidence-based scoring. ~20 minutes.</p>
+        <h2>Project Definition Scorecard</h2>
+        <p>Define your project foundation with 21 guided questions. Free-text + multiple choice. ~15 minutes.</p>
         <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
@@ -797,15 +723,13 @@ body.rtl .option-card { text-align: right; }
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: PAIN REALITY</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
+            <div class="section-label" id="sectionLabel">Section A: Founder Context</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 21</div>
         </div>
         <div class="progress-track">
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
-    <!-- Upstream Reference Panel -->
-    <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -822,7 +746,7 @@ body.rtl .option-card { text-align: right; }
     <div class="contact-screen">
         <div class="contact-card">
             <h2>Almost Done!</h2>
-            <p class="subtitle">Get your personalized AI-powered market analysis.</p>
+            <p class="subtitle">Get your personalized AI-powered analysis.</p>
             <div class="form-group">
                 <label>Full Name *</label>
                 <input type="text" id="contactName" placeholder="Your full name" autocomplete="name">
@@ -850,10 +774,9 @@ body.rtl .option-card { text-align: right; }
 
 <script>
 /* ═══════════════════════════════════════════════════
-   EO MARKET ATTRACTIVENESS SCORING — SCORECARD 3
-   20 Questions | 4 Sections (A-D) | 100 Points
+   EO PROJECT DEFINITION SCORING — SCORECARD 1
+   21 Questions | 6 Sections (A-F) | 100 Points
    Question Types: MC, Free-Text, MC+Evidence
-   Prerequisites: SC1 (Project Definition) + SC2 (ICP Clarity)
    ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
@@ -868,245 +791,237 @@ body.rtl .option-card { text-align: right; }
     /* ===================================
        ASSESSMENT CONFIG
        =================================== */
-    var ASSESSMENT_ID = 'market-attractiveness';
-    var ASSESSMENT_TITLE = 'Market Attractiveness';
+    var ASSESSMENT_ID = 'project-definition';
+    var ASSESSMENT_TITLE = 'Project Definition';
 
     var SECTIONS = [
-        { id: 'A', name: 'PAIN REALITY', fullName: 'Pain Reality & Intensity' },
-        { id: 'B', name: 'PURCHASING', fullName: 'Purchasing Power & Willingness' },
-        { id: 'C', name: 'ACCESS', fullName: 'ICP Accessibility' },
-        { id: 'D', name: 'GROWTH', fullName: 'Market Growth & Momentum' }
+        { id: 'A', name: 'FOUNDER', fullName: 'Founder Context & Problem Origin' },
+        { id: 'B', name: 'NICHE', fullName: '3-Level Niche Definition' },
+        { id: 'C', name: 'POSITIONING', fullName: 'Positioning & Differentiation' },
+        { id: 'D', name: 'PRODUCT', fullName: 'Product Vision & Spec' },
+        { id: 'E', name: 'VOICE', fullName: 'Brand Voice & Founder Story' },
+        { id: 'F', name: 'MENA', fullName: 'MENA Context & Localization' }
     ];
 
-    var SECTION_MAXES = { 'A': 25, 'B': 25, 'C': 25, 'D': 25 };
+    var SECTION_MAXES = { 'A': 15, 'B': 25, 'C': 20, 'D': 20, 'E': 10, 'F': 10 };
 
     var SECTION_NAME_MAP = {
-        'A': 'Pain Reality & Intensity',
-        'B': 'Purchasing Power & Willingness',
-        'C': 'ICP Accessibility',
-        'D': 'Market Growth & Momentum'
+        'A': 'Founder Context',
+        'B': 'Niche Definition',
+        'C': 'Positioning',
+        'D': 'Product Vision',
+        'E': 'Brand Voice',
+        'F': 'MENA Context'
     };
 
     /* ===================================
-       QUESTION DEFINITIONS (20 Questions)
+       QUESTION DEFINITIONS (21 Questions)
        =================================== */
     var allQuestions = [
-        /* ── SECTION A: PAIN REALITY & INTENSITY (25 pts) ── */
+        /* ── SECTION A: FOUNDER CONTEXT (15 pts) ── */
         {
             id: 'a1', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'From your ICP pain statements (SC2), which THREE pains have the STRONGEST evidence of being real? For each pain, cite your evidence: customer conversations, competitor reviews, market data, case studies, or observable behavior.',
-            help: 'Not what you think. What you can PROVE. Cite conversations, data, competitor reviews.',
-            placeholder: 'e.g., "Pain: Invoice reconciliation wastes 15 hours/week. Evidence: 4 finance managers confirmed; competitor reviews mention \'time-saving\' (500+ FreshBooks reviews); ZATCA mandate forces e-invoicing."',
-            rubric: '5=3+ types per pain across all 3 pains; 4=2+ types per pain for 2+ pains; 3=Partial evidence 2 types for 1 pain; 2=Generic evidence; 1=Assertion only; 0=Blank'
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'Describe the specific moment you realized this problem needed solving. What happened? Who was affected? What was the cost of doing nothing?',
+            help: 'Not about your overall vision. This is about a specific, real moment where you witnessed this problem.',
+            placeholder: 'e.g., "In Q3 2024, I watched 3 real estate brokers in Dubai lose AED 180K combined because they were tracking 200+ leads in WhatsApp with no follow-up system..."',
+            rubric: '5=Vivid specific moment with named entities, timing, clear cost; 4=Specific moment with some cost; 3=Specific but lacks cost/detail; 2=Vague observation; 1=Generic; 0=Blank'
         },
         {
             id: 'a2', sectionId: 'A', sectionIndex: 0,
-            type: Q_MC, maxScore: 5,
-            text: 'How often does your #1 pain occur for your typical buyer?',
-            help: 'Consider your top pain from A1. Higher frequency = easier to sell.',
-            options: [
-                { label: 'Multiple times daily — constant friction', score: 5 },
-                { label: 'Daily — part of every workday', score: 4 },
-                { label: 'Weekly — a regular annoyance', score: 3 },
-                { label: 'Monthly — noticeable but infrequent', score: 2 },
-                { label: 'Quarterly or less — rare occurrence', score: 1 }
-            ]
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
+            text: 'Why are YOU the right person to solve this? What experience, access, or unfair advantage do you bring that a random developer couldn\'t replicate?',
+            help: 'Not about passion. What specific domain knowledge, network, or lived experience gives you an edge?',
+            placeholder: 'e.g., "I spent 8 years as a broker myself, own a network of 200+ active brokers in MENA, and know their exact pain points from 1,000+ conversations..."',
+            rubric: '5=Crystal-clear unfair advantage with evidence; 4=Specific advantage; 3=Clear experience, underdeveloped; 2=Some relevant experience; 1=Generic passion; 0=Blank'
         },
         {
             id: 'a3', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Quantify the cost of your #1 pain per month. Show your math.',
-            help: 'Include labor, errors, opportunity cost. Use real numbers: hours x rate = cost.',
-            placeholder: 'e.g., "Pain: Manual invoice reconciliation. Cost: 4 finance staff x 15 hours/week = 60 hrs/month x $50/hour = $3,000/month. Plus: 2 errors/month x $200 audit cost = $400/month. Total: $3,400/month."',
-            rubric: '5=Comprehensive model with sensitivity; 4=Multiple cost types with clear math; 3=Reasonable math missing 1 cost type; 2=Rough estimate with arbitrary numbers; 1=Partial math; 0=No quantification'
-        },
-        {
-            id: 'a4', sectionId: 'A', sectionIndex: 0,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'What are buyers doing TODAY to manage this pain? List tools, processes, workarounds. How broken are they?',
-            help: 'Name specific tools and describe how they fail. "Spreadsheets" is vague. "INDEX/MATCH in Excel that breaks when format changes" is specific.',
-            placeholder: 'e.g., "Workarounds: (1) Manual spreadsheet INDEX/MATCH (errors if format changes), (2) Temp staff hiring (expensive, turnover loss), (3) Quarterly audits (reactive, errors found too late)."',
-            rubric: '5=Comprehensive failure map with chains; 4=Tools + specific failures; 3=Named tools with basic failures; 2=Generic workarounds; 1=No awareness; 0=Blank'
-        },
-        {
-            id: 'a5', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'If you pitched tomorrow, what timeline would the buyer want? (week/month/quarter/someday) What evidence supports this urgency?',
-            help: 'Cite external pressure: regulation deadlines, competitive launches, budget cycles, operational crises.',
-            placeholder: 'e.g., "Urgency: This month. Evidence: (1) ZATCA mandate effective next month; (2) CFO said \'We need solution before month-end\'; (3) Budget allocated in Q; (4) Competitor launched."',
-            rubric: '5=3+ validated signals with direct buyer statement; 4=2-3 signals (regulatory + budget + competitive); 3=1-2 present; 2=Logical assumption unvalidated; 1=Wishful thinking; 0=Blank'
+            text: 'What evidence do you have that this problem is real beyond your own experience? List conversations, failed alternatives, market data, competitor traction.',
+            help: 'Specificity matters. "I talked to 5 brokers" is evidence. "They confirmed the pain" is not.',
+            placeholder: 'e.g., "5 broker interviews: all use WhatsApp + Sheets for leads. Competitor X charges $300/mo but has 0 solo broker users. Industry growing 15% YoY per RERA data..."',
+            rubric: '5=Multiple evidence types with specifics; 4=2-3 types with detail; 3=1-2 types with specifics; 2=Vague evidence; 1=Assumption only; 0=Blank'
         },
 
-        /* ── SECTION B: PURCHASING POWER & WILLINGNESS (25 pts) ── */
+        /* ── SECTION B: 3-LEVEL NICHE (25 pts) ── */
         {
             id: 'b1', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What are buyers CURRENTLY PAYING for related problems? List tools/services and monthly spend.',
-            help: 'Include SaaS tools, freelancers, internal labor, and any vendor costs. Name names, cite prices.',
-            placeholder: 'e.g., "Current spend: (1) QuickBooks: $25/month; (2) Zapier: $99/month; (3) Freelance accountant: $300/month; (4) Internal labor: 40 hrs x $50/hr = $2,000/month. Total: $2,424/month."',
-            rubric: '5=Complete spend map with hidden costs; 4=Named tools + prices + labor; 3=3+ named tools with prices; 2=1-2 tools with vague pricing; 1=Generic; 0=Blank'
+            type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
+            text: 'What is the broad market you\'re entering? (e.g., "Real Estate Technology", "Healthcare SaaS"). Describe the category and its natural boundaries.',
+            help: 'Market level is where your product is one of many. Think "Real Estate Tech" not "WhatsApp bots for brokers".',
+            placeholder: 'e.g., "Real Estate Technology — CRM, lead capture, and deal management tools for real estate professionals"',
+            rubric: '3=Clear recognizable market with scope; 2=Recognizable but vague; 1=Too broad or too narrow; 0=Blank'
         },
         {
             id: 'b2', sectionId: 'B', sectionIndex: 1,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Who controls the budget for your solution?',
-            help: 'Simpler decision = faster sales. Committee = longer cycle. Be honest about the approval chain.',
-            options: [
-                { label: 'User/manager decides alone', score: 2 },
-                { label: 'User + 1 approver', score: 2 },
-                { label: 'Department head', score: 1.5 },
-                { label: 'C-suite approval required', score: 1 },
-                { label: 'Committee decision', score: 1 }
-            ],
-            evidencePrompt: 'Describe the budget decision process. Who proposes? Who approves? Timeline? Thresholds? (75 words)',
-            evidenceRubric: '3=Sharp (decision-maker + timeline + thresholds); 2=Partial (decision-maker named, missing timeline); 1=Generic; 0=Blank'
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'Within that market, what specific sub-market are you targeting? Show how you\'ve narrowed from your market level.',
+            help: 'Sub-market narrows the field. Instead of "all real estate," you\'re saying "independent brokers" or "boutique brokerages."',
+            placeholder: 'e.g., "CRM for independent real estate brokers managing <50 listings in Gulf countries"',
+            rubric: '4=Sharp sub-market with buyer group identified; 3=Clear sub-market; 2=Some narrowing but broad; 1=Same as market; 0=Blank'
         },
         {
             id: 'b3', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What price are you charging? Compare to: (a) pain cost, (b) alternative spend, (c) ROI delivered. Does it pass the no-brainer test?',
-            help: 'Show the math. Price < 25% of pain cost = strong. ROI > 3x = strong. All 3 comparisons needed for top score.',
-            placeholder: 'e.g., "Price: $199/month. (a) Pain cost $1,150/month; price is 17% of pain. (b) Alternatives $2,424/month; price is 8%. (c) ROI: Customer pays $2,388/year; saves $13,800/year; ROI = 5.8x."',
-            rubric: '5=All 3 comparisons + sensitivity; 4=All 3 clear no-brainer calc; 3=Two comparisons; 2=Partial logic one benchmark; 1=Price only no comparison; 0=No price'
+            type: Q_FREETEXT, maxScore: 10, wordLimit: 150,
+            text: 'What is your exact niche? Describe the specific person/company, their situation, their problem, and the outcome you deliver. So tight you could target them in an ad.',
+            help: 'Four elements: (1) Specific Person, (2) Specific Situation, (3) Specific Problem, (4) Specific Outcome. All four must be present.',
+            placeholder: 'e.g., "WhatsApp-based lead capture for independent real estate brokers in Dubai managing 10-30 active listings who lose 40%+ of leads due to manual tracking..."',
+            rubric: '10=Razor-sharp all 4 elements + market validation; 8=All 4 strong; 6=3-4 elements present; 4=2 elements; 2=1 element only; 0=Blank'
         },
         {
             id: 'b4', sectionId: 'B', sectionIndex: 1,
-            type: Q_MC, maxScore: 5,
-            text: 'How will buyers pay?',
-            help: 'MENA context matters. Credit card adoption varies by country. Offering multiple methods increases conversion.',
-            options: [
-                { label: 'Mixed/multiple methods (card + bank + wallet)', score: 5 },
-                { label: 'Credit card online', score: 5 },
-                { label: 'Bank transfer', score: 5 },
-                { label: 'Mobile wallets (Apple Pay, STC Pay, etc.)', score: 5 },
-                { label: 'BNPL (Tabby, Tamara, etc.)', score: 4 },
-                { label: 'Cash/check only', score: 2 },
-                { label: 'Unknown — haven\'t figured this out', score: 0 }
-            ]
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'Explain WHY this niche is better than going broader. Address: pricing power, competitive advantage, expansion path, and seasonal/regional factors.',
+            help: 'Don\'t just assert the niche is good. PROVE the logic. What happens if you serve the whole sub-market instead?',
+            placeholder: 'e.g., "If we serve all brokers globally, we compete with HubSpot. Solo MENA brokers have unique WhatsApp-centric workflows that global CRMs ignore..."',
+            rubric: '5=Sophisticated niche economics; 4=Clear reasoning with multiple factors; 3=Some reasoning; 2=Basic logic; 1=Assertion only; 0=Blank'
         },
         {
             id: 'b5', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What is the STRONGEST signal that someone would PAY? (pre-orders, verbal commits, LOIs, pilots, competitor revenue, market research)',
-            help: 'Hierarchy: Executed payment > Signed commitment > Verbal > Behavioral (waitlist/signup) > Aspirational ("I think they would").',
-            placeholder: 'e.g., "Signal: Signed LOI with [Company] for $2K/month pilot. CTO: \'This is exactly what we need.\' Also: 8 people on waitlist said \'I\'d pay $200-300/month.\'"',
-            rubric: '5=Executed payment/paid pilot in progress; 4=Signed LOI/pre-order; 3=Verbal commitment named buyer; 2=Behavioral waitlist/signup; 1=Aspirational; 0=Blank'
+            type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
+            text: 'Estimate the number of potential buyers in your niche in your primary geography. Show your math or reasoning.',
+            help: 'Bottom-up estimation. "There are 2,000 independent brokers in UAE" is better than "200 million people use WhatsApp."',
+            placeholder: 'e.g., "UAE real estate board: 15,000 brokers. 60% independent. 40% manage 10-30 listings = ~3,600 TAM"',
+            rubric: '3=Detailed bottom-up with sources; 2=Estimation with partial method; 1=Guess without math; 0=Blank'
         },
 
-        /* ── SECTION C: ICP ACCESSIBILITY (25 pts) ── */
+        /* ── SECTION C: POSITIONING (20 pts) ── */
         {
             id: 'c1', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'From SC2 congregation points, which has HIGHEST density of exact buyers? How many are there? Show layered filtering.',
-            help: 'Layer: Total members → Filter by role → Filter by size → Filter by geography → Actual ICP fit.',
-            placeholder: 'e.g., "Top point: LinkedIn Finance Mgr group. Estimated: 5K members; 2K mid-market; 500-1K exact fit by size + industry. Can reach 100 in 30 days."',
-            rubric: '5=Expert map multiple points ranked with specific counts; 4=Sharp calculation with layered filtering; 3=Specific point + rough estimate; 2=Generic group no estimate; 1=Vague; 0=Blank'
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
+            text: 'Complete this: "[Product Name] is a _____________ for _____________." Make it crisp, clear, and specific.',
+            help: 'Both blanks matter. First blank = what it is (feature + channel). Second blank = who it\'s for (niche).',
+            placeholder: 'e.g., "SalesFast is a WhatsApp-based lead capture system for independent real estate brokers in the Middle East"',
+            rubric: '5=Crisp memorable pitch-deck ready; 4=Specific and clear; 3=Somewhat specific; 2=Vague; 1=Missing one blank; 0=Blank'
         },
         {
             id: 'c2', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Can you reach 100+ buyers in 30 days with your resources? Describe exactly how: channels, daily cadence, response rates, time required.',
-            help: 'Be specific: LinkedIn 15-20 msgs/week is realistic. 100+/week is not. Show the math adds up to 100 in 30 days.',
-            placeholder: 'e.g., "LinkedIn outbound: 20 msgs/week x 4 weeks = 80; 20% response = 16 meetings. Cold email: 10/week x 4 = 40; 5% response = 2 meetings. Total: 120 attempts, ~18 meetings."',
-            rubric: '5=Multiple channels + targets + validated rates + contingency; 4=Channels + daily cadence + response rates; 3=Channels + weekly targets realistic; 2=Some path vague numbers; 1=No path; 0=Blank'
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'List the top 3 alternatives your buyer uses TODAY (including "doing nothing"). For each, explain what\'s broken about it.',
+            help: 'Not competitor names. What your buyer ACTUALLY DOES: WhatsApp groups, Google Sheets, expensive CRM, manual process.',
+            placeholder: 'e.g., "1. WhatsApp groups: no history, chaotic. 2. Google Sheets: manual, lost leads. 3. HubSpot: $300/mo, overkill for solo brokers"',
+            rubric: '5=3 real alternatives with specific failures + buyer friction; 4=3 with specific failures; 3=3 with surface weaknesses; 2=1-2 alternatives; 1=Names competitors only; 0=Blank'
         },
         {
             id: 'c3', sectionId: 'C', sectionIndex: 2,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Which channels can you realistically use to reach your ICP? (Select your primary)',
-            help: 'Choose your strongest channel. The one where you have existing audience, proven response rates, or unique advantage.',
-            options: [
-                { label: 'LinkedIn outbound (existing network)', score: 2 },
-                { label: 'Cold email (proven templates)', score: 2 },
-                { label: 'WhatsApp groups (active member)', score: 2 },
-                { label: 'Content marketing (existing audience)', score: 2 },
-                { label: 'Events & networking (regular attendee)', score: 2 },
-                { label: 'Referrals (existing customer base)', score: 2 },
-                { label: 'Paid ads (budget + experience)', score: 1.5 },
-                { label: 'SEO (established presence)', score: 1.5 }
-            ],
-            evidencePrompt: 'Describe your specific capability on your top 2-3 channels. Include audience size, response rate, time required. (100 words)',
-            evidenceRubric: '3=Specific numbers with proof (5K connections, 15% response rate); 2=Some specificity; 1=Vague; 0=Blank'
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
+            text: 'What is the ONE thing your product does differently that makes old alternatives obsolete? Not a feature list — the core mechanism.',
+            help: 'Features: "Mobile app, Automation." Mechanism: "Native WhatsApp instead of forcing tool switching." What makes it fundamentally different?',
+            placeholder: 'e.g., "Passive SMS follow-up triggered by lead timestamp, requiring zero broker action — turns lead capture into automatic pipeline"',
+            rubric: '5=Ownable defendable mechanism; 4=Specific differentiator; 3=Real but generic; 2=Feature-adjacent; 1=Feature list; 0=Blank'
         },
         {
             id: 'c4', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'How are competitors reaching these buyers? What channels dominate? Where are they weak?',
-            help: 'Research competitors\' marketing: LinkedIn followers, content strategy, SEO rankings, event presence. Find gaps.',
-            placeholder: 'e.g., "Competitors [A, B] dominate LinkedIn (15K followers; weekly posts) and content (SEO-ranked). Absent from: WhatsApp outreach, community engagement. Gap: MENA WhatsApp groups ignored."',
-            rubric: '5=Detailed channels + metrics + clear gaps + strategic positioning; 4=2-3 competitors with channels + metrics + 2+ weaknesses; 3=Partial map 1-2 channels 1 weakness; 2=Names competitors only; 1=No awareness; 0=Blank'
-        },
-        {
-            id: 'c5', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'For your MENA geography (SC1), what\'s the realistic channel mix? Account for: Arabic vs English, WhatsApp vs email, LinkedIn penetration, event culture, mobile-first.',
-            help: 'Saudi: LinkedIn 65%, WhatsApp 90%. Egypt: LinkedIn 35%, WhatsApp 95%. Adapt your channel mix to local reality.',
-            placeholder: 'e.g., "Saudi finance managers: 65% LinkedIn, 90% WhatsApp, 40% email. Strategy: 35% LinkedIn, 40% WhatsApp, 15% email, 10% events. Arabic preference growing."',
-            rubric: '5=Expert detailed mix by geography with language strategy; 4=3-4 MENA factors with channel percentages; 3=Some MENA context partial mix; 2=Surface awareness; 1=Western assumptions; 0=Blank'
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
+            text: 'Write one sentence that would make your ideal buyer stop scrolling on LinkedIn. Not a tagline — a wedge that creates curiosity and tension.',
+            help: 'Create a gap. Make them think "Wait, I have that problem" or "That\'s different."',
+            placeholder: 'e.g., "Stop losing 40% of your leads to WhatsApp chaos — capture and auto-follow up without leaving the app"',
+            rubric: '5=Would genuinely stop the scroll; 4=Specific + curiosity gap; 3=Some interest; 2=Specific but no gap; 1=Generic marketing; 0=Blank'
         },
 
-        /* ── SECTION D: MARKET GROWTH & MOMENTUM (25 pts) ── */
+        /* ── SECTION D: PRODUCT VISION (20 pts) ── */
         {
             id: 'd1', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'What is the overall direction of your market?',
-            help: 'Base this on evidence: analyst reports, funding data, revenue growth, customer growth.',
-            options: [
-                { label: 'Rapidly growing (>30% YoY)', score: 2 },
-                { label: 'Growing (10-30% YoY)', score: 2 },
-                { label: 'Stable (0-10% YoY)', score: 1.5 },
-                { label: 'Declining (<0% YoY)', score: 0.5 },
-                { label: 'Don\'t know — need to research', score: 0 }
-            ],
-            evidencePrompt: 'What evidence supports this? Cite analyst reports, company funding, revenue growth, or market research. (75 words)',
-            evidenceRubric: '3=Sharp with named source and numbers; 2=Generic with some source; 1=Assumption only; 0=Blank'
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'Describe the exact workflow that is broken for your buyer. What do they do today step by step, and where does it break?',
+            help: 'Workflow specificity: Morning → Afternoon → Evening. Where exactly does it fail?',
+            placeholder: 'e.g., "Morning: 10 new WhatsApp leads. 2pm: Calls 3, forgets 7. 5pm: Lead calls back, broker has no notes..."',
+            rubric: '4=Step-by-step with multiple breakdowns; 3=Clear workflow + 1 failure; 2=Some workflow, vague failure; 1=Abstract problem; 0=Blank'
         },
         {
             id: 'd2', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'List regulatory, technology, cultural, or economic shifts PUSHING buyers toward solutions like yours. Examples: Vision 2030, ZATCA, GDPR, labor cost inflation, AI integration.',
-            help: 'Be specific: "ZATCA e-invoicing mandate effective [month]" not "digitization happening." Include dates and magnitude.',
-            placeholder: 'e.g., "Tailwinds: (1) ZATCA e-invoicing mandate effective [month] — forces modernization. (2) Saudi labor cost inflation 12% YoY — companies automating. (3) Cloud adoption 40% CAGR."',
-            rubric: '5=3+ specific tailwinds with dates and magnitude; 4=2-3 specific dated tailwinds with buyer connection; 3=2 named missing dates; 2=1 generic trend; 1=No tailwinds; 0=Blank'
+            type: Q_FREETEXT, maxScore: 6, wordLimit: 200,
+            text: 'List 3-5 core MVP features. For EACH: (1) What problem does it solve? (2) Why can\'t it be cut?',
+            help: 'NOT a feature list. A problem-to-feature mapping. If you have more than 5, you\'re building too much.',
+            placeholder: 'e.g., "1. Lead Auto-Capture from WhatsApp: Solves broker forgetting leads. Can\'t cut — core value prop..."',
+            rubric: '6=Tight MVP with clear problem-feature mapping; 5=3-5 with good mapping; 4=3-5 with some mapping; 3=Features with minimal linkage; 2=Feature dump; 0=Blank'
         },
         {
             id: 'd3', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'Is money flowing into your space? Name funded competitors (Series A+, recent seed), acquisitions. What does this tell you about viability?',
-            help: 'Use Crunchbase, LinkedIn, news. For each competitor: name, round, amount, date. Then interpret: what does funding mean for your market?',
-            placeholder: 'e.g., "Funding: [Competitor A] $8M Series B (Q4 2025); [Competitor B] $1.5M seed (Q2 2025); [Competitor C] acquired for ~$15M (2024). Signal: VCs fund this space = investor confidence."',
-            rubric: '5=3+ funded competitors with amounts + dates + interpretation; 4=2-3 with amounts + stages + viability signal; 3=2 competitors with some funding; 2=Names competitors no data; 1=No awareness; 0=Blank'
+            type: Q_MC_EVIDENCE, maxScore: 4,
+            text: 'How fast can a new user get their first meaningful result?',
+            help: 'Speed to value is critical for MENA MicroSaaS — founders need revenue fast.',
+            options: [
+                { label: 'Same day — user solves core problem immediately', score: 4 },
+                { label: 'Within 3 days — quick setup, fast results', score: 3 },
+                { label: 'Within a week — moderate onboarding needed', score: 2 },
+                { label: 'Within a month — significant setup required', score: 1 },
+                { label: 'Longer than a month', score: 0 }
+            ],
+            evidencePrompt: 'Describe what that first result looks like. What does the user DO and EXPERIENCE?',
+            evidenceRubric: 'Specific step-by-step first result = bonus; Vague "they see value" = no bonus'
         },
         {
             id: 'd4', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Is search demand for your solution type increasing?',
-            help: 'Check Google Trends, keyword tools. Cite specific keywords, timeframes, and volume changes.',
+            type: Q_MC, maxScore: 6,
+            text: 'What\'s your build approach for the MVP?',
+            help: 'This is MicroSaaS context — speed to market matters more than technical elegance.',
             options: [
-                { label: 'Strongly up (>20% YoY)', score: 2 },
-                { label: 'Slightly up (5-20% YoY)', score: 1.5 },
-                { label: 'Flat (0-5% YoY)', score: 1 },
-                { label: 'Down (<0% YoY)', score: 0 },
-                { label: 'Don\'t know — haven\'t checked', score: 0 }
-            ],
-            evidencePrompt: 'What did you check? Which keywords? Tools used? Timeframe? (75 words)',
-            evidenceRubric: '3=Specific keywords + tool + timeframe + numbers; 2=Generic checked Google Trends; 1=No research; 0=Blank'
+                { label: 'No-code (GHL, Bubble, FlutterFlow, Airtable, etc.)', score: 6 },
+                { label: 'Hybrid (No-code for MVP, custom for scale)', score: 5 },
+                { label: 'Low-code (n8n + APIs, Zapier + custom backend)', score: 4 },
+                { label: 'Custom code (React/Next.js, Python, Node)', score: 3 },
+                { label: 'Haven\'t decided yet', score: 1 }
+            ]
+        },
+
+        /* ── SECTION E: BRAND VOICE (10 pts) ── */
+        {
+            id: 'e1', sectionId: 'E', sectionIndex: 4,
+            type: Q_MC, maxScore: 3,
+            text: 'Which founder archetype fits you best? (Russell Brunson, Expert Secrets)',
+            help: 'No wrong answer — all archetypes work. This shapes your brand positioning angle.',
+            options: [
+                { label: 'The Reluctant Hero — This problem forced me into action', score: 3 },
+                { label: 'The Adventurer — Exploring new territory, curious about what\'s possible', score: 3 },
+                { label: 'The Reporter — Investigated deeply, now sharing findings', score: 3 },
+                { label: 'The Expert — Deep domain authority, solving a mastered problem', score: 3 }
+            ]
         },
         {
-            id: 'd5', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'How ready is your MENA market for this solution?',
-            help: 'Already Buying = established category. Unaware = need to educate. Resistant = entrenched systems.',
+            id: 'e2', sectionId: 'E', sectionIndex: 4,
+            type: Q_FREETEXT, maxScore: 7, wordLimit: 150,
+            text: 'Tell your founder story in 3-5 sentences. What happened, what changed, what you\'re building because of it. Should work as a 30-second VSL opener.',
+            help: 'Not your resume. The human moment that made you a founder.',
+            placeholder: 'e.g., "I spent 10 years as a real estate broker. In 2023, I watched my team lose 40% of leads to WhatsApp chaos..."',
+            rubric: '7=Expert story with specific moment, named impact, failed alternatives; 5=Specific story with emotion; 3=Clear story lacks urgency; 2=Some personal element; 1=Resume-like; 0=Blank'
+        },
+
+        /* ── SECTION F: MENA CONTEXT (10 pts) ── */
+        {
+            id: 'f1', sectionId: 'F', sectionIndex: 5,
+            type: Q_MC, maxScore: 3,
+            text: 'Where will you launch first?',
+            help: 'This grounds all decisions in your chosen geography.',
             options: [
-                { label: 'Already buying — established category, known solutions', score: 2 },
-                { label: 'Aware not buying — knowledge gap or price barrier', score: 1.5 },
-                { label: 'Unaware — need to educate the market', score: 1 },
-                { label: 'Resistant — entrenched systems, cultural resistance', score: 0 },
-                { label: 'Don\'t know', score: 0 }
-            ],
-            evidencePrompt: 'What tells you this? Competitor presence, buyer conversations, market research, regulatory readiness. (75 words)',
-            evidenceRubric: '3=Multiple sources: competitors + buyer conversations + adoption data; 2=One source; 1=Assumption only; 0=Blank'
+                { label: 'UAE', score: 3 },
+                { label: 'KSA (Saudi Arabia)', score: 3 },
+                { label: 'Egypt', score: 3 },
+                { label: 'Jordan', score: 3 },
+                { label: 'Other MENA', score: 3 },
+                { label: 'Non-MENA', score: 3 }
+            ]
+        },
+        {
+            id: 'f2', sectionId: 'F', sectionIndex: 5,
+            type: Q_MC, maxScore: 3,
+            text: 'What\'s your content and product language strategy?',
+            help: 'Language choice impacts reach, conversion, and competitive positioning in MENA.',
+            options: [
+                { label: 'Arabic-first (all product + content Arabic, English secondary)', score: 3 },
+                { label: 'English-first, Arabic later (launch English, add Arabic after MRR)', score: 3 },
+                { label: 'Bilingual from day one (equal Arabic + English)', score: 3 },
+                { label: 'English only (no Arabic planned)', score: 2 }
+            ]
+        },
+        {
+            id: 'f3', sectionId: 'F', sectionIndex: 5,
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'How does your product account for MENA business culture? Address at least 2 of: relationship-based selling, WhatsApp preference, Ramadan, trust-first buying, payment infrastructure, family business dynamics.',
+            help: 'Don\'t just list MENA characteristics. Show how your product ADAPTS to them.',
+            placeholder: 'e.g., "WhatsApp-native (no tool switching). Arabic UI. Flexible payment (card + bank transfer). Ramadan-aware pause..."',
+            rubric: '4=2+ factors with specific adaptations; 3=2+ factors, 1 adaptation specific; 2=1 factor with vague adaptation; 1=Acknowledges MENA only; 0=Blank'
         }
     ];
 
@@ -1115,47 +1030,49 @@ body.rtl .option-card { text-align: right; }
        =================================== */
     var RECOMMENDATIONS = {
         'A': [
-            'Cite 3+ evidence types per pain: customer conversations, competitor reviews, market data, case studies.',
-            'Quantify your #1 pain cost with full math: labor + errors + opportunity cost. Validate unit costs with a buyer.',
-            'Map workarounds with failure chains: what tool fails, why, and what breaks next.',
-            'Find urgency signals: regulatory deadlines, competitive pressure, budget cycles. Ask: "What happens if you DON\'T solve this?"',
-            'Interview 3-5 ICPs this week. Ask: "Walk me through how you handle this today. What breaks?"'
+            'Write your problem origin story as a 3-sentence narrative with specific moment, named people, and quantified cost.',
+            'Document your unfair advantage: list your domain years, network size, and what would take a competitor 2+ years to replicate.',
+            'Conduct 5 buyer validation conversations this week. Document specific quotes, not yes/no answers.'
         ],
         'B': [
-            'Map complete current spend: SaaS tools + freelancers + internal labor + vendor costs. Name names, cite prices.',
-            'Document the budget decision process: who proposes, who approves, timeline, thresholds.',
-            'Run the no-brainer test: Price < 25% of pain cost AND < 25% of alternative spend AND ROI > 3x.',
-            'For MENA, offer 2-3 payment methods: bank transfer + credit card + BNPL. Credit card only limits Egypt/Jordan conversions.',
-            'Convert behavioral signals to commitments: waitlist → pilot → LOI → payment.'
+            'Map your 3-level niche cascade: Market > Sub-Market > Niche. Each level should be more specific.',
+            'Write your niche statement with all 4 elements: specific person, situation, problem, and outcome.',
+            'Estimate your TAM with bottom-up math: total population x percentage that fits your criteria.',
+            'Explain why going broader would fail: competitive pressure, pricing power, and expansion path.'
         ],
         'C': [
-            'Layer your congregation density estimate: Total → Role → Size → Geography → Actual ICP fit.',
-            'Build a 30-day reach plan with daily cadence: channels, messages per day, expected response rates.',
-            'Research competitor channels: where are they strong, where are they absent? That gap is your opportunity.',
-            'Adapt channels for MENA: WhatsApp > LinkedIn in Egypt/Jordan. Arabic content increases response rates.',
-            'Attend one offline event from your list. Verify: Is your buyer there? How many?'
+            'Complete the positioning sentence: "[Product] is a ___ for ___" — both blanks specific.',
+            'Map 3 real alternatives (including "doing nothing") with specific failure points for each.',
+            'Define your unique mechanism — what makes old alternatives obsolete, not just "worse."',
+            'Write a scroll-stopping wedge sentence with specific problem + intriguing solution.'
         ],
         'D': [
-            'Research market growth with named analyst sources: Gartner, Statista, IBISWorld. Cite year and numbers.',
-            'List 3+ specific tailwinds with dates and magnitude. Regulatory deadlines are strongest.',
-            'Use Crunchbase to find funded competitors: name, round, amount, date. Interpret what funding means.',
-            'Check Google Trends for 3-5 keywords. Report: volume, YoY change, geographic breakdown.',
-            'Assess MENA readiness honestly: are buyers already buying, aware, or resistant? Match GTM accordingly.'
+            'Map the broken workflow step by step: where does it fail, what is the cost of failure?',
+            'Define 3-5 MVP features with problem-to-feature mapping. Cut anything without a clear problem.',
+            'Validate speed-to-value: can a new user solve the core problem on day 1?',
+            'Choose your build approach based on speed to market, not technical preference.'
+        ],
+        'E': [
+            'Choose your founder archetype and write your origin story as a VSL opener.',
+            'Make it personal: specific moment, named impact, failed alternatives, clear connection to product.'
+        ],
+        'F': [
+            'Ground your launch geography decision in market data and personal advantage.',
+            'Align your language strategy with your geography — English-only in Egypt/KSA is a flag.',
+            'Show how your product adapts to MENA culture: WhatsApp, Ramadan, trust-first buying, payments.'
         ]
     };
 
     /* ===================================
        STATE
        =================================== */
-    var STORAGE_KEY = 'eo-market-attractiveness';
+    var STORAGE_KEY = 'eo-project-definition';
     var answers = {};
     var currentIndex = 0;
     var autoAdvanceTimer = null;
     var focusedOptionIndex = -1;
     var capturedEmail = '';
     var aiData = null;
-    var upstreamPD = null;
-    var upstreamICP = null;
 
     /* ===================================
        DOM REFS
@@ -1163,7 +1080,7 @@ body.rtl .option-card { text-align: right; }
     var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
     var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
+    var $loadingOverlay, $resultsContent;
 
     /* ===================================
        INIT
@@ -1185,18 +1102,10 @@ body.rtl .option-card { text-align: right; }
         $btnSkipContact = document.getElementById('btnSkipContact');
         $loadingOverlay = document.getElementById('loadingOverlay');
         $resultsContent = document.getElementById('resultsContent');
-        $upstreamPanel = document.getElementById('upstreamPanel');
 
         loadAnswers();
-        loadUpstreamData();
         bindEvents();
         restoreRTL();
-
-        /* Prerequisite Check */
-        if (!checkPrerequisites()) {
-            showScreen('screenPrereq');
-            return;
-        }
 
         /* Auto-skip email if already captured */
         try {
@@ -1208,14 +1117,7 @@ body.rtl .option-card { text-align: right; }
                 showScreen('screenStepper');
                 renderQuestion();
             }
-        } catch (e) { /* show email screen by default */ }
-    }
-
-    function checkPrerequisites() {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            return (status.pd && status.pd.score !== undefined) && (status.icp && status.icp.score !== undefined);
-        } catch (e) { return false; }
+        } catch (e) { /* show email screen */ }
     }
 
     function loadAnswers() {
@@ -1227,17 +1129,6 @@ body.rtl .option-card { text-align: right; }
 
     function saveAnswers() {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {}
-    }
-
-    function loadUpstreamData() {
-        try {
-            var pdData = localStorage.getItem('eo-project-definition');
-            if (pdData) upstreamPD = JSON.parse(pdData);
-        } catch (e) { upstreamPD = null; }
-        try {
-            var icpData = localStorage.getItem('eo-icp-clarity');
-            if (icpData) upstreamICP = JSON.parse(icpData);
-        } catch (e) { upstreamICP = null; }
     }
 
     function findFirstUnanswered() {
@@ -1296,68 +1187,6 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
-       UPSTREAM REFERENCE PANEL
-       =================================== */
-    function renderUpstreamPanel() {
-        if (!upstreamPD && !upstreamICP) { $upstreamPanel.innerHTML = ''; return; }
-
-        var html = '';
-
-        /* SC1 Reference */
-        if (upstreamPD) {
-            var niche = upstreamPD.niche || upstreamPD.b3 || '';
-            var positioning = upstreamPD.positioning || upstreamPD.c1 || '';
-            var geography = upstreamPD.geography || '';
-
-            if (niche || positioning || geography) {
-                html += '<div class="upstream-ref">';
-                html += '<button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc1\')">';
-                html += '<span class="arrow" id="arrowSC1">▶</span> SC1 Reference: Project Definition';
-                html += '</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC1">';
-                if (niche) html += '<div class="upstream-ref-item"><div class="label">Niche</div><div class="value">' + escapeHtml(niche) + '</div></div>';
-                if (positioning) html += '<div class="upstream-ref-item"><div class="label">Positioning</div><div class="value">' + escapeHtml(positioning) + '</div></div>';
-                if (geography) html += '<div class="upstream-ref-item"><div class="label">Geography</div><div class="value">' + escapeHtml(geography) + '</div></div>';
-                html += '</div></div>';
-            }
-        }
-
-        /* SC2 Reference */
-        if (upstreamICP) {
-            var customerIdentity = upstreamICP.a1 || '';
-            var topPains = [];
-            for (var i = 1; i <= 3; i++) {
-                var p = upstreamICP['b' + i] || '';
-                if (p) topPains.push(p);
-            }
-            var budget = '';
-            if (upstreamICP.a5 !== undefined) {
-                budget = upstreamICP.a5 || '';
-            }
-            var congregation = upstreamICP.e1 || '';
-
-            if (customerIdentity || topPains.length > 0 || congregation) {
-                html += '<div class="upstream-ref">';
-                html += '<button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc2\')">';
-                html += '<span class="arrow" id="arrowSC2">▶</span> SC2 Reference: ICP Clarity';
-                html += '</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC2">';
-                if (customerIdentity) html += '<div class="upstream-ref-item"><div class="label">Customer Identity</div><div class="value">' + escapeHtml(customerIdentity.substring(0, 200)) + '</div></div>';
-                if (topPains.length > 0) {
-                    html += '<div class="upstream-ref-item"><div class="label">Top Pain Statements</div><div class="value">';
-                    topPains.forEach(function(p, idx) { html += (idx + 1) + '. ' + escapeHtml(p.substring(0, 100)) + '<br>'; });
-                    html += '</div></div>';
-                }
-                if (budget) html += '<div class="upstream-ref-item"><div class="label">Budget Range</div><div class="value">' + escapeHtml(budget) + '</div></div>';
-                if (congregation) html += '<div class="upstream-ref-item"><div class="label">Congregation Points</div><div class="value">' + escapeHtml(congregation.substring(0, 200)) + '</div></div>';
-                html += '</div></div>';
-            }
-        }
-
-        $upstreamPanel.innerHTML = html;
-    }
-
-    /* ===================================
        EMAIL CAPTURE
        =================================== */
     function startAssessment() {
@@ -1403,9 +1232,6 @@ body.rtl .option-card { text-align: right; }
         }
 
         $optionsList.innerHTML = '';
-
-        /* Show upstream panel */
-        renderUpstreamPanel();
 
         if (q.type === Q_FREETEXT) {
             renderFreetextQuestion(q);
@@ -1510,7 +1336,7 @@ body.rtl .option-card { text-align: right; }
         for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
         cards[idx].classList.add('selected');
         $btnNext.disabled = false;
-        /* No auto-advance for MC+Evidence */
+        /* No auto-advance for MC+Evidence — user needs to add evidence */
     }
 
     function countWords(text) {
@@ -1579,6 +1405,7 @@ body.rtl .option-card { text-align: right; }
     function handleKeyboard(e) {
         if (!document.getElementById('screenStepper').classList.contains('active')) return;
         var q = allQuestions[currentIndex];
+        /* Skip keyboard shortcuts for free-text (user is typing) */
         if (q.type === Q_FREETEXT || q.type === Q_MC_EVIDENCE) {
             if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); }
             return;
@@ -1712,7 +1539,7 @@ body.rtl .option-card { text-align: right; }
 
         $loadingOverlay.classList.add('active');
 
-        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-market-attractiveness', {
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-definition', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -1751,10 +1578,10 @@ body.rtl .option-card { text-align: right; }
         var total = result.mcTotal;
         var band = getBand(total);
 
-        /* Save for dashboard */
-        saveCompletionStatus('mas', total);
+        /* Save for dashboard — use MC score since FT is AI-scored */
+        saveCompletionStatus('pd', total);
 
-        /* Store answers for downstream scorecards (SC4, SC5) */
+        /* Also store all answers for downstream scorecards */
         try {
             var downstream = {};
             allQuestions.forEach(function(q) {
@@ -1767,23 +1594,11 @@ body.rtl .option-card { text-align: right; }
                     downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
                 }
             });
-            downstream.pain_evidence = answers['a1'] || '';
-            downstream.pain_cost = answers['a3'] || '';
-            downstream.workarounds = answers['a4'] || '';
-            downstream.urgency = answers['a5'] || '';
-            downstream.existing_spend = answers['b1'] || '';
-            downstream.price_validation = answers['b3'] || '';
-            downstream.willingness_signal = answers['b5'] || '';
-            downstream.congregation_density = answers['c1'] || '';
-            downstream.reach_plan = answers['c2'] || '';
-            downstream.mena_channels = answers['c5'] || '';
-            downstream.market_direction = answers['d1'] !== undefined ? allQuestions.find(function(q) { return q.id === 'd1'; }).options[answers['d1']].label : '';
-            downstream.tailwinds = answers['d2'] || '';
-            downstream.competitive_landscape = answers['d3'] || '';
-            downstream.section_scores = sectionScores;
-            downstream.total = total;
-            downstream.band = band.label;
-            localStorage.setItem('eo-market-attractiveness', JSON.stringify(downstream));
+            downstream.niche = answers['b3'] || '';
+            downstream.positioning = answers['c1'] || '';
+            downstream.geography = answers['f1'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f1'; }).options[answers['f1']].label : '';
+            downstream.language = answers['f2'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f2'; }).options[answers['f2']].label : '';
+            localStorage.setItem('eo-project-definition', JSON.stringify(downstream));
         } catch (e) {}
 
         var html = '';
@@ -1795,7 +1610,7 @@ body.rtl .option-card { text-align: right; }
         html += '<span class="score-total">/ ' + result.mcMax + '</span>';
         html += '</div></div>';
         html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">Market Attractiveness MC Score</div>';
+        html += '<div class="band-subtitle">Project Definition MC Score</div>';
         if (result.ftCount > 0) {
             html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>';
         }
@@ -1803,7 +1618,7 @@ body.rtl .option-card { text-align: right; }
 
         /* Section Breakdown */
         html += '<div class="results-card"><h3>Section Breakdown</h3>';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
@@ -1839,8 +1654,8 @@ body.rtl .option-card { text-align: right; }
                         html += '<div class="a-text" style="margin-top:8px;font-size:13px;"><strong>Evidence:</strong> ' + escapeHtml(answers[q.id + '_evidence']) + '</div>';
                     }
                 } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    html += '<div class="a-mc">' + (opt2 ? escapeHtml(opt2.label) + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
                 }
                 html += '</div>';
             });
@@ -1877,7 +1692,7 @@ body.rtl .option-card { text-align: right; }
             }
             if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
                 var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                html += '<div class="ai-plan"><h4>30-Day Validation Plan</h4>';
+                html += '<div class="ai-plan"><h4>30-Day Action Plan</h4>';
                 if (typeof plan === 'string') { html += '<p>' + escapeHtml(plan) + '</p>'; }
                 else if (Array.isArray(plan)) { html += '<ul>'; plan.forEach(function(item) { html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>'; }); html += '</ul>'; }
                 html += '</div>';
@@ -1888,14 +1703,6 @@ body.rtl .option-card { text-align: right; }
                 if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>'; }); }
                 html += '</ul>';
             }
-            html += '</div>';
-        }
-
-        /* Gate Warning if score low */
-        if (total < 40) {
-            html += '<div class="gate-warning">';
-            html += '<h3>Market Validation Needed</h3>';
-            html += '<p>Your market attractiveness score suggests core assumptions may need revisiting. Consider 10+ buyer interviews and revisiting SC1/SC2 before moving to Strategy (SC4).</p>';
             html += '</div>';
         }
 
@@ -1933,7 +1740,7 @@ body.rtl .option-card { text-align: right; }
         var band = getBand(result.mcTotal);
 
         var md = '';
-        md += '# Market Attractiveness Scorecard Results\n\n';
+        md += '# Project Definition Scorecard Results\n\n';
         md += '**Student:** ' + capturedEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
@@ -1942,7 +1749,7 @@ body.rtl .option-card { text-align: right; }
 
         /* Section Breakdown */
         md += '## Section Breakdown\n\n';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
@@ -1972,10 +1779,9 @@ body.rtl .option-card { text-align: right; }
                     if (answers[q.id + '_evidence']) {
                         md += '**Evidence:** ' + answers[q.id + '_evidence'] + '\n\n';
                     }
-                    if (q.evidenceRubric) md += '_Evidence Rubric: ' + q.evidenceRubric + '_\n\n';
                 } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt2 ? opt2.label + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
                 }
             });
         });
@@ -2000,7 +1806,7 @@ body.rtl .option-card { text-align: right; }
             if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
             if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
                 var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                md += '### 30-Day Validation Plan\n\n';
+                md += '### 30-Day Action Plan\n\n';
                 if (typeof plan === 'string') md += plan + '\n\n';
                 else if (Array.isArray(plan)) { plan.forEach(function(item) { md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n'; }); md += '\n'; }
             }
@@ -2014,14 +1820,14 @@ body.rtl .option-card { text-align: right; }
         /* AI Scoring Instructions */
         md += '---\n\n## AI Scoring Instructions\n\n';
         md += 'To score the free-text answers, copy this file into Claude.ai along with:\n';
-        md += '- `market-attractiveness-scoring/SKILL.md`\n\n';
-        md += 'Ask: "Score these Market Attractiveness answers using the rubric provided. Return section scores and total."\n\n';
+        md += '- `project-files-scoring/SKILL.md`\n\n';
+        md += 'Ask: "Score these Project Definition answers using the rubric provided. Return section scores and total."\n\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'market-attractiveness-results-' + dateStr + '.md';
+        a.download = 'project-definition-results-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -2069,7 +1875,7 @@ body.rtl .option-card { text-align: right; }
         var dateStr = new Date().toISOString().split('T')[0];
         var opt = {
             margin: [10, 10, 10, 10],
-            filename: 'market-attractiveness-results-' + dateStr + '.pdf',
+            filename: 'project-definition-results-' + dateStr + '.pdf',
             image: { type: 'jpeg', quality: 0.95 },
             html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -2114,19 +1920,6 @@ function toggleRTL() {
     document.documentElement.lang = isRTL ? 'ar' : 'en';
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
     try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
-}
-
-/* Upstream Toggle (global scope) */
-function toggleUpstream(panel) {
-    var content = document.getElementById('upstream' + panel.toUpperCase());
-    var arrow = document.getElementById('arrow' + panel.toUpperCase());
-    if (content) {
-        content.classList.toggle('open');
-        if (arrow) {
-            var toggle = content.parentElement.querySelector('.upstream-ref-toggle');
-            if (toggle) toggle.classList.toggle('open');
-        }
-    }
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>

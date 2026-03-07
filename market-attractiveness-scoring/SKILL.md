@@ -1,826 +1,900 @@
-# Market Attractiveness Scoring (MAS) Skill
+---
+name: market-attractiveness-scoring-engine
+description: Scorecard 3 of 5 — Evaluates market attractiveness across 4 dimensions (Market Size, Competition, Monetization, Execution). Scores /100 with hybrid MC + AI-evaluated questions.
+version: "2.0"
+---
 
-**Version:** 1.0
-**Last Updated:** February 2026
-**Framework:** Combines Alex Hormozi ($100M Offers, $100M Leads) + Chet Holmes (Ultimate Sales Machine)
-**Region Focus:** MENA-optimized (with universal applicability)
+# SKILL: Market Attractiveness Scoring Engine
+
+**Version:** 2.0
+**Created:** 2026-03-06
+**Framework:** Alex Hormozi ($100M Leads), Chet Holmes (7x4x11)
+**Input Sources:** SC1 (Project Definition) + SC2 (ICP Clarity)
+**Output File:** `MarketAttractiveness.md`
+**Execution Model:** Claude-administered questionnaire with real-time AI scoring
 
 ---
 
-## CRITICAL PHILOSOPHY
+## 1. STRATEGIC PURPOSE
 
-**This is NOT a go/no-go filter.** This is a diagnostic tool.
+Market Attractiveness Scoring (MAS) determines whether a market is worth entering by shifting from subjective ratings to evidence-based validation. Rather than asking founders to rate pain intensity 1-5, the system requires concrete evidence: customer conversations, competitive research, market data, regulatory signals, and growth indicators.
 
-Every low score gets **specific, actionable recommendations**: "If these become true, your score increases."
+**Philosophy:** Student provides evidence; AI validates findings; output is a defensible market assessment.
 
-- Score of 85? Build and sell simultaneously.
-- Score of 45? You have work to do, but here's exactly what it is.
-- Score of 15? Don't panic—pivot to what's working.
-
-The goal is clarity, not judgment.
+**Philosophical Shift from Previous Version:**
+- Old: "How intense is the pain? Rate 1-5."
+- New: "Show me your evidence that pain is real. Cite conversations, data, competitor reviews, market research."
 
 ---
 
-## ASSESSMENT FRAMEWORK
+## 2. PREREQUISITES
 
-### Total Points Available: 100
+This scorecard builds on upstream data. Do not administer until student has completed:
 
-- **Section A: Pain Reality** — 25 points
-- **Section B: Purchasing Power** — 25 points
-- **Section C: Market Momentum** — 25 points
-- **Section D: Competitive Advantage** — 25 points
+| Prerequisite | Provides | Used In |
+|--------------|----------|---------|
+| **SC1: Project Definition** | Niche, sub-market, positioning, geography, product scope | Sections C, D (MENA context) |
+| **SC2: ICP Clarity** | Pain statements, congregation points, budget range, buying behavior | Sections A, B, C (all evidence) |
 
----
-
-## SECTION A: PAIN REALITY (25 points)
-
-**Core Principle:** Customers buy to solve problems. The sharper the problem, the faster they buy.
-
-### Question A1: Pain Specificity (0-5 points)
-
-**Question:** "Can you describe the exact moment your buyer feels this pain?"
-
-**What You're Testing:** Not "they need better software" but rather "At 3pm every Thursday when they manually reconcile 47 invoices, they lose 2 hours they could spend on client work."
-
-**Scoring Rubric:**
-- **5 points:** You can describe a specific moment, role, or scenario. You've watched them experience the pain or heard them describe the exact moment it hits.
-- **4 points:** You have a clear picture but haven't witnessed it firsthand. You've interviewed multiple buyers.
-- **3 points:** You understand the pain exists but can't pinpoint the exact trigger. General description only.
-- **1 point:** Vague understanding. Could describe it in multiple ways.
-- **0 points:** No specific understanding. "People need better X."
-
-**Red Flag Questions:**
-- Can you tell me a specific story of a buyer experiencing this?
-- What time of day/week/month does this happen?
-- What does the buyer do *right before* the pain? *Right after*?
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Interview 5 buyers this week. Ask: 'Walk me through the last time this problem cost you money.' Record exact quotes and timestamps. Specificity compounds urgency."
+**Pre-Admin Checklist:**
+- Display SC1 outputs (niche, positioning, geography, ICP)
+- Display SC2 outputs (pain statements, congregation points, budget range)
+- Ask student: "Are these still accurate? Any updates?"
+- Note any updates; flag for cross-scorecard consistency review
 
 ---
 
-### Question A2: Pain Frequency (0-5 points)
+## 3. SECTION ARCHITECTURE
 
-**Question:** "How often does this pain occur?"
+| Section | Points | Questions | Duration | Focus |
+|---------|--------|-----------|----------|-------|
+| **A. Pain Reality & Intensity** | 25 | 5 (4 FT, 1 MC×3) | 15 min | Evidence of real, frequent, costly, urgent pain |
+| **B. Purchasing Power & Willingness** | 25 | 5 (3 FT, 2 MC+FT) | 15 min | Budget authority, payment capability, willingness signals |
+| **C. ICP Accessibility** | 25 | 5 (4 FT, 1 MC+FT) | 15 min | Congregation density, reach, channels, competitor gaps |
+| **D. Market Growth & Momentum** | 25 | 5 (3 FT, 2 MC+FT) | 15 min | Direction, tailwinds, funding, demand, MENA readiness |
+| **TOTAL** | **100** | **25** | **60 min** | |
 
-**Scoring Rubric:**
-- **5 points:** Daily (or multiple times per day)
-- **4 points:** Weekly
-- **3 points:** Monthly
-- **2 points:** Quarterly
-- **1 point:** Annually or semi-annually
-- **0 points:** Rare or one-time problem
+### Score Bands
 
-**Context Matters:** A pain that happens once per year might still be worth solving if it costs $500K. But frequency = behavior change urgency.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "The pain exists but it's not frequent enough to trigger action. Options: (1) Can you target a sub-segment where this happens daily? (Example: If "annual budget planning" is your pain, target Finance Directors at 30+ employee companies—they do it more frequently.) (2) Can you bundle this pain with other frequent pains to increase overall urgency?"
-
----
-
-### Question A3: Pain Quantification (0-5 points)
-
-**Question:** "Can the buyer put a dollar/AED amount on this pain? What's the financial impact?"
-
-**Scoring Rubric:**
-- **5 points:** Exact number. "We spend $250K/year on this problem." Or: "This costs me 15 hours/week at $75/hour = $58.5K annually."
-- **3 points:** Good estimate. "Probably $50-100K range based on our team size."
-- **1 point:** Vague. "Significant amount" or "More than we'd like to spend."
-- **0 points:** Cannot quantify. No dollar awareness.
-
-**How to Quantify the Unquantifiable:**
-- Opportunity cost: "You spend 10 hours/week on this. At $100/hour blended rate, that's $52K/year."
-- Error cost: "Each mistake costs $500 in rework. You make 20/month = $120K/year."
-- Inefficiency: "Process takes 3 months. If you did it in 1 month, you'd reach revenue 2 months earlier."
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Buyers can't price the pain. Build a cost calculator tool: 'If you spend X hours/week on this at $Y/hour, that's $Z/year wasted. Your current annual loss is [AMOUNT].' Use this in conversations. Quantification justifies spending."
+| Range | Band | Meaning | Risk | Action |
+|-------|------|---------|------|--------|
+| **85-100** | LAUNCH READY | Strong evidence across all dimensions | Low | Execute GTM; move to SC5 |
+| **70-84** | ALMOST THERE | Solid core appeal; 1-2 sections need validation | Low-Med | Fix weakest section; re-score; confirm |
+| **55-69** | NEEDS WORK | Right direction but significant gaps | Medium | 30-day validation plan required |
+| **40-54** | EARLY STAGE | Fundamental validation needed | Med-High | 10+ buyer interviews before GTM |
+| **0-39** | RESET | Core assumptions likely wrong | High | Revisit SC1/SC2; consider pivot |
 
 ---
 
-### Question A4: Current Workarounds (0-5 points)
+## 4. SECTION A: PAIN REALITY & INTENSITY (25 POINTS)
 
-**Question:** "What are they currently doing about it? Are they paying for a solution, or doing it manually?"
+**Goal:** Validate that SC2 pains are real, frequent, costly, and urgent through evidence, not speculation.
 
-**Scoring Rubric:**
-- **5 points:** Paying for an inferior existing solution (tells you: category exists, money flows, and you can position as "better")
-- **4 points:** Painful manual process (lots of labor, clearly suboptimal)
-- **2 points:** Ignoring it (low priority, but the pain exists)
-- **0 points:** Nothing—they're not trying to solve it
+### A1. Pain Evidence Strength (5 pts)
+**Type:** Free-text, 150-word limit
+**Question:**
+> From your ICP pain statements (listed from SC2), which THREE pains have the STRONGEST evidence of being real? For each pain, cite your evidence: customer conversations, competitor reviews, market data, case studies, or observable behavior.
 
-**The Danger Zone:** If no one is paying for alternatives and no one is manually workarounding, the pain may not be real.
+**Display:** Show SC2 pain statements as reference. Provide example: "Pain: 'Invoice reconciliation wastes 15 hours/week.' Evidence: 4 finance managers confirmed; competitor reviews mention 'time-saving' (500+ FreshBooks reviews); ZATCA mandate forces e-invoicing."
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "No one is investing in solving this = danger zone. Either the pain isn't real, the market isn't ready, or you've found the wrong buyer. Test with a consulting offer first. Sell 3 months of service (at $500-1000/month). If nobody bites, the market isn't ready. If 5+ people sign up, you have validation."
+**AI Scoring Rubric:**
 
----
+| Score | Criteria | What AI Checks |
+|-------|----------|---|
+| 0 | Blank or off-topic | Did not attempt |
+| 1 | Assertion only ("I think") | No evidence cited; pure speculation |
+| 2 | Generic evidence | Vague sources ("asked people"); no names, numbers, or quotes |
+| 3 | Partial evidence | 2 types for 1 pain OR 1 type for 2 pains; some specificity |
+| 4 | Strong evidence | 2+ types per pain for ≥2 pains; named sources; numbers cited |
+| 5 | Expert evidence | 3+ types per pain across all 3 pains; could use in pitch deck |
 
-### Question A5: Pain Urgency (0-5 points)
+**Evaluation Process:**
+1. Extract 3 pains mentioned; verify they match SC2 pain statements
+2. For each pain, count distinct evidence types (conversations, data, competitive, research, regulatory)
+3. Assess specificity: Named people/companies (high) vs. generic sources (low)
+4. Check consistency with SC2 pain map
+5. Award: (Diversity × 0.5) + (Specificity × 0.3) + (Consistency × 0.2)
 
-**Question:** "If you solved this tomorrow, would they buy this week? Or next month? Or 'someday'?"
+**Improvement (if <4):**
+- Score 0-2: "Schedule 3 buyer conversations THIS WEEK. Ask: 'How does this pain show up for you?' Document stories, not yes/no."
+- Score 2-3: "For #1 pain, gather 3 sources: (1) conversation quote, (2) competitive evidence, (3) data point. Name and number everything."
+- Score 3-4: "Add one more evidence type per pain. Check Google Trends, LinkedIn, competitor support forums."
 
-**Scoring Rubric:**
-- **5 points:** Same day or within 24 hours (rarest case)
-- **4 points:** This week (strong urgency)
-- **3 points:** This month (moderate urgency)
-- **1 point:** Someday, when they get around to it
-- **0 points:** Not sure / no urgency signal
-
-**The Urgency Multiplier:** A $100K pain with 0 urgency = slow sales cycle. A $10K pain with 5 urgency = fast close.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "No urgency = no deal velocity. Look for trigger events that create urgency: (1) Regulation deadlines (GDPR, taxes, compliance), (2) Seasonal deadlines (end of year, budget planning), (3) Hiring (new role created = new problem), (4) Funding (raised capital = must deploy it). Target buyers experiencing these triggers."
-
----
-
-### **SECTION A SCORING BANDS**
-
-- **20-25:** Bleeding pain. Buyers are actively searching. You'll sell on inbound.
-- **15-19:** Real pain but not urgent. Needs a trigger event or re-targeting.
-- **10-14:** Nice-to-have territory. You need to reframe the problem or find a different ICP.
-- **0-9:** No real pain. Pivot the ICP or the problem.
+**Time to Fix:** 2-5 hours (conversations + research)
 
 ---
 
-## SECTION B: PURCHASING POWER (25 points)
+### A2. Pain Frequency (5 pts)
+**Type:** Multiple Choice × 3 (one per pain)
+**Question:** How often does **[Pain from A1]** occur for your buyer?
 
-**Core Principle:** Alex Hormozi's "ability to pay." A buyer with perfect pain but zero budget = no deal.
+**Options:**
+- Multiple times daily (5 pts)
+- Daily (4 pts)
+- Weekly (3 pts)
+- Monthly (2 pts)
+- Quarterly or less (1 pt)
 
-### Question B1: Buyer Budget Authority (0-5 points)
+**Scoring:** Average of 3 pain frequencies. Deterministic (no interpretation).
 
-**Question:** "Does your buyer control the budget? Or do they need approval?"
+**Consistency Check:** If pain cost (A3) is high but frequency is quarterly, flag (possible high-impact rare events). Ask for clarification; don't penalize if explained.
 
-**Scoring Rubric:**
-- **5 points:** Sole decision maker. "I can approve this myself."
-- **4 points:** Needs one approval (their manager, but quick)
-- **2 points:** Needs committee approval (multi-stakeholder, slower)
-- **0 points:** No budget access. They can't approve anything.
+**Improvement (if score <3):**
+> "Your frequency average is low. Either: (1) Find daily/weekly pains, OR (2) Show how infrequent pains compound. Example: 'Quarterly audit failure × 4/year × 30 hours = 120 hours/year = 2.5 weeks.'"
 
-**MENA Critical Note:** In MENA, budget authority is often hierarchical. The person with pain may not be the economic buyer. The economic buyer is typically:
-- The owner
-- The General Manager
-- The CFO or Finance Director
-- Sometimes a Department Head (but only with limits)
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "You're selling to the wrong person. Find the economic buyer. Walk up the org chart: 'Who would need to approve this purchase?' In MENA, that's usually the owner or GM. Reposition: Get the person with pain to introduce you to the economic buyer, or start your conversation there."
+**Time to Fix:** 30 minutes (reframe or pivot pain)
 
 ---
 
-### Question B2: Price Sensitivity (0-5 points)
+### A3. Pain Cost (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** Quantify the cost of your #1 pain per month. Show your math.
 
-**Question:** "How does your price compare to the pain cost? Is the ROI obvious?"
+**Display Example:** "Pain: Manual invoice reconciliation. Cost: 4 finance staff × 15 hours/week ÷ 4 = 15 hours/month × $50/hour = $750/month. Plus: 2 errors/month × $200 audit cost = $400/month. Total: $1,150/month."
 
-**Scoring Rubric:**
-- **5 points:** 10x ROI or better. "You save $100K/year, we charge $10K/year."
-- **4 points:** 5x ROI. "You save $50K/year, we charge $10K/year."
-- **3 points:** 2x ROI. "You save $20K/year, we charge $10K/year."
-- **1 point:** Break-even. "You save $10K, we charge $10K."
-- **0 points:** Expensive. "You save $5K but we charge $20K."
+**AI Scoring Rubric:**
 
-**The Rule:** If your solution saves them more than it costs, they'll buy. If it costs more than it saves, you need to increase perceived value or lower price.
+| Score | Criteria |
+|-------|----------|
+| 0 | No quantification ("very expensive") |
+| 1 | Partial math (incomplete or unclear formula) |
+| 2 | Rough estimate (math valid but arbitrary numbers) |
+| 3 | Reasonable math (realistic unit costs; misses 1 cost type) |
+| 4 | Sharp calculation (multiple cost types; all clear; realistic) |
+| 5 | Expert (comprehensive model; sensitivity analysis; investor-grade) |
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Your pricing doesn't align with perceived value. Either: (1) Raise perceived value through case studies ('Our customer saved $150K in Year 1'), guarantees ('Money-back if we don't hit X'), or risk transfer ('We charge only if you reach 10x ROI'); or (2) Lower the entry point through a pilot ('Pay $3K for 30-day trial'), freemium model ('Free for <5 users'), or annual prepay discount ('20% off if you commit for 12 months')."
+**Evaluation Process:**
+1. Extract and verify math (hours × rate = cost)
+2. Check unit realism ($30-150/hour for labor is realistic; $50-1K per error typical)
+3. Assess completeness (labor + error + opportunity cost)
+4. MENA adjustment: Egypt/Jordan labor may be $20-40/hour; validate consistency
+5. Award: (Math × 0.4) + (Unit Realism × 0.35) + (Completeness × 0.25)
 
----
+**Improvement (if <4):**
+- Score 0-2: "Pick ONE cost driver and calculate it. If 10 hours/week × $50/hour = $2,000/month. That's your baseline."
+- Score 2-3: "Add missing costs: errors/rework + opportunity cost. Include all cost types."
+- Score 3-4: "Validate unit costs with a buyer: 'Is $50/hour loaded cost right for your team?'"
 
-### Question B3: Payment Infrastructure (0-5 points)
-
-**Question:** "Can they actually pay you? What's their payment method preference?"
-
-**MENA Specific:** Payment infrastructure in MENA is different from the West. Adjust accordingly.
-
-**Scoring Rubric:**
-- **5 points:** Credit card ready. "We have Visa/Mastercard."
-- **4 points:** Bank transfer. "We can do wire transfers."
-- **3 points:** Invoice/PO process. (Slower but established)
-- **1 point:** Cash only or bartering
-- **0 points:** Payment friction. "We'd need to set up a process."
-
-**MENA Payment Realities:**
-- Many businesses prefer bank transfers over credit cards (credit card penetration lower than West)
-- Installment payment options (Tabby, Tamara, Payfort) are increasingly popular
-- Annual prepay discounts work well
-- Some sectors still prefer cash or checks
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "MENA payment friction is real. Add payment options: (1) Bank transfer/SWIFT, (2) Installment plans (Tabby, Tamara, PayFort), (3) 10-20% discount for annual prepaid. Remove friction: Don't require credit cards exclusively. Offer multiple methods. Remove: Multiple payment gates that delay purchase."
+**Time to Fix:** 1-2 hours (research + math)
 
 ---
 
-### Question B4: Existing Spend (0-5 points)
+### A4. Workaround Assessment (5 pts)
+**Type:** Free-text, 150-word limit
+**Question:** What are buyers doing TODAY to manage this pain? List tools, processes, workarounds. How broken are they?
 
-**Question:** "Are they already paying for solutions in this category? How much?"
+**Display Example:** "Workarounds: (1) Manual spreadsheet INDEX/MATCH (errors if format changes), (2) Temp staff hiring (expensive, turnover loss), (3) Quarterly audits (reactive, errors found too late). Failures: Formula breaks → hidden errors → audit discovers massive backlog → expensive rework."
 
-**Scoring Rubric:**
-- **5 points:** Already spending $1000+/month on competitive solutions
-- **4 points:** Spending $100-1000/month
-- **3 points:** Spending <$100/month
-- **1 point:** Using free tools only
-- **0 points:** Not paying anyone. Not investing in this problem category.
+**AI Scoring Rubric:**
 
-**Why This Matters:** If a buyer is already spending $500/month on Solution A, they'll spend $600/month on Solution B if it's 20% better. They won't spend $500/month if they're not paying anyone (you must create the category).
+| Score | Criteria |
+|-------|----------|
+| 0 | No answer |
+| 1 | "Not doing anything" (unaware of buyer behavior) |
+| 2 | Generic ("spreadsheets and manual processes") |
+| 3 | Named tools ("Excel, Zapier, manual emails") with basic failures |
+| 4 | Tools + specific failures ("formula breaks if format changes"; "hiring delays") |
+| 5 | Comprehensive failure map with failure chains and buyer frustration clear |
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "If they're not paying anyone in this category, you need to create the market. That's 10x harder. You must: (1) Educate them on why this matters, (2) Change behavior, (3) Create budget. Or: Can you find buyers already paying for an adjacent solution? Example: If you're selling 'email deliverability,' look for buyers already paying for 'email marketing platforms' (adjacent category)."
+**Evaluation Process:**
+1. Extract named tools/processes
+2. Count distinct failure points (errors, delays, cost, hiring friction, knowledge loss)
+3. Assess specificity: "INDEX/MATCH breaks" (specific) vs. "it's slow" (generic)
+4. Check consistency: Do workarounds match pain statement?
+5. Award: (Tool Specificity × 0.4) + (Failure Count × 0.3) + (Articulation × 0.3)
 
----
+**Improvement (if <4):**
+- Score 0-2: "Interview 3 ICPs. Ask: 'Walk me through how you handle this today. What breaks?' Take notes."
+- Score 2-3: "You know tools; now know failures. Ask: 'What bugs you about this? When has it failed?'"
+- Score 3-4: "Deepen failure analysis. Ask: 'Why do you keep using this despite problems?' Answer = your moat."
 
-### Question B5: Willingness Signal (0-5 points)
-
-**Question:** "Have they expressed willingness to pay? What's the strongest signal?"
-
-**Scoring Rubric:**
-- **5 points:** Sent you a purchase order or deposit
-- **4 points:** Verbal commitment ("We're ready to sign")
-- **2 points:** "Sounds interesting" or "Send me more info"
-- **1 point:** "Send me information" (weakest signal)
-- **0 points:** No signal
-
-**The Gap:** There's a massive gap between "interested" and "willing to pay." Words are free. Wallets are real.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Words without wallets = unreliable signal. Run a waitlist with a deposit gate. Ask: 'Are you interested in early access? $100 refundable deposit to guarantee your spot.' If no one deposits, the demand isn't real. If 10+ people deposit, you have validation. This also pre-funds your development."
+**Time to Fix:** 2-3 hours (interviews)
 
 ---
 
-### **SECTION B SCORING BANDS**
+### A5. Pain Urgency Signal (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** If you pitched tomorrow, what timeline would buyer want? (week/month/quarter/someday) What evidence supports it?
 
-- **20-25:** Money is ready. Close fast. No objections = clear path to revenue.
-- **15-19:** Budget exists but needs justification. Build an ROI case.
-- **10-14:** Payment friction exists. Consider model changes.
-- **0-9:** Cannot pay or won't pay. Different ICP needed.
+**Display Example:** "Urgency: This month. Evidence: (1) ZATCA mandate effective next month; (2) CFO said 'We need solution before month-end'; (3) Budget allocated in Q; (4) Competitor launched. Multiple external pressures = HIGH urgency."
 
----
+**AI Scoring Rubric:**
 
-## SECTION C: MARKET MOMENTUM (25 points)
+| Score | Criteria | Signal Type |
+|-------|----------|---|
+| 0 | Blank | N/A |
+| 1 | Wishful thinking ("want it ASAP"; no evidence) | Hope, not reality |
+| 2 | Logical assumption (reasonable guess; unvalidated) | Internal logic only |
+| 3 | Some signals (1-2 present; budget allocated, timeline mentioned) | Beginning of urgency |
+| 4 | Strong signals (2-3: regulatory + budget + competitive) | Multiple pressure points |
+| 5 | Validated urgency (3+ signals; direct buyer statement; external deadlines) | Investment-grade |
 
-**Core Principle:** Even with pain and money, selling into a shrinking market is hard. Selling into a growing market is easy.
+**Signal Hierarchy:** Regulatory deadline > Competitive pressure > Budget deadline > Operational crisis > Seasonal > Buyer statement > Aspiration
 
-### Question C1: Market Growth Direction (0-5 points)
+**Evaluation Process:**
+1. Extract claimed timeline (week/month/quarter/someday)
+2. Count distinct signals; categorize by hierarchy
+3. Assess evidence quality: Direct quote (high) > Assumption (low)
+4. Check consistency: Does timeline match evidence?
+5. Award: (Timeline Realism × 0.3) + (Signal Count × 0.4) + (Evidence Quality × 0.3)
 
-**Question:** "Is this market growing, stable, or shrinking?"
+**Improvement (if <4):**
+- Score 0-2: "Ask ICP: 'When would you need this? What makes that timeline urgent?' Find external pressure: regulation, competitor, budget deadline, crisis."
+- Score 2-3: "Find one external signal. Verify its date. Is regulatory deadline in writing? Is budget allocation confirmed?"
+- Score 3-4: "Ask: 'What happens if you DON'T solve this by [timeline]?' Their answer = cost of inaction."
 
-**Scoring Rubric:**
-- **5 points:** Explosive growth (>30% YoY). Market is expanding rapidly.
-- **4 points:** Strong growth (10-30% YoY)
-- **3 points:** Stable (~0-10% YoY). Not growing or shrinking.
-- **1 point:** Plateauing. Growth is slowing.
-- **0 points:** Shrinking. Market is contracting.
+**Time to Fix:** 1-2 hours (buyer conversation)
 
-**How to Find This:**
-- Google Trends (search your market + "growth")
-- Industry reports (Gartner, IDC, local analyst firms)
-- Investor data (if VC-backed, funding is growing)
-- Customer data (are your competitors growing or shrinking?)
-
-**MENA Context:** Many MENA digital markets are in explosive growth (SaaS adoption, fintech, e-commerce logistics). Local growth often outpaces global.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Flat or declining markets can work IF you niche hard enough. Target the 3% early adopters in that niche. But if the market is shrinking, kill it. You can't beat gravity. If it's flat: can you find a sub-segment that's growing within the flat market? Example: 'Email marketing' is flat, but 'Email marketing for coaches' is growing 40% YoY."
-
----
-
-### Question C2: Tailwind Events (0-5 points)
-
-**Question:** "Are there macro forces pushing this market forward?"
-
-**Examples of Tailwinds:**
-- Regulation mandating a solution (GDPR → privacy software)
-- Technology shift enabling new solutions (AI → AI-powered tools)
-- Cultural trend (remote work → async collaboration tools)
-- Economic shift (inflation → cost optimization tools)
-
-**Scoring Rubric:**
-- **5 points:** Regulation or major tech shift forcing adoption
-- **4 points:** Technology enablement (new tech makes solution possible)
-- **3 points:** Cultural or economic trend pushing adoption
-- **1 point:** No specific tailwind, but nothing against it
-- **0 points:** Active headwinds pushing the market away
-
-**MENA Tailwinds (2024-2026):**
-- Saudi Vision 2030 digitization push
-- Increased compliance requirements (SAMA, CBE regulations)
-- AI adoption (ChatGPT, local LLMs)
-- E-commerce growth post-COVID
-- SME digitization wave
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "No external force pushing adoption. You'll need to create urgency yourself: (1) Limited launch ('First 50 customers only'), (2) Founding member pricing ('Lock in 50% discount now, price increases in 30 days'), (3) Proof first ('Here's how 5 companies like you solved this'). Budget 6 months for category education."
+**Section A Total:** A1+A2+A3+A4+A5 = 0-25 pts
 
 ---
 
-### Question C3: Competitor Funding (0-5 points)
+## 5. SECTION B: PURCHASING POWER & WILLINGNESS (25 POINTS)
 
-**Question:** "Are competitors getting funded? Is money flowing into this space?"
+**Goal:** Validate that ICP has budget and will pay.
 
-**Scoring Rubric:**
-- **5 points:** Multiple competitors raising $10M+ rounds (Series A or later)
-- **4 points:** Active Series A funding in the space
-- **3 points:** Seed-stage funding ($500K-$2M) from credible VCs
-- **1 point:** Only bootstrapped competitors. No VC interest.
-- **0 points:** No competitors at all (red flag—validates demand but risky)
+### B1. Existing Spend (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** What are buyers CURRENTLY PAYING for related problems? List tools/services and monthly spend.
 
-**Why This Matters:** VC funding = validation that investors believe the market exists and is sizable. But it's not perfect. Some huge markets (consulting, done-for-you) have almost no VC funding.
+**Display Example:** "Current spend: (1) QuickBooks: $25/month; (2) Zapier: $99/month; (3) Freelance accountant: $300/month; (4) Internal labor: 40 hours × $50/hour = $2,000/month. Total: $2,424/month."
 
-**MENA Context:** VC funding in MENA is lower than globally, so don't penalize heavily for "no funding." But if there ARE funded competitors, that's a strong signal.
+**AI Scoring Rubric:**
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "No money flowing into competitors = investors don't believe in the market size. BUT—this can mean untapped opportunity. Don't panic. Validate with 10 buyer conversations. Ask: 'Why hasn't someone solved this yet?' If buyers say 'We didn't know we needed it' or 'No one's built it,' you have opportunity. If they say 'The last 3 solutions didn't work,' that's a red flag."
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank or "I don't know" |
+| 1 | Generic ("accounting software"; no names, prices) |
+| 2 | Some specificity (1-2 tools; vague pricing) |
+| 3 | Specific tools (3+ named; prices; may miss labor) |
+| 4 | Sharp spend map (named tools + prices; includes labor cost) |
+| 5 | Expert (complete spend; hidden costs; purchasing precedent clear) |
 
----
+**Evaluation Process:**
+1. Extract named tools; count pricing data points
+2. Assess completeness (tools + services + labor + vendors)
+3. Verify realism (QuickBooks $25-300/month is realistic; $5K/month is not)
+4. Check consistency with pain cost (A3): Should be in same ballpark
+5. Award: (Tool Specificity × 0.35) + (Price Completeness × 0.35) + (Labor Inclusion × 0.3)
 
-### Question C4: Search Demand (0-5 points)
+**Improvement (if <4):**
+- Score 0-2: "Interview 3 ICPs: 'What tools do you use for [problem]? What's the monthly cost?' Get vendor names and actual prices."
+- Score 2-3: "Add pricing. Google vendor prices. Ask: 'Do you pay for freelance help?' Include labor cost."
+- Score 3-4: "Good map. Validate: Ask 'How much do you spend per month on [problem]?' Your estimate should align."
 
-**Question:** "Are people actively searching for this solution? Is Google Trends up or down?"
-
-**Scoring Rubric:**
-- **5 points:** Google Trends up 50%+ YoY. Strong rising demand.
-- **4 points:** Trending up 20-50% YoY
-- **3 points:** Stable (~0-20% change)
-- **1 point:** Low search volume, but stable
-- **0 points:** Declining search. Interest is dropping.
-
-**How to Check:**
-- Google Trends (trends.google.com): Search your keyword
-- Google Keyword Planner: Check monthly searches
-- Answer The Public: See what questions people are asking
-
-**MENA Note:** Arabic search demand may differ from English. Check both if relevant.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "No one is Googling for this solution. You'll need outbound + education. Budget 6 months for category creation. You can't rely on inbound. Strategy: (1) Outbound SDR team, (2) Content marketing (blog, YouTube, podcast—create the conversation), (3) Partnerships (get other platforms to recommend you), (4) Communities (become the expert in relevant Telegram groups, LinkedIn groups, forums)."
+**Time to Fix:** 1-2 hours (interviews + web research)
 
 ---
 
-### Question C5: MENA-Specific Readiness (0-5 points)
+### B2. Budget Authority (5 pts)
+**Type:** Multiple Choice (2 pts) + Free-text (3 pts)
 
-**Question:** "Is the MENA market specifically ready for this?"
+**MC:** Who controls the budget for your solution?
+- User/manager themselves (2 pts)
+- User + 1 approver (2 pts)
+- Department head (1.5 pts)
+- C-suite (1 pt)
+- Committee (1 pt)
 
-**Scoring Rubric:**
-- **5 points:** Arabic SaaS gap confirmed. You're addressing a gap that exists nowhere else.
-- **4 points:** Regional regulation creates need (SAMA, CBE, etc. mandate solutions)
-- **3 points:** Growing SME digitization. Companies are becoming ready.
-- **1 point:** Still mostly cash-heavy. Digital adoption slower than West.
-- **0 points:** Actively resistant. Market prefers offline/manual solutions.
+**Free-text (75 words):** Describe the budget decision process. Who proposes? Who approves? Timeline? Thresholds?
 
-**MENA Digital Readiness Varies:**
-- **Most Ready:** UAE, KSA (Vision 2030), Bahrain, Kuwait
-- **Emerging:** Egypt, Lebanon, Pakistan, Bangladesh
-- **Slower:** Afghanistan, Yemen, Iraq (conflict regions)
+**Display Example:** "Finance Manager proposes to Finance Director. Director approves if <$500/month + ROI >3x within 1 week. If >$500/month, needs CFO (4 weeks). Our price: $150/month → Director approval → 1-week sales cycle."
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "MENA isn't ready yet for your solution. Options: (1) Start with UAE/KSA only (most digital-ready), (2) Use consulting as the wedge while market matures ('We'll build this for you' → Productize later), (3) Focus on English-first MENA buyers (multinational offices), (4) Wait 12-24 months and revisit (market may mature), (5) Target diaspora MENA buyers globally (they're ready now)."
+**Free-text Scoring (0-3):**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Generic ("they need approval") |
+| 2 | Partial (decision-maker named; missing timeline/thresholds) |
+| 3 | Sharp (decision-maker + timeline + thresholds + connection to sales cycle) |
 
----
+**Combined:** MC (0-2) + Free-text (0-3) = 0-5 pts
 
-### **SECTION C SCORING BANDS**
+**Evaluation Process:**
+1. Extract MC (simplicity score): simpler = higher score
+2. Extract free-text details (decision-maker, timeline, thresholds)
+3. Check consistency: Does ACV from SC1 fit within decision threshold?
+4. Flag if ACV exceeds threshold (longer sales cycle)
+5. Award: (MC × 0.4) + (Free-text Quality × 0.6)
 
-- **20-25:** Ride the wave. Market is pulling demand. Selling is easy.
-- **15-19:** Momentum exists but not explosive. Positioning needs precision.
-- **10-14:** Flat market. You need sharper differentiation.
-- **0-9:** No momentum or negative momentum. Timing may be wrong.
+**Improvement (if <3):**
+> "Interview decision-maker: 'If you wanted to buy [solution] at $[price]/month, how would approval work? Who would you ask? How long?' Document exact process and timeline."
 
----
-
-## SECTION D: COMPETITIVE ADVANTAGE (25 points)
-
-**Core Principle:** Why will customers choose you over alternatives (including doing nothing)?
-
-### Question D1: Differentiation Clarity (0-5 points)
-
-**Question:** "Why are you different? Can you say it in one sentence?"
-
-**Good Examples:**
-- "We're the only SaaS built specifically for Arab agencies (Arabic-first, not translated)"
-- "We solve it 10x faster than the manual process"
-- "We're $500/month while competitors are $5000/month, with 80% of features"
-- "We're the only solution that integrates with SAP AND Odoo"
-
-**Bad Examples:**
-- "We have great customer service" (everyone says this)
-- "We're innovative and modern" (meaningless)
-- "We're the best" (relative to what?)
-
-**Scoring Rubric:**
-- **5 points:** Crystal clear differentiation. One sentence. Unique claim.
-- **3 points:** Decent differentiation. Takes a few sentences. Somewhat unique.
-- **1 point:** Still figuring it out. Fuzzy claim.
-- **0 points:** No differentiation. "We do what competitors do but we're newer."
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Differentiation is your moat. You have 2 weeks to nail this. Answer: (1) Who is your main competitor? (2) What do they do worse than you? (3) What do you have that they don't? (4) Why can't they copy it quickly? Use the answer as your positioning. Test it with 5 buyers: 'Does this differentiation matter to you?' If not, it's not real differentiation."
+**Time to Fix:** 1-2 hours (buyer interview)
 
 ---
 
-### Question D2: Reach Ability (0-5 points)
+### B3. Price Point Validation (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** What price are you charging? Compare to: (a) pain cost, (b) alternative spend, (c) ROI delivered. Does it pass the no-brainer test?
 
-**Question:** "Can you reach 1,000 prospects in 30 days? Do you have the list? The channel?"
+**Display Example:** "Price: $199/month. (a) Pain cost $1,150/month; price is 17% of pain. (b) Alternatives $2,424/month; price is 8% of alternatives. (c) ROI: Customer pays $2,388/year; saves $13,800/year; ROI = 5.8x. Verdict: Clear no-brainer; customer saves $2,225/month net."
 
-**This Tests:** Do you know WHO to sell to and HOW to reach them?
+**AI Scoring Rubric:**
 
-**Scoring Rubric:**
-- **5 points:** You have a list of 1,000+ prospects AND a channel to reach them (email, LinkedIn, community, etc.)
-- **4 points:** You have a list of prospects, but need to develop the channel
-- **3 points:** You know the channel (e.g., "Facebook Ads") and can find prospects there
-- **1 point:** You're guessing. "I think LinkedIn might work."
-- **0 points:** No idea how to reach customers
+| Score | Criteria |
+|-------|----------|
+| 0 | No price |
+| 1 | Price only (no comparison) |
+| 2 | Partial logic (ONE benchmark; missing others) |
+| 3 | Two comparisons (clear but incomplete) |
+| 4 | Three comparisons (clear "no brainer" calc) |
+| 5 | Expert model (all 3 comparisons + sensitivity analysis) |
 
-**Examples of Channels:**
-- Email lists (LinkedIn Sales Navigator, Apollo, ZoomInfo)
-- Paid ads (Google Ads, Facebook Ads, LinkedIn Ads)
-- Communities (Telegram groups, Reddit, forums, WhatsApp groups)
-- Partnerships (resellers, platform integrations, referrals)
-- Content (SEO, YouTube, TikTok, podcasts)
-- Sales teams (SDRs, Account Execs)
-- Word-of-mouth (founder network, existing customers)
+**Evaluation Process:**
+1. Extract price; normalize to $/month
+2. Validate vs. pain cost (A3): Price < 50% pain cost = good; < 25% = strong
+3. Validate vs. alternatives (B1): Price < 25% = good
+4. Calculate ROI: Annual cost vs. annual savings; aim for 3x+ minimum
+5. Check math accuracy
+6. Award: (Pain Comparison × 0.27) + (Alternative Comparison × 0.27) + (ROI × 0.26) + (Clarity × 0.2)
 
-**MENA Channels:**
-- LinkedIn (strong in professional segments)
-- WhatsApp groups (underrated in MENA)
-- Email (still powerful)
-- Paid Arabic ads (Google Arabic, Facebook Arabic)
-- Local partnerships (distributors, agencies)
-- Founder networks (very strong in MENA startup scene)
+**Improvement (if <4):**
+- Score 0-2: "Use formula: Pain cost × 30-40% = entry price. Example: $1,150 × 35% = $400/month."
+- Score 2-3: "All 3 benchmarks required. Calculate ROI: (Annual savings) ÷ (Annual cost) = ROI multiple. Aim for 3x+"
+- Score 3-4: "Stress-test with buyer: 'Would you pay $[price] to save $[pain]?' Their reaction tells you if realistic."
 
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "You don't have a clear path to customers. Pick ONE channel and test it: (1) If email: Buy a list and send 100 personalized emails. Track replies. (2) If ads: Spend $500 on Google Ads or Facebook, track CAC. (3) If partnerships: Identify 10 strategic partners, pitch them. (4) If communities: Join 5 relevant communities, be helpful for 2 weeks, see if inbound happens. You need a repeatable channel before scaling."
-
----
-
-### Question D3: Unfair Advantage (0-5 points)
-
-**Question:** "What do you have that competitors can't easily copy?"
-
-**Types of Moats:**
-- Domain expertise (you've spent 10 years in this industry)
-- Relationships (you know all the decision-makers)
-- Technology (you have a patent or unique algorithm)
-- Network effects (value increases with more users)
-- Data (you have proprietary data competitors lack)
-- Brand (customers trust you more)
-- Economics (you can deliver profitably at lower prices)
-
-**Scoring Rubric:**
-- **5 points:** Domain expertise + relationships. You've built something hard to replicate.
-- **4 points:** Technical moat (proprietary algorithm, technology stack, or data)
-- **2 points:** First-mover advantage only (but it's temporary)
-- **0 points:** No moat. Competitors can copy you in weeks.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "You're vulnerable. Competitors can copy you. Build a moat: (1) Domain expertise: Become the expert. Write, speak, build community around your area. (2) Customer data: Over time, your product learns from each customer, making it better (network effects). (3) Relationships: Make customers so happy they refer you. (4) Speed: Move 10x faster than competitors. Burn them with execution. (5) Economics: Lower your cost structure so you can undercut on price and still be profitable."
+**Time to Fix:** 1-2 hours (modeling + validation)
 
 ---
 
-### Question D4: Arabic/MENA Moat (0-5 points)
+### B4. Payment Infrastructure (5 pts)
+**Type:** Multiple Choice (MENA-specific context)
+**Question:** How will buyers pay?
 
-**Question:** "Does Arabic localization or MENA-specific features create defensibility?"
+**Options & Base Scoring:**
+- Credit card online (5 pts)
+- Bank transfer (5 pts)
+- Mobile wallets (Apple Pay, STC Pay, Google Pay, etc.) (5 pts)
+- BNPL (Tabby, Tamara, etc.) (4 pts)
+- Mixed/multiple (5 pts)
+- Cash/check (2 pts)
+- Unknown (0 pts)
 
-**Scoring Rubric:**
-- **5 points:** Arabic-first product with cultural depth. Not just translated—built for MENA workflows.
-- **3 points:** Arabic translation + some MENA features. Adequate but not excellent.
-- **1 point:** English-only. No Arabic, no MENA customization.
-- **0 points:** Arabic is irrelevant to your market (but then why are you in MENA?)
+**MENA Adjustments:** If "Credit card only" in Egypt/Jordan/Lebanon/Morocco: Deduct 1 pt (credit card adoption <40%; should add bank transfer or BNPL).
 
-**Why This Matters:** In MENA, Arabic-first products have defensibility Western competitors lack. But translation-only is weak. Examples:
+**Display:** Show MENA context. "Saudi: Credit card adoption 65%; mobile wallet 90%. Egypt: Credit card 30%; WhatsApp Pay adoption emerging. Offer 2-3 methods to maximize conversion."
 
-**Strong MENA Moat:**
-- "We built our invoicing for Saudis first" (payment methods, tax rules, Arabic language design)
-- "Our CRM understands Arabic business culture" (proper name handling, family business structures)
+**Improvement (if <5):**
+- If credit card only (Egypt/Jordan): "Add bank transfer (primary) + BNPL secondary. Increases conversion significantly."
+- If Unknown: "Ask ICP: 'How do you prefer to pay for SaaS? Credit card, bank transfer, BNPL?' Their answer guides your infrastructure."
 
-**Weak MENA Moat:**
-- "We translated our English product to Arabic"
-- "We have Arabic support"
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "You're not leveraging MENA-specific advantages. Options: (1) If you're already Arabic: Market this aggressively. It's a moat. (2) If you're English-only: Partner with local experts to add Arabic. Or niche into English-first MENA buyers (multinational companies, diaspora). (3) If you're considering Arabic: Do it, but do it right. Hire native speakers, cultural consultants. Bad Arabic is worse than no Arabic."
-
----
-
-### Question D5: Speed to Value (0-5 points)
-
-**Question:** "How fast can a new customer see results?"
-
-**Scoring Rubric:**
-- **5 points:** Same day. "Sign up, see value immediately."
-- **4 points:** Same week. "Within 7 days, they see ROI."
-- **3 points:** 30 days. "After 1 month, they see impact."
-- **1 point:** 90+ days. "Requires patience and belief."
-- **0 points:** Unclear timeline. "Could take months, depends."
-
-**Why This Matters:** Fast time-to-value = lower buyer hesitation = faster sales cycle = higher retention.
-
-**Examples of Speed to Value:**
-- **Fast (1 day):** Dashboard app. User logs in, sees their data visualized instantly.
-- **Medium (1 week):** CRM. Takes 3-5 days to input data and see first insights.
-- **Slow (30 days):** Process consulting. Needs implementation time before ROI shows.
-
-**If Scoring Below 3:**
-→ **RECOMMENDATION:** "Slow time-to-value kills momentum. You need to either: (1) Accelerate time-to-value ('Can we show results in 2 weeks instead of 90?'), (2) Add a quick-win feature ('Here's a 5-minute win before the full implementation'), (3) Risk-transfer pricing ('You only pay if you hit X results in 30 days'), (4) Use consulting as a wedge ('We'll set it up for you this week, hand it off next week')."
+**Time to Fix:** 30 minutes (research + setup)
 
 ---
 
-### **SECTION D SCORING BANDS**
+### B5. Willingness Signal (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** What is the STRONGEST signal that someone would PAY? (pre-orders, verbal commits, LOIs, pilots, competitor revenue, market research)
 
-- **20-25:** Strong moat. Defensible position. Defend and scale.
-- **15-19:** Competitive but vulnerable. Strengthen your wedge.
-- **10-14:** Commodity risk. Positioning needs to be sharper.
-- **0-9:** No defensibility. Rethink the approach fundamentally.
+**Display Example:** "Signal: Signed LOI with [Company] for $2K/month pilot. CTO: 'This is exactly what we need; we can start [month].' Also: 8 people on waitlist said 'I'd pay $200-300/month.' LOI is strongest signal."
 
----
+**AI Scoring Rubric:**
 
-## TOTAL SCORE INTERPRETATION
+| Score | Signal Type | Criteria |
+|-------|---|---|
+| 0 | No signal | Blank |
+| 1 | Aspirational | "I think people would pay" (no evidence) |
+| 2 | Behavioral | Waitlist, email signups, free trial (intent; no commitment) |
+| 3 | Verbal | "Buyer said they'd pay" (named, stated, but no signature) |
+| 4 | Signed | Signed LOI, paid pilot, pre-order agreement |
+| 5 | Executed | Paid pilot in progress, pre-orders collected, competitor revenue data |
 
-**Scale: 0-100 points**
+**Hierarchy:** Executed Payment > Signed Commitment > Verbal > Behavioral > Aspirational
 
-### 80-100: STRONG MARKET
-**Status:** Build + Sell Simultaneously
+**Evaluation Process:**
+1. Identify signal type; map to hierarchy
+2. Assess specificity: Named buyer (high) vs. generic (low)
+3. Verify commitment level: Money down > Signature > Verbal > Behavioral > Aspirational
+4. Check consistency with urgency (A5)
+5. Award: (Signal Type × 0.4) + (Specificity × 0.3) + (Commitment Level × 0.3)
 
-- Market is pulling demand
-- Buyers want to buy
-- You have defensibility
-- **Action:** Don't overthink. Build. Sell. Scale.
-- **30-Day Plan:** Ship first version, sign first 3 customers, iterate based on feedback
+**Improvement (if <4):**
+- Score 0-2: "Go get a willingness signal. Contact 5 ICPs; ask 'Would you pay $[price] for this?' Get 2-3 explicit yes answers. Document names."
+- Score 2-3: "Convert waitlist → pilot. Offer 50% off if they commit to $500 pilot in 30 days."
+- Score 3-4: "Turn verbal → signed. Send one-page LOI: '[Company] agrees to pilot [solution] for $[price] from [date] to [date].' Get signature."
 
-### 60-79: VIABLE MARKET
-**Status:** Validate First, Then Scale
+**Time to Fix:** 1-3 weeks (outreach + pilot closure)
 
-- Market is real but needs precision
-- You have most pieces but gaps exist
-- **Action:** Pre-sell before heavy building. Reduce technical debt. Focus on weakest section.
-- **30-Day Plan:** Validate assumptions (address top 3 weak areas), sign 5 pilot customers, refine positioning
-
-### 40-59: WEAK MARKET
-**Status:** Significant Work Needed
-
-- Real problems but significant gaps
-- May require ICP change or problem re-framing
-- **Action:** Focus on the 2-3 lowest-scoring sections. Consider pivoting.
-- **30-Day Plan:** Deep dive interviews (50+ buyer conversations), test alternate ICPs, measure demand signals weekly
-
-### 20-39: HIGH RISK
-**Status:** Major Pivot Likely
-
-- Fundamental misalignment
-- Consider different ICP, different problem, different market
-- **Action:** Before scaling, fix basics.
-- **30-Day Plan:** 100 buyer interviews across 3 alternate ICPs. Find the one with strongest pain signal. Re-score.
-
-### 0-19: NO MARKET
-**Status:** Kill It (or Pivot Hard)
-
-- Market doesn't exist yet, or you're in the wrong market
-- **Action:** Find a different problem or different audience
-- **30-Day Plan:** Brainstorm 5 alternate problems/audiences. Interview 20 people for each. Restart MAS with highest-scoring combo.
+**Section B Total:** B1+B2+B3+B4+B5 = 0-25 pts
 
 ---
 
-## THE SKILL: HOW CLAUDE SHOULD RUN THIS ASSESSMENT
+## 6. SECTION C: ICP ACCESSIBILITY (25 POINTS)
 
-### Input: The founder provides context
-- Problem statement
-- Target buyer (ICP)
-- Current traction (if any)
+**Goal:** Validate that you can actually reach your ICP.
 
-### Process: Claude asks ALL 20 questions
+### C1. Congregation Density (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** From SC2 congregation points, which has HIGHEST density of exact buyers? How many are there?
 
-1. Ask questions conversationally (one section at a time, not all at once)
-2. Listen to answers, probe deeper with follow-ups
-3. Score each question 0-5 based on rubric
-4. Calculate section totals and grand total
-5. Identify all sections scoring below 3 (these get specific recommendations)
+**Display Example:** "Top point: LinkedIn Finance Mgr group. Estimated: 5K group members; 2K mid-market companies (ACV sweet spot); 500-1K exact fit by size + industry. Can reach 100 in 30 days via targeted outreach."
 
-### Output: Comprehensive Report
+**AI Scoring Rubric:**
 
-**1. SCORE CARD (Visual)**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Vague ("LinkedIn"; no specific group/location) |
+| 2 | Generic ("LinkedIn finance group"; no estimate) |
+| 3 | Specific point + rough estimate |
+| 4 | Sharp calculation (layered: total → filtered by role → filtered by size → actual fit) |
+| 5 | Expert map (multiple points ranked; specific counts; actionable reach) |
 
+**Evaluation Process:**
+1. Extract congregation point; verify it matches SC2 points
+2. Extract density estimate; check calculation quality
+3. Assess layering: Total → Role filter → Size filter → Geography filter = actual ICP fit
+4. Award: (Specificity × 0.3) + (Estimation Quality × 0.35) + (Filtering Logic × 0.35)
+
+**Improvement (if <4):**
+- Score 0-2: "Name ONE congregation point (LinkedIn group, conference, business club, city). Research its size."
+- Score 2-3: "Validate estimate with actual data (LinkedIn group member count, conference attendee list, census data)."
+- Score 3-4: "Layer the estimate. Of 5K group members: 20% right role × 40% right size × 50% right industry = 200 prospects."
+
+**Time to Fix:** 2-3 hours (research + filtering)
+
+---
+
+### C2. Reach Capability (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** Can you reach 100+ buyers in 30 days with your resources? Describe exactly how.
+
+**Display Example:** "Plan: (1) LinkedIn outbound: 20 messages/week × 4 weeks = 80 reach attempts; 20% response = 16 meetings. 30 min/day. (2) Cold email: 10/week × 4 = 40 attempts; 5% response = 2 meetings. Total: 120 reach attempts, ~18 meetings, 1 hour/day. Achievable."
+
+**AI Scoring Rubric:**
+
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | No path ("I'll use LinkedIn") |
+| 2 | Some path (channels named; numbers missing/unrealistic) |
+| 3 | Specific path (channels + weekly targets; realistic) |
+| 4 | Sharp plan (channels + daily cadence + response rates + time/resources) |
+| 5 | Expert model (multiple channels + targets + validated rates + contingency) |
+
+**Evaluation Process:**
+1. Extract channels and targets
+2. Check realism: LinkedIn 15-20 quality msgs/week/person is realistic; 100+/week is not
+3. Verify math: Sum targets; do they reach ~100 in 30 days?
+4. Confirm resources: Can stated team do this?
+5. Award: (Channel Diversity × 0.2) + (Target Specificity × 0.35) + (Realism × 0.35) + (Resource Clarity × 0.1)
+
+**Improvement (if <3):**
+- Score 0-1: "Pick ONE channel. Calculate: 100 people ÷ 30 days = 3.3/day. For LinkedIn: 4 msgs/day × 20-30 min = achievable."
+- Score 1-2: "Make specific. 'LinkedIn: 4 msgs/day × 5 days × 4 weeks = 80 msgs. 20% response = 16 replies. 30 min/day = 10 hours total.'"
+- Score 2-3: "Stress-test: Can you ACTUALLY do 20 msgs/day while running business? If not, reduce target or phase it."
+
+**Time to Fix:** 2-3 hours (planning + validation)
+
+---
+
+### C3. Channel Viability (5 pts)
+**Type:** Multiple Choice (select top 3) + Free-text (2 pts each)
+
+**MC:** Which channels can you realistically use? (Select max 3)
+- LinkedIn outbound
+- Cold email
+- WhatsApp
+- Content marketing
+- Paid ads
+- Events & networking
+- SEO
+- Referrals
+- Community (Slack, Discord, Reddit, forums)
+- Partner channels
+
+**Free-text (75 words each, up to 2 questions = 4 pts total):**
+
+For top 3 selections: "Describe your specific capability on [Channel]. Example: 'LinkedIn — 5K connections, mostly [role], in [geography]; I've done 50+ outreach with 15% response rate; 30 min/day; can scale to 200+/month.'"
+
+**Scoring:**
+
+**MC (0-5):**
+- 5 pts: 3 channels with strong ICP fit
+- 3 pts: 3 viable but lower-fit channels
+- 1 pt: 1-2 channels with weak fit
+- 0 pts: No fit
+
+**Free-text (0-2 per channel, up to 4 pts):**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Vague ("I'll use LinkedIn") |
+| 2 | Specific ("5K connections, 15% response rate, 30 min/day") |
+
+**Combined:** MC (0-5) + Free-text (0-4) → normalize to 0-5
+
+**Evaluation Process:**
+1. Verify channel selections align with ICP
+2. Extract capability specifics (audience, response rate, time)
+3. Check for proof (actual experience vs. aspirational)
+4. Assess consistency: Does free-text match MC selections?
+5. Award: (Channel Fit × 0.35) + (Capability Detail × 0.35) + (Proof × 0.3)
+
+**Improvement (if <4):**
+- MC weak fit: "Your channels don't match ICP. [ICP] congregates on [X], not [Y]. Reconsider."
+- Free-text vague: "Tell me your actual capability. Numbers: audience size, response rate, time required. Build on real data."
+- Proof missing: "Have you tried this channel? Do 20 attempts this week; measure response rate."
+
+**Time to Fix:** 1-2 weeks (validate channels + measure)
+
+---
+
+### C4. Competitor Access Pattern (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** How are competitors reaching these buyers? What channels dominate? Where are they weak?
+
+**Display Example:** "Competitors [A, B] dominate LinkedIn (15K followers; weekly posts) and content (SEO-ranked). Absent from: WhatsApp outreach, email list, community engagement. Gap: MENA congregates on WhatsApp; competitors ignore it. Opportunity: Own WhatsApp channel + email list in [geography]."
+
+**AI Scoring Rubric:**
+
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | No awareness ("don't know competitors") |
+| 2 | Basic (names competitors; knows 1 channel) |
+| 3 | Partial map (2-3 competitors; 1-2 channels each; 1 weakness) |
+| 4 | Sharp map (2-3 competitors; channels + metrics; 2+ weaknesses) |
+| 5 | Expert (detailed channels + metrics; clear gaps; strategic positioning) |
+
+**Evaluation Process:**
+1. Extract named competitors (not generic)
+2. Extract channels per competitor
+3. Check research quality: Did they actually look at competitors?
+4. Identify weaknesses articulated
+5. Assess gap identification (strategic opportunity?)
+6. Award: (Competitor Specificity × 0.3) + (Channel Coverage × 0.3) + (Weakness × 0.2) + (Gap ID × 0.2)
+
+**Improvement (if <3):**
+- Score 0-1: "Spend 30 min per competitor. Visit website, check LinkedIn (followers, posts), search their content (rank for what?), look for email list."
+- Score 2: "You know competitors and channels. Identify weaknesses: 'What are they NOT doing? What's missing?'"
+- Score 3: "Good map. Deepen weakness analysis: For each competitor, state clearly: 'They're strong on [channel] but weak on [channel].'"
+
+**Time to Fix:** 3-5 hours (research: sites, social, SEO, reviews)
+
+---
+
+### C5. MENA Access Reality (5 pts)
+**Type:** Free-text, 100-word limit
+**Question:** For your MENA geography (SC1), what's realistic channel mix? Account for: Arabic vs. English, WhatsApp vs. email, LinkedIn penetration, event culture, mobile-first.
+
+**Display Examples:**
+
+**Saudi:** "Saudi finance managers: 65% LinkedIn (high); 90% WhatsApp (primary); 40% email (secondary); 25% conferences. Strategy: 35% LinkedIn, 40% WhatsApp, 15% email, 10% events. Arabic preference growing."
+
+**Egypt:** "Egypt SME owners: 35% LinkedIn (lower); 95% WhatsApp (primary); 15% email (low); 10% conferences. Strategy: 50% WhatsApp, 35% LinkedIn, 10% email, 5% in-person. All content in Arabic."
+
+**MENA Channel Reference Table:**
+
+| Country | LinkedIn | WhatsApp | Email | Events | Language |
+|---------|----------|----------|-------|--------|----------|
+| Saudi | 65-70% | 90%+ | 40-50% | Medium | Arabic growing |
+| UAE | 75%+ | 95%+ | 60% | High | Mixed |
+| Qatar | 70% | 95%+ | 60% | Medium | Mixed |
+| Egypt | 35-45% | 95%+ | 15-25% | Low | Arabic |
+| Jordan | 45-50% | 95%+ | 20-30% | Low | Arabic |
+| Lebanon | 45-50% | 95%+ | 20-30% | Low | Arabic |
+| Morocco | 45% | 90%+ | 15-20% | Low | Arabic/French |
+
+**AI Scoring Rubric:**
+
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Western assumptions ("email and LinkedIn standard"; no MENA adaptation) |
+| 2 | Surface awareness ("MENA uses WhatsApp more"; vague) |
+| 3 | Some context (2-3 MENA factors mentioned; partial channel mix) |
+| 4 | Sharp strategy (3-4 factors; channel % provided; language clear) |
+| 5 | Expert (detailed mix by geography; language strategy; local competitive advantage identified) |
+
+**Evaluation Process:**
+1. Extract geography (from SC1)
+2. Identify MENA factors mentioned (language, WhatsApp, LinkedIn, email, events, mobile)
+3. Compare student's channel mix to baseline table (unrealistic mix = flag)
+4. Assess language strategy (Arabic/English/mixed)
+5. Assess local competitive positioning
+6. Award: (Factors Mentioned × 0.3) + (Channel Mix Realism × 0.35) + (Language × 0.2) + (Competitive Position × 0.15)
+
+**Improvement (if <3):**
+- Score 0-1: "Research [country]'s communication norms. Google '[country] business communication preferences.' Ask 2 local founders: 'How do you reach customers here? What channels work?'"
+- Score 2: "You know WhatsApp is important; expand. What about LinkedIn adoption? Email culture? Events? For [country], provide realistic percentages."
+- Score 3: "Good MENA awareness. Add language strategy. Will you do Arabic outreach? How will this affect response rates?"
+
+**Time to Fix:** 2-3 hours (research + local conversations)
+
+**Section C Total:** C1+C2+C3+C4+C5 = 0-25 pts
+
+---
+
+## 7. SECTION D: MARKET GROWTH & MOMENTUM (25 POINTS)
+
+**Goal:** Validate that market is growing and has external tailwinds.
+
+### D1. Market Direction (5 pts)
+**Type:** Multiple Choice (2 pts) + Free-text (3 pts)
+
+**MC:** What is the overall direction of your market?
+- Rapidly growing (>30% YoY) (2 pts)
+- Growing (10-30% YoY) (2 pts)
+- Stable (0-10% YoY) (1.5 pts)
+- Declining (<0% YoY) (0.5 pts)
+- Don't know (0 pts) → Triggers recommendation to research
+
+**Free-text (75 words):** What evidence supports this? (Analyst reports, company funding, revenue growth, customer growth, market research)
+
+**Display Example:** "Market direction: Growing (15-25% YoY). Evidence: (1) Gartner 2026 report projects [market] at 18% CAGR through 2030. (2) 5 funded competitors in last 18 months ($15M total); only 2 competitors existed 2 years ago. (3) Google Trends shows [keyword] search volume up 35% YoY. = Growing market."
+
+**Free-text Scoring (0-3):**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Assumption ("market is growing"; no evidence) |
+| 2 | Generic ("I read [market] is growing"; no source/numbers) |
+| 3 | Sharp ("Gartner 2026 report: 18% CAGR through 2030"; specific numbers) |
+
+**Combined:** MC (0-2) + Free-text (0-3) = 0-5 pts
+
+**Evaluation Process:**
+1. Map MC to growth category
+2. Extract free-text sources: Analyst firms (Gartner, McKinsey, Statista) + competitor funding + customer growth
+3. Assess evidence quality: Named firm + report year + numbers (highest) vs. generic opinion (lowest)
+4. Verify consistency: Does free-text match MC? (If MC says "rapidly growing," evidence should show 30%+ growth)
+5. Award: (MC × 0.4) + (Free-text Quality × 0.6)
+
+**Improvement (if <3):**
+- Score 0-1: "Research market growth. Google '[market] market size 2024 2025 2026 growth rate.' Find specific number. Spend 1 hour."
+- Score 2: "You have direction but weak evidence. Find named analyst source (Gartner, Statista, IBISWorld) OR competitor funding data."
+- Score "Don't know": "Research TODAY: (1) Google Trends '[market keyword]' (1-year trend up/down?), (2) Statista '[market] forecasts,' (3) Crunchbase '[market]' funding. Come back with direction + numbers."
+
+**Time to Fix:** 1-2 hours (research)
+
+---
+
+### D2. Tailwind Events (5 pts)
+**Type:** Free-text, 150-word limit
+**Question:** List regulatory, technology, cultural, or economic shifts PUSHING buyers toward solutions like yours. Examples: Vision 2030, ZATCA, GDPR, labor cost inflation, remote work, AI integration.
+
+**Display Example:** "Tailwinds: (1) ZATCA e-invoicing mandate effective [month] → forces modernization. (2) Saudi labor cost inflation 12% YoY → companies automating to reduce headcount. (3) Cloud adoption 40% CAGR → companies shifting from on-premise. (4) AI integration requirements → want AI-powered insights. All = EXTERNAL pressure pushing toward automation solutions."
+
+**AI Scoring Rubric:**
+
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | No tailwinds ("don't know any") OR only generic ("technology advancing") |
+| 2 | Generic tailwinds (1 trend; no specificity/dates) |
+| 3 | Some specific (2 tailwinds named; missing dates/impact) |
+| 4 | Sharp (2-3 specific + dated tailwinds; clear buyer urgency connection) |
+| 5 | Expert (3+ specific tailwinds; dates; magnitude; strategic interpretation) |
+
+**Evaluation Process:**
+1. Extract tailwind types (regulatory, economic, technology, cultural, competitive)
+2. Assess specificity: "ZATCA e-invoicing effective June 2026" (specific) vs. "digitization happening" (vague)
+3. Verify realism: Are dates correct?
+4. Assess relevance: Does tailwind push toward student's solution? (Direct = strong; tangential = weak)
+5. Assess magnitude: How many buyers affected? (Regulatory affecting ALL companies in jurisdiction = highest)
+6. Award: (Tailwind Count × 0.35) + (Specificity × 0.35) + (Solution Relevance × 0.3)
+
+**Improvement (if <2):**
+- Score 0-1: "Brainstorm tailwinds. What regulatory changes, cost pressures, or technology shifts affect your market in [geography]? Find 2-3 specific examples."
+- Score 2: "Be specific. Instead of 'digitization happening,' name regulation (ZATCA, Vision 2030, data law). Instead of 'costs rising,' state: 'Labor inflation 8% YoY.'"
+
+**Time to Fix:** 2-3 hours (research)
+
+---
+
+### D3. Competitive Landscape (5 pts)
+**Type:** Free-text, 150-word limit
+**Question:** Is money flowing into your space? Name funded competitors (Series A+, recent seed), acquisitions. What does this tell you about viability?
+
+**Display Example:** "Funding: [Competitor A] $8M Series B (Q4 2025); [Competitor B] $1.5M seed (Q2 2025); [Competitor C] acquired by [acquirer] for ~$10-20M (2024). Signal: VCs fund this space = investor confidence. Exits exist = acquisition pathways. Buyers pay = revenue-generating. Space is competitive + validated. My differentiation: [specific advantage]."
+
+**AI Scoring Rubric:**
+
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | No awareness ("don't know competitors") |
+| 2 | Names competitors (no funding/acquisition data) |
+| 3 | Partial funding (2 competitors + some funding; may lack acquisition/interpretation) |
+| 4 | Sharp funding (2-3 competitors + amounts + stages; clear viability signal) |
+| 5 | Expert (3+ funded competitors + amounts + dates; acquisition data; market viability clear) |
+
+**Evaluation Process:**
+1. Extract competitor names (not generic)
+2. Extract funding data (round, amount, date)
+3. Extract acquisition data
+4. Assess competitiveness: Multiple funded = validation + high competition; none funded = unvalidated
+5. Check strategic interpretation: Does student understand what funding means?
+6. Award: (Competitor Specificity × 0.25) + (Funding Completeness × 0.35) + (Acquisition × 0.15) + (Interpretation × 0.25)
+
+**Improvement (if <3):**
+- Score 0-2: "Find 2-3 competitors. Use Crunchbase, LinkedIn, Google. For each: founding date, funding rounds, acquisition history."
+- Score 2-3: "You have competitors. Research their funding. How much? What stage? When? Check Crunchbase, news, company websites."
+- Score 3-4: "Good funding data. Add interpretation. What does [Competitor A]'s Series B mean for the market? Demand? Exit path? Competition intensity?"
+
+**Time to Fix:** 2-3 hours (Crunchbase + research)
+
+---
+
+### D4. Search Demand Signal (5 pts)
+**Type:** Multiple Choice (2 pts) + Free-text (3 pts)
+
+**MC:** Is search demand for your solution type increasing?
+- Strongly up (>20% YoY) (2 pts)
+- Slightly up (5-20% YoY) (1.5 pts)
+- Flat (0-5% YoY) (1 pt)
+- Down (<0% YoY) (0 pts)
+- Don't know (0 pts) → Triggers recommendation
+
+**Free-text (75 words):** What did you check? Which keywords? Tools used? Timeframe?
+
+**Display Example:** "Search demand: Slightly up. I checked Google Trends for '[keyword 1],' '[keyword 2],' '[keyword 3]' from March 2025 to March 2026. Keyword 1 up 25% YoY; Keyword 2 flat; Keyword 3 up 15% YoY. Average = 10-15% growth. Confirmed via Keyword Tool: '[keyword]' has 2,300 monthly searches (up from 1,900 last year)."
+
+**Free-text Scoring (0-3):**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | No research ("I think demand is up") |
+| 2 | Generic ("I checked Google Trends"; no keywords/timeframe) |
+| 3 | Sharp ("Checked '[keyword]' March 2025-2026; volume up 25% YoY") |
+
+**Combined:** MC (0-2) + Free-text (0-3) = 0-5 pts
+
+**Evaluation Process:**
+1. Map MC to demand category
+2. Extract free-text research: Tools (Google Trends, Keyword Tool, Semrush) + keywords + timeframe
+3. Verify methodology quality: Named tool + specific keywords + timeframe + numbers (highest) vs. generic (lowest)
+4. Check consistency: Does free-text match MC?
+5. Award: (MC × 0.4) + (Free-text Quality × 0.6)
+
+**Improvement (if <3):**
+- Score 0-1: "Go to Google Trends NOW. Search '[your solution type] [geography].' Check if 30-day trend is up or down. Return with direction."
+- Score 2: "You checked something; add data. Google Trends '[keyword 1]' and '[keyword 2].' Report: Search volume X/month, up Y% YoY."
+- Score "Don't know": "TODAY: (1) Google Trends: Search '[specific keyword suggestions]'; check 1-year trend. (2) Keyword Tool: Check monthly volume. Come back with direction + numbers."
+
+**Time to Fix:** 30 minutes (Google Trends)
+
+---
+
+### D5. MENA Market Readiness (5 pts)
+**Type:** Multiple Choice (2 pts) + Free-text (3 pts)
+
+**MC:** How ready is your MENA market for this solution?
+- Already buying (established category, known solutions) (2 pts)
+- Aware not buying (knowledge gap or price barrier) (1.5 pts)
+- Unaware (need to educate) (1 pt)
+- Resistant (entrenched systems, cultural resistance) (0 pts)
+- Don't know (0 pts)
+
+**Free-text (75 words):** What tells you this? (Competitor presence, buyer conversations, market research, regulatory readiness)
+
+**Display Example:** "Saudi Arabia: Already buying. Evidence: ZATCA marketplace has 50+ authorized e-invoicing vendors. Major firms (KPMG, Deloitte) promote solutions. Companies actively implementing. Readiness = HIGH; sales cycle 4-8 weeks."
+
+**MENA Readiness Levels:**
+
+| Level | Meaning | Examples | Sales Cycle | GTM |
+|-------|---------|----------|------------|-----|
+| **Already Buying** | Category exists; competitors operate; buyers compare | UAE/Saudi SaaS, fintech | Fast (4-8 wks) | Price competitive |
+| **Aware Not Buying** | Know category; barriers: price, culture, regulatory | Egypt B2B SaaS (aware; expensive) | Medium (8-16 wks) | Education + ROI |
+| **Unaware** | Don't know category exists | MENA early B2B SaaS; AI tools | Long (16-26 wks) | Authority building |
+| **Resistant** | Legacy systems entrenched; cultural/regulatory blockers | MENA government compliance | Very Long (26+ wks) | Focus new entrants |
+
+**Free-text Scoring (0-3):**
+| Score | Criteria |
+|-------|----------|
+| 0 | Blank |
+| 1 | Assumption ("I think market is ready"; no evidence) |
+| 2 | Some evidence (ONE source: competitors OR buyers OR research) |
+| 3 | Sharp (Multiple sources: competitors + buyer conversations + adoption data) |
+
+**Combined:** MC (0-2) + Free-text (0-3) = 0-5 pts
+
+**Evaluation Process:**
+1. Map MC to readiness level
+2. Extract evidence types (competitor presence, buyer conversations, market research, regulatory)
+3. Check evidence quality: Multiple sources (high) vs. single source (low)
+4. Assess realism: Is readiness appropriate for their geography?
+5. Award: (MC × 0.4) + (Free-text Quality × 0.6)
+
+**Improvement (if <3):**
+- Score 0-1: "Research market readiness. (1) Do competitors exist in [geography]? (2) Talk to 3 ICPs: 'Do you know solutions in this category?' (3) Check regulatory status. Return with evidence-based readiness."
+- Score 2: "Find one more evidence source. If you have competitor presence, add buyer conversations. If you have buyer data, add market research."
+- MC ≠ Free-text: "Your evidence doesn't support your claim. If you said 'Already Buying' but evidence is 'saw one competitor,' that's actually 'Aware Not Buying.' Update MC to match evidence."
+
+**Time to Fix:** 2-3 hours (competitor + buyer research)
+
+**Section D Total:** D1+D2+D3+D4+D5 = 0-25 pts
+
+---
+
+## 8. OVERALL SCORE & INTERPRETATION
+
+**Total:** A (0-25) + B (0-25) + C (0-25) + D (0-25) = **0-100 points**
+
+**Band Interpretation:** (See Score Bands section earlier)
+
+---
+
+## 9. CROSS-SCORECARD CONSISTENCY CHECKS
+
+**Claude automatically checks:**
+
+1. **SC1 ↔ SC3 Alignment:**
+   - ICP from SC2 matches pain evidence in A1?
+   - Geography from SC1 matches MENA strategy in C5?
+   - Positioning aligns with pain evidence?
+
+2. **SC2 ↔ SC3 Alignment:**
+   - Pain statements from SC2 referenced in A1-A5?
+   - Congregation points from SC2 in C1?
+   - Budget range from SC2 feasible with B3 pricing?
+
+3. **Internal MAS Consistency:**
+   - Pain cost (A3) vs. Frequency (A2): High-cost pains should occur frequently
+   - Reach (C2) vs. Congregation (C1): If dense, should be reachable
+   - Market Growth (D1) vs. Funding (D3): Growing markets have funded competitors
+
+**Flag Contradictions:** Surface for student clarification; offer chance to update; don't penalize if good explanation provided.
+
+---
+
+## 10. RECOMMENDATION ENGINE
+
+**For every question <4:**
 ```
-MARKET ATTRACTIVENESS SCORING RESULTS
-======================================
+QUESTION: [Text]
+YOUR SCORE: [X/5]
 
-Total Score: [XX/100]
-
-Section Breakdown:
-├─ Pain Reality: [XX/25]
-├─ Purchasing Power: [XX/25]
-├─ Market Momentum: [XX/25]
-└─ Competitive Advantage: [XX/25]
-
-Interpretation: [STATUS based on ranges above]
+WHY: [What's missing]
+TO IMPROVE: [Specific action]
+EXAMPLE OF 5: [What great looks like]
+TIME TO FIX: [Estimate]
 ```
 
-**2. SECTION BREAKDOWN**
+**Priority Recommendations:**
+Rank by Impact Score = (Points to gain) × (Ease of fix, 1-5)
 
-For each section, provide:
-- Raw score
-- Question-by-question breakdown
-- What's working
-- What's weak
-
-**3. IMMEDIATE RECOMMENDATIONS**
-
-For any question scoring 0-2:
-- Show the specific recommendation from the RECOMMENDATION ENGINE above
-- Provide 1-3 concrete actions they can take THIS WEEK
-
-**4. SCORE IMPROVEMENT ROADMAP**
-
-Priority-ordered list of actions, sorted by point impact (biggest score gain first):
-
-Example:
-```
-ACTION 1: Quantify pain in dollars
-→ Impact: +4 points to Pain Quantification
-→ Why: Once buyers know it costs $100K/year, urgency increases
-→ How: Build cost calculator, test with 5 buyers this week
-
-ACTION 2: Find the economic buyer
-→ Impact: +3 points to Budget Authority
-→ Why: Currently selling to department head; sell to owner instead
-→ How: In your next 5 conversations, ask "Who approves purchases?"
-
-ACTION 3: Add Installment payment option
-→ Impact: +2 points to Payment Infrastructure
-→ Why: Removes friction for MENA buyers
-→ How: Integrate Tabby or similar, within 2 weeks
-```
-
-**5. 30-DAY ACTION PLAN**
-
-Week 1: Focus area [TOP WEAK SECTION]
-- [ ] Action A
-- [ ] Action B
-
-Week 2: Focus area [SECOND WEAK SECTION]
-- [ ] Action A
-- [ ] Action B
-
-Week 3: Testing & Validation
-- [ ] Run 10 buyer conversations testing new positioning
-- [ ] Measure willingness signals
-
-Week 4: Assessment & Iteration
-- [ ] Review what moved the needle
-- [ ] Plan month 2
-
-**6. FINAL GUIDANCE**
-
-**If score is < 40:**
-
-"I'm recommending a pivot. Your strongest section is [X]. The market isn't validating your current [problem/ICP] combo. Consider:
-
-**Option A:** Keep the problem, find a different buyer
-**Option B:** Keep the buyer, find a different problem
-**Option C:** New problem + New buyer
-
-In Week 1, interview 30 people across [Option A/B/C] and re-run this assessment. If that scores higher, you've found your real market."
-
-**Always end with:**
-
-"This is NOT a death sentence. It's a diagnostic. Every recommendation above is designed to move your score UP. Execute them and re-score in 30 days. The best founders don't have perfect scores on day 1—they systematically improve every dimension of their market fit."
+Recommend fixes in order of highest impact first.
 
 ---
 
-## QUESTION BANK (All 20 Questions at a Glance)
+## 11. OUTPUT FILE: MarketAttractiveness.md
 
-### SECTION A: PAIN REALITY (5 questions)
-1. Pain Specificity: "Describe the exact moment the buyer feels this pain"
-2. Pain Frequency: "How often does this pain occur?"
-3. Pain Quantification: "Can you put a dollar amount on this pain?"
-4. Current Workarounds: "What are they doing about it now?"
-5. Pain Urgency: "Would they buy this week if you solved it tomorrow?"
-
-### SECTION B: PURCHASING POWER (5 questions)
-6. Budget Authority: "Does your buyer control the budget?"
-7. Price Sensitivity: "Does your price make sense vs. the pain cost?"
-8. Payment Infrastructure: "Can they actually pay you?"
-9. Existing Spend: "Are they already paying for similar solutions?"
-10. Willingness Signal: "Have they shown they're willing to pay?"
-
-### SECTION C: MARKET MOMENTUM (5 questions)
-11. Market Growth: "Is the market growing, stable, or shrinking?"
-12. Tailwind Events: "Are macro forces pushing this market?"
-13. Competitor Funding: "Is money flowing into this space?"
-14. Search Demand: "Are people Googling for solutions?"
-15. MENA Readiness: "Is MENA specifically ready for this?"
-
-### SECTION D: COMPETITIVE ADVANTAGE (5 questions)
-16. Differentiation: "Why are you different in one sentence?"
-17. Reach Ability: "Can you reach 1,000 prospects in 30 days?"
-18. Unfair Advantage: "What can't competitors easily copy?"
-19. Arabic/MENA Moat: "Does Arabic/MENA focus create defensibility?"
-20. Speed to Value: "How fast can customers see ROI?"
+**Automatically generated with all sections populated:**
+- Score Summary (section breakdown + total + band)
+- Executive Summary (2-3 sentences on market viability)
+- Section A-D Detailed Assessments (student answers + scores)
+- Cross-Scorecard Consistency Notes
+- Recommendations (prioritized by impact)
+- 30-Day Validation Action Plan (if score <70)
+- Next Steps (band-specific guidance)
+- Frameworks & References
 
 ---
 
-## MENA-SPECIFIC CONSIDERATIONS
+## 12. CLAUDE EXECUTION FLOW
 
-### Payment & Financial Factors
-- Bank transfers more common than credit cards
-- Installment solutions (Tabby, Tamara, PayFort) popular
-- Annual prepay with discount highly effective
-- Some sectors still prefer cash; accept it
+1. **Preparation (2 min):** Load SC1 + SC2 data; display for confirmation
+2. **Sections A-D (15 min each):** Administer questions in sequence; provide examples
+3. **Scoring (10 min):** Apply rubrics; flag contradictions (no penalties; offer clarification)
+4. **Output (5 min):** Generate MarketAttractiveness.md
+5. **Presentation (5 min):** Show score, band, top 3 fixes
+6. **Next Steps (2 min):** Offer re-scoring, validation plan, or move to SC5
 
-### Market Readiness by Region
-- **Tier 1 (Most Ready):** UAE, KSA, Bahrain, Kuwait, Qatar
-- **Tier 2 (Emerging):** Egypt, Lebanon, Oman, Jordan
-- **Tier 3 (Slower):** Pakistan, Bangladesh, Iraq, Afghanistan
-- **Diaspora:** Highly ready (Western-educated, digital-native)
-
-### Organizational Dynamics
-- Decision-making more hierarchical (owner/GM controls budget)
-- Family business structures common (affects buying process)
-- Relationship-based sales more effective than transactional
-- Arabic language crucial for deeper penetration
-
-### Regulatory Tailwinds
-- SAMA (Saudi Central Bank) digital push
-- CBE (Egypt) compliance requirements
-- UAE's Vision 2030 digitization
-- Growing fintech/payments regulation = opportunity
-
-### Competitive Landscape
-- Fewer Arabic-native competitors (opportunity)
-- Many are English products translated to Arabic (weakness)
-- Build Arabic-first = defensible advantage
-- Partnerships with local distributors highly effective
+**Total Time:** 60-90 minutes
 
 ---
 
-## TEMPLATES FOR CLAUDE OUTPUT
+## 13. MENA-SPECIFIC ADJUSTMENTS
 
-### Template 1: Question with Follow-Ups
-
-**Question:** [MAIN QUESTION]
-
-**Follow-ups to deepen understanding:**
-- [Specific probe 1]
-- [Specific probe 2]
-- [Specific probe 3]
-
-**Listen for:** [What indicates high vs. low score]
+Applied throughout:
+- **B4 Payment:** Deduct 1 pt if credit card only (Egypt/Jordan/Lebanon)
+- **C3/C5 Channels:** Adjust channel fit based on geography penetration rates
+- **D2 Tailwinds:** Recognize Vision 2030 (Saudi), ZATCA (Saudi), data laws (UAE/Egypt)
+- **D5 Readiness:** Expect longer sales cycles in emerging markets; government adoption slower
 
 ---
 
-### Template 2: Weak Area Recommendation
-
-**Area:** [DIMENSION NAME]
-**Current Score:** [X/5]
-**Why It Matters:** [Impact on overall viability]
-
-**Specific Recommendation:** [From RECOMMENDATION ENGINE]
-
-**30-Day Actions:**
-- Week 1: [Action]
-- Week 2: [Action]
-- Week 3: [Action]
-
----
-
-### Template 3: Score Improvement Action
-
-**Action:** [SPECIFIC TASK]
-→ **Current State:** [What's happening now]
-→ **Target State:** [What should happen]
-→ **How to Execute:** [Step-by-step]
-→ **Expected Impact:** [Points gained + why]
-→ **Timeline:** [How many days/weeks]
-
----
-
-## EXPERT TIPS FOR CLAUDE
-
-1. **Don't accept surface answers.** "Customers want X" isn't enough. "I interviewed 5 customers last week who said X at this exact moment" is strong.
-
-2. **Quantification is power.** Push every pain toward numbers. "How much time?" "How many people?" "What's the cost?"
-
-3. **Follow the money.** The truthiest signal is: Are they paying? Words are easy. Wallets are real.
-
-4. **MENA context matters.** Don't apply Silicon Valley rules (credit cards, fast decisions) to MENA. Understand local dynamics.
-
-5. **Reframing is an option.** If the score is low on one ICP, reframe for a different buyer. Don't give up; pivot.
-
-6. **Early signals > market size.** A market of 1,000 companies where 10 are desperate beats a market of 1M where none care.
-
-7. **Build the roadmap, not just the report.** Scores without actions are useless. Actions without priorities waste time. Prioritize by impact.
-
----
-
-## FINAL PHILOSOPHY
-
-This assessment is a mirror. It shows what's true about your market, not what you hope is true.
-
-- A score of 45 with a clear action plan > A score of 65 with confusion
-- A score of 30 with a pivot to a strong new ICP > Grinding on a 30-score market
-- Honest assessment now > Surprise collapse in 6 months
-
-The goal is not a high score. The goal is **clarity**. Once you're clear on your weaknesses, you can systematically fix them.
-
-Execute the 30-day plan. Re-score. Watch the needle move. That's how you build a real market.
-
----
-
-## VERSION HISTORY
-
-- **v1.0** (Feb 2026): Initial framework combining Hormozi + Holmes + MENA context
+**END OF SKILL.MD**
