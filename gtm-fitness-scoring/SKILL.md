@@ -1,880 +1,510 @@
-# GTM Fitness Scoring Assessment Skill
+---
+name: gtm-fitness-scoring-engine
+description: Scorecard 5 of 5 — Evaluates readiness across 13 GTM motions using composite scoring (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3). Assigns PRIMARY/SECONDARY/CONDITIONAL/SKIP tiers.
+version: "2.0"
+---
 
-## PHILOSOPHY
+# SKILL: GTM Fitness Scoring Engine
 
-Not every founder should use every motion. This assessment identifies the **2-3 PRIMARY motions to activate immediately** and deprioritizes the rest. It provides specific recommendations to **IMPROVE fitness for each motion**.
-
-**Core Principle**: Your GTM is not static. As you build content, audience, and infrastructure, previously CONDITIONAL motions become SECONDARY, then PRIMARY. Re-score quarterly.
+**Version:** 2.0
+**Created:** 2026-03-06
+**Input Sources:** SC1-SC4 (all upstream scorecards)
+**Output File:** `gtm-fitness.md`
+**Execution Model:** Pre-scored upstream + Readiness-focused deep dive
 
 ---
 
-## THE 13 GTM MOTIONS
+## 1. STRATEGIC PURPOSE
 
-### 1. Waitlist Heat-to-Webinar Close
-**Build anticipation, convert via live demo**
+GTM Fitness Scoring identifies which of the 13 go-to-market motions are realistic and highest-ROI given founder resources, market conditions, ICP, and strategy path. It answers: "Of all possible GTM motions, which 2-3 should I activate first?"
 
-- **What it is**: Create a waitlist with heat (scarcity, exclusivity), then convert via webinar with live demo + early-bird offer
-- **Product-Market Fit**: Products with visual wow factor, webinar-friendly audience
-- **Sales Cycle**: 7-14 days (short, conversion-focused)
-- **Team Requirement**: Founder + 1 person (can do webinar hosting + follow-up)
-- **Budget**: $0-2K (Webinar platform, optional ads)
-- **MENA Viability**: Webinars work in MENA if <45 min, evening time, Arabic option available
-- **Competitors Using This**: Notion, Loom, Framer (early stage)
-- **Common Pitfalls**: Webinar hype with poor conversion tech, wrong time zone, no follow-up sequence
+**Philosophy:** Not every motion works for every founder. Fitness depends on upstream context (MAS, ICP clarity, strategy path). Pre-populate Fit and MENA Viability; focus depth on Readiness (what founder can execute).
 
 ---
 
-### 2. Build-in-Public Trust Flywheel
-**Share journey, attract followers who become customers**
+## 2. PREREQUISITES
 
-- **What it is**: Daily/weekly posts about your journey, lessons learned, building in the open on Twitter/LinkedIn; followers become advocates and customers
-- **Product-Market Fit**: Solo founders, developer-tool builders, personality-driven brands
-- **Sales Cycle**: 30-90 days (relationship-driven)
-- **Team Requirement**: Founder (this is personal brand; can't delegate fully)
-- **Budget**: $0 (organic content)
-- **MENA Viability**: Less common in traditional MENA markets but growing. Arabic build-in-public is an open niche with high upside
-- **Competitors Using This**: Pieter Levels, Wes Bos, Indie hackers ecosystem
-- **Common Pitfalls**: Inconsistent posting, sharing without personality, selling too hard too early
+**Completion Required:**
+- SC1 (Project Definition): Niche, positioning, geography, ACV, product scope
+- SC2 (ICP Clarity): ICP profile, congregation points, buying behavior, payment method
+- SC3 (Market Attractiveness): Market conditions, growth, competitive landscape
+- SC4 (Strategy Selector): Recommended strategy path (Replicate/Consulting/Micro/Hammering)
 
----
-
-### 3. Authority Education Engine
-**Teach valuable content, position as expert**
-
-- **What it is**: Create course, video series, or structured training that teaches a methodology; customers pay to learn, then convert to SaaS
-- **Product-Market Fit**: Consultants converting to SaaS, complex products needing education, skill-building tools
-- **Sales Cycle**: 14-60 days (education-to-conversion)
-- **Team Requirement**: Founder + content creator (or 1 person who can script)
-- **Budget**: $1-5K (video production, hosting)
-- **MENA Viability**: **VERY strong in MENA**. Arabic education content is severely undersupplied. High willingness to pay for Arabic courses
-- **Competitors Using This**: ConvertKit, Copyblogger, EO itself
-- **Common Pitfalls**: Course without clear SaaS connection, poor production quality, wrong audience
+**Pre-Admin Checklist:**
+- Load all upstream data
+- Pre-populate Fit scores (from ICP + MAS data)
+- Pre-populate MENA Viability (from geography + language strategy)
+- Display these pre-scores to student for confirmation/update
+- Flag if any upstream scorecard is <40 (RESET band)
 
 ---
 
-### 4. Wave Riding Distribution
-**Ride trending topics/platforms for explosive growth**
+## 3. SECTION ARCHITECTURE
 
-- **What it is**: Identify a trend (AI, regulation, platform algorithm change) and ship a solution or content extremely fast; catch the wave before it peaks
-- **Product-Market Fit**: Agile founders who can ship fast on trends, products with modular features
-- **Sales Cycle**: 3-7 days (viral/momentum-driven)
-- **Team Requirement**: Founder + 1 developer (ship in hours/days, not weeks)
-- **Budget**: $0-5K (paid amplification optional)
-- **MENA Viability**: Works but requires Arabic speed. English wave-riding has MENA lag (by the time trend hits MENA, it's already saturated in West)
-- **Competitors Using This**: Product Hunt heroes, AI tools launched in March 2023
-- **Common Pitfalls**: Wrong timing, poor execution speed, trend dies before launch
-
----
-
-### 5. LTD Cash-to-MRR Ladder
-**Lifetime deal launch → convert to subscription**
-
-- **What it is**: Launch a limited-time lifetime deal on AppSumo or similar; use cash and initial users to fund roadmap; convert segment to MRR
-- **Product-Market Fit**: New products needing initial users + cash + feedback
-- **Sales Cycle**: 5-30 days (transactional to trial)
-- **Team Requirement**: Founder + support person (high volume of questions)
-- **Budget**: $0 (platform takes 30-50% commission; you provide deal)
-- **MENA Viability**: AppSumo doesn't serve MENA well. EO platform aims to fill this gap. Lifetime deals resonate in MENA but need local execution
-- **Competitors Using This**: Early-stage SaaS tools (loom, Notion, Figma used this)
-- **Common Pitfalls**: Bad deal terms, poor LTD audience targeting, support overflow
+| Section | Points | Focus | Duration |
+|---------|--------|-------|----------|
+| **A. Business Context Confirmation** | 10 | Validate upstream data; confirm ACV, buyer type, sales cycle | 5 min |
+| **B. Capability Assessment** | 30 | Content library, outbound infra, audience, budget, network, proof | 10 min |
+| **C. Motion-Specific Deep Dive (Top 5)** | 40 | 5 most relevant motions, 2 questions each, 4 pts each | 20 min |
+| **D. MENA Execution Context** | 10 | Regional channel adaptations, competitive positioning | 5 min |
+| **E. Motion Sequencing** | 10 | Activation order, dependencies, 90-day sequence | 5 min |
+| **TOTAL** | **100** | | **45 min** |
 
 ---
 
-### 6. Signal Sniper Outbound
-**Signal-based targeted outreach**
+## 4. SECTION A: BUSINESS CONTEXT CONFIRMATION (10 POINTS)
 
-- **What it is**: Use tools (HeyReach, Clay, Instantly) to identify buyers showing buying signals (job change, funding, hiring, tool swap), then personalized outreach
-- **Product-Market Fit**: B2B with clear buying signals, founders with outbound infrastructure or ability to hire SDR
-- **Sales Cycle**: 14-30 days (inbound response to conversion)
-- **Team Requirement**: Founder or 1 SDR (or do it yourself initially)
-- **Budget**: $500-2K/month (signal tools, email infrastructure)
-- **MENA Viability**: LinkedIn outbound works well for UAE/KSA C-suite. WhatsApp for SME outreach. Signal tools less available in MENA but growing
-- **Competitors Using This**: B2B SaaS (Loom, Retool, Cal.com)
-- **Common Pitfalls**: Spam-like messaging, wrong signal criteria, cold outbound without warm angle
+**Goal:** Validate upstream context; confirm key GTM parameters.
 
----
+**System Behavior:** Pre-populate from SC1 and SC4; ask for confirmation or updates.
 
-### 7. Outcome Demo First
-**Show the result before explaining the product**
+**Questions (MC, Deterministic):**
 
-- **What it is**: Lead with before/after, outcome, or transformation. "Here's what you'll be able to do" BEFORE explaining the feature/product
-- **Product-Market Fit**: Products with clear before/after, visual transformation, results-driven buyers
-- **Sales Cycle**: 3-7 days (immediate comprehension, faster decisions)
-- **Team Requirement**: Founder + designer (can be lean)
-- **Budget**: $0-2K (video, design)
-- **MENA Viability**: Demo culture is very strong in MENA. "Show me" > "Tell me." This is native to MENA buying psychology
-- **Competitors Using This**: Loom, Figma, video-first tools
-- **Common Pitfalls**: Outcome demo without clear product fit, confusing before/after
+**A1. ACV Confirmation (5 pts)**
+"Your projected Annual Contract Value (ACV) is $[X] per year. Is this accurate?"
+- Yes, correct (5 pts)
+- Within 20% (3 pts)
+- Needs update to $[X] (5 pts if update provided and reasonable)
+- Unknown (0 pts)
 
----
+**A2. Sales Cycle Length (5 pts)**
+"How long is your typical sales cycle?"
+- <1 month (self-serve, quick) (5 pts) → Favors: Micro-SaaS, Waitlist, Build-in-Public
+- 1-3 months (consultative) (4 pts) → Favors: Consulting-First, Authority Education, Dream 100
+- 3-6 months (complex, relationship) (3 pts) → Favors: Consulting-First, 7x4x11, Value Trust Engine
+- 6+ months (enterprise) (2 pts) → Favors: Dream 100, Strategic Partnerships, Consulting-First
+- Unknown (0 pts)
 
-### 8. Hammering-Feature-First Launches
-**Launch one feature at a time, build momentum**
-
-- **What it is**: Ship a single powerful feature every 1-2 weeks; each launch is a mini PR event on Product Hunt or relevant channels
-- **Product-Market Fit**: Developers who ship fast, products with modular features
-- **Sales Cycle**: 7-14 days (feature-discovery to trial)
-- **Team Requirement**: Founder + 1 developer + marketer (3-person minimum)
-- **Budget**: $0-1K (Product Hunt ads optional)
-- **MENA Viability**: Works on Product Hunt. Less relevant for MENA-first launches unless MENA audience exists
-- **Competitors Using This**: Figma, Framer, Linear
-- **Common Pitfalls**: Features too small, launches lose steam, no bigger narrative
+**Section A Total:** A1+A2 = 0-10 pts (deterministic)
 
 ---
 
-### 9. MicroSaaS BOFU SEO Strike
-**Bottom-of-funnel SEO for high-intent keywords**
+## 5. SECTION B: CAPABILITY ASSESSMENT (30 POINTS)
 
-- **What it is**: Target keywords with purchase intent ("best X for Y", "X vs Y", "how to do X"); 6-12 month content play
-- **Product-Market Fit**: Products solving searchable problems, founders willing to invest 6+ months
-- **Sales Cycle**: 30-90 days (search to conversion)
-- **Team Requirement**: Founder + content writer (can hire freelancer)
-- **Budget**: $2-5K (content, tools like Ahrefs)
-- **MENA Viability**: **Arabic SEO is massively underserved**. Low competition, growing search volume, high conversion intent. This is a hidden gem for MENA founders
-- **Competitors Using This**: Indie SaaS, finance tools, niche software
-- **Common Pitfalls**: Wrong keyword selection, poor SEO hygiene, content without clear CTA
+**Goal:** Assess founder's capability across 6 GTM dimensions.
 
----
+**System Behavior:** 6 MC questions; 5 pts each; deterministic scoring.
 
-### 10. Dream 100 Strategy
-**Identify and court 100 key relationships**
+**Questions:**
 
-- **What it is**: Build a list of 100 ideal customers/partners/VCs/influencers; personalized outreach + value delivery; convert 5-10
-- **Product-Market Fit**: B2B with defined decision-makers, relationship-driven markets
-- **Sales Cycle**: 60-180 days (relationship-building to close)
-- **Team Requirement**: Founder (relationship owner)
-- **Budget**: $1-2K (gifting, time)
-- **MENA Viability**: **THIS IS THE MENA STRATEGY**. Relationship-based market = Dream 100 on steroids. Personal trust > brand. In Gulf, this is default sales mode
-- **Competitors Using This**: B2B founders, Russell Brunson, Entrepreneurs Oasis MENA methodology
-- **Common Pitfalls**: Poorly targeted list, generic outreach, no follow-up
+**B1. Content Library (5 pts)**
+"Do you have a content library (blog posts, videos, case studies, frameworks)?"
+- Yes, 50+ pieces (5 pts) → Enables: Authority Education, Build-in-Public, Wave Riding
+- Yes, 10-49 pieces (4 pts)
+- Some, <10 pieces (2 pts)
+- No, need to build (1 pt)
+- Not applicable to my model (5 pts) → Enables: Consulting-First, Dream 100 (relationship-based)
 
----
+**B2. Outbound Infrastructure (5 pts)**
+"Do you have lists and tools for outbound (email lists, LinkedIn access, cold email tool)?"
+- Yes, fully set up (email, LinkedIn, tracking) (5 pts) → Enables: Signal Sniper, Dream 100, Cold email campaigns
+- Partial (one tool; one list) (3 pts)
+- No, starting from scratch (1 pt)
+- N/A to my strategy (5 pts) → Inbound-focused strategies only
 
-### 11. 7x4x11 Strategy
-**7 touchpoints, 4 weeks, 11 impressions (Chet Holmes)**
+**B3. Audience Size (5 pts)**
+"How large is your audience (email, social, network)?"
+- 10K+ followers/connections (5 pts) → Enables: Waitlist Heat, Build-in-Public, Wave Riding
+- 1K-10K (4 pts)
+- 100-1K (2 pts)
+- <100 (1 pt) → Must build audience; favor long-tail strategies
+- Building/growing (3 pts)
 
-- **What it is**: Structured outreach: 7 different types of contact (email, call, social, etc.), compressed into 4 weeks, creating 11+ brand impressions
-- **Product-Market Fit**: Enterprise sales, long sales cycles, high ACV deals, complex B2B
-- **Sales Cycle**: 30-90 days (structured pursuit)
-- **Team Requirement**: Founder + sales person (or founder + CRM discipline)
-- **Budget**: $1K (CRM, phone)
-- **MENA Viability**: Modified for MENA trust timeline. Chet Holmes developed this for US market. In MENA, may need 7x8x22 (8 weeks, 22 impressions) to build sufficient trust
-- **Competitors Using This**: Enterprise SaaS, high-ticket B2B
-- **Common Pitfalls**: Touchpoints lack variety, not truly 11 distinct impressions, ghosting between touches
+**B4. Marketing Budget (5 pts)**
+"What's your GTM marketing budget for the next 90 days?"
+- $5K+ (5 pts) → Enables: Paid ads, Paid VSL, Wave Riding, Webinars (ads)
+- $1K-5K (4 pts) → Limited paid; must focus on organic/free
+- <$1K (2 pts) → Organic only; favor low-cost motions
+- $0 (1 pt) → Bootstrap; favor built-in-public, referrals, content
+- Unknown/TBD (1 pt)
 
----
+**B5. Network Strength (5 pts)**
+"Can you leverage your network (advisors, mentors, investors, friends) for introductions?"
+- Yes, strong network (50+ warm relationships) (5 pts) → Enables: Dream 100, Referrals, Wave Riding
+- Moderate (10-50 warm relationships) (4 pts)
+- Weak (<10 warm relationships) (2 pts)
+- No network; cold outreach only (1 pt)
+- N/A; focusing on inbound (3 pts)
 
-### 12. Value Trust Engine
-**Training/content as a customer acquisition channel**
+**B6. Proof Assets (5 pts)**
+"Do you have proof assets (case studies, testimonials, early wins, metrics)?"
+- Yes, documented (3+ case studies, testimonials) (5 pts) → Enables: Authority Education, Value Trust Engine, Outcome Demo
+- Some (1-2 case studies or early wins) (3 pts)
+- Minimal (1 win, some metrics) (2 pts)
+- None yet (1 pt) → Must build proof; favor early-stage motions (Waitlist, Build-in-Public)
+- Will have proof in 30 days (3 pts)
 
-- **What it is**: Offer training (workshops, certification, bootcamp) as a standalone product; quality training attracts premium customers; graduates convert to SaaS
-- **Product-Market Fit**: Experts with teachable methodology, founders building audience, educators becoming SaaS builders
-- **Sales Cycle**: 60-120 days (training to SaaS conversion)
-- **Team Requirement**: Founder + instructor + support (2-3 people)
-- **Budget**: $5-15K (infrastructure, marketing, payroll)
-- **MENA Viability**: **EO training itself IS this motion**. Proven effective in Arabic. Willingness to invest in upskilling is very high
-- **Competitors Using This**: ConvertKit, Mighty Networks, Skillshare ecosystem
-- **Common Pitfalls**: Training quality below expectations, no clear SaaS funnel, low graduate conversion
-
----
-
-### 13. Paid VSL Value Ladder
-**Video sales letter → tripwire → core → premium**
-
-- **What it is**: Create a 5-15 minute video sales letter (VSL) on Facebook/Instagram with emotional hooks; drive to tripwire offer; convert to core product; upsell premium
-- **Product-Market Fit**: Founders with proven offer, budget for paid traffic, emotional/results-driven products
-- **Sales Cycle**: 5-14 days (impulse to conversion)
-- **Team Requirement**: Founder + VSL writer + media buyer (or hire freelancer for VSL, run ads yourself)
-- **Budget**: $2-10K/month (ad spend) + $1-2K (VSL production)
-- **MENA Viability**: Facebook/Instagram ads work for UAE/KSA. Arabic VSL is an open field with high ROI potential. Emotional storytelling resonates in MENA
-- **Competitors Using This**: Info products, e-commerce, coaching
-- **Common Pitfalls**: VSL too long or slow, wrong targeting, poor tripwire conversion
+**Section B Total:** B1+B2+B3+B4+B5+B6 = 0-30 pts (deterministic)
 
 ---
 
-## SCORING MODEL
+## 6. SECTION C: MOTION-SPECIFIC DEEP DIVE (40 POINTS)
 
-### Dimension 1: FIT (Weight: 40%)
-**How well does this motion match your product, market, and buyer?**
+**Goal:** Score founder's readiness for each of the 13 GTM motions; identify top 5 for focus.
 
-| Score | Definition | Criteria |
-|-------|-----------|----------|
-| 5 | Perfect fit | Your product type, buyer, and sales cycle align exactly with motion's natural pattern |
-| 4 | Strong fit | Minor adaptations needed; core alignment is clear |
-| 3 | Moderate fit | Could work with effort; 1-2 major adaptations needed |
-| 2 | Weak fit | Misaligned on 2+ criteria (e.g., long sales cycle but motion assumes short) |
-| 1 | Poor fit | Fundamentally wrong motion for your business |
+**System Behavior:**
+1. Pre-score all 13 motions using formula: (Fit × 0.4) + (Readiness × 0.3) + (MENA × 0.3)
+   - Fit: Pre-populated from ICP + MAS data (0-10)
+   - MENA: Pre-populated from geography (0-10)
+   - Readiness: To be assessed in this section (0-10 per motion)
+2. Rank all 13 motions by score
+3. Ask deep-dive questions on TOP 5 ONLY (to save time)
+4. For each top 5 motion: 2 questions × 2 pts each = 4 pts per motion
+5. Top 5 × 4 pts = 40 pts total
 
-**Questions to Determine Fit:**
-- "What is your product ACV (annual contract value)?"
-  - <$500 → Transactional motions (Waitlist, LTD, Outcome Demo, Wave Riding)
-  - $500-$5K → Hybrid motions (Authority, BOFU SEO, Signal Sniper)
-  - $5K-$50K → Relationship motions (Dream 100, 7x4x11)
-  - >$50K → Long-cycle motions (7x4x11, Value Trust Engine)
+**13 GTM Motions (Reference & Pre-Scores):**
 
-- "Is your buyer a searcher or a scroller?"
-  - Searcher (has specific problem) → SEO, Signal Sniper
-  - Scroller (discovering problem) → Waitlist, Build-in-Public, Wave Riding, Paid VSL
-  - Both → Authority Education, Outcome Demo
+| # | Motion | Fit | MENA Viability | Readiness (To be scored) |
+|---|--------|-----|---|---|
+| 1 | Waitlist Heat-to-Webinar | Varies | 3/10 | ? |
+| 2 | Build-in-Public Trust | Varies | 2/10 | ? |
+| 3 | Authority Education Engine | High if expert | 5/10 | ? |
+| 4 | Wave Riding Distribution | Varies | 2/10 | ? |
+| 5 | LTD Cash-to-MRR | Low | 2/10 | ? |
+| 6 | Signal Sniper Outbound | Varies | 4/10 | ? |
+| 7 | Outcome Demo First | High if clear ROI | 5/10 | ? |
+| 8 | Hammering-Feature-First | High if niche | 3/10 | ? |
+| 9 | MicroSaaS BOFU SEO | High if long-tail | 5/10 | ? |
+| 10 | Dream 100 Strategy | High if network | 5/10 | ? |
+| 11 | 7x4x11 Strategy (Chet Holmes) | Varies | 4/10 | ? |
+| 12 | Value Trust Engine | High if proof | 5/10 | ? |
+| 13 | Paid VSL Value Ladder | Medium | 4/10 | ? |
 
-- "Is your sales cycle <7 days or >30 days?"
-  - <7 days (fast impulse) → Waitlist, Wave Riding, Outcome Demo, LTD, Paid VSL
-  - 7-30 days (moderate) → Authority, Signal Sniper, Hammering Launches
-  - >30 days (consultative) → Dream 100, 7x4x11, Value Trust Engine
+**MENA Viability Legend:**
+- 5/10: Highly viable in MENA (proven, culturally aligned, high adoption potential)
+- 4/10: Good viability (emerging, reasonable friction)
+- 3/10: Moderate viability (works but requires localization)
+- 2/10: Low viability (Western-centric, low adoption in MENA)
 
-- "Does your product have visual before/after?"
-  - Yes → Outcome Demo, Wave Riding, Paid VSL
-  - No → Authority, Build-in-Public, BOFU SEO
+**Example: Top 5 Motions Selection**
 
-- "Are you selling to individuals or committees?"
-  - Individuals → All transactional motions
-  - Committees → Dream 100, 7x4x11, Signal Sniper
+Assume student's ICP = Finance managers at mid-market Saudi companies; Strategy = Consulting-First SaaS; Budget = $2K
 
----
+Pre-scoring example:
+| Motion | Fit | MENA | Readiness | Score | Rank |
+|--------|-----|------|-----------|-------|------|
+| Authority Education | 8 | 5 | ? | ? | 1 |
+| Dream 100 Strategy | 7 | 5 | ? | ? | 2 |
+| Outcome Demo First | 7 | 5 | ? | ? | 3 |
+| 7x4x11 Strategy | 6 | 4 | ? | ? | 4 |
+| Signal Sniper Outbound | 6 | 4 | ? | ? | 5 |
 
-### Dimension 2: READINESS (Weight: 30%)
-**Can you execute this motion in the next 30 days?**
+→ Top 5 selected for deep dive
 
-| Score | Definition | Criteria |
-|-------|-----------|----------|
-| 5 | Ready to go | Tools, skills, and content exist; could launch in 1-2 weeks |
-| 4 | Almost ready | One gap to fill (e.g., have audience but no webinar platform) |
-| 3 | Partially ready | Need 2-3 things (tools, content, skills) |
-| 2 | Not ready | Significant setup required; 4-6 weeks to launch |
-| 1 | Far from ready | Would need months of preparation |
+**Deep-Dive Questions for Each Top Motion (2 questions × 2 pts = 4 pts per motion):**
 
-**Questions to Determine Readiness:**
-- "Do you have a content library?" (for Authority, Build-in-Public, Value Trust Engine)
-  - 5: 20+ pieces existing
-  - 4: 10-19 pieces
-  - 3: 3-9 pieces
-  - 2: 1-2 pieces
-  - 1: None
+### Motion 1: Authority Education Engine (4 pts)
 
-- "Do you have outbound infrastructure?" (for Signal Sniper, Dream 100, 7x4x11)
-  - 5: CRM + email tool + (HeyReach or Clay) + list-building process
-  - 4: CRM + email tool
-  - 3: Email tool only
-  - 2: Manual outreach
-  - 1: No system
+**C1.1. Content Readiness (2 pts)**
+"What core framework or methodology would you teach to position as an expert?"
+- Options:
+  - Already defined, tested with customers (2 pts)
+  - Rough framework, needs refinement (1 pt)
+  - Undefined (0 pts)
 
-- "Do you have an email list or audience?" (for Waitlist, Authority, Build-in-Public, Value Trust)
-  - 5: 5K+ engaged subscribers
-  - 4: 1K-5K
-  - 3: 100-1K
-  - 2: 10-100
-  - 1: <10
-
-- "Do you have ad budget ready to deploy?" (for Paid VSL, Wave Riding, Waitlist ads)
-  - 5: $5K+ available
-  - 4: $2-5K
-  - 3: $500-2K
-  - 2: $100-500
-  - 1: $0
-
-- "Do you have a network of 20+ industry contacts?" (for Dream 100, Value Trust Engine)
-  - 5: 50+ warm contacts (would respond to outreach)
-  - 4: 20-49
-  - 3: 10-19
-  - 2: 5-9
-  - 1: <5
-
-- "Do you have case studies, demos, or testimonials?" (for Authority, Outcome Demo, Value Trust)
-  - 5: 5+ case studies or customer testimonials
-  - 4: 3-4
-  - 3: 1-2
-  - 2: 0 case studies but have demo
-  - 1: None
+**C1.2. Implementation Timeline (2 pts)**
+"Can you create and launch a 5-module course (or equivalent) within 30 days?"
+- Options:
+  - Yes, have content ready (2 pts)
+  - Yes, with 2-week build time (1.5 pts)
+  - Need 4-6 weeks (1 pt)
+  - Can't do this (0 pts)
 
 ---
 
-### Dimension 3: MENA VIABILITY (Weight: 30%)
-**How viable is this motion specifically in MENA markets?**
+### Motion 2: Dream 100 Strategy (4 pts)
 
-| Score | Definition | Criteria |
-|-------|-----------|----------|
-| 5 | Proven in MENA with Arabic execution | Data shows this works in MENA/Arabic markets |
-| 4 | Works in MENA with minor adaptation | Minor cultural/language tweaks needed |
-| 3 | Possible in MENA but requires localization | Significant adaptation needed for MENA buyers |
-| 2 | Limited MENA viability | Works better in Western markets; MENA market is secondary |
-| 1 | Not viable in MENA | Fundamentally misaligned with MENA market dynamics |
+**C2.1. Target List Quality (2 pts)**
+"Can you identify and list 100 named companies/individuals who are ideal customers?"
+- Options:
+  - Yes, list already built (100+) (2 pts)
+  - Yes, can build in 1 week (1.5 pts)
+  - Rough idea, need to research (1 pt)
+  - Can't do this (0 pts)
 
-**MENA-Specific Context:**
-
-**Motions Scoring 5:**
-- **Dream 100**: Relationship-first markets naturally favor this. Trust > brand.
-- **Authority Education**: Undersupply of Arabic education content + high willingness to pay.
-- **Value Trust Engine**: EO model proven. Bootcamps/training are scaled vehicles in MENA.
-- **Outcome Demo**: Demo-first, show-and-tell culture native to MENA.
-
-**Motions Scoring 4:**
-- **Signal Sniper Outbound**: LinkedIn works for C-suite (UAE/KSA); WhatsApp for SME. Tools less available but growing.
-- **MicroSaaS BOFU SEO**: Arabic SEO severely underserved = low competition + high intent.
-- **7x4x11**: Works but timeline stretched (8 weeks, 22 impressions more natural than 4/11).
-- **Paid VSL**: Facebook/Instagram strong in MENA; Arabic VSL is open field.
-
-**Motions Scoring 3:**
-- **Waitlist Heat-to-Webinar**: Webinars work if <45 min, evening time, Arabic option.
-- **Authority Education**: Different format/audience than Western courses.
-- **Hammering Launches**: Product Hunt works if MENA audience exists.
-
-**Motions Scoring 2:**
-- **Build-in-Public**: Less common in traditional MENA; Twitter/personal brand culture weaker than West.
-- **Wave Riding**: By the time trend hits MENA news, wave already peaked in West.
-- **LTD Cash**: AppSumo doesn't serve MENA; local alternatives needed.
-
-**Motions Scoring 1:**
-- None. All 13 motions can work in MENA with right adaptation.
+**C2.2. Outreach Capability (2 pts)**
+"Can you personally send customized outreach to 10-15 people per week?"
+- Options:
+  - Yes, have time and infrastructure (2 pts)
+  - Yes, with effort (1.5 pts)
+  - Not sure (1 pt)
+  - No (0 pts)
 
 ---
 
-## COMPOSITE SCORE FORMULA
+### Motion 3: Outcome Demo First (4 pts)
 
+**C3.1. Outcome Clarity (2 pts)**
+"Can you demonstrate a clear, quantified outcome (e.g., 'saves $1K/month' or 'improves [metric] by X%')?"
+- Options:
+  - Yes, tested and proven (2 pts)
+  - Yes, based on customer feedback (1.5 pts)
+  - Yes, theoretical calculation (1 pt)
+  - Not clear (0 pts)
+
+**C3.2. Demo Readiness (2 pts)**
+"Can you deliver a compelling 15-minute outcome demo (live or video)?"
+- Options:
+  - Yes, already have recording (2 pts)
+  - Yes, can film this week (1.5 pts)
+  - Yes, with prep time (1 week) (1 pt)
+  - Not ready (0 pts)
+
+---
+
+### Motion 4: 7x4x11 Strategy (Chet Holmes) (4 pts)
+
+**C4.1. Target Market Definition (2 pts)**
+"Have you defined your target market precisely enough for 7x4x11? (List of 7 touchpoints × 4 ways to reach × 11 time frequency)"
+- Options:
+  - Yes, detailed map (2 pts)
+  - Partial, need refinement (1 pt)
+  - No, too abstract (0 pts)
+
+**C4.2. List + Infrastructure (2 pts)**
+"Do you have: (1) A list of buyers, (2) Multiple ways to reach them (email, LinkedIn, phone, events, content, etc.)?"
+- Options:
+  - Yes, both (2 pts)
+  - Partial (1 pt)
+  - No (0 pts)
+
+---
+
+### Motion 5: Signal Sniper Outbound (4 pts)
+
+**C5.1. Signal Definition (2 pts)**
+"What 'signal' are you targeting? (E.g., 'Just hired a new Finance Director' or 'Posted about invoice automation')"
+- Options:
+  - Clear, actionable signal (2 pts)
+  - Rough signal (1 pt)
+  - Undefined (0 pts)
+
+**C5.2. Signal Source (2 pts)**
+"Where will you find these signals? (E.g., LinkedIn, job boards, news, manual research)"
+- Options:
+  - Automated or easy source (2 pts)
+  - Manual research, doable (1 pt)
+  - Unclear source (0 pts)
+
+---
+
+[Repeat similar deep-dive structures for all top 5 motions]
+
+**Section C Total:** Top 5 Motions × 4 pts each = 0-40 pts
+
+---
+
+## 7. SECTION D: MENA EXECUTION CONTEXT (10 POINTS)
+
+**Goal:** Address regional execution considerations.
+
+**Questions (Free-text, 5 pts each):**
+
+**D1. MENA Channel Adaptation (5 pts)**
+"For your top 3 recommended motions, what specific MENA adaptations will you make? (Language, timing, tool choices, messaging)"
+
+**Display Example:** "For Authority Education Engine: (1) Arabic-first content (50% Arabic, 50% English mix); (2) Evening timing (7-9pm Gulf time) for live webinars; (3) WhatsApp follow-up (SMS is lower adoption; WhatsApp is 95%+). For Dream 100: (1) Build list from Arabic LinkedIn profiles; (2) Initial outreach in Arabic; (3) Follow-up in English if no response."
+
+**AI Scoring (0-5):**
+| Score | Criteria |
+|-------|----------|
+| 0 | No MENA adaptation mentioned (generic Western approach) |
+| 1 | Surface adaptation (mentioned Arabic or WhatsApp; vague) |
+| 2 | Some specificity (2 adaptations with partial detail) |
+| 3 | Specific adaptations (3+ adaptations with clear reasoning) |
+| 4 | Sharp strategy (detailed for all top 3 motions) |
+| 5 | Expert (detailed adaptations + cultural reasoning + competitive positioning) |
+
+---
+
+**D2. Competitive Advantage in MENA (5 pts)**
+"What's your GTM advantage in MENA that competitors may not have?"
+
+**Display Example:** "My advantage: (1) Arabic native (can create content and communicate in Arabic; competitors are English-only); (2) Deep Saudi network (can leverage relationships for Dream 100); (3) Cultural understanding (know that WhatsApp is primary, Friday timing is off, email is low priority)."
+
+**AI Scoring (0-5):**
+| Score | Criteria |
+|-------|----------|
+| 0 | No MENA advantage identified |
+| 1 | Generic advantage (e.g., "I'll be first") |
+| 2 | Some advantage (1-2 points; weak reasoning) |
+| 3 | Specific advantages (2-3 points; clear reasoning) |
+| 4 | Strong moat (defensible advantages; hard to replicate) |
+| 5 | Expert positioning (sustainable competitive advantage in MENA context) |
+
+**Section D Total:** D1+D2 = 0-10 pts
+
+---
+
+## 8. SECTION E: MOTION SEQUENCING (10 POINTS)
+
+**Goal:** Determine activation order and dependencies.
+
+**Questions (Free-text, 5 pts each):**
+
+**E1. Activation Sequence (5 pts)**
+"In what order will you activate your top 3 motions in the next 90 days? Why this order?"
+
+**Display Example:** "Order: (1) Month 1: Authority Education Engine (build credibility and content; takes 2-3 weeks to launch). (2) Month 2: Dream 100 (use education content as hook in outreach; reference in emails). (3) Month 3: Outcome Demo First (use early pilot customers from Dream 100 as proof for demos). Dependencies: Education content → Dream 100 outreach → Outcome demo with proof."
+
+**AI Scoring (0-5):**
+| Score | Criteria |
+|-------|----------|
+| 0 | No sequence (random order) |
+| 1 | Sequence mentioned; no logic |
+| 2 | Sequence with weak logic |
+| 3 | Logical sequence; some dependencies noted |
+| 4 | Strong sequence with clear dependencies |
+| 5 | Expert sequencing (identifies leverage points, compound effects) |
+
+---
+
+**E2. 90-Day Execution Plan (5 pts)**
+"Summarize your 90-day GTM plan: Week 1-4, Week 5-8, Week 9-12. Key milestones and targets?"
+
+**Display Example:**
+"Weeks 1-4 (Authority Education): Launch Arabic course on [platform]; 50 students enrolled; build community. Weeks 5-8 (Dream 100): Send 300 personalized emails (10-15/day); aim for 30-50 responses (10-15% response rate); convert 3-5 to consulting clients. Weeks 9-12 (Outcome Demo): Document 2 case studies from consulting clients; create 2-minute demo videos; use in sales conversations. Target: 5-10 consulting clients at $3K/month = $15-30K MRR."
+
+**AI Scoring (0-5):**
+| Score | Criteria |
+|-------|----------|
+| 0 | No plan |
+| 1 | Vague plan (no timeline, targets, or milestones) |
+| 2 | Rough plan (timeline + some targets; lacking detail) |
+| 3 | Specific plan (clear milestones, targets, activities for each phase) |
+| 4 | Sharp plan (includes metrics, response rates, conversion targets) |
+| 5 | Expert plan (realistic targets with built-in contingencies and pivot points) |
+
+**Section E Total:** E1+E2 = 0-10 pts
+
+---
+
+## 9. OVERALL GTM FITNESS SCORE
+
+**Formula:**
+- Section A (Context): 0-10 pts
+- Section B (Capability): 0-30 pts
+- Section C (Motion Readiness): 0-40 pts
+- Section D (MENA Context): 0-10 pts
+- Section E (Sequencing): 0-10 pts
+- **TOTAL: 0-100 pts**
+
+**Motion Composite Score (for each motion):**
 ```
 Motion Score = (Fit × 0.4) + (Readiness × 0.3) + (MENA Viability × 0.3)
 ```
 
-**Example:**
-- Motion: Authority Education Engine
-- Fit: 5 (education model with clear B2B conversion)
-- Readiness: 3 (have 5 content pieces, need more production)
-- MENA Viability: 5 (Arabic education demand is very high)
-- **Score = (5 × 0.4) + (3 × 0.3) + (5 × 0.3) = 2.0 + 0.9 + 1.5 = 4.4**
+**Motion Tiers (Classification):**
+| Tier | Score | Action | Meaning |
+|------|-------|--------|---------|
+| **PRIMARY** | 4.0-5.0 | Activate immediately | High fit, high readiness, high MENA viability → Fastest ROI |
+| **SECONDARY** | 3.0-3.9 | Start after PRIMARY | Good fit, moderate readiness → Do next quarter |
+| **CONDITIONAL** | 2.0-2.9 | Activate only if [X] | Fit exists but gaps → Fix gaps first, then activate |
+| **SKIP** | 1.0-1.9 | Deprioritize | Low fit or low readiness → Not worth effort |
 
 ---
 
-## SCORING BANDS PER MOTION
+## 10. OUTPUT FILE: gtm-fitness.md
 
-| Band | Score | Action | Timeline |
-|------|-------|--------|----------|
-| PRIMARY | 4.0-5.0 | Activate immediately. This is your growth engine. | Next 30 days |
-| SECONDARY | 3.0-3.9 | Build capacity. Activate after primary generates leads. | 60-90 days |
-| CONDITIONAL | 2.0-2.9 | Only if resources allow after primary motions running. | As secondary flows |
-| SKIP | 1.0-1.9 | Do not invest energy here now. | N/A |
-
----
-
-## OVERALL GTM FITNESS SCORE
-
-```
-GTM Fitness Score = (Average of all 13 motion scores) × 20
-Maximum: 100
-```
-
-**Interpretation:**
-- **80-100: Elite GTM Fitness** — Multiple strong channels. 3+ motions scoring 4+. Scale aggressively. Double down on what's working.
-- **60-79: Strong Foundation** — 2-3 primary motions clear. Focus and execute. Avoid distraction.
-- **40-59: Emerging GTM** — Some motions available but need development. Build infrastructure for secondary motions.
-- **20-39: Weak GTM** — Limited distribution options. Need fundamental GTM building. Do NOT spread across channels.
-- **0-19: No GTM Readiness** — Fix product-market fit first. Reassess after product delivers clear value.
-
----
-
-## RECOMMENDATION ENGINE
-
-### For Each Motion Scoring Below 3.0:
-
-1. **WHY it scored low** (which dimension dragged it down)
-   - Fit issue: Product/market misalignment
-   - Readiness issue: Missing tools/content/skills
-   - MENA viability issue: Market structure doesn't support it
-
-2. **WHAT would need to change** for it to become PRIMARY
-   - Specific resource acquisition
-   - Product roadmap changes
-   - Market positioning shifts
-
-3. **SPECIFIC 30-DAY ACTIONS** to improve the score
-   - Build 1 artifact (content, list, etc.)
-   - Acquire 1 tool or skill
-   - Create 1 asset that unlocks motion
-
-4. **RESOURCES NEEDED**
-   - Budget
-   - Time
-   - Team
-
----
-
-### SPECIAL RECOMMENDATIONS
-
-**If NO motion scores above 3.5:**
-- **Diagnosis**: You have a GTM readiness gap.
-- **Recommendation**: Start with the SINGLE highest-scoring motion. Invest 80% of your time there. Do NOT spread across multiple channels.
-- **Action**: 30-day sprint on one motion. Generate first 5-10 leads. Validate before adding second channel.
-
-**If 3+ motions score above 4.0:**
-- **Diagnosis**: You have optionality. Rare and valuable.
-- **Recommendation**: Pick 2 motions (NOT 3+). Avoid shiny object syndrome.
-- **Action**: Sequence them:
-  1. Lead with the highest scorer for 30 days. Build internal rhythm.
-  2. Once generating consistent leads, add the second motion.
-  3. Iterate and optimize both together.
-
-**If Dream 100 scores above 4.0 in MENA:**
-- **Diagnosis**: You're in a relationship-first market.
-- **Recommendation**: Dream 100 is your foundational motion. Every other channel amplifies it but doesn't replace it.
-- **Action**: Invest 40-50% of time on Dream 100 core outreach. Use other motions to amplify your visibility to that 100.
-
----
-
-## CLAUDE SKILL EXECUTION FLOW
-
-When invoked with `/gtm-fitness-scoring`, Claude should:
-
-### Phase 1: Business Profiling (5-7 Questions)
-Ask about:
-1. Product description + what problem it solves
-2. Target customer (title, company size, industry)
-3. Current annual contract value (ACV) or price point
-4. Current GTM channels (if any) + what's working/broken
-5. Founder's background (technical, sales, marketing, other)
-6. Team size + key roles
-7. Current monthly budget for GTM (if any)
-
-**Purpose**: Map product characteristics to Fit dimension for each motion.
-
----
-
-### Phase 2: Fit Scoring
-Based on Phase 1 answers, pre-score the Fit dimension (40% of overall score):
-- ACV → maps to transactional vs. relationship motions
-- Buyer profile → maps to searcher vs. scroller motions
-- Sales cycle → maps to fast vs. long-cycle motions
-- Product type → maps to demo-first vs. education-first motions
-
-**Output to user**: "Based on your product, here's my initial read on FIT for each motion..."
-
----
-
-### Phase 3: Capability Profiling (5-7 Questions)
-Ask about current capabilities:
-1. Do you have any existing content? (blog, videos, courses)
-   - If yes: How much? How fresh?
-2. Do you have an email list or social following?
-   - If yes: How large? How engaged?
-3. Do you have any outbound infrastructure? (CRM, lists, tools)
-   - If yes: What tools? How mature?
-4. Do you have ad budget?
-   - If yes: How much? Committed or flexible?
-5. Do you have customer case studies or testimonials?
-   - If yes: How many? How detailed?
-6. What's your #1 constraint right now? (time, money, skill)
-
-**Purpose**: Score Readiness dimension (30% of overall score).
-
----
-
-### Phase 4: Readiness Scoring
-Based on Phase 3 answers, score Readiness for each motion:
-- Content library → Authority, Build-in-Public, Value Trust
-- Email list/audience → Waitlist, Authority, Build-in-Public
-- Outbound infrastructure → Signal Sniper, Dream 100, 7x4x11
-- Ad budget → Paid VSL, Waitlist ads, Wave Riding
-- Case studies → Authority, Outcome Demo, Value Trust
-- Network → Dream 100, Value Trust Engine
-
-**Output to user**: "Here's your Readiness profile for each motion..."
-
----
-
-### Phase 5: MENA Context & Viability Scoring
-Based on Phase 1 (target market):
-- If founder is selling to MENA market: Score each motion's MENA Viability
-- If founder is selling to Western market: Note MENA potential for future expansion
-
-**Key Questions:**
-- "Is your primary market MENA, or are you planning MENA expansion?"
-- "Do you have Arabic language capability or team?"
-- "Are your products/messaging culturally adapted for MENA?"
-
-**Output to user**: "Based on MENA market dynamics, here's Viability scoring..."
-
----
-
-### Phase 6: Calculate All 13 Composite Scores
-Using formula: Motion Score = (Fit × 0.4) + (Readiness × 0.3) + (MENA Viability × 0.3)
-
-For each of 13 motions, show:
-- Fit score
-- Readiness score
-- MENA Viability score
-- **Composite score**
-
----
-
-### Phase 7: Rank & Identify Tiers
-Sort all 13 motions from highest to lowest composite score.
-
-Categorize by band:
-- **PRIMARY** (4.0-5.0): Activate in 30 days
-- **SECONDARY** (3.0-3.9): Activate in 60-90 days
-- **CONDITIONAL** (2.0-2.9): Only if time/resources available
-- **SKIP** (1.0-1.9): Not recommended now
-
----
-
-### Phase 8: Generate Full Output Report
-
-**Section 1: Executive Summary**
+**Automatically generated with all sections populated:**
 - GTM Fitness Score (/100)
-- Key insight in 1 sentence (e.g., "You have 2 strong primary motions. Focus there.")
-
-**Section 2: Ranked Motions Table**
-```
-| Motion | Fit | Readiness | MENA | Score | Tier |
-|--------|-----|-----------|------|-------|------|
-```
-
-**Section 3: PRIMARY MOTIONS (4.0+)**
-For each primary motion:
-- Why it scored high (all dimensions)
-- 30-day activation plan (week-by-week)
-- 5 specific action items
-- Budget + resources needed
-- Success metrics (how to know it's working)
-- MENA-specific execution guide (if selling to MENA)
-
-**Section 4: SECONDARY MOTIONS (3.0-3.9)**
-For each secondary motion:
-- Why it's secondary (which dimension held it back)
-- 60-day preparation roadmap
-- What needs to happen before activation
-- Dependencies on primary motions (if any)
-
-**Section 5: IMPROVEMENT RECOMMENDATIONS**
-For each motion scoring <3.0:
-1. Root cause (Fit vs. Readiness vs. MENA)
-2. "What needs to change" to make it PRIMARY
-3. 30-day action to improve (if worth pursuing)
-4. Budget/resource cost
-
-**Section 6: Special Insights**
-- Founder's key constraint (time/money/skill)
-- Recommended sequence (which motion first, second)
-- What NOT to do (spread prevention)
-- Quarterly review plan
-
-**Section 7: MENA Execution Guide (If Applicable)**
-If founder is selling to MENA:
-- Which 2-3 motions have highest MENA potential
-- Arabic/cultural adaptations needed for primary motions
-- MENA-specific tools + platforms
-- MENA audience building steps
-- Common mistakes for Western founders selling to MENA
+- All 13 Motions Ranked Table (Fit | Readiness | MENA | Score | Tier)
+- Primary Motions Detail (top 2-3 with 30-day activation plans)
+- Secondary Motions (next-wave candidates)
+- Motions to Skip (with reasons)
+- 90-Day Motion Sequence (visual roadmap)
+- MENA Execution Adaptations
+- Capability Gap Analysis (what to fix before activation)
+- Re-Assessment Triggers
 
 ---
 
-### Phase 9: Final Guidance
-**Always include:**
-```
-YOUR GTM IS NOT STATIC
+## 11. CLAUDE EXECUTION FLOW
 
-As you build content, audience, and infrastructure, previously CONDITIONAL
-motions become SECONDARY, then PRIMARY.
+1. **Load Upstream Data (2 min):** SC1-SC4 complete; pre-populate Fit and MENA
+2. **Confirm Business Context (5 min):** Section A (ACV, sales cycle)
+3. **Assess Capabilities (10 min):** Section B (6 MC questions)
+4. **Pre-Score All 13 Motions (auto):** Rank by formula; identify top 5
+5. **Deep-Dive Top 5 (20 min):** Section C (2 questions × 4 pts each)
+6. **MENA Execution (5 min):** Section D (2 free-text questions)
+7. **Motion Sequencing (5 min):** Section E (2 free-text questions)
+8. **Generate Output (3 min):** gtm-fitness.md with rankings
+9. **Present Results (5 min):** Show primary motions, 90-day plan, capability gaps
 
-RECOMMENDED ACTIONS:
-- Revisit this assessment in 30 days (after executing primary motions)
-- Re-score quarterly as your fitness changes
-- Track 1 metric per primary motion to validate fit
-- Add a secondary motion once primary generates consistent leads
-
-NEXT STEP: Pick your #1 primary motion and commit to 30-day sprint.
-```
+**Total Time:** 55-65 minutes
 
 ---
 
-## OUTPUT TEMPLATES
+## 12. MOTION TIERS & TIER DEFINITIONS
 
-### Motion Deep-Dive Template (for each primary motion)
+**PRIMARY TIER (4.0-5.0):**
+"Activate these first. They have high fit with your ICP, you have the capability to execute, and MENA context is favorable. These are your fastest paths to first customers."
 
+**SECONDARY TIER (3.0-3.9):**
+"Good candidates for waves 2-3 of your launch. They require some capability building or are slightly less natural fits, but are worth investing in once PRIMARY is validated."
+
+**CONDITIONAL TIER (2.0-2.9):**
+"These could work IF you build certain capabilities or conditions are met. Example: 'Paid VSL would work IF you had $5K budget, but you only have $2K. Either increase budget or skip.'"
+
+**SKIP TIER (1.0-1.9):**
+"Not recommended for your current situation. Either poor fit with ICP, low MENA viability, or you lack key capabilities. Revisit in 6 months."
+
+---
+
+## 13. CAPABILITY GAP ANALYSIS
+
+**System Generates Automatically:**
+
+For each PRIMARY motion scoring <4.0 in readiness, generate:
 ```
-## PRIMARY MOTION: [Motion Name]
-**Composite Score: [X.X]/5.0 | Fit: X | Readiness: X | MENA Viability: X**
-
-### Why This Motion Is Ideal For You
-[2-3 sentences explaining why this specific motion aligns with their business]
-
-### 30-Day Activation Roadmap
-
-**Week 1: Foundation**
-- [ ] Action 1
-- [ ] Action 2
-- [ ] Action 3
-
-**Week 2: Build**
-- [ ] Action 1
-- [ ] Action 2
-
-**Week 3: Launch**
-- [ ] Action 1
-- [ ] Action 2
-
-**Week 4: Optimize**
-- [ ] Action 1
-- [ ] Measure: Metric X
-
-### Success Metrics
-- Metric 1: [What to measure]
-- Metric 2: [What to measure]
-- Win condition: [When to declare success]
-
-### Budget + Resources
-- Cash: $[X]
-- Time: [X] hours/week from founder
-- Tools: [Tool 1], [Tool 2]
-- Team: [Role needed]
-
-### MENA Execution Guide (if applicable)
-- **Adaptation 1**: [Change for MENA]
-- **Adaptation 2**: [Change for MENA]
-- **Platform shifts**: [Which platforms perform better]
-- **Language/cultural notes**: [Specific MENA context]
-
-### Common Pitfalls
-- Pitfall 1: [What goes wrong] → [How to avoid]
-- Pitfall 2: [What goes wrong] → [How to avoid]
+MOTION: [Name]
+GAP: [What's missing]
+IMPACT: [How this limits motion effectiveness]
+FIX: [Specific action to close gap]
+TIME: [Estimate to close gap]
+PRIORITY: [High / Medium / Low]
 ```
 
-### Improvement Recommendation Template (for <3.0 motions)
-
+Example:
 ```
-## CONDITIONAL MOTION: [Motion Name]
-**Composite Score: [X.X]/5.0 | Fit: X | Readiness: X | MENA Viability: X**
-
-### Why It Scored Low
-- **Fit**: [Reason if Fit is the limiter]
-- **Readiness**: [Reason if Readiness is the limiter]
-- **MENA Viability**: [Reason if MENA Viability is the limiter]
-
-### What Needs to Change
-[Specific resource/skill/product change needed]
-
-### 30-Day Improvement Actions (If Worth Pursuing)
-1. Action: [Specific 30-day task]
-   - Deliverable: [What you'll have after 30 days]
-   - Budget: $[X]
-   - Owner: [Founder / Team member]
-
-2. Action: [Specific 30-day task]
-   - Deliverable: [What you'll have after 30 days]
-   - Budget: $[X]
-   - Owner: [Founder / Team member]
-
-### Success Criteria
-- This motion becomes SECONDARY when: [Specific milestone]
-
-### When to Revisit
-- Reactivate this motion when: [Condition]
+MOTION: Authority Education Engine
+GAP: Content library exists (blog) but no structured course framework
+IMPACT: Can't launch course in month 1; limits credibility signaling
+FIX: Spend 1 week creating 5-module outline; use existing blog posts as module content
+TIME: 1 week
+PRIORITY: High
 ```
 
 ---
 
-## QUESTION BANK (For Claude Customization)
+## 14. 13 GTM MOTIONS (FULL REFERENCE)
 
-### Business Profiling Questions
-1. "Can you describe your product in one sentence? What specific problem does it solve?"
-2. "Who is your ideal customer? (Title, company size, industry)"
-3. "What's your current pricing or expected annual contract value (ACV)?"
-4. "Do you currently have any GTM channels working? What's bringing in your first customers (if any)?"
-5. "What's your founder background? (technical, sales, marketing, other)"
-6. "How big is your team right now? What roles do you have?"
-7. "What's your current monthly budget allocated to GTM?"
+[Full descriptions of each motion with Fit context, MENA viability, execution requirements]
 
-### Capability Profiling Questions
-1. "Do you have any existing content (blog posts, videos, guides, courses)? If yes, how much and how recent?"
-2. "Do you have an email list or social media following? How large? How engaged?"
-3. "Do you have any outbound sales infrastructure (CRM, lists, tools, process)? What are you using?"
-4. "What's your advertising budget (monthly)? Is it committed or flexible?"
-5. "Do you have customer case studies, testimonials, or success stories? How many?"
-6. "What's your #1 constraint right now: Time, money, or skill/knowledge?"
-
-### MENA Context Questions
-1. "Is your primary market MENA, or are you selling to Western markets first?"
-2. "Do you or your team speak Arabic or have MENA market experience?"
-3. "If MENA is your market: Which countries? (UAE, KSA, Egypt, etc.)"
-4. "Are your product/messaging already culturally adapted for MENA, or is this a future consideration?"
+1. **Waitlist Heat-to-Webinar** (3/10 MENA) - Scarcity-driven webinar conversion
+2. **Build-in-Public Trust** (2/10 MENA) - Journey-driven audience building
+3. **Authority Education Engine** (5/10 MENA) - Expert positioning via content/course
+4. **Wave Riding Distribution** (2/10 MENA) - Leverage existing audience waves
+5. **LTD Cash-to-MRR** (2/10 MENA) - Lifetime deal → subscription transition
+6. **Signal Sniper Outbound** (4/10 MENA) - Targeted outreach to buyers showing intent signals
+7. **Outcome Demo First** (5/10 MENA) - ROI-driven demo-first sales
+8. **Hammering-Feature-First** (3/10 MENA) - Release-driven community engagement
+9. **MicroSaaS BOFU SEO** (5/10 MENA) - Bottom-of-funnel search dominance
+10. **Dream 100 Strategy** (5/10 MENA) - Relationship-driven outreach to ideal customers
+11. **7x4x11 Strategy** (4/10 MENA) - Chet Holmes frequency-based touch strategy
+12. **Value Trust Engine** (5/10 MENA) - Trust-building through proof and education
+13. **Paid VSL Value Ladder** (4/10 MENA) - VSL-driven paid customer acquisition
 
 ---
 
-## MENA-SPECIFIC CONTEXT & ADAPTATIONS
+## 15. NOTES FOR DEVELOPERS & ADMINISTRATORS
 
-### Market Structure
-- **Relationship > Brand**: Personal trust and connections drive B2B decisions more than brand reputation
-- **Decision-makers are gatekeepers**: Buying decisions often require multiple approvals; consensus-based
-- **WhatsApp is a business tool**: Outreach, customer support, sales conversations happen on WhatsApp, not just email
-- **LinkedIn is strong but platform fatigue**: C-suite active on LinkedIn; SMEs less so
-- **Arabic content is underserved**: Educational, technical content in Arabic is sparse; high demand, low supply
-- **Webinar timing matters**: Evening (8-10pm) works better than morning; 45min or less preferred
-- **Facebook/Instagram for B2C or B2SME**: Traditional MSMEs prefer discovery on Facebook/Instagram, not LinkedIn
-
-### Motions Ranked by MENA Viability
-
-**Top Tier (5):**
-1. Dream 100 (relationship-native)
-2. Authority Education (undersupply of Arabic education)
-3. Value Trust Engine (training-first = MENA-proven model)
-4. Outcome Demo (show > tell is native to culture)
-
-**Second Tier (4):**
-5. Signal Sniper (LinkedIn + WhatsApp works)
-6. MicroSaaS BOFU SEO (Arabic SEO is wide open)
-7. 7x4x11 (works but timing stretched)
-8. Paid VSL (Facebook/Instagram strong, Arabic VSL is new frontier)
-
-**Third Tier (3):**
-9. Waitlist Heat-to-Webinar (if <45min, evening, Arabic option)
-10. Hammering Launches (if MENA audience exists)
-
-**Fourth Tier (2):**
-11. Build-in-Public (personal brand culture weaker)
-12. Wave Riding (MENA lag = catch-up market)
-13. LTD Cash (AppSumo gap = opportunity for EO/local platforms)
-
-### MENA Adaptations for Each Motion
-
-**1. Waitlist → Webinar:**
-- **Adapt**: Move to 8-10pm timing, limit to 45 minutes, provide Arabic option (host or subtitles)
-- **Platform**: Use Zoom with Arabic chat moderation
-
-**2. Build-in-Public:**
-- **Adapt**: LinkedIn still strong for B2B. Consider building community in Telegram/Discord alongside Twitter
-- **Language**: Build in Arabic on LinkedIn to capture Arabic GTM audience
-
-**3. Authority Education:**
-- **Adapt**: Bundle education + community (Telegram, WhatsApp group). Offer Arabic-language course
-- **Pricing**: Price lower than Western equivalents; higher volume, lower ACV
-
-**4. Wave Riding:**
-- **Adapt**: Watch Western trends 4-6 weeks after spike. By then, Gulf market is starting to discover
-- **Language**: Create Arabic content on trend 6-8 weeks after English spike
-
-**5. LTD Cash:**
-- **Adapt**: Use EO platform or regional alternatives (Jumia, Zando for MENA). AppSumo not viable
-- **Marketing**: Promote heavily on Facebook/WhatsApp groups
-
-**6. Signal Sniper:**
-- **Adapt**: LinkedIn for C-suite (UAE/KSA), WhatsApp for SME outreach
-- **Language**: Arabic outreach messages convert better than English for local businesses
-- **Signals**: Job changes, hiring announcements visible on LinkedIn; watch for WhatsApp broadcast announcements
-
-**7. Outcome Demo:**
-- **Adapt**: Shorter demos (5-7 min vs. 10+). Emphasize results over features
-- **Language**: Arabic demo scripts perform better
-
-**8. Hammering Launches:**
-- **Adapt**: Product Hunt works if you have MENA audience. Otherwise, consider local platforms
-- **Audience**: Launch on Twitter/LinkedIn for tech audience; Facebook for broader MENA
-
-**9. BOFU SEO:**
-- **Language**: Arabic keywords have MASSIVELY low competition. Huge opportunity
-- **Timeframe**: 6-12 month play; compounding advantage in underserved market
-- **Tools**: Ahrefs, SEMrush have Arabic keyword data
-
-**10. Dream 100:**
-- **Adapt**: This IS the MENA motion. Build list of 100 decision-makers/influencers
-- **Outreach**: Personalization is critical. Reference mutual connections
-- **Gifting**: Meaningful gifts resonate; align with Ramadan or local festivals
-
-**11. 7x4x11:**
-- **Adapt**: Stretch to 8 weeks, 22+ impressions. Trust-building takes longer in Gulf
-- **Touchpoints**: Mix email, LinkedIn, WhatsApp, calls, in-person coffee (if local)
-- **Timing**: Avoid Ramadan/summer for outreach intensity
-
-**12. Value Trust Engine:**
-- **Adapt**: This is proven. Bootcamps, certification, training → SaaS conversion works
-- **Language**: Arabic bootcamp + English product = strong combo
-- **Community**: Build WhatsApp/Telegram community post-training for ongoing engagement
-
-**13. Paid VSL:**
-- **Adapt**: Facebook/Instagram ads work. Create Arabic VSL
-- **Audiences**: Target UAE/KSA (highest purchasing power), then Egypt (largest audience)
-- **Storytelling**: Emotional hooks work; emphasize family benefit, career advancement, independence
+- **Pre-Populate Aggressively:** Fit and MENA Viability should come from upstream scores; don't make student re-enter
+- **Top 5 Selection:** Automatic based on composite formula; reduces scope to manageable depth
+- **Readiness is the Differentiator:** This scorecard's value is assessing founder capacity to execute specific motions
+- **MENA Context Critical:** Every motion has MENA viability score; this is not afterthought
+- **Re-Assessment Trigger:** System recommends re-scoring GTM Fitness after 30 days of execution (capabilities improve; readiness changes)
 
 ---
 
-## CHANGELOG & UPDATES
-
-**Version 1.0** (February 2025)
-- Initial release with 13 GTM motions
-- Scoring model (Fit, Readiness, MENA Viability)
-- Full MENA context and adaptations
-- Claude skill execution flow
-- Output templates and recommendation engine
-
----
-
-## APPENDIX: RESOURCE LINKS
-
-### Tools by Motion
-
-**Waitlist Heat-to-Webinar:**
-- Webinar: Zoom, WebinarJam, EverywebinarKit
-- Waitlist: Typeform, Unboxed, Carrd
-
-**Build-in-Public:**
-- Platform: Twitter, LinkedIn, Indie Hackers
-- Newsletter: Substack, beehiiv, ConvertKit
-
-**Authority Education:**
-- Video: Loom, Cap, ScreenFlow
-- Hosting: Kajabi, Teachable, Thinkific
-- Email: ConvertKit, ActiveCampaign
-
-**Wave Riding:**
-- Tools: Product Hunt, Hacker News, Twitter/X
-- Analytics: Google Trends, Semrush Sensor
-
-**LTD Cash-to-MRR:**
-- Platforms: AppSumo (West), Jumia / local MENA equivalents
-- Payment: Stripe, 2Checkout
-
-**Signal Sniper:**
-- Tools: HeyReach, Clay, Instantly
-- CRM: Pipedrive, HubSpot, Salesforce
-- Signals: LinkedIn Sales Navigator, Hunter.io
-
-**Outcome Demo:**
-- Video: Loom, Vimeo, YouTube
-- Graphics: Figma, Canva
-
-**Hammering Launches:**
-- Platform: Product Hunt, Hacker News, BetaList
-- Analytics: Amplitude, Mixpanel
-
-**MicroSaaS BOFU SEO:**
-- Keyword research: Ahrefs, SEMrush, Ubersuggest
-- Content: WordPress, Webflow, Ghost
-- Analytics: Google Search Console, Google Analytics
-
-**Dream 100:**
-- List building: Clay, Hunter.io, Clearbit
-- CRM: HubSpot, Pipedrive, Salesloft
-- Email: Apollo, Instantly, Outreach
-
-**7x4x11:**
-- CRM: Salesforce, HubSpot, Pipedrive
-- Call: Calendly, Acuity Scheduling
-- Email: Apollo, Instantly
-
-**Value Trust Engine:**
-- Community: Telegram, Circle, Mighty Networks
-- Courses: Kajabi, Teachable, Thinkific
-- Email: ConvertKit, ActiveCampaign
-
-**Paid VSL:**
-- VSL Tools: Wistia, Vimeo, VSL.io
-- Ad platforms: Facebook Ads Manager, Instagram Ads Manager
-- Landing page: Leadpages, Unbounce, ConvertKit
-
----
-
-## FINAL NOTES
-
-This skill is designed to help founders **focus, not spread thin**.
-
-The core message: **You don't need to use all 13 motions. You need to identify your 2-3 strongest and execute them with focus.**
-
-Re-evaluate quarterly. As you build infrastructure (content, audience, tools), previously CONDITIONAL motions become available. But don't add new channels until your primary motions are generating consistent leads.
-
-**Your GTM is not static. It evolves as you do.**
+**END OF SKILL.MD**
