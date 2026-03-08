@@ -1,7 +1,8 @@
 # Consolidated Assessment Configuration
-# Version: 1.0
+# Version: 1.1
 # Combines MAS + ICP + GTM into Founder Readiness Score
 # Uses strategy-selector/SKILL.md for AI analysis
+# v1.1: Updated cascade/data flow for SC3 v3.0, added venture name, engagement protocol
 
 ---
 
@@ -11,13 +12,75 @@
 id: consolidated
 name: Founder Readiness Assessment
 short_name: Consolidated
-version: "1.0"
+version: "1.1"
 requires:
   - market-attractiveness
   - icp-clarity
   - gtm-fitness
 skill_file: "strategy-selector/SKILL.md"
 webhook_path: /webhook/eo-consolidated
+```
+
+---
+
+## CASCADE / DATA FLOW (Updated for v1.1)
+
+```
+SC1 (Project Definition v1.1)
+├── Section 0: Venture naming (unscored) → venture_name propagates everywhere
+├── Outputs: project-brief.md, niche-validation.md, positioning.md, product-spec.md
+├── Provides to SC2: niche, positioning, geography, product angle
+├── Provides to SC3: niche, positioning, geography, product scope (auto-loaded in Section A)
+├── Provides to SC4: all SC1 outputs
+└── Provides to SC5: all SC1 outputs
+
+SC2 (ICP Clarity v1.1)
+├── Output: icp-refined.md
+├── B: 5 pain statements (reduced from 10)
+├── C: 5 dream outcomes (reduced from 10)
+├── Provides to SC3: pain statements, congregation points, budget range (auto-loaded in Section A)
+├── Provides to SC4: ICP data
+└── Provides to SC5: ICP data
+
+SC3 (Market Attractiveness v3.0) ← REDESIGNED: inherits 80% from upstream
+├── Output: MarketAttractiveness.md
+├── Section A: AUTO-LOADS SC1+SC2 data (no user questions, 0 pts)
+├── Section B: Evidence Validation (3 questions, 40 pts)
+├── Section C: Market Sizing & Growth (3 questions, 40 pts)
+├── Section D: AI SYNTHESIS (no user questions, 20 pts auto-scored)
+└── Provides to SC4+SC5: MAS score + evidence summary
+
+SC4 (Strategy Selector v2.1)
+├── Output: strategy-recommendation.md
+├── 7 questions, 4 strategy paths, 8 archetypes
+├── AI auto-generates several inputs from SC1-SC3
+├── Engagement: pattern breaks after sections A, C, D
+└── Provides to SC5: strategy path, archetype
+
+SC5 (GTM Fitness v2.1)
+├── Output: gtm-fitness-report.md
+├── 14 questions, 13 motions scored
+├── Pre-populates Fit + MENA from upstream
+├── Engagement: pattern breaks after sections B, C, D
+└── Final assessment output
+```
+
+---
+
+## VENTURE IDENTITY
+
+```yaml
+venture_name:
+  source: "SC1 Section 0, Question s0_2"
+  storage:
+    localStorage: "eo-assessment-status.ventureName"
+    also_in: "eo_completion_status.ventureName"
+  propagation:
+    - "All 5 scorecard results headers"
+    - "Dashboard header display"
+    - "Download All Answers filename and header"
+    - "Download Strategic Summary filename and header"
+    - "Webhook payloads (venture_name field)"
 ```
 
 ---
@@ -32,6 +95,7 @@ readiness:
     icp_weight: 0.35
     gtm_weight: 0.30
   max_score: 100
+  note: "SC1 and SC2 are prerequisites — they feed SC3-SC5 but don't factor into the composite score directly."
 ```
 
 ---
@@ -111,6 +175,38 @@ bottleneck:
       bottleneck: "gtm"
       tag: "eo-bottleneck-gtm"
       action: "GTM fitness is your weakest link. You have the market and the customer — now build distribution."
+```
+
+---
+
+## DOCUMENT GENERATION
+
+```yaml
+documents:
+  all_answers:
+    filename: "{VentureName}-All-Answers.html"
+    content: "Complete record of every response across all 5 scorecards"
+    structure: "Venture name header → per-scorecard sections → score badge per SC → formatted Q&A pairs"
+    data_source: "localStorage eo_*_answers keys"
+    styling: "SMO dark theme (#000000 bg, #FF6600 accent, Inter font)"
+
+  strategic_summary:
+    filename: "{VentureName}-Strategic-Summary.html"
+    content: "Polished executive brief"
+    structure:
+      - "Score hero section (large score number + band label)"
+      - "Three-pillar breakdown: MAS (×0.35) + ICP (×0.35) + GTM (×0.30)"
+      - "Strategy path from SC4 (path name + archetype)"
+      - "Key insights: strongest pillar, weakest pillar, critical gap"
+      - "MENA context paragraph"
+      - "Top 3 GTM motion recommendations with tier labels"
+      - "Next steps section"
+    design_intent: "Should feel like a $5K strategy deliverable"
+
+  implementation:
+    method: "JavaScript Blob + URL.createObjectURL for client-side generation"
+    format: "Self-contained HTML (no external dependencies)"
+    print: "Both print cleanly to PDF via browser print dialog"
 ```
 
 ---
@@ -248,8 +344,8 @@ section_bottleneck:
   formula: "Section Impact = (Section Max / Assessment Max) * Assessment Weight * (1 - Section Score / Section Max)"
 
   # Higher impact = bigger bottleneck
-  # Example: MAS Pain Reality scores 8/25
-  # Impact = (25/100) * 0.35 * (1 - 8/25) = 0.25 * 0.35 * 0.68 = 0.0595
+  # Example: MAS Evidence Validation scores 15/40
+  # Impact = (40/100) * 0.35 * (1 - 15/40) = 0.40 * 0.35 * 0.625 = 0.0875
 
   # Sort all sections by impact descending
   # Top 3 = priority bottlenecks
@@ -262,6 +358,7 @@ section_bottleneck:
 ```yaml
 tags:
   # Completion
+  project_files_assessed: "eo-project-files-assessed"
   strategy_assessed: "eo-strategy-assessed"
   mas_assessed: "eo-mas-assessed"
   icp_assessed: "eo-icp-assessed"
@@ -310,6 +407,10 @@ tags:
 
 ```yaml
 custom_fields:
+  - key: eo_venture_name
+    type: TEXT
+    description: "Venture name from SC1 Section 0"
+
   - key: eo_strategy_path
     type: TEXT
     description: "Primary strategy path result (replicate/consulting/boring/hammering)"

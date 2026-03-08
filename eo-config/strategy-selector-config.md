@@ -1,7 +1,8 @@
 # Strategy Selector Configuration
-# Version: 1.0
+# Version: 2.1
 # 7 questions, 4 strategy paths
 # Each option scores against all 4 paths simultaneously
+# v2.1 Changes: Light engagement polish added (pattern breaks, acknowledgments)
 
 ---
 
@@ -11,10 +12,32 @@
 id: strategy-selector
 name: MicroSaaS Strategy Selector
 short_name: Strategy Selector
-version: "1.0"
+version: "2.1"
 questions_count: 7
 paths_count: 4
 webhook_path: /webhook/eo-strategy-selector
+```
+
+---
+
+## ENGAGEMENT PROTOCOL (NEW in v2.1)
+
+```yaml
+engagement:
+  pattern_breaks:
+    - after: "Section A (Founder DNA / Existing Expertise)"
+      type: "Insight Unlock"
+      content: "AI insight referencing founder skill from question a1"
+    - after: "Section C (Strategy-Market Fit / Competitive Landscape)"
+      type: "Strategy Preview"
+      content: "Shows selected path based on scores so far"
+    - after: "Section D (Building Style)"
+      type: "Investment Signal"
+      content: "MENA context insight"
+  acknowledgment_protocol:
+    - "Between all questions"
+    - "MC: Score ratio-based feedback (strong ≥0.8, weak ≤0.4)"
+    - "Free-text: Word count-based feedback"
 ```
 
 ---

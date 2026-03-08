@@ -674,6 +674,18 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 
+/* Engagement: Pattern Break */
+.pattern-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.pattern-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px 24px; }
+.pattern-break-card .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.pattern-break-card .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
+/* Engagement: Investment Signal */
+.investment-signal { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.investment-signal-card { background: rgba(233,77,27,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
+/* Engagement: Acknowledgment */
+.acknowledgment { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.acknowledgment-card { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #D1D5DB; font-style: italic; border-left: 3px solid var(--eo-orange); }
+
 /* Mobile */
 @media (max-width: 680px) {
     .question-card { margin: 0 16px; padding: 24px 20px; }
@@ -713,7 +725,7 @@ body.rtl .option-card { text-align: right; }
 <div class="screen active" id="screenEmail">
     <div class="email-capture">
         <h2>Project Definition Scorecard</h2>
-        <p>Define your project foundation with 21 guided questions. Free-text + multiple choice. ~15 minutes.</p>
+        <p>Define your project foundation with 23 guided questions. Free-text + multiple choice. ~20 minutes.</p>
         <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
@@ -730,6 +742,7 @@ body.rtl .option-card { text-align: right; }
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -774,8 +787,9 @@ body.rtl .option-card { text-align: right; }
 
 <script>
 /* ═══════════════════════════════════════════════════
-   EO PROJECT DEFINITION SCORING — SCORECARD 1
-   21 Questions | 6 Sections (A-F) | 100 Points
+   EO PROJECT DEFINITION SCORING — SCORECARD 1 v1.1
+   23 Questions | 7 Sections (0+A-F) | 100 Points
+   Section 0: 2 warm-up (unscored) | A-F: 21 scored
    Question Types: MC, Free-Text, MC+Evidence
    ═══════════════════════════════════════════════════ */
 (function() {
@@ -795,6 +809,7 @@ body.rtl .option-card { text-align: right; }
     var ASSESSMENT_TITLE = 'Project Definition';
 
     var SECTIONS = [
+        { id: '0', name: 'INTRO', fullName: 'Venture Introduction' },
         { id: 'A', name: 'FOUNDER', fullName: 'Founder Context & Problem Origin' },
         { id: 'B', name: 'NICHE', fullName: '3-Level Niche Definition' },
         { id: 'C', name: 'POSITIONING', fullName: 'Positioning & Differentiation' },
@@ -803,9 +818,10 @@ body.rtl .option-card { text-align: right; }
         { id: 'F', name: 'MENA', fullName: 'MENA Context & Localization' }
     ];
 
-    var SECTION_MAXES = { 'A': 15, 'B': 25, 'C': 20, 'D': 20, 'E': 10, 'F': 10 };
+    var SECTION_MAXES = { '0': 0, 'A': 15, 'B': 25, 'C': 20, 'D': 20, 'E': 10, 'F': 10 };
 
     var SECTION_NAME_MAP = {
+        '0': 'Venture Introduction',
         'A': 'Founder Context',
         'B': 'Niche Definition',
         'C': 'Positioning',
@@ -815,12 +831,28 @@ body.rtl .option-card { text-align: right; }
     };
 
     /* ===================================
-       QUESTION DEFINITIONS (21 Questions)
+       QUESTION DEFINITIONS (23 Questions: 2 warm-up + 21 scored)
        =================================== */
     var allQuestions = [
+        /* ── SECTION 0: VENTURE INTRODUCTION (0 pts — warm-up) ── */
+        {
+            id: 's0_1', sectionId: '0', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 0,
+            text: 'Before we get into the structured assessment, just tell me \u2014 what are you building? Who is it for? What problem does it solve? Talk to me like you\'re explaining it to a friend over coffee.',
+            help: 'No pitch deck language, no buzzwords. Just the raw idea. This is not scored \u2014 it helps us understand your venture before we begin.',
+            placeholder: 'e.g., "I\'m building a tool that helps independent real estate brokers in Dubai capture and follow up with leads automatically through WhatsApp, because right now they lose 40% of leads to manual chaos..."'
+        },
+        {
+            id: 's0_2', sectionId: '0', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 0,
+            text: 'What would you call this venture? Give me your best shot \u2014 even if it\'s rough or temporary.',
+            help: 'This becomes your working title throughout all 5 scorecards. You can always change it later.',
+            placeholder: 'e.g., "LeadFast", "BrokerFlow", "QuickClose" \u2014 or describe the concept if you don\'t have a name yet'
+        },
+
         /* ── SECTION A: FOUNDER CONTEXT (15 pts) ── */
         {
-            id: 'a1', sectionId: 'A', sectionIndex: 0,
+            id: 'a1', sectionId: 'A', sectionIndex: 1,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
             text: 'Describe the specific moment you realized this problem needed solving. What happened? Who was affected? What was the cost of doing nothing?',
             help: 'Not about your overall vision. This is about a specific, real moment where you witnessed this problem.',
@@ -828,7 +860,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=Vivid specific moment with named entities, timing, clear cost; 4=Specific moment with some cost; 3=Specific but lacks cost/detail; 2=Vague observation; 1=Generic; 0=Blank'
         },
         {
-            id: 'a2', sectionId: 'A', sectionIndex: 0,
+            id: 'a2', sectionId: 'A', sectionIndex: 1,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
             text: 'Why are YOU the right person to solve this? What experience, access, or unfair advantage do you bring that a random developer couldn\'t replicate?',
             help: 'Not about passion. What specific domain knowledge, network, or lived experience gives you an edge?',
@@ -836,7 +868,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=Crystal-clear unfair advantage with evidence; 4=Specific advantage; 3=Clear experience, underdeveloped; 2=Some relevant experience; 1=Generic passion; 0=Blank'
         },
         {
-            id: 'a3', sectionId: 'A', sectionIndex: 0,
+            id: 'a3', sectionId: 'A', sectionIndex: 1,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
             text: 'What evidence do you have that this problem is real beyond your own experience? List conversations, failed alternatives, market data, competitor traction.',
             help: 'Specificity matters. "I talked to 5 brokers" is evidence. "They confirmed the pain" is not.',
@@ -846,7 +878,7 @@ body.rtl .option-card { text-align: right; }
 
         /* ── SECTION B: 3-LEVEL NICHE (25 pts) ── */
         {
-            id: 'b1', sectionId: 'B', sectionIndex: 1,
+            id: 'b1', sectionId: 'B', sectionIndex: 2,
             type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
             text: 'What is the broad market you\'re entering? (e.g., "Real Estate Technology", "Healthcare SaaS"). Describe the category and its natural boundaries.',
             help: 'Market level is where your product is one of many. Think "Real Estate Tech" not "WhatsApp bots for brokers".',
@@ -854,7 +886,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '3=Clear recognizable market with scope; 2=Recognizable but vague; 1=Too broad or too narrow; 0=Blank'
         },
         {
-            id: 'b2', sectionId: 'B', sectionIndex: 1,
+            id: 'b2', sectionId: 'B', sectionIndex: 2,
             type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
             text: 'Within that market, what specific sub-market are you targeting? Show how you\'ve narrowed from your market level.',
             help: 'Sub-market narrows the field. Instead of "all real estate," you\'re saying "independent brokers" or "boutique brokerages."',
@@ -862,7 +894,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '4=Sharp sub-market with buyer group identified; 3=Clear sub-market; 2=Some narrowing but broad; 1=Same as market; 0=Blank'
         },
         {
-            id: 'b3', sectionId: 'B', sectionIndex: 1,
+            id: 'b3', sectionId: 'B', sectionIndex: 2,
             type: Q_FREETEXT, maxScore: 10, wordLimit: 150,
             text: 'What is your exact niche? Describe the specific person/company, their situation, their problem, and the outcome you deliver. So tight you could target them in an ad.',
             help: 'Four elements: (1) Specific Person, (2) Specific Situation, (3) Specific Problem, (4) Specific Outcome. All four must be present.',
@@ -870,7 +902,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '10=Razor-sharp all 4 elements + market validation; 8=All 4 strong; 6=3-4 elements present; 4=2 elements; 2=1 element only; 0=Blank'
         },
         {
-            id: 'b4', sectionId: 'B', sectionIndex: 1,
+            id: 'b4', sectionId: 'B', sectionIndex: 2,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
             text: 'Explain WHY this niche is better than going broader. Address: pricing power, competitive advantage, expansion path, and seasonal/regional factors.',
             help: 'Don\'t just assert the niche is good. PROVE the logic. What happens if you serve the whole sub-market instead?',
@@ -878,7 +910,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=Sophisticated niche economics; 4=Clear reasoning with multiple factors; 3=Some reasoning; 2=Basic logic; 1=Assertion only; 0=Blank'
         },
         {
-            id: 'b5', sectionId: 'B', sectionIndex: 1,
+            id: 'b5', sectionId: 'B', sectionIndex: 2,
             type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
             text: 'Estimate the number of potential buyers in your niche in your primary geography. Show your math or reasoning.',
             help: 'Bottom-up estimation. "There are 2,000 independent brokers in UAE" is better than "200 million people use WhatsApp."',
@@ -888,7 +920,7 @@ body.rtl .option-card { text-align: right; }
 
         /* ── SECTION C: POSITIONING (20 pts) ── */
         {
-            id: 'c1', sectionId: 'C', sectionIndex: 2,
+            id: 'c1', sectionId: 'C', sectionIndex: 3,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
             text: 'Complete this: "[Product Name] is a _____________ for _____________." Make it crisp, clear, and specific.',
             help: 'Both blanks matter. First blank = what it is (feature + channel). Second blank = who it\'s for (niche).',
@@ -896,7 +928,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=Crisp memorable pitch-deck ready; 4=Specific and clear; 3=Somewhat specific; 2=Vague; 1=Missing one blank; 0=Blank'
         },
         {
-            id: 'c2', sectionId: 'C', sectionIndex: 2,
+            id: 'c2', sectionId: 'C', sectionIndex: 3,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
             text: 'List the top 3 alternatives your buyer uses TODAY (including "doing nothing"). For each, explain what\'s broken about it.',
             help: 'Not competitor names. What your buyer ACTUALLY DOES: WhatsApp groups, Google Sheets, expensive CRM, manual process.',
@@ -904,7 +936,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=3 real alternatives with specific failures + buyer friction; 4=3 with specific failures; 3=3 with surface weaknesses; 2=1-2 alternatives; 1=Names competitors only; 0=Blank'
         },
         {
-            id: 'c3', sectionId: 'C', sectionIndex: 2,
+            id: 'c3', sectionId: 'C', sectionIndex: 3,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
             text: 'What is the ONE thing your product does differently that makes old alternatives obsolete? Not a feature list — the core mechanism.',
             help: 'Features: "Mobile app, Automation." Mechanism: "Native WhatsApp instead of forcing tool switching." What makes it fundamentally different?',
@@ -912,7 +944,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '5=Ownable defendable mechanism; 4=Specific differentiator; 3=Real but generic; 2=Feature-adjacent; 1=Feature list; 0=Blank'
         },
         {
-            id: 'c4', sectionId: 'C', sectionIndex: 2,
+            id: 'c4', sectionId: 'C', sectionIndex: 3,
             type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
             text: 'Write one sentence that would make your ideal buyer stop scrolling on LinkedIn. Not a tagline — a wedge that creates curiosity and tension.',
             help: 'Create a gap. Make them think "Wait, I have that problem" or "That\'s different."',
@@ -922,7 +954,7 @@ body.rtl .option-card { text-align: right; }
 
         /* ── SECTION D: PRODUCT VISION (20 pts) ── */
         {
-            id: 'd1', sectionId: 'D', sectionIndex: 3,
+            id: 'd1', sectionId: 'D', sectionIndex: 4,
             type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
             text: 'Describe the exact workflow that is broken for your buyer. What do they do today step by step, and where does it break?',
             help: 'Workflow specificity: Morning → Afternoon → Evening. Where exactly does it fail?',
@@ -930,7 +962,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '4=Step-by-step with multiple breakdowns; 3=Clear workflow + 1 failure; 2=Some workflow, vague failure; 1=Abstract problem; 0=Blank'
         },
         {
-            id: 'd2', sectionId: 'D', sectionIndex: 3,
+            id: 'd2', sectionId: 'D', sectionIndex: 4,
             type: Q_FREETEXT, maxScore: 6, wordLimit: 200,
             text: 'List 3-5 core MVP features. For EACH: (1) What problem does it solve? (2) Why can\'t it be cut?',
             help: 'NOT a feature list. A problem-to-feature mapping. If you have more than 5, you\'re building too much.',
@@ -938,7 +970,7 @@ body.rtl .option-card { text-align: right; }
             rubric: '6=Tight MVP with clear problem-feature mapping; 5=3-5 with good mapping; 4=3-5 with some mapping; 3=Features with minimal linkage; 2=Feature dump; 0=Blank'
         },
         {
-            id: 'd3', sectionId: 'D', sectionIndex: 3,
+            id: 'd3', sectionId: 'D', sectionIndex: 4,
             type: Q_MC_EVIDENCE, maxScore: 4,
             text: 'How fast can a new user get their first meaningful result?',
             help: 'Speed to value is critical for MENA MicroSaaS — founders need revenue fast.',
@@ -953,7 +985,7 @@ body.rtl .option-card { text-align: right; }
             evidenceRubric: 'Specific step-by-step first result = bonus; Vague "they see value" = no bonus'
         },
         {
-            id: 'd4', sectionId: 'D', sectionIndex: 3,
+            id: 'd4', sectionId: 'D', sectionIndex: 4,
             type: Q_MC, maxScore: 6,
             text: 'What\'s your build approach for the MVP?',
             help: 'This is MicroSaaS context — speed to market matters more than technical elegance.',
@@ -968,7 +1000,7 @@ body.rtl .option-card { text-align: right; }
 
         /* ── SECTION E: BRAND VOICE (10 pts) ── */
         {
-            id: 'e1', sectionId: 'E', sectionIndex: 4,
+            id: 'e1', sectionId: 'E', sectionIndex: 5,
             type: Q_MC, maxScore: 3,
             text: 'Which founder archetype fits you best? (Russell Brunson, Expert Secrets)',
             help: 'No wrong answer — all archetypes work. This shapes your brand positioning angle.',
@@ -980,7 +1012,7 @@ body.rtl .option-card { text-align: right; }
             ]
         },
         {
-            id: 'e2', sectionId: 'E', sectionIndex: 4,
+            id: 'e2', sectionId: 'E', sectionIndex: 5,
             type: Q_FREETEXT, maxScore: 7, wordLimit: 150,
             text: 'Tell your founder story in 3-5 sentences. What happened, what changed, what you\'re building because of it. Should work as a 30-second VSL opener.',
             help: 'Not your resume. The human moment that made you a founder.',
@@ -990,7 +1022,7 @@ body.rtl .option-card { text-align: right; }
 
         /* ── SECTION F: MENA CONTEXT (10 pts) ── */
         {
-            id: 'f1', sectionId: 'F', sectionIndex: 5,
+            id: 'f1', sectionId: 'F', sectionIndex: 6,
             type: Q_MC, maxScore: 3,
             text: 'Where will you launch first?',
             help: 'This grounds all decisions in your chosen geography.',
@@ -1004,7 +1036,7 @@ body.rtl .option-card { text-align: right; }
             ]
         },
         {
-            id: 'f2', sectionId: 'F', sectionIndex: 5,
+            id: 'f2', sectionId: 'F', sectionIndex: 6,
             type: Q_MC, maxScore: 3,
             text: 'What\'s your content and product language strategy?',
             help: 'Language choice impacts reach, conversion, and competitive positioning in MENA.',
@@ -1016,7 +1048,7 @@ body.rtl .option-card { text-align: right; }
             ]
         },
         {
-            id: 'f3', sectionId: 'F', sectionIndex: 5,
+            id: 'f3', sectionId: 'F', sectionIndex: 6,
             type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
             text: 'How does your product account for MENA business culture? Address at least 2 of: relationship-based selling, WhatsApp preference, Ramadan, trust-first buying, payment infrastructure, family business dynamics.',
             help: 'Don\'t just list MENA characteristics. Show how your product ADAPTS to them.',
@@ -1211,6 +1243,82 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
+       ENGAGEMENT LAYER
+       =================================== */
+    var engagementStartTime = Date.now();
+
+    function renderEngagement() {
+        var slot = document.getElementById('engagementSlot');
+        if (!slot) return;
+        slot.innerHTML = '';
+
+        var q = allQuestions[currentIndex];
+        var prevQ = currentIndex > 0 ? allQuestions[currentIndex - 1] : null;
+        if (!prevQ) return;
+
+        var html = '';
+
+        /* Pattern Break after A3 (end of Section A) */
+        if (prevQ.id === 'a3' && q.sectionId !== 'A') {
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">Insight Unlock</div>';
+            html += '<div class="pb-text">Your niche hierarchy is sharper than 80% of the founders I\'ve worked with. Here\'s why that matters \u2014 specificity is pricing power. The narrower your focus, the higher you can charge, because you\'re solving a problem nobody else is even looking at.</div>';
+            html += '</div></div>';
+        }
+
+        /* Pattern Break after B5 (end of Section B) */
+        if (prevQ.id === 'b5' && q.sectionId !== 'B') {
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">Enemy Reveal</div>';
+            html += '<div class="pb-text">The enemy behind your ICP\'s problem is now named. Most founders fight symptoms. You\'re naming the cause. That\'s the difference between a feature request and a movement.</div>';
+            html += '</div></div>';
+            /* Investment signal at ~30 min mark */
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += 'You\'ve invested 30 minutes. Your problem-solution statement is uniquely yours \u2014 no generic strategy template could produce this.';
+            html += '</div></div>';
+        }
+
+        /* Pattern Break after D4 (end of Section D) */
+        if (prevQ.id === 'd4' && q.sectionId !== 'D') {
+            var positioning = answers['c1'] || 'your product';
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">Offer Preview</div>';
+            html += '<div class="pb-text">Based on your answers so far, here\'s your draft positioning: "' + escapeHtml(positioning) + '" \u2014 We\'ll refine this in the final output documents.</div>';
+            html += '</div></div>';
+            /* Investment signal at ~50 min mark */
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += '50 minutes in. Your product scope document is more specific than what most agencies deliver for $5K.';
+            html += '</div></div>';
+        }
+
+        /* Final investment signal after F3 (last question) */
+        if (prevQ.id === 'f3' || q.id === 'f3') {
+            if (currentIndex === allQuestions.length - 1) {
+                html += '<div class="investment-signal"><div class="investment-signal-card">';
+                html += 'Final question. You\'ve built a complete venture definition that most accelerators charge $10K to produce. This is strategy-grade output.';
+                html += '</div></div>';
+            }
+        }
+
+        /* Acknowledgment between questions (based on previous answer quality) */
+        if (prevQ.type === Q_FREETEXT && prevQ.maxScore > 0 && prevQ.id in answers) {
+            var prevAnswer = answers[prevQ.id] || '';
+            var wordCount = prevAnswer.trim() ? prevAnswer.trim().split(/\s+/).length : 0;
+            if (wordCount > 40) {
+                html += '<div class="acknowledgment"><div class="acknowledgment-card">';
+                html += 'That\'s specific. Most founders stay vague here \u2014 you gave me something I can actually work with.';
+                html += '</div></div>';
+            } else if (wordCount > 0 && wordCount <= 15) {
+                html += '<div class="acknowledgment"><div class="acknowledgment-card">';
+                html += 'I need more from you here. The difference between a $10K idea and a $100K idea often hides in this answer.';
+                html += '</div></div>';
+            }
+        }
+
+        slot.innerHTML = html;
+    }
+
+    /* ===================================
        RENDER QUESTION (supports all 3 types)
        =================================== */
     function renderQuestion() {
@@ -1251,6 +1359,9 @@ body.rtl .option-card { text-align: right; }
         /* Next button label */
         var isLast = currentIndex === allQuestions.length - 1;
         $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+
+        /* Render engagement layer */
+        renderEngagement();
     }
 
     function renderMcQuestion(q) {
@@ -1273,15 +1384,16 @@ body.rtl .option-card { text-align: right; }
         ta.rows = 5;
         ta.value = answers[q.id] || '';
 
+        var hasLimit = q.wordLimit && q.wordLimit > 0;
         var charDiv = document.createElement('div');
         charDiv.className = 'char-count';
         var wordCount = countWords(ta.value);
-        charDiv.textContent = wordCount + ' / ' + (q.wordLimit || 200) + ' words';
+        charDiv.textContent = hasLimit ? (wordCount + ' / ' + q.wordLimit + ' words') : (wordCount + ' words');
 
         ta.addEventListener('input', function() {
             var wc = countWords(ta.value);
-            charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
-            if (wc > (q.wordLimit || 200)) {
+            charDiv.textContent = hasLimit ? (wc + ' / ' + q.wordLimit + ' words') : (wc + ' words');
+            if (hasLimit && wc > q.wordLimit) {
                 charDiv.classList.add('over');
             } else {
                 charDiv.classList.remove('over');
@@ -1385,6 +1497,14 @@ body.rtl .option-card { text-align: right; }
             setTimeout(function() { $questionCard.classList.remove('shake'); }, 400);
             return;
         }
+        /* Save venture name after Section 0 Q2 */
+        if (q.id === 's0_2') {
+            try {
+                var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+                status.ventureName = answers['s0_2'] || '';
+                localStorage.setItem('eo_completion_status', JSON.stringify(status));
+            } catch(e) {}
+        }
         if (currentIndex === allQuestions.length - 1) {
             showScreen('screenContact');
             if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail;
@@ -1451,8 +1571,8 @@ body.rtl .option-card { text-align: right; }
                 }
                 mcMax += q.maxScore;
             } else if (q.type === Q_FREETEXT) {
-                ftCount++;
-                /* Free-text scored 0 locally — AI scores at export */
+                /* Section 0 questions are warm-up (unscored) — don't count them */
+                if (q.maxScore > 0) ftCount++;
             }
         });
         return { sectionScores: sectionScores, total: total, mcTotal: mcTotal, mcMax: mcMax, ftCount: ftCount };
@@ -1506,6 +1626,7 @@ body.rtl .option-card { text-align: right; }
 
         return {
             assessment: ASSESSMENT_ID,
+            venture_name: answers['s0_2'] || '',
             answers: answersMap,
             section_scores: sectionScoresNamed,
             total_score: result.total,
@@ -1580,6 +1701,12 @@ body.rtl .option-card { text-align: right; }
 
         /* Save for dashboard — use MC score since FT is AI-scored */
         saveCompletionStatus('pd', total);
+        /* Ensure venture name is saved in completion status */
+        try {
+            var completionStatus = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            completionStatus.ventureName = answers['s0_2'] || completionStatus.ventureName || '';
+            localStorage.setItem('eo_completion_status', JSON.stringify(completionStatus));
+        } catch(e) {}
 
         /* Also store all answers for downstream scorecards */
         try {
@@ -1598,6 +1725,8 @@ body.rtl .option-card { text-align: right; }
             downstream.positioning = answers['c1'] || '';
             downstream.geography = answers['f1'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f1'; }).options[answers['f1']].label : '';
             downstream.language = answers['f2'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f2'; }).options[answers['f2']].label : '';
+            downstream.ventureName = answers['s0_2'] || '';
+            downstream.ideaDescription = answers['s0_1'] || '';
             localStorage.setItem('eo-project-definition', JSON.stringify(downstream));
         } catch (e) {}
 
@@ -1634,9 +1763,10 @@ body.rtl .option-card { text-align: right; }
         });
         html += '</div>';
 
-        /* Answers Summary */
+        /* Answers Summary (includes Section 0 warm-up) */
         html += '<div class="results-card"><h3>Your Answers</h3>';
-        sectionOrder.forEach(function(sid) {
+        var answerSectionOrder = ['0', 'A', 'B', 'C', 'D', 'E', 'F'];
+        answerSectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
             html += '<h4 style="font-size:14px;color:var(--eo-orange);margin:16px 0 8px;">Section ' + sid + ': ' + sec.fullName + '</h4>';
@@ -1739,8 +1869,10 @@ body.rtl .option-card { text-align: right; }
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
         var band = getBand(result.mcTotal);
 
+        var ventureName = answers['s0_2'] || '';
         var md = '';
         md += '# Project Definition Scorecard Results\n\n';
+        if (ventureName) md += '**Venture:** ' + ventureName + '\n';
         md += '**Student:** ' + capturedEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
@@ -1761,9 +1893,10 @@ body.rtl .option-card { text-align: right; }
         });
         md += '\n---\n\n';
 
-        /* Full Answers by Section */
+        /* Full Answers by Section (includes Section 0 warm-up) */
         md += '## Answers\n\n';
-        sectionOrder.forEach(function(sid) {
+        var mdAnswerOrder = ['0', 'A', 'B', 'C', 'D', 'E', 'F'];
+        mdAnswerOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
             md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';

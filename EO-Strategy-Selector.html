@@ -170,6 +170,17 @@ body.rtl .option-card { text-align: right; }
 .shake { animation: shake 0.4s ease; }
 @media (max-width: 680px) { .question-card { margin: 0 16px; padding: 24px 20px; } .nav-buttons { padding: 0 16px; } .question-text { font-size: 18px; } .progress-wrapper { padding: 0 16px; } .freetext-input { min-height: 100px; } }
 @media (max-width: 400px) { .nav-buttons { flex-direction: column; } .btn-prev.hidden { display: none; } .option-card { padding: 14px 16px; font-size: 14px; } .question-text { font-size: 17px; } }
+/* ── Engagement Layer ── */
+.pattern-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.pattern-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px 24px; }
+.pattern-break-card .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.pattern-break-card .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
+.investment-signal { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.investment-signal-card { background: rgba(233,77,27,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
+.acknowledgment { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.acknowledgment-card { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #D1D5DB; font-style: italic; border-left: 3px solid var(--eo-orange); }
+body.rtl .pattern-break-card { border-left: none; border-right: 4px solid var(--eo-orange); }
+body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(--eo-orange); }
 </style>
 </head>
 <body>
@@ -204,6 +215,7 @@ body.rtl .option-card { text-align: right; }
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
     <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -679,6 +691,107 @@ body.rtl .option-card { text-align: right; }
         $upstreamPanel.innerHTML = html;
     }
 
+    /* ===================================
+       ENGAGEMENT LAYER
+       Pattern breaks, acknowledgments,
+       investment signals between questions
+       =================================== */
+    var $engagementSlot;
+
+    function renderEngagement() {
+        if (!$engagementSlot) $engagementSlot = document.getElementById('engagementSlot');
+        if (!$engagementSlot) return;
+        $engagementSlot.innerHTML = '';
+
+        var q = getEffectiveQuestion(currentIndex);
+        var prevQ = currentIndex > 0 ? getEffectiveQuestion(currentIndex - 1) : null;
+
+        /* ── Pattern Breaks at section transitions ── */
+        if (prevQ && prevQ.sectionId !== q.sectionId) {
+            var prevSection = prevQ.sectionId;
+
+            /* After Section A (Founder DNA) → entering Section B */
+            if (prevSection === 'A') {
+                var founderSkill = answers['a1'] !== undefined ? allQuestions[0].options[answers['a1']].label : 'your unique combination';
+                var html = '<div class="pattern-break"><div class="pattern-break-card">';
+                html += '<div class="pb-label">Insight Unlock</div>';
+                html += '<div class="pb-text">Your founder profile is emerging. ' + escapeHtml(founderSkill) + ' is a strong foundation. Here\'s what that means for your next 90 days: the strategy path we identify will be specifically calibrated to leverage this strength.</div>';
+                html += '</div></div>';
+                $engagementSlot.innerHTML = html;
+                return;
+            }
+
+            /* After Section C (ICP-Strategy Fit) → entering Section D */
+            if (prevSection === 'C') {
+                var selectedPath = answers['b5'] !== undefined ? STRATEGY_PATHS[answers['b5']] : null;
+                if (selectedPath) {
+                    var html = '<div class="pattern-break"><div class="pattern-break-card">';
+                    html += '<div class="pb-label">Strategy Preview</div>';
+                    html += '<div class="pb-text">Here\'s your draft strategy recommendation before final scoring: <strong>' + escapeHtml(selectedPath) + '</strong>. The next questions will test whether you\'re truly ready to execute this path. Your answers so far suggest alignment — now let\'s validate execution readiness.</div>';
+                    html += '</div></div>';
+                    $engagementSlot.innerHTML = html;
+                    return;
+                }
+            }
+
+            /* After Section D (Execution) → entering Section E (Final/MENA) */
+            if (prevSection === 'D') {
+                var html = '<div class="investment-signal"><div class="investment-signal-card">';
+                html += 'Your strategy recommendation accounts for your market data, ICP clarity, and personal resources. This is custom, not template. Two final questions to calibrate for MENA context.';
+                html += '</div></div>';
+                $engagementSlot.innerHTML = html;
+                return;
+            }
+        }
+
+        /* ── Acknowledgment protocol between questions within same section ── */
+        if (prevQ && prevQ.sectionId === q.sectionId && currentIndex > 0) {
+            var ack = getAcknowledgment(prevQ);
+            if (ack) {
+                var html = '<div class="acknowledgment"><div class="acknowledgment-card">' + escapeHtml(ack) + '</div></div>';
+                $engagementSlot.innerHTML = html;
+                return;
+            }
+        }
+    }
+
+    function getAcknowledgment(prevQ) {
+        if (!prevQ || !(prevQ.id in answers)) return null;
+
+        if (prevQ.type === Q_MC || prevQ.type === Q_MC_EVIDENCE) {
+            var selectedIdx = answers[prevQ.id];
+            var opt = prevQ.options[selectedIdx];
+            if (!opt) return null;
+            var maxScore = prevQ.maxScore;
+            var ratio = opt.score / maxScore;
+
+            if (ratio >= 0.8) {
+                var strongAcks = [
+                    'That\'s specific. Most founders stay vague here \u2014 you gave me something I can actually work with.',
+                    'Strong signal. This kind of clarity separates builders from dreamers.',
+                    'Noted. That answer tells me you\'ve thought about this more than most.'
+                ];
+                return strongAcks[Math.floor(Math.random() * strongAcks.length)];
+            } else if (ratio <= 0.4) {
+                var weakAcks = [
+                    'I need more from you here. The difference between a $10K idea and a $100K idea often hides in this answer.',
+                    'That\'s honest, but it flags a gap. Worth revisiting before you commit to a strategy path.',
+                    'This is a pressure point. Founders who address this early save months of wasted effort.'
+                ];
+                return weakAcks[Math.floor(Math.random() * weakAcks.length)];
+            }
+        } else if (prevQ.type === Q_FREETEXT) {
+            var text = answers[prevQ.id] || '';
+            var wc = countWords(text);
+            if (wc >= 40) {
+                return 'That\'s the depth I\'m looking for. Your reasoning here will directly shape the strategy recommendation.';
+            } else if (wc > 0 && wc < 15) {
+                return 'I need more from you here. A few more sentences will sharpen the strategy recommendation significantly.';
+            }
+        }
+        return null;
+    }
+
     function startAssessment() {
         var email = $emailInput.value.trim().toLowerCase();
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $emailInput.style.borderColor = '#EF4444'; $emailInput.focus(); return; }
@@ -702,6 +815,7 @@ body.rtl .option-card { text-align: right; }
         if (q.help) { $questionHelp.textContent = q.help; $questionHelp.style.display = 'block'; } else { $questionHelp.style.display = 'none'; }
         $optionsList.innerHTML = '';
         renderUpstreamPanel();
+        renderEngagement();
         if (q.type === Q_FREETEXT) { renderFreetextQuestion(q); }
         else if (q.type === Q_MC_EVIDENCE) { renderMcEvidenceQuestion(q); }
         else { renderMcQuestion(q); }

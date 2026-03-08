@@ -1,29 +1,32 @@
-# MicroSaaS Project Files Readiness Scorecard
+# MicroSaaS Project Definition Scorecard
+# Version: 1.1
 
 ## Purpose
-Assesses whether a founder has the core business files needed to effectively
-use Claude Desktop / Claude Code for building their MicroSaaS product.
+Defines the founder's venture identity, niche, positioning, product vision, brand voice, and MENA context.
+Section 0 (Venture Introduction) is unscored warm-up. Sections A-F are scored.
 
 ## Scoring
-- 20 questions across 5 sections (4 questions each)
-- Each question: 0-5 scale
-  - 0 = Nothing exists
-  - 1 = Vague idea in my head
-  - 2 = Rough draft / scattered notes
-  - 3 = Decent document that covers the basics
-  - 4 = Polished, detailed, reviewed document
-  - 5 = Battle-tested, updated based on real market feedback
-- Section score: /20
+- 23 questions: 2 warm-up (Section 0) + 21 scored (Sections A-F)
+- Section 0: UNSCORED (venture idea + naming)
+- Sections A-F: Scored per rubric in SKILL.md
 - Total score: /100
 
+## Engagement Protocol (NEW in v1.1)
+- Pattern Breaks: After A3 (Insight Unlock), B5 (Enemy Reveal), D4 (Offer Preview), F3 (Final)
+- Acknowledgment Protocol: Between all scored questions
+- Investment Signaling: At ~30min, ~50min, and final
+- Venture name stored in localStorage: `eo-assessment-status.ventureName`
+
 ## Sections
-| Section | Name | Questions | Max |
-|---------|------|-----------|-----|
-| A | Brand Foundation Files | Q1-Q4 | 20 |
-| B | Pricing & Offer Files | Q5-Q8 | 20 |
-| C | ICP & Market Files | Q9-Q12 | 20 |
-| D | Product & Tech Files | Q13-Q16 | 20 |
-| E | GTM & Content Files | Q17-Q20 | 20 |
+| Section | Name | Questions | Max | Notes |
+|---------|------|-----------|-----|-------|
+| 0 | Venture Introduction | s0_1, s0_2 | 0 | UNSCORED warm-up |
+| A | Founder Context & Problem Origin | a1-a3 | 15 | |
+| B | 3-Level Niche Definition | b1-b5 | 25 | |
+| C | Positioning & Differentiation | c1-c4 | 20 | |
+| D | Product Vision & Spec | d1-d4 | 20 | |
+| E | Brand Voice & Founder Story | e1-e2 | 10 | |
+| F | MENA Context & Localization | f1-f3 | 10 | |
 
 ## Bands
 - READY (80-100): Files are production-grade. Start building immediately.

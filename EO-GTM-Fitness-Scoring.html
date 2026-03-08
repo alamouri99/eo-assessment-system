@@ -175,6 +175,21 @@ body.rtl .option-card { text-align: right; }
 .shake { animation: shake 0.4s ease; }
 @media (max-width: 680px) { .question-card { margin: 0 16px; padding: 24px 20px; } .nav-buttons { padding: 0 16px; } .question-text { font-size: 18px; } .progress-wrapper { padding: 0 16px; } .freetext-input { min-height: 100px; } .motion-table { font-size: 11px; } .motion-table th, .motion-table td { padding: 6px 4px; } }
 @media (max-width: 400px) { .nav-buttons { flex-direction: column; } .btn-prev.hidden { display: none; } .option-card { padding: 14px 16px; font-size: 14px; } .question-text { font-size: 17px; } }
+/* ── Engagement Layer ── */
+.pattern-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.pattern-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px 24px; }
+.pattern-break-card .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.pattern-break-card .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
+.investment-signal { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.investment-signal-card { background: rgba(233,77,27,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
+.acknowledgment { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.acknowledgment-card { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #D1D5DB; font-style: italic; border-left: 3px solid var(--eo-orange); }
+.variable-reward { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.variable-reward-card { background: linear-gradient(135deg, var(--eo-orange), #D4411A); border-radius: var(--eo-radius-sm); padding: 20px 24px; color: #FFFFFF; }
+.variable-reward-card .vr-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.9; }
+.variable-reward-card .vr-text { font-size: 14px; line-height: 1.6; }
+body.rtl .pattern-break-card { border-left: none; border-right: 4px solid var(--eo-orange); }
+body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(--eo-orange); }
 </style>
 </head>
 <body>
@@ -209,6 +224,7 @@ body.rtl .option-card { text-align: right; }
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
     <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -608,7 +624,7 @@ body.rtl .option-card { text-align: right; }
     var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
     var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
+    var $loadingOverlay, $resultsContent, $upstreamPanel, $engagementSlot;
 
     function init() {
         $sectionLabel = document.getElementById('sectionLabel');
@@ -628,6 +644,7 @@ body.rtl .option-card { text-align: right; }
         $loadingOverlay = document.getElementById('loadingOverlay');
         $resultsContent = document.getElementById('resultsContent');
         $upstreamPanel = document.getElementById('upstreamPanel');
+        $engagementSlot = document.getElementById('engagementSlot');
 
         loadAnswers();
         loadUpstreamData();
@@ -814,6 +831,100 @@ body.rtl .option-card { text-align: right; }
         renderQuestion();
     }
 
+    /* ===================================
+       ENGAGEMENT LAYER (Light Polish v2.1)
+       Pattern breaks, investment signals,
+       acknowledgment protocol
+       =================================== */
+    function renderEngagement() {
+        if (!$engagementSlot) return;
+        $engagementSlot.innerHTML = '';
+        var html = '';
+
+        /* ── Pattern Break: After Section B (entering Section C, idx 8) ── */
+        if (currentIndex === 8) {
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">Capability Profile Complete</div>';
+            html += '<div class="pb-text">Your capability profile is taking shape. The content, outbound, audience, budget, network, and proof assets you described unlock specific GTM motions while ruling out others. The next section dives deep into your top 5 motions based on what you just told me.</div>';
+            html += '</div></div>';
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += 'You\'ve mapped your GTM capabilities across 6 dimensions. This profile is now shaping which motions get prioritized for you.';
+            html += '</div></div>';
+        }
+
+        /* ── Variable Reward: After Section C (entering Section D, idx 18) ── */
+        if (currentIndex === 18) {
+            computeTopMotions();
+            html += '<div class="variable-reward"><div class="variable-reward-card">';
+            html += '<div class="vr-label">Motion Ranking Unlocked</div>';
+            html += '<div class="vr-text">Your ranked motion table with tier assignments is ready. Here\'s your top 5:<br><br>';
+            for (var i = 0; i < Math.min(5, motionScores.length); i++) {
+                var ms = motionScores[i];
+                var m = MOTIONS[ms.idx];
+                var tier = getMotionTier(ms.score);
+                html += '<strong>#' + (i + 1) + ' ' + escapeHtml(m.name) + '</strong> — ' + tier.label + ' (' + (Math.round(ms.score * 100) / 100).toFixed(1) + '/5.0)<br>';
+            }
+            html += '<br>Now let\'s contextualize these for MENA execution.</div>';
+            html += '</div></div>';
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += 'You\'ve deep-dived 5 motions with 10 tactical questions. Most founders guess which motions to use. You have data.';
+            html += '</div></div>';
+        }
+
+        /* ── Investment Signal: After Section D (entering Section E, idx 20) ── */
+        if (currentIndex === 20) {
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">MENA Context Locked In</div>';
+            html += '<div class="pb-text">Your MENA execution adaptations are documented. Language mix, timing, channel preferences, and competitive advantages specific to your region. Two final questions: sequencing and your 90-day plan.</div>';
+            html += '</div></div>';
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += 'Almost there. Your GTM fitness assessment accounts for market data, ICP clarity, strategy path, capabilities, and MENA context. This is custom, not template.';
+            html += '</div></div>';
+        }
+
+        /* ── Acknowledgment Protocol: between questions ── */
+        if (currentIndex > 0 && !html) {
+            var prevQ = getEffectiveQuestion(currentIndex - 1);
+            var prevAnswer = answers[prevQ.id];
+            if (prevAnswer !== undefined) {
+                var ackText = '';
+                /* Strong answer acknowledgments based on section */
+                if (prevQ.sectionId === 'B') {
+                    if (prevQ.type === Q_MC && prevQ.options && prevQ.options[prevAnswer]) {
+                        var prevScore = prevQ.options[prevAnswer].score;
+                        if (prevScore >= 4) {
+                            ackText = 'Strong capability. That opens up higher-leverage motions for you.';
+                        } else if (prevScore >= 2) {
+                            ackText = 'Noted. We\'ll factor that into your motion prioritization.';
+                        }
+                    }
+                } else if (prevQ.sectionId === 'C') {
+                    if (prevQ.type === Q_MC && prevQ.options && prevQ.options[prevAnswer]) {
+                        var prevScore = prevQ.options[prevAnswer].score;
+                        if (prevScore >= 3) {
+                            ackText = 'That\'s a strong readiness signal for this motion.';
+                        } else if (prevScore <= 1) {
+                            ackText = 'Lower readiness here doesn\'t disqualify the motion — it shapes the activation timeline.';
+                        }
+                    }
+                } else if (prevQ.sectionId === 'D' && prevQ.type === Q_FREETEXT) {
+                    if (typeof prevAnswer === 'string' && prevAnswer.trim().length > 100) {
+                        ackText = 'Detailed MENA adaptation plan. That level of specificity is what separates regional strategy from generic playbooks.';
+                    }
+                } else if (prevQ.sectionId === 'E' && prevQ.type === Q_FREETEXT) {
+                    if (typeof prevAnswer === 'string' && prevAnswer.trim().length > 80) {
+                        ackText = 'Good sequencing logic. Dependencies between motions create compound effects.';
+                    }
+                }
+                if (ackText) {
+                    html += '<div class="acknowledgment"><div class="acknowledgment-card">' + ackText + '</div></div>';
+                }
+            }
+        }
+
+        $engagementSlot.innerHTML = html;
+    }
+
     function renderQuestion() {
         /* Recompute top motions before entering C section */
         if (currentIndex >= 8 && currentIndex <= 17) { computeTopMotions(); }
@@ -835,6 +946,7 @@ body.rtl .option-card { text-align: right; }
         if (q.help) { $questionHelp.textContent = q.help; $questionHelp.style.display = 'block'; } else { $questionHelp.style.display = 'none'; }
         $optionsList.innerHTML = '';
         renderUpstreamPanel();
+        renderEngagement();
         if (q.type === Q_FREETEXT) { renderFreetextQuestion(q); }
         else { renderMcQuestion(q); }
         if (currentIndex === 0) { $btnPrev.classList.add('hidden'); } else { $btnPrev.classList.remove('hidden'); }
@@ -1043,6 +1155,12 @@ body.rtl .option-card { text-align: right; }
         html += '<div class="band-subtitle">GTM Fitness MC Score</div>';
         if (result.ftCount > 0) { html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>'; }
         html += '</div>';
+
+        /* Completion Engagement — Final Investment Signal */
+        html += '<div style="max-width:640px;margin:0 auto 24px;padding:0 20px;"><div class="pattern-break-card">';
+        html += '<div class="pb-label">Assessment Complete</div>';
+        html += '<div class="pb-text">Your GTM fitness assessment is complete. You have a ranked motion list, a 90-day sequence, and MENA execution adaptations. Most founders spend months figuring out what you just mapped in an hour.</div>';
+        html += '</div></div>';
 
         /* 13 Motions Ranking Table */
         html += '<div class="results-card"><h3>All 13 GTM Motions Ranked</h3>';

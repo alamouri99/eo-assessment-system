@@ -1,8 +1,10 @@
 # ICP — Clarity Scoring Configuration
-# Version: 1.0
+# Version: 1.1
 # Framework: Russell Brunson + Chet Holmes
-# Total Points: 100 (6 sections, weighted differently)
-# Each question: 0-5 scale
+# Total Points: 100 (5 sections A-E, weighted differently)
+# Each question: 0-5 scale (except B/C which use 0-4 scale)
+# 22 questions across 5 sections
+# v1.1 Changes: B reduced 10→5 pains, C reduced 10→5 pleasures, engagement layer added
 
 ---
 
@@ -12,11 +14,48 @@
 id: icp-clarity
 name: ICP Clarity Scoring
 short_name: ICP
-version: "1.0"
+version: "1.1"
 total_points: 100
-questions_count: 20
+questions_count: 22
 readiness_weight: 0.35
 webhook_path: /webhook/eo-icp-score
+```
+
+---
+
+## ENGAGEMENT PROTOCOL (NEW in v1.1)
+
+```yaml
+engagement:
+  pattern_breaks:
+    - after: "Section A → B transition"
+      type: "Insight Unlock"
+      content: "AI-generated insight about WHO clarity quality"
+    - after: "Section B → C transition"
+      type: "Investment Signal"
+      content: "Your pain statements have more depth than most consultants charge $5K for."
+    - after: "Section C → D transition"
+      type: "Variable Reward"
+      content: "Pain-Pleasure Matrix: visual grid of pains vs dream outcomes"
+    - after: "Section D → E transition"
+      type: "Offer Preview"
+      content: "Draft ICP profile based on answers so far"
+  acknowledgment_protocol:
+    - "Between all scored questions"
+    - "Strong answers: positive reinforcement with specificity praise"
+    - "Weak answers: constructive push with specific follow-up"
+  investment_signaling:
+    - at: "~20min"
+      message: "Your ICP clarity is sharper than most founders who've raised $500K."
+    - at: "~40min"
+      message: "This ICP document could anchor a $50K consulting engagement."
+    - at: "final"
+      message: "Complete ICP profile built. This is strategy-grade output."
+  elevation_instructions:
+    - "Upgrade language: scrappy input → polished strategic prose"
+    - "Add strategic context: implications not stated but logically implied"
+    - "Flag contradictions: cross-section misalignments with ⚠️ warnings"
+    - "Strategy-grade output: documents read like professional deliverables"
 ```
 
 ---
@@ -32,34 +71,30 @@ sections:
     questions_count: 5
 
   - id: B
-    key: where
-    name: "WHERE — Congregation Points"
+    key: pain
+    name: "PAIN — Top 5 Pain Statements"
     max_score: 20
-    questions_count: 4
+    questions_count: 5
+    notes: "v1.1: Reduced from 10→5 pains. Each scored 0-4. AI probes top 2."
 
   - id: C
-    key: capture
-    name: "WHAT CAPTURE — Attraction Mechanism"
+    key: pleasure
+    name: "PLEASURE — Top 5 Dream Outcomes"
+    max_score: 20
+    questions_count: 5
+    notes: "v1.1: Reduced from 10→5 pleasures. Each scored 0-4. AI probes top 2."
+
+  - id: D
+    key: hero_journey
+    name: "HERO JOURNEY — Current → Future State"
     max_score: 20
     questions_count: 4
 
-  - id: D
-    key: result
-    name: "RESULT — Desired Transformation"
+  - id: E
+    key: access
+    name: "ACCESS & CONGREGATION — Where to Find Them"
     max_score: 15
     questions_count: 3
-
-  - id: E
-    key: epiphany
-    name: "EPIPHANY — Epiphany Bridge"
-    max_score: 10
-    questions_count: 2
-
-  - id: F
-    key: character
-    name: "CHARACTER — Attractive Character"
-    max_score: 10
-    questions_count: 2
 ```
 
 ---
@@ -141,233 +176,157 @@ questions:
         score: 0
 ```
 
-### Section B: WHERE — Congregation Points (20 points)
+### Section B: PAIN — Top 5 Pain Statements (20 points)
+
+v1.1: Reduced from 10 to 5 pain statements. Each scored 0-4. AI probes the top 2 for depth.
 
 ```yaml
 questions:
   - id: b1
     section: B
-    text: "Where do they gather in person?"
-    rubric_summary: "5=Named specific events AND attended, 3=Know events but haven't attended, 1=Generic, 0=No idea"
-    options:
-      - label: "Named 2-3 specific events AND attended them"
-        score: 5
-      - label: "Know the events but haven't attended"
-        score: 3
-      - label: "Generic references (e.g., 'networking events')"
-        score: 1
-      - label: "No idea where they physically gather"
-        score: 0
+    type: free_text
+    text: "TOP Pain #1 — What is the single biggest pain your ICP faces?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Specific, quantified, emotionally resonant. 2=Generic but relevant. 0=Vague or missing."
 
   - id: b2
     section: B
-    text: "Where are they online? Be specific with group names, not platforms."
-    rubric_summary: "5=Named specific communities AND active, 3=Know some communities, 2=Platform-level, 0=No idea"
-    options:
-      - label: "Named specific communities AND active in them"
-        score: 5
-      - label: "Know some communities but not active"
-        score: 3
-      - label: "Platform-level thinking (e.g., 'LinkedIn and WhatsApp')"
-        score: 2
-      - label: "No idea"
-        score: 0
+    type: free_text
+    text: "TOP Pain #2 — What is the second most urgent pain?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Specific, quantified, emotionally resonant. 2=Generic but relevant. 0=Vague or missing."
 
   - id: b3
     section: B
-    text: "What content do they consume? Podcasts? YouTube? Newsletters?"
-    rubric_summary: "5=Named specific creators AND verified, 3=Know some content, 2=Platform-level, 0=No idea"
-    options:
-      - label: "Named specific creators/shows AND heard them mention these"
-        score: 5
-      - label: "Know some content they consume, not verified"
-        score: 3
-      - label: "Platform-level (e.g., 'YouTube and podcasts')"
-        score: 2
-      - label: "No idea"
-        score: 0
+    type: free_text
+    text: "TOP Pain #3 — What operational pain do they tolerate daily?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Specific, quantified, emotionally resonant. 2=Generic but relevant. 0=Vague or missing."
 
   - id: b4
     section: B
-    text: "Who do they trust for recommendations?"
-    rubric_summary: "5=Named specific people/roles AND know how to reach, 3=Know types, 2=Generic, 0=No idea"
-    options:
-      - label: "Named specific people/roles AND know how to reach them"
-        score: 5
-      - label: "Know the types of people they trust"
-        score: 3
-      - label: "Generic (e.g., 'peers and experts')"
-        score: 2
-      - label: "No idea"
-        score: 0
+    type: free_text
+    text: "TOP Pain #4 — What pain keeps them up at night?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Specific, quantified, emotionally resonant. 2=Generic but relevant. 0=Vague or missing."
+
+  - id: b5
+    section: B
+    type: free_text
+    text: "TOP Pain #5 — What pain would they pay to eliminate TODAY?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Specific, quantified, emotionally resonant. 2=Generic but relevant. 0=Vague or missing."
 ```
 
-### Section C: WHAT CAPTURE — Attraction Mechanism (20 points)
+### Section C: PLEASURE — Top 5 Dream Outcomes (20 points)
+
+v1.1: Reduced from 10 to 5 dream outcomes. Each scored 0-4. AI probes the top 2 for depth.
 
 ```yaml
 questions:
   - id: c1
     section: C
-    text: "Do you have a hook that stops them mid-scroll?"
-    rubric_summary: "5=Tested hook with >3% CTR, 3=Strong hypothesis untested, 1=Weak/generic, 0=No hook"
-    options:
-      - label: "Tested hook with proven engagement (>3% CTR)"
-        score: 5
-      - label: "Strong hypothesis, haven't tested yet"
-        score: 3
-      - label: "Weak or generic hook"
-        score: 1
-      - label: "No hook — still describing features"
-        score: 0
+    type: free_text
+    text: "TOP Dream Outcome #1 — What does their ideal future look like?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Vivid, specific, emotionally compelling. 2=Generic but directional. 0=Vague or missing."
 
   - id: c2
     section: C
-    text: "Do you have an origin story that creates BELIEF?"
-    rubric_summary: "5=Full Epiphany Bridge tested, 3=Partial story, 1=Generic, 0=No story"
-    options:
-      - label: "Full Epiphany Bridge — tested, creates 'me too' moments"
-        score: 5
-      - label: "Partial story, 3-4 elements present"
-        score: 3
-      - label: "Generic: 'I saw a problem and solved it'"
-        score: 1
-      - label: "No story — rely on credentials or features"
-        score: 0
+    type: free_text
+    text: "TOP Dream Outcome #2 — What transformation would they brag about?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Vivid, specific, emotionally compelling. 2=Generic but directional. 0=Vague or missing."
 
   - id: c3
     section: C
-    text: "What do you give them to enter your world?"
-    rubric_summary: "5=Named specific valuable tool that teaches AND qualifies, 3=Generic offer, 1=Weak offer, 0=Nothing"
-    options:
-      - label: "Named, specific, valuable tool that teaches AND qualifies"
-        score: 5
-      - label: "Generic offer (e.g., 'free consultation')"
-        score: 3
-      - label: "Weak offer (e.g., 'join our newsletter')"
-        score: 1
-      - label: "No lead magnet"
-        score: 0
+    type: free_text
+    text: "TOP Dream Outcome #3 — What status shift do they desire?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Vivid, specific, emotionally compelling. 2=Generic but directional. 0=Vague or missing."
 
   - id: c4
     section: C
-    text: "What proof do you have that this works?"
-    rubric_summary: "5=Published case studies + logos, 4=Video testimonials, 3=Text testimonials, 2=Credentials only, 0=Nothing"
-    options:
-      - label: "Published case studies with metrics AND client logos"
-        score: 5
-      - label: "Video testimonials with specific results"
-        score: 4
-      - label: "Text testimonials with results"
-        score: 3
-      - label: "Credentials only — no proven results"
-        score: 2
+    type: free_text
+    text: "TOP Dream Outcome #4 — What would their business look like in 12 months?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Vivid, specific, emotionally compelling. 2=Generic but directional. 0=Vague or missing."
+
+  - id: c5
+    section: C
+    type: free_text
+    text: "TOP Dream Outcome #5 — What would make them recommend you to others?"
+    maxScore: 4
+    wordLimit: 75
+    rubric_summary: "4=Vivid, specific, emotionally compelling. 2=Generic but directional. 0=Vague or missing."
 ```
 
-### Section D: RESULT — Desired Transformation (15 points)
+### Section D: HERO JOURNEY — Current → Future State (20 points)
 
 ```yaml
 questions:
   - id: d1
     section: D
-    text: "Can you show a measurable before/after?"
-    rubric_summary: "5=Specific transformation with metrics, 3=Clear but vague metrics, 1=Generic, 0=No transformation"
-    options:
-      - label: "Specific transformation with metrics (e.g., 'From 3hrs to 15min/week')"
-        score: 5
-      - label: "Transformation clear, metrics vague"
-        score: 3
-      - label: "Generic (e.g., 'more efficient')"
-        score: 1
-      - label: "No transformation articulated"
-        score: 0
+    type: free_text
+    text: "Where is your ideal client RIGHT NOW in their journey?"
+    maxScore: 5
+    rubric_summary: "5=Vivid, specific current state with frustration level and prior attempts. 3=Generic but relevant. 0=Vague."
 
   - id: d2
     section: D
-    text: "How fast do they see the transformation?"
-    rubric_summary: "5=Same day, 4=Week 1, 3=30 days, 2=90 days, 0=Vague"
-    options:
-      - label: "Same-day or next-day proof"
-        score: 5
-      - label: "Week 1 results"
-        score: 4
-      - label: "30-day results"
-        score: 3
-      - label: "90+ days or vague timeline"
-        score: 1
+    type: free_text
+    text: "What does 'success' look like for them after using your solution?"
+    maxScore: 5
+    rubric_summary: "5=Specific 90-day outcome with metrics. 3=General improvement. 0=Vague."
 
   - id: d3
     section: D
-    text: "Do you de-risk their decision?"
-    rubric_summary: "5=Performance guarantee, 4=Money-back, 3=Pilot/trial, 2=Soft guarantee, 0=No guarantee"
-    options:
-      - label: "Performance guarantee with clawback"
-        score: 5
-      - label: "Money-back guarantee"
-        score: 4
-      - label: "Pilot/trial structure"
-        score: 3
-      - label: "No guarantee"
-        score: 0
+    type: free_text
+    text: "What are the 3 biggest obstacles preventing your client from reaching that future state WITHOUT your product?"
+    maxScore: 5
+    rubric_summary: "5=Real blockers mapped, not feature lists. 3=Generic obstacles. 0=Vague."
+
+  - id: d4
+    section: D
+    type: free_text
+    text: "How does your product bridge the gap between current state and desired state?"
+    maxScore: 5
+    rubric_summary: "5=Each obstacle mapped to specific solution approach. 3=Generic solution. 0=Vague."
 ```
 
-### Section E: Epiphany Bridge (10 points)
+### Section E: ACCESS & CONGREGATION — Where to Find Them (15 points)
 
 ```yaml
 questions:
   - id: e1
     section: E
-    text: "What false belief stops your buyer from buying?"
-    rubric_summary: "5=Specific limiting belief verified from multiple buyers, 3=Suspected but unverified, 0=None identified"
-    options:
-      - label: "Specific limiting belief articulated AND heard from multiple buyers"
-        score: 5
-      - label: "Suspect a limiting belief but haven't verified"
-        score: 3
-      - label: "No limiting belief identified"
-        score: 0
+    type: free_text
+    text: "Where does your ideal customer spend time online?"
+    maxScore: 5
+    rubric_summary: "5=Specific platforms, groups, communities with names and sizes. 3=Platform-level. 0=Vague."
 
   - id: e2
     section: E
-    text: "Have you reframed the solution as a NEW opportunity, not just an improvement?"
-    rubric_summary: "5=Clear new category/vehicle, 2=Better version pitch, 0=Same-as-competitor"
-    options:
-      - label: "Clear new category/vehicle — buyers see this as NEW"
-        score: 5
-      - label: "Better version pitch (e.g., 'Our CRM is 3x better')"
-        score: 2
-      - label: "Same-as-competitor pitch"
-        score: 0
-```
+    type: free_text
+    text: "Where does your ideal customer gather offline?"
+    maxScore: 5
+    rubric_summary: "5=Specific events, associations, meetups, MENA-specific. 3=Generic. 0=Vague."
 
-### Section F: Attractive Character (10 points)
-
-```yaml
-questions:
-  - id: f1
-    section: F
-    text: "Which archetype are you? (Expert, Everyman, Mentor, Visionary, Rebel, Lover)"
-    rubric_summary: "5=Chosen AND content consistent, 3=Natural but not intentional, 0=No persona"
-    options:
-      - label: "Consciously chosen AND content/messaging consistent with it"
-        score: 5
-      - label: "Natural archetype but not intentionally designed"
-        score: 3
-      - label: "No public persona — blank slate"
-        score: 0
-
-  - id: f2
-    section: F
-    text: "Does your backstory create authority AND relatability?"
-    rubric_summary: "5=Tested backstory that generates 'me too' responses, 3=Untested story, 1=Generic bio, 0=No backstory"
-    options:
-      - label: "Tested backstory generating 'me too' responses"
-        score: 5
-      - label: "Have a story, haven't tested resonance"
-        score: 3
-      - label: "Generic bio (e.g., '10 years in industry')"
-        score: 1
-      - label: "No backstory — just credentials"
-        score: 0
+  - id: e3
+    section: E
+    type: free_text
+    text: "How will you get in front of 100 potential buyers in the next 30 days?"
+    maxScore: 5
+    rubric_summary: "5=Specific plan with channels, numbers, timeline. 3=General plan. 0=No plan."
 ```
 
 ---
@@ -424,16 +383,20 @@ bands:
 ```yaml
 scoring:
   section_score: "Sum of all question scores in section"
-  total_score: "Sum of all 6 section scores (max 100)"
+  total_score: "Sum of all 5 section scores: A(25) + B(20) + C(20) + D(20) + E(15) = 100"
   band_assignment: "Match total_score to bands"
   readiness_contribution: "total_score * 0.35"
+
+  # B/C scoring note (v1.1):
+  # B: 5 pains × 4 pts each = 20 pts max
+  # C: 5 pleasures × 4 pts each = 20 pts max
+  # AI probes top 2 in each section for depth (probing doesn't change score)
 
   # Priority order for focus (if section scores are low):
   priority_order:
     - "A (WHO) — If unclear, everything else breaks"
-    - "B (WHERE) — If you can't reach them, clarity doesn't matter"
-    - "C (CAPTURE) — If no one's listening, specificity doesn't help"
-    - "D (RESULT) — If transformation isn't clear, harder to sell"
-    - "E (EPIPHANY) — If unaddressed, stalls sales cycles"
-    - "F (CHARACTER) — If not consistent, message dilutes"
+    - "B (PAIN) — If you can't articulate their pain, you can't sell"
+    - "C (PLEASURE) — If no dream outcome, no aspiration pull"
+    - "D (HERO JOURNEY) — If transformation isn't mapped, harder to sell"
+    - "E (ACCESS) — If you can't reach them, clarity doesn't matter"
 ```

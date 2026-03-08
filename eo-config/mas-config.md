@@ -1,7 +1,8 @@
 # MAS — Market Attractiveness Scoring Configuration
-# Version: 1.0
-# Total Points: 100 (4 sections x 25 points)
-# Each question: 0-5 scale
+# Version: 3.0
+# FULL REWRITE: 20→6 user questions + upstream inheritance + AI synthesis
+# Total Points: 100 (B:40 + C:40 + D-auto:20)
+# Section A: Auto-loaded from SC1+SC2 (no user questions)
 
 ---
 
@@ -11,11 +12,62 @@
 id: market-attractiveness
 name: Market Attractiveness Scoring
 short_name: MAS
-version: "1.0"
+version: "3.0"
 total_points: 100
-questions_count: 20
+user_questions_count: 6
+auto_sections: 2  # A (upstream) and D (AI synthesis)
 readiness_weight: 0.35
 webhook_path: /webhook/eo-mas-score
+```
+
+---
+
+## UPSTREAM INHERITANCE (NEW in v3.0)
+
+```yaml
+upstream:
+  description: "SC3 inherits ~80% of its context from SC1 (Project Definition) and SC2 (ICP Clarity)"
+  sources:
+    SC1:
+      - niche_definition
+      - positioning_statement
+      - geography
+      - product_scope
+    SC2:
+      - pain_statements (top 5)
+      - congregation_points
+      - budget_range
+      - buying_behavior
+  storage_keys:
+    SC1: "eo_project-files_answers"
+    SC2: "eo_icp-clarity_answers"
+  auto_load: "Section A displays upstream data for founder confirmation"
+```
+
+---
+
+## ENGAGEMENT PROTOCOL (NEW in v3.0)
+
+```yaml
+engagement:
+  pattern_breaks:
+    - after: "Section A confirmation"
+      type: "Insight Unlock"
+      content: "AI insight on upstream data quality"
+    - after: "Section B (Evidence Validation)"
+      type: "Investment Signal"
+      content: "Your evidence base is stronger than most Series A pitch decks."
+    - after: "Section C (Market Sizing)"
+      type: "Variable Reward"
+      content: "Market sizing snapshot: TAM/SAM/SOM visual"
+  acknowledgment_protocol:
+    - "Between all scored questions in B and C"
+    - "Strong answers: positive reinforcement"
+    - "Weak answers: constructive push"
+  elevation_instructions:
+    - "Upgrade language: scrappy input → polished strategic prose"
+    - "Add strategic context: implications not stated but logically implied"
+    - "Flag contradictions: cross-section misalignments with ⚠️ warnings"
 ```
 
 ---
@@ -25,316 +77,138 @@ webhook_path: /webhook/eo-mas-score
 ```yaml
 sections:
   - id: A
-    key: pain_reality
-    name: "Pain Reality"
-    subtitle: "Understanding Your Buyer's Problem"
-    max_score: 25
-    questions_count: 5
+    key: upstream_confirmation
+    name: "Upstream Confirmation"
+    subtitle: "Auto-loaded from SC1 + SC2"
+    max_score: 0
+    questions_count: 0
+    type: auto
+    notes: "Displays SC1/SC2 data for founder review. No user input required."
 
   - id: B
-    key: purchasing_power
-    name: "Purchasing Power"
-    subtitle: "Can They Actually Buy?"
-    max_score: 25
-    questions_count: 5
+    key: evidence_validation
+    name: "Evidence Validation"
+    subtitle: "Do buyers actually pay for this?"
+    max_score: 40
+    questions_count: 3
+    notes: "b1 (FT, 15pts), b2 (FT, 15pts), b3 (MC, 10pts)"
 
   - id: C
-    key: market_momentum
-    name: "Market Momentum"
-    subtitle: "Is Your Market Growing?"
-    max_score: 25
-    questions_count: 5
+    key: market_sizing
+    name: "Market Sizing & Growth"
+    subtitle: "How big is this and where is it going?"
+    max_score: 40
+    questions_count: 3
+    notes: "c1 (FT, 15pts), c2 (FT, 15pts), c3 (MC, 10pts)"
 
   - id: D
-    key: competitive_advantage
-    name: "Competitive Advantage"
-    subtitle: "Why Should Buyers Choose You?"
-    max_score: 25
-    questions_count: 5
+    key: ai_synthesis
+    name: "AI Synthesis"
+    subtitle: "AI-generated market verdict"
+    max_score: 20
+    questions_count: 0
+    type: auto
+    notes: "AI synthesizes all data (A+B+C) into market verdict. Scored automatically."
 ```
 
 ---
 
 ## QUESTIONS
 
-### Section A: Pain Reality (25 points)
+### Section A: Upstream Confirmation (0 points — auto-loaded)
 
-```yaml
-questions:
-  - id: a1
-    section: A
-    text: "Can you describe the exact moment your buyer feels this pain?"
-    options:
-      - label: "Yes — I can describe the specific moment, time, and trigger"
-        score: 5
-      - label: "I know the general pain but not the exact moment"
-        score: 3
-      - label: "I think they have this pain based on my research"
-        score: 1
-      - label: "I'm not sure how they experience it"
-        score: 0
+No user questions. System auto-loads from localStorage:
+- `eo_project-files_answers`: niche, positioning, geography, product scope
+- `eo_icp-clarity_answers`: pain statements, congregation points, budget range
 
-  - id: a2
-    section: A
-    text: "How often does your buyer experience this pain?"
-    options:
-      - label: "Daily — it disrupts their workflow every day"
-        score: 5
-      - label: "Weekly — it's a recurring frustration"
-        score: 4
-      - label: "Monthly — it surfaces periodically"
-        score: 3
-      - label: "Quarterly or less — it's occasional"
-        score: 1
+Founder reviews and confirms. If data is missing, founder is directed to complete SC1/SC2 first.
 
-  - id: a3
-    section: A
-    text: "Can your buyer put a dollar/AED amount on this pain?"
-    options:
-      - label: "Yes — they can quote the exact cost"
-        score: 5
-      - label: "They can estimate the cost range"
-        score: 3
-      - label: "They acknowledge it costs money but can't quantify"
-        score: 1
-      - label: "No — they haven't connected it to money"
-        score: 0
-
-  - id: a4
-    section: A
-    text: "What are they currently doing to solve this problem?"
-    options:
-      - label: "Paying for an inferior solution they hate"
-        score: 5
-      - label: "Using a painful manual process"
-        score: 4
-      - label: "Using free tools or spreadsheets"
-        score: 2
-      - label: "Nothing — they've accepted the pain"
-        score: 0
-
-  - id: a5
-    section: A
-    text: "If you solved this tomorrow, how fast would they buy?"
-    options:
-      - label: "Same day — they'd sign immediately"
-        score: 5
-      - label: "Within a week — minimal decision process"
-        score: 4
-      - label: "Within a month — some evaluation needed"
-        score: 3
-      - label: "Eventually — no urgency to switch"
-        score: 1
-```
-
-### Section B: Purchasing Power (25 points)
+### Section B: Evidence Validation (40 points)
 
 ```yaml
 questions:
   - id: b1
     section: B
-    text: "Does your buyer control the purchase budget?"
-    options:
-      - label: "Sole decision maker — signs and pays"
-        score: 5
-      - label: "Needs one approval above them"
-        score: 4
-      - label: "Committee decision — multiple approvers"
-        score: 2
-      - label: "No budget authority — needs to request"
-        score: 0
+    type: free_text
+    text: "What evidence do you have that real people experience this pain? (conversations, forums, reviews, support tickets)"
+    maxScore: 15
+    rubric_summary: "15=Multiple sources of direct evidence. 10=Some direct evidence. 5=Indirect evidence. 0=Assumption only."
 
   - id: b2
     section: B
-    text: "How does your price compare to the pain cost?"
-    options:
-      - label: "10x+ ROI — price is a no-brainer"
-        score: 5
-      - label: "5x ROI — clearly worth it"
-        score: 4
-      - label: "2-3x ROI — reasonable but needs justification"
-        score: 3
-      - label: "Break-even or unclear ROI"
-        score: 1
+    type: free_text
+    text: "What evidence do you have that they're willing to PAY for a solution? (existing spend, price conversations, competitor revenue)"
+    maxScore: 15
+    rubric_summary: "15=Direct payment evidence. 10=Strong willingness signals. 5=Indirect signals. 0=No evidence."
 
   - id: b3
     section: B
-    text: "Can your buyer actually pay you easily?"
+    type: multiple_choice
+    text: "How would you rate the strength of your evidence base overall?"
+    maxScore: 10
     options:
-      - label: "Credit card or instant payment — frictionless"
-        score: 5
-      - label: "Bank transfer — some process but doable"
+      - label: "Direct buyer conversations + payment proof + competitor validation"
+        score: 10
+      - label: "Buyer conversations + some payment signals"
+        score: 7
+      - label: "Market research + forum/review mining"
         score: 4
-      - label: "Invoice/PO required — procurement process"
-        score: 3
-      - label: "Significant payment friction (cash market, no digital)"
+      - label: "Assumptions + general industry knowledge"
         score: 1
-
-  - id: b4
-    section: B
-    text: "Are they already paying for solutions in this category?"
-    options:
-      - label: "Yes — spending $1,000+/month on similar tools"
-        score: 5
-      - label: "Yes — spending $100-1,000/month"
-        score: 4
-      - label: "Yes — but under $100/month"
-        score: 3
-      - label: "Only using free tools"
-        score: 1
-
-  - id: b5
-    section: B
-    text: "Have buyers expressed willingness to pay?"
-    options:
-      - label: "Sent deposit, PO, or signed LOI"
-        score: 5
-      - label: "Verbal commitment with specific budget"
-        score: 4
-      - label: "Said 'sounds interesting, send pricing'"
-        score: 2
-      - label: "No buying signal yet"
-        score: 0
 ```
 
-### Section C: Market Momentum (25 points)
+### Section C: Market Sizing & Growth (40 points)
 
 ```yaml
 questions:
   - id: c1
     section: C
-    text: "What direction is your target market heading?"
-    options:
-      - label: "Explosive growth — 30%+ YoY expansion"
-        score: 5
-      - label: "Strong growth — 15-30% YoY"
-        score: 4
-      - label: "Stable — maintaining current size"
-        score: 3
-      - label: "Plateauing or declining"
-        score: 1
+    type: free_text
+    text: "What is your TAM → SAM → SOM? Walk through the funnel with specific numbers."
+    maxScore: 15
+    rubric_summary: "15=All three tiers with credible numbers and sources. 10=Two tiers clear. 5=One tier only. 0=No sizing."
 
   - id: c2
     section: C
-    text: "Are there macro forces pushing this market?"
-    options:
-      - label: "Regulation mandating adoption"
-        score: 5
-      - label: "Technology shift creating new demand (AI, automation)"
-        score: 4
-      - label: "Cultural or behavioral trend supporting it"
-        score: 3
-      - label: "No specific external forces"
-        score: 1
+    type: free_text
+    text: "What growth signals exist in your market? (new entrants, funding rounds, regulatory changes, search trends)"
+    maxScore: 15
+    rubric_summary: "15=Multiple growth signals with data. 10=Some signals identified. 5=Generic growth claim. 0=No signals."
 
   - id: c3
     section: C
-    text: "What's the investment activity in your space?"
+    type: multiple_choice
+    text: "How defensible is your position in this market?"
+    maxScore: 10
     options:
-      - label: "Multiple competitors raised $10M+ rounds"
-        score: 5
-      - label: "Series A/B activity in the space"
+      - label: "Arabic-first + domain expertise + data moat"
+        score: 10
+      - label: "Two defensibility factors (e.g., localization + expertise)"
+        score: 7
+      - label: "One defensibility factor (e.g., first-mover only)"
         score: 4
-      - label: "Seed-stage activity"
-        score: 3
-      - label: "No funding activity — all bootstrapped"
-        score: 1
-
-  - id: c4
-    section: C
-    text: "Are people actively searching for your type of solution?"
-    options:
-      - label: "Google Trends up 50%+ in 12 months"
-        score: 5
-      - label: "Growing search volume steadily"
-        score: 4
-      - label: "Stable search volume"
-        score: 3
-      - label: "Low or declining search interest"
-        score: 1
-
-  - id: c5
-    section: C
-    text: "Is the MENA market specifically ready for this?"
-    options:
-      - label: "Confirmed Arabic SaaS gap — no local solution exists"
-        score: 5
-      - label: "Regional regulation creating specific demand"
-        score: 4
-      - label: "Growing SME digitization wave supports it"
-        score: 3
-      - label: "MENA market is still cash-heavy / resistant"
+      - label: "No clear defensibility — anyone could replicate"
         score: 1
 ```
 
-### Section D: Competitive Advantage (25 points)
+### Section D: AI Synthesis (20 points — auto-scored)
+
+No user questions. AI synthesizes all upstream data (Section A) + user evidence (B+C) into a market verdict.
 
 ```yaml
-questions:
-  - id: d1
-    section: D
-    text: "Can you explain why you're different in one sentence?"
-    options:
-      - label: "Crystal clear — tested and validated with buyers"
-        score: 5
-      - label: "Clear to me but not yet tested"
-        score: 3
-      - label: "Still working on positioning"
-        score: 1
-      - label: "Not differentiated yet"
-        score: 0
-
-  - id: d2
-    section: D
-    text: "Can you reach 1,000 target prospects in 30 days?"
-    options:
-      - label: "Yes — have the list AND the channel"
-        score: 5
-      - label: "Have the channel, building the list"
-        score: 4
-      - label: "Know which channel but haven't built it"
-        score: 3
-      - label: "No clear path to reach them"
-        score: 1
-
-  - id: d3
-    section: D
-    text: "What do you have that competitors can't easily copy?"
-    options:
-      - label: "Deep domain expertise + relationships + data"
-        score: 5
-      - label: "Technical moat or proprietary technology"
-        score: 4
-      - label: "First-mover advantage only"
-        score: 2
-      - label: "Nothing defensible yet"
-        score: 0
-
-  - id: d4
-    section: D
-    text: "Does Arabic localization create defensibility?"
-    options:
-      - label: "Arabic-first with deep cultural integration"
-        score: 5
-      - label: "Arabic translation with regional adaptation"
-        score: 3
-      - label: "English-only for now"
-        score: 1
-      - label: "Arabic not relevant to my market"
-        score: 0
-
-  - id: d5
-    section: D
-    text: "How fast can a new customer see results?"
-    options:
-      - label: "Same day — instant value visible"
-        score: 5
-      - label: "Within a week — quick onboarding"
-        score: 4
-      - label: "Within 30 days — some setup required"
-        score: 3
-      - label: "90+ days before value is clear"
-        score: 1
+ai_synthesis:
+  inputs:
+    - "SC1 niche and positioning data"
+    - "SC2 ICP and pain data"
+    - "Section B evidence validation answers"
+    - "Section C market sizing answers"
+  output: "Market verdict with confidence level"
+  scoring:
+    - "20 = High confidence: strong market with clear evidence"
+    - "15 = Moderate confidence: viable market with some gaps"
+    - "10 = Low confidence: market potential but weak evidence"
+    - "5 = Very low confidence: significant concerns"
+    - "0 = No confidence: evidence contradicts market viability"
 ```
 
 ---
@@ -357,7 +231,7 @@ bands:
     max_score: 79
     color: "#3B82F6"
     tag: "eo-mas-viable"
-    action: "Good foundation. Sharpen 1-2 weak sections."
+    action: "Good foundation. Strengthen evidence in weak areas."
 
   - id: WEAK
     name: "Weak Market"
@@ -378,48 +252,16 @@ bands:
 
 ---
 
-## SECTION RECOMMENDATIONS
-
-```yaml
-recommendations:
-  A:
-    title: "Pain Reality"
-    below_threshold: 15
-    tips:
-      - "Interview 5 buyers this week. Ask: 'Walk me through the last time this problem cost you money.'"
-      - "Build a pain quantification calculator to help buyers see the dollar impact"
-      - "Look for trigger events that make the pain urgent"
-  B:
-    title: "Purchasing Power"
-    below_threshold: 15
-    tips:
-      - "Find the economic buyer — in MENA that's usually the owner/GM"
-      - "Add flexible payment options: Tabby/Tamara installments, annual prepaid discounts"
-      - "Price against the pain cost, not competitor pricing"
-  C:
-    title: "Market Momentum"
-    below_threshold: 15
-    tips:
-      - "Research market growth data from credible sources"
-      - "Identify regulatory tailwinds specific to MENA"
-      - "Track search trends for your solution category in Arabic and English"
-  D:
-    title: "Competitive Advantage"
-    below_threshold: 15
-    tips:
-      - "Articulate your differentiator in one sentence and test with 5 prospects"
-      - "Build a reachability plan: How to get to 1,000 prospects in 30 days"
-      - "Develop at least one unfair advantage (data, relationships, or domain depth)"
-```
-
----
-
 ## SCORING FORMULA
 
 ```yaml
 scoring:
-  section_score: "Sum of all question scores in section (max 25 per section)"
-  total_score: "Sum of all 4 section scores (max 100)"
-  band_assignment: "Match total_score to bands (STRONG >= 80, VIABLE >= 60, WEAK >= 40, RISK < 40)"
+  section_scores:
+    A: 0  # Auto-loaded, no score
+    B: 40  # Evidence Validation (b1:15 + b2:15 + b3:10)
+    C: 40  # Market Sizing (c1:15 + c2:15 + c3:10)
+    D: 20  # AI Synthesis (auto-scored)
+  total_score: "B + C + D = 100"
+  band_assignment: "Match total_score to bands"
   readiness_contribution: "total_score * 0.35"
 ```

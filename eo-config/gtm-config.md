@@ -1,8 +1,9 @@
 # GTM — Fitness Scoring Configuration
-# Version: 1.0
+# Version: 2.1
 # 14 questions (7 business profile + 7 capability profile)
 # 13 motions scored on Fit x Readiness x MENA Viability
 # Composite = Fit*0.4 + Readiness*0.3 + MENA*0.3
+# v2.1 Changes: Light engagement polish (pattern breaks after B, C, D; acknowledgments)
 
 ---
 
@@ -12,12 +13,36 @@
 id: gtm-fitness
 name: GTM Fitness Scoring
 short_name: GTM
-version: "1.0"
+version: "2.1"
 total_points: 100
 questions_count: 14
 motions_count: 13
 readiness_weight: 0.30
 webhook_path: /webhook/eo-gtm-score
+```
+
+---
+
+## ENGAGEMENT PROTOCOL (NEW in v2.1)
+
+```yaml
+engagement:
+  pattern_breaks:
+    - after: "Section B (Capability Profile)"
+      type: "Insight Unlock"
+      content: "Capability Profile Complete — shows strength summary"
+    - after: "Section C (Motion Deep Dive)"
+      type: "Variable Reward"
+      content: "Shows top 5 motions with tier labels (PRIMARY/SECONDARY/etc.)"
+    - after: "Section D (MENA Context)"
+      type: "Pattern Break"
+      content: "MENA Context Locked In — shows MENA viability adjustment"
+  acknowledgment_protocol:
+    - "Between all questions"
+    - "Section-specific feedback based on fit/readiness scores"
+  investment_signaling:
+    - at: "results_screen"
+      content: "Completion card showing time invested and strategy value"
 ```
 
 ---

@@ -220,15 +220,7 @@ body.rtl .option-card { text-align: right; }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; }
 
-/* Evidence */
-.evidence-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--eo-dark);
-    margin-top: 16px;
-    margin-bottom: 8px;
-}
-.evidence-input { min-height: 80px; }
+/* Char count */
 .char-count {
     font-size: 12px;
     color: var(--eo-gray-text);
@@ -460,7 +452,7 @@ body.rtl .option-card { text-align: right; }
     gap: 12px;
 }
 .section-bar-label {
-    width: 100px;
+    width: 140px;
     font-size: 13px;
     font-weight: 600;
     color: #D1D5DB;
@@ -605,47 +597,31 @@ body.rtl .option-card { text-align: right; }
     text-decoration: none;
 }
 
-/* Upstream Reference Panel */
-.upstream-ref {
-    background: rgba(255,255,255,0.04);
+/* Upstream Confirmation Panel */
+.upstream-panel {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+}
+.upstream-card {
+    background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--eo-radius-sm);
-    overflow: hidden;
+    border-radius: var(--eo-radius);
+    padding: 24px;
+    margin-bottom: 16px;
+}
+.upstream-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--eo-orange);
     margin-bottom: 12px;
 }
-.upstream-ref-toggle {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: #9CA3AF;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: color var(--eo-transition);
-}
-.upstream-ref-toggle:hover { color: #D1D5DB; }
-.upstream-ref-toggle .arrow {
-    font-size: 10px;
-    transition: transform 0.2s ease;
-}
-.upstream-ref-toggle.open .arrow { transform: rotate(90deg); }
-.upstream-ref-content {
-    display: none;
-    padding: 0 16px 12px;
-}
-.upstream-ref-content.open { display: block; }
-.upstream-ref-item {
-    padding: 6px 0;
+.upstream-item {
+    padding: 8px 0;
     border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.upstream-ref-item:last-child { border-bottom: none; }
-.upstream-ref-item .label {
+.upstream-item:last-child { border-bottom: none; }
+.upstream-item .label {
     font-size: 11px;
     font-weight: 600;
     color: var(--eo-orange);
@@ -653,10 +629,93 @@ body.rtl .option-card { text-align: right; }
     letter-spacing: 0.5px;
     margin-bottom: 2px;
 }
-.upstream-ref-item .value {
+.upstream-item .value {
     font-size: 13px;
     color: #D1D5DB;
     line-height: 1.4;
+}
+.upstream-confirm-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+.upstream-confirm-bar .confirm-label {
+    font-size: 13px;
+    color: #9CA3AF;
+    flex: 1;
+}
+.btn-confirm {
+    background: var(--eo-orange);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--eo-transition);
+}
+.btn-confirm:hover { background: #D4411A; }
+
+/* Engagement: Pattern Break Card */
+.pattern-break {
+    max-width: 640px;
+    margin: 0 auto 24px;
+    padding: 0 20px;
+}
+.pattern-break-card {
+    background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+    border-left: 4px solid var(--eo-orange);
+    border-radius: var(--eo-radius-sm);
+    padding: 20px 24px;
+}
+.pattern-break-card .pb-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.pattern-break-card .pb-text {
+    font-size: 14px;
+    color: #D1D5DB;
+    line-height: 1.6;
+}
+
+/* Engagement: Investment Signal */
+.investment-signal {
+    max-width: 640px;
+    margin: 0 auto 16px;
+    padding: 0 20px;
+}
+.investment-signal-card {
+    background: rgba(233,77,27,0.08);
+    border-radius: var(--eo-radius-sm);
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #D1D5DB;
+    font-style: italic;
+}
+
+/* Engagement: Acknowledgment */
+.acknowledgment {
+    max-width: 640px;
+    margin: 0 auto 16px;
+    padding: 0 20px;
+}
+.acknowledgment-card {
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--eo-radius-sm);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #D1D5DB;
+    font-style: italic;
+    border-left: 3px solid var(--eo-orange);
 }
 
 /* Gate Warning */
@@ -744,6 +803,10 @@ body.rtl .option-card { text-align: right; }
     .question-text { font-size: 18px; }
     .progress-wrapper { padding: 0 16px; }
     .freetext-input { min-height: 100px; }
+    .upstream-panel { padding: 0 16px; }
+    .pattern-break { padding: 0 16px; }
+    .investment-signal { padding: 0 16px; }
+    .acknowledgment { padding: 0 16px; }
 }
 @media (max-width: 400px) {
     .nav-buttons { flex-direction: column; }
@@ -764,7 +827,7 @@ body.rtl .option-card { text-align: right; }
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
-    <p>Generating your advanced analysis...</p>
+    <p>Generating your market analysis...</p>
 </div>
 
 <!-- Header -->
@@ -777,7 +840,7 @@ body.rtl .option-card { text-align: right; }
     <div class="prereq-gate">
         <div class="prereq-card">
             <h2>Prerequisites Required</h2>
-            <p>You must complete <strong>SC1: Project Definition</strong> and <strong>SC2: ICP Clarity</strong> before starting Market Attractiveness Scoring.<br><br>This assessment references your niche, positioning, pain statements, and congregation points from SC1 and SC2.</p>
+            <p>You must complete <strong>SC1: Project Definition</strong> and <strong>SC2: ICP Clarity</strong> before starting Market Attractiveness Scoring.<br><br>This assessment inherits your niche, positioning, pain statements, and congregation data from SC1 and SC2.</p>
             <a href="EO-Assessment-Dashboard.html" class="btn-primary">Go to Dashboard →</a>
         </div>
     </div>
@@ -787,25 +850,30 @@ body.rtl .option-card { text-align: right; }
 <div class="screen" id="screenEmail">
     <div class="email-capture">
         <h2>Market Attractiveness Scorecard</h2>
-        <p>Validate your market across 4 dimensions with 20 guided questions. Evidence-based scoring. ~20 minutes.</p>
+        <p>Evidence-based market validation in 6 focused questions. Inherits 80% from your SC1 + SC2 work. ~25 minutes.</p>
         <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
 </div>
 
-<!-- Screen 2: Stepper Questions -->
+<!-- Screen 2A: Upstream Confirmation -->
+<div class="screen" id="screenUpstream">
+    <div class="upstream-panel" id="upstreamConfirmPanel"></div>
+</div>
+
+<!-- Screen 2B: Stepper Questions -->
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: PAIN REALITY</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
+            <div class="section-label" id="sectionLabel">Section B: EVIDENCE VALIDATION</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 6</div>
         </div>
         <div class="progress-track">
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
-    <!-- Upstream Reference Panel -->
-    <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <!-- Engagement slot (pattern breaks, acknowledgments) -->
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -850,10 +918,13 @@ body.rtl .option-card { text-align: right; }
 
 <script>
 /* ═══════════════════════════════════════════════════
-   EO MARKET ATTRACTIVENESS SCORING — SCORECARD 3
-   20 Questions | 4 Sections (A-D) | 100 Points
-   Question Types: MC, Free-Text, MC+Evidence
-   Prerequisites: SC1 (Project Definition) + SC2 (ICP Clarity)
+   EO MARKET ATTRACTIVENESS SCORING v3.0 — SCORECARD 3
+   6 Questions | 4 Sections (A-D) | 100 Points
+   A: Upstream Confirmation (auto, 0 pts)
+   B: Evidence Validation (3 Qs, 40 pts)
+   C: Market Sizing & Growth (3 Qs, 40 pts)
+   D: AI Synthesis (auto, 20 pts)
+   Prerequisites: SC1 + SC2
    ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
@@ -863,291 +934,145 @@ body.rtl .option-card { text-align: right; }
        =================================== */
     var Q_MC = 1;
     var Q_FREETEXT = 2;
-    var Q_MC_EVIDENCE = 3;
 
     /* ===================================
        ASSESSMENT CONFIG
        =================================== */
     var ASSESSMENT_ID = 'market-attractiveness';
     var ASSESSMENT_TITLE = 'Market Attractiveness';
+    var STORAGE_KEY = 'eo-market-attractiveness';
 
     var SECTIONS = [
-        { id: 'A', name: 'PAIN REALITY', fullName: 'Pain Reality & Intensity' },
-        { id: 'B', name: 'PURCHASING', fullName: 'Purchasing Power & Willingness' },
-        { id: 'C', name: 'ACCESS', fullName: 'ICP Accessibility' },
-        { id: 'D', name: 'GROWTH', fullName: 'Market Growth & Momentum' }
+        { id: 'B', name: 'EVIDENCE', fullName: 'Evidence Validation' },
+        { id: 'C', name: 'MARKET SIZE', fullName: 'Market Sizing & Growth' }
     ];
 
-    var SECTION_MAXES = { 'A': 25, 'B': 25, 'C': 25, 'D': 25 };
+    var SECTION_MAXES = { 'B': 40, 'C': 40, 'D': 20 };
 
     var SECTION_NAME_MAP = {
-        'A': 'Pain Reality & Intensity',
-        'B': 'Purchasing Power & Willingness',
-        'C': 'ICP Accessibility',
-        'D': 'Market Growth & Momentum'
+        'B': 'Evidence Validation',
+        'C': 'Market Sizing & Growth',
+        'D': 'AI Synthesis'
     };
 
     /* ===================================
-       QUESTION DEFINITIONS (20 Questions)
+       QUESTION DEFINITIONS (6 Questions)
        =================================== */
     var allQuestions = [
-        /* ── SECTION A: PAIN REALITY & INTENSITY (25 pts) ── */
+        /* ── SECTION B: EVIDENCE VALIDATION (40 pts) ── */
         {
-            id: 'a1', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'From your ICP pain statements (SC2), which THREE pains have the STRONGEST evidence of being real? For each pain, cite your evidence: customer conversations, competitor reviews, market data, case studies, or observable behavior.',
-            help: 'Not what you think. What you can PROVE. Cite conversations, data, competitor reviews.',
-            placeholder: 'e.g., "Pain: Invoice reconciliation wastes 15 hours/week. Evidence: 4 finance managers confirmed; competitor reviews mention \'time-saving\' (500+ FreshBooks reviews); ZATCA mandate forces e-invoicing."',
-            rubric: '5=3+ types per pain across all 3 pains; 4=2+ types per pain for 2+ pains; 3=Partial evidence 2 types for 1 pain; 2=Generic evidence; 1=Assertion only; 0=Blank'
+            id: 'b1', sectionId: 'B', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
+            text: 'What EVIDENCE do you have that this pain is real? Cite: customer conversations, competitor reviews, market data, personal experience, regulatory signals. Don\'t tell me pain exists — SHOW me proof.',
+            help: 'Reference your SC2 pain statements. Hierarchy: paid validation > customer interviews > competitor data > market research > assertion.',
+            placeholder: 'e.g., "Pain: Invoice reconciliation wastes 15 hours/week. Evidence: (1) 4 finance managers confirmed in interviews; (2) 500+ FreshBooks reviews mention \'time-saving\'; (3) ZATCA mandate forces e-invoicing; (4) Google Trends shows 40% YoY increase for \'invoice automation MENA\'."',
+            rubric: '15=Expert (3+ types, pitch-ready); 12=Very strong (3+ types, all named/specific); 9=Strong (2+ types, named sources); 6=Decent (2 types, some specificity); 3=Partial (1-2 types, vague); 2=Generic; 1=Assertion only; 0=Blank'
         },
         {
-            id: 'a2', sectionId: 'A', sectionIndex: 0,
-            type: Q_MC, maxScore: 5,
-            text: 'How often does your #1 pain occur for your typical buyer?',
-            help: 'Consider your top pain from A1. Higher frequency = easier to sell.',
+            id: 'b2', sectionId: 'B', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
+            text: 'What EVIDENCE do you have that your ICP can and will PAY? Cite: competitor pricing, customer interviews about budget, industry benchmark data, payment method availability. Show me willingness + ability.',
+            help: 'Cover all 4 if possible: (1) customer intent interviews, (2) competitor pricing benchmarks, (3) industry budget standards, (4) payment infrastructure in your geography.',
+            placeholder: 'e.g., "Evidence: (1) 5 ICPs said they\'d pay $200-300/month — quotes documented; (2) Competitor A charges $149/mo, Competitor B $299/mo; (3) Industry benchmark: mid-market finance teams spend $2K-5K/year on automation; (4) Saudi: credit card + bank transfer available; UAE: Apple Pay adoption 60%."',
+            rubric: '15=Expert (all 4 components); 12=Very strong (3+ types, specific prices, payment validated); 9=Strong (2+ types, named competitors, budget benchmarks); 6=Decent (2 types, some numbers); 3=Partial; 2=Generic; 1=Assertion only; 0=Blank'
+        },
+        {
+            id: 'b3', sectionId: 'B', sectionIndex: 0,
+            type: Q_MC, maxScore: 10,
+            text: 'Which best describes your evidence base for purchasing power?',
+            help: 'Be honest. Primary research = you talked to real ICPs. Secondary = you analyzed existing data. Assumption = you believe but haven\'t validated.',
             options: [
-                { label: 'Multiple times daily — constant friction', score: 5 },
-                { label: 'Daily — part of every workday', score: 4 },
-                { label: 'Weekly — a regular annoyance', score: 3 },
-                { label: 'Monthly — noticeable but infrequent', score: 2 },
-                { label: 'Quarterly or less — rare occurrence', score: 1 }
+                { label: 'Primary research: I\'ve interviewed 5+ ICPs with documented responses about budget + willingness', score: 10 },
+                { label: 'Mixed research: Interviews (3-4) + competitor pricing analysis + some market data', score: 7 },
+                { label: 'Secondary research only: Analyzed competitor pricing, reviews, market reports (no direct conversations)', score: 5 },
+                { label: 'Assumption-based: Logical reasoning but no direct customer/market evidence', score: 2 }
             ]
         },
-        {
-            id: 'a3', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Quantify the cost of your #1 pain per month. Show your math.',
-            help: 'Include labor, errors, opportunity cost. Use real numbers: hours x rate = cost.',
-            placeholder: 'e.g., "Pain: Manual invoice reconciliation. Cost: 4 finance staff x 15 hours/week = 60 hrs/month x $50/hour = $3,000/month. Plus: 2 errors/month x $200 audit cost = $400/month. Total: $3,400/month."',
-            rubric: '5=Comprehensive model with sensitivity; 4=Multiple cost types with clear math; 3=Reasonable math missing 1 cost type; 2=Rough estimate with arbitrary numbers; 1=Partial math; 0=No quantification'
-        },
-        {
-            id: 'a4', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'What are buyers doing TODAY to manage this pain? List tools, processes, workarounds. How broken are they?',
-            help: 'Name specific tools and describe how they fail. "Spreadsheets" is vague. "INDEX/MATCH in Excel that breaks when format changes" is specific.',
-            placeholder: 'e.g., "Workarounds: (1) Manual spreadsheet INDEX/MATCH (errors if format changes), (2) Temp staff hiring (expensive, turnover loss), (3) Quarterly audits (reactive, errors found too late)."',
-            rubric: '5=Comprehensive failure map with chains; 4=Tools + specific failures; 3=Named tools with basic failures; 2=Generic workarounds; 1=No awareness; 0=Blank'
-        },
-        {
-            id: 'a5', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'If you pitched tomorrow, what timeline would the buyer want? (week/month/quarter/someday) What evidence supports this urgency?',
-            help: 'Cite external pressure: regulation deadlines, competitive launches, budget cycles, operational crises.',
-            placeholder: 'e.g., "Urgency: This month. Evidence: (1) ZATCA mandate effective next month; (2) CFO said \'We need solution before month-end\'; (3) Budget allocated in Q; (4) Competitor launched."',
-            rubric: '5=3+ validated signals with direct buyer statement; 4=2-3 signals (regulatory + budget + competitive); 3=1-2 present; 2=Logical assumption unvalidated; 1=Wishful thinking; 0=Blank'
-        },
 
-        /* ── SECTION B: PURCHASING POWER & WILLINGNESS (25 pts) ── */
+        /* ── SECTION C: MARKET SIZING & GROWTH (40 pts) ── */
         {
-            id: 'b1', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What are buyers CURRENTLY PAYING for related problems? List tools/services and monthly spend.',
-            help: 'Include SaaS tools, freelancers, internal labor, and any vendor costs. Name names, cite prices.',
-            placeholder: 'e.g., "Current spend: (1) QuickBooks: $25/month; (2) Zapier: $99/month; (3) Freelance accountant: $300/month; (4) Internal labor: 40 hrs x $50/hr = $2,000/month. Total: $2,424/month."',
-            rubric: '5=Complete spend map with hidden costs; 4=Named tools + prices + labor; 3=3+ named tools with prices; 2=1-2 tools with vague pricing; 1=Generic; 0=Blank'
+            id: 'c1', sectionId: 'C', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 15, wordLimit: 250,
+            text: 'Estimate your TAM → SAM → SOM. Show your math.',
+            help: 'Example: TAM = $50B global HR tech → SAM = $2B MENA mid-market → SOM = $50M UAE finance teams under 500 employees. Use named sources (Statista, Gartner, IBISWorld). For MENA, apply country adjustment factors.',
+            placeholder: 'e.g., "TAM: $12B global invoice automation (Gartner 2025). SAM: $800M MENA (applied 0.07x for MENA share, Statista). SOM: $40M UAE+Saudi mid-market finance teams. Bottom-up: 2,000 target companies × $2,400 ACV = $4.8M serviceable in Year 1."',
+            rubric: '15=Expert (all layers + bottom-up + MENA-specific + sensitivity); 12=Very strong (sources named, MENA adjustments); 9=Strong (all 3 layers, cited sources); 6=Decent (all 3 layers, some sources); 3=Some math (basic, unsourced); 2=Rough estimates; 1=No math; 0=Blank'
         },
         {
-            id: 'b2', sectionId: 'B', sectionIndex: 1,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Who controls the budget for your solution?',
-            help: 'Simpler decision = faster sales. Committee = longer cycle. Be honest about the approval chain.',
+            id: 'c2', sectionId: 'C', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
+            text: 'What growth signals exist in this market? (New entrants, funding rounds, regulatory changes, technology shifts, hiring trends, search volume trends) Show me this market is growing.',
+            help: 'Be specific: "12 companies funded in 2025, up from 4 in 2023" not "companies are getting funded." Include dates, numbers, and sources. MENA-specific signals: Vision 2030, ZATCA, fintech adoption.',
+            placeholder: 'e.g., "Signals: (1) 15 competitors funded in 2024-2025 totaling $180M (Crunchbase); (2) ZATCA e-invoicing mandate effective Q2 2026; (3) Google Trends: \'invoice automation Saudi\' +45% YoY; (4) LinkedIn: 200+ open roles for \'automation engineer\' in MENA; (5) STC Pay + Tabby adoption growing 30% QoQ."',
+            rubric: '15=Expert (comprehensive signal map + buyer urgency implications); 12=Very strong (5+ signals, diverse types, timeline clear); 9=Strong (4+ signals with dates/sources); 6=Decent (2-3 specific with dates); 3=Some specific (2-3, partial dates); 2=Generic; 1=Vague; 0=Blank'
+        },
+        {
+            id: 'c3', sectionId: 'C', sectionIndex: 1,
+            type: Q_MC, maxScore: 10,
+            text: 'How defensible is your competitive gap in this market?',
+            help: 'Think about what stops a funded competitor from copying you in 6 months. Unique mechanism > first-mover > better execution > no gap.',
             options: [
-                { label: 'User/manager decides alone', score: 2 },
-                { label: 'User + 1 approver', score: 2 },
-                { label: 'Department head', score: 1.5 },
-                { label: 'C-suite approval required', score: 1 },
-                { label: 'Committee decision', score: 1 }
-            ],
-            evidencePrompt: 'Describe the budget decision process. Who proposes? Who approves? Timeline? Thresholds? (75 words)',
-            evidenceRubric: '3=Sharp (decision-maker + timeline + thresholds); 2=Partial (decision-maker named, missing timeline); 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b3', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What price are you charging? Compare to: (a) pain cost, (b) alternative spend, (c) ROI delivered. Does it pass the no-brainer test?',
-            help: 'Show the math. Price < 25% of pain cost = strong. ROI > 3x = strong. All 3 comparisons needed for top score.',
-            placeholder: 'e.g., "Price: $199/month. (a) Pain cost $1,150/month; price is 17% of pain. (b) Alternatives $2,424/month; price is 8%. (c) ROI: Customer pays $2,388/year; saves $13,800/year; ROI = 5.8x."',
-            rubric: '5=All 3 comparisons + sensitivity; 4=All 3 clear no-brainer calc; 3=Two comparisons; 2=Partial logic one benchmark; 1=Price only no comparison; 0=No price'
-        },
-        {
-            id: 'b4', sectionId: 'B', sectionIndex: 1,
-            type: Q_MC, maxScore: 5,
-            text: 'How will buyers pay?',
-            help: 'MENA context matters. Credit card adoption varies by country. Offering multiple methods increases conversion.',
-            options: [
-                { label: 'Mixed/multiple methods (card + bank + wallet)', score: 5 },
-                { label: 'Credit card online', score: 5 },
-                { label: 'Bank transfer', score: 5 },
-                { label: 'Mobile wallets (Apple Pay, STC Pay, etc.)', score: 5 },
-                { label: 'BNPL (Tabby, Tamara, etc.)', score: 4 },
-                { label: 'Cash/check only', score: 2 },
-                { label: 'Unknown — haven\'t figured this out', score: 0 }
+                { label: 'Unique mechanism: Proprietary tech, data moat, network effect, or regulatory barrier hard to replicate', score: 10 },
+                { label: 'First-mover advantage: First in specific sub-niche with execution head start', score: 7 },
+                { label: 'Better execution: Speed, price, UX, localization, or service better than competitors', score: 5 },
+                { label: 'No clear gap: Competing on effort and hustle; no structural advantage', score: 2 }
             ]
-        },
-        {
-            id: 'b5', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What is the STRONGEST signal that someone would PAY? (pre-orders, verbal commits, LOIs, pilots, competitor revenue, market research)',
-            help: 'Hierarchy: Executed payment > Signed commitment > Verbal > Behavioral (waitlist/signup) > Aspirational ("I think they would").',
-            placeholder: 'e.g., "Signal: Signed LOI with [Company] for $2K/month pilot. CTO: \'This is exactly what we need.\' Also: 8 people on waitlist said \'I\'d pay $200-300/month.\'"',
-            rubric: '5=Executed payment/paid pilot in progress; 4=Signed LOI/pre-order; 3=Verbal commitment named buyer; 2=Behavioral waitlist/signup; 1=Aspirational; 0=Blank'
-        },
-
-        /* ── SECTION C: ICP ACCESSIBILITY (25 pts) ── */
-        {
-            id: 'c1', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'From SC2 congregation points, which has HIGHEST density of exact buyers? How many are there? Show layered filtering.',
-            help: 'Layer: Total members → Filter by role → Filter by size → Filter by geography → Actual ICP fit.',
-            placeholder: 'e.g., "Top point: LinkedIn Finance Mgr group. Estimated: 5K members; 2K mid-market; 500-1K exact fit by size + industry. Can reach 100 in 30 days."',
-            rubric: '5=Expert map multiple points ranked with specific counts; 4=Sharp calculation with layered filtering; 3=Specific point + rough estimate; 2=Generic group no estimate; 1=Vague; 0=Blank'
-        },
-        {
-            id: 'c2', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Can you reach 100+ buyers in 30 days with your resources? Describe exactly how: channels, daily cadence, response rates, time required.',
-            help: 'Be specific: LinkedIn 15-20 msgs/week is realistic. 100+/week is not. Show the math adds up to 100 in 30 days.',
-            placeholder: 'e.g., "LinkedIn outbound: 20 msgs/week x 4 weeks = 80; 20% response = 16 meetings. Cold email: 10/week x 4 = 40; 5% response = 2 meetings. Total: 120 attempts, ~18 meetings."',
-            rubric: '5=Multiple channels + targets + validated rates + contingency; 4=Channels + daily cadence + response rates; 3=Channels + weekly targets realistic; 2=Some path vague numbers; 1=No path; 0=Blank'
-        },
-        {
-            id: 'c3', sectionId: 'C', sectionIndex: 2,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Which channels can you realistically use to reach your ICP? (Select your primary)',
-            help: 'Choose your strongest channel. The one where you have existing audience, proven response rates, or unique advantage.',
-            options: [
-                { label: 'LinkedIn outbound (existing network)', score: 2 },
-                { label: 'Cold email (proven templates)', score: 2 },
-                { label: 'WhatsApp groups (active member)', score: 2 },
-                { label: 'Content marketing (existing audience)', score: 2 },
-                { label: 'Events & networking (regular attendee)', score: 2 },
-                { label: 'Referrals (existing customer base)', score: 2 },
-                { label: 'Paid ads (budget + experience)', score: 1.5 },
-                { label: 'SEO (established presence)', score: 1.5 }
-            ],
-            evidencePrompt: 'Describe your specific capability on your top 2-3 channels. Include audience size, response rate, time required. (100 words)',
-            evidenceRubric: '3=Specific numbers with proof (5K connections, 15% response rate); 2=Some specificity; 1=Vague; 0=Blank'
-        },
-        {
-            id: 'c4', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'How are competitors reaching these buyers? What channels dominate? Where are they weak?',
-            help: 'Research competitors\' marketing: LinkedIn followers, content strategy, SEO rankings, event presence. Find gaps.',
-            placeholder: 'e.g., "Competitors [A, B] dominate LinkedIn (15K followers; weekly posts) and content (SEO-ranked). Absent from: WhatsApp outreach, community engagement. Gap: MENA WhatsApp groups ignored."',
-            rubric: '5=Detailed channels + metrics + clear gaps + strategic positioning; 4=2-3 competitors with channels + metrics + 2+ weaknesses; 3=Partial map 1-2 channels 1 weakness; 2=Names competitors only; 1=No awareness; 0=Blank'
-        },
-        {
-            id: 'c5', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'For your MENA geography (SC1), what\'s the realistic channel mix? Account for: Arabic vs English, WhatsApp vs email, LinkedIn penetration, event culture, mobile-first.',
-            help: 'Saudi: LinkedIn 65%, WhatsApp 90%. Egypt: LinkedIn 35%, WhatsApp 95%. Adapt your channel mix to local reality.',
-            placeholder: 'e.g., "Saudi finance managers: 65% LinkedIn, 90% WhatsApp, 40% email. Strategy: 35% LinkedIn, 40% WhatsApp, 15% email, 10% events. Arabic preference growing."',
-            rubric: '5=Expert detailed mix by geography with language strategy; 4=3-4 MENA factors with channel percentages; 3=Some MENA context partial mix; 2=Surface awareness; 1=Western assumptions; 0=Blank'
-        },
-
-        /* ── SECTION D: MARKET GROWTH & MOMENTUM (25 pts) ── */
-        {
-            id: 'd1', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'What is the overall direction of your market?',
-            help: 'Base this on evidence: analyst reports, funding data, revenue growth, customer growth.',
-            options: [
-                { label: 'Rapidly growing (>30% YoY)', score: 2 },
-                { label: 'Growing (10-30% YoY)', score: 2 },
-                { label: 'Stable (0-10% YoY)', score: 1.5 },
-                { label: 'Declining (<0% YoY)', score: 0.5 },
-                { label: 'Don\'t know — need to research', score: 0 }
-            ],
-            evidencePrompt: 'What evidence supports this? Cite analyst reports, company funding, revenue growth, or market research. (75 words)',
-            evidenceRubric: '3=Sharp with named source and numbers; 2=Generic with some source; 1=Assumption only; 0=Blank'
-        },
-        {
-            id: 'd2', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'List regulatory, technology, cultural, or economic shifts PUSHING buyers toward solutions like yours. Examples: Vision 2030, ZATCA, GDPR, labor cost inflation, AI integration.',
-            help: 'Be specific: "ZATCA e-invoicing mandate effective [month]" not "digitization happening." Include dates and magnitude.',
-            placeholder: 'e.g., "Tailwinds: (1) ZATCA e-invoicing mandate effective [month] — forces modernization. (2) Saudi labor cost inflation 12% YoY — companies automating. (3) Cloud adoption 40% CAGR."',
-            rubric: '5=3+ specific tailwinds with dates and magnitude; 4=2-3 specific dated tailwinds with buyer connection; 3=2 named missing dates; 2=1 generic trend; 1=No tailwinds; 0=Blank'
-        },
-        {
-            id: 'd3', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'Is money flowing into your space? Name funded competitors (Series A+, recent seed), acquisitions. What does this tell you about viability?',
-            help: 'Use Crunchbase, LinkedIn, news. For each competitor: name, round, amount, date. Then interpret: what does funding mean for your market?',
-            placeholder: 'e.g., "Funding: [Competitor A] $8M Series B (Q4 2025); [Competitor B] $1.5M seed (Q2 2025); [Competitor C] acquired for ~$15M (2024). Signal: VCs fund this space = investor confidence."',
-            rubric: '5=3+ funded competitors with amounts + dates + interpretation; 4=2-3 with amounts + stages + viability signal; 3=2 competitors with some funding; 2=Names competitors no data; 1=No awareness; 0=Blank'
-        },
-        {
-            id: 'd4', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Is search demand for your solution type increasing?',
-            help: 'Check Google Trends, keyword tools. Cite specific keywords, timeframes, and volume changes.',
-            options: [
-                { label: 'Strongly up (>20% YoY)', score: 2 },
-                { label: 'Slightly up (5-20% YoY)', score: 1.5 },
-                { label: 'Flat (0-5% YoY)', score: 1 },
-                { label: 'Down (<0% YoY)', score: 0 },
-                { label: 'Don\'t know — haven\'t checked', score: 0 }
-            ],
-            evidencePrompt: 'What did you check? Which keywords? Tools used? Timeframe? (75 words)',
-            evidenceRubric: '3=Specific keywords + tool + timeframe + numbers; 2=Generic checked Google Trends; 1=No research; 0=Blank'
-        },
-        {
-            id: 'd5', sectionId: 'D', sectionIndex: 3,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'How ready is your MENA market for this solution?',
-            help: 'Already Buying = established category. Unaware = need to educate. Resistant = entrenched systems.',
-            options: [
-                { label: 'Already buying — established category, known solutions', score: 2 },
-                { label: 'Aware not buying — knowledge gap or price barrier', score: 1.5 },
-                { label: 'Unaware — need to educate the market', score: 1 },
-                { label: 'Resistant — entrenched systems, cultural resistance', score: 0 },
-                { label: 'Don\'t know', score: 0 }
-            ],
-            evidencePrompt: 'What tells you this? Competitor presence, buyer conversations, market research, regulatory readiness. (75 words)',
-            evidenceRubric: '3=Multiple sources: competitors + buyer conversations + adoption data; 2=One source; 1=Assumption only; 0=Blank'
         }
     ];
 
     /* ===================================
-       RECOMMENDATIONS BY SECTION
+       RECOMMENDATIONS
        =================================== */
     var RECOMMENDATIONS = {
-        'A': [
-            'Cite 3+ evidence types per pain: customer conversations, competitor reviews, market data, case studies.',
-            'Quantify your #1 pain cost with full math: labor + errors + opportunity cost. Validate unit costs with a buyer.',
-            'Map workarounds with failure chains: what tool fails, why, and what breaks next.',
-            'Find urgency signals: regulatory deadlines, competitive pressure, budget cycles. Ask: "What happens if you DON\'T solve this?"',
-            'Interview 3-5 ICPs this week. Ask: "Walk me through how you handle this today. What breaks?"'
-        ],
         'B': [
-            'Map complete current spend: SaaS tools + freelancers + internal labor + vendor costs. Name names, cite prices.',
-            'Document the budget decision process: who proposes, who approves, timeline, thresholds.',
-            'Run the no-brainer test: Price < 25% of pain cost AND < 25% of alternative spend AND ROI > 3x.',
-            'For MENA, offer 2-3 payment methods: bank transfer + credit card + BNPL. Credit card only limits Egypt/Jordan conversions.',
-            'Convert behavioral signals to commitments: waitlist → pilot → LOI → payment.'
+            'Schedule 3-5 buyer conversations this week. Ask: "How does this pain show up for you?" Document names + quotes.',
+            'Research 3 competitors\' pricing on G2/Capterra. Document: competitor name, plan, price, target segment.',
+            'Ask 5 ICPs directly: "Would you pay $[your price] to solve this?" Get documented yes/no + reasoning.',
+            'For MENA, validate payment methods: credit card adoption varies by country. Offer 2-3 options.',
+            'Run the no-brainer test: Price < 25% of pain cost AND ROI > 3x. Show the math.'
         ],
         'C': [
-            'Layer your congregation density estimate: Total → Role → Size → Geography → Actual ICP fit.',
-            'Build a 30-day reach plan with daily cadence: channels, messages per day, expected response rates.',
-            'Research competitor channels: where are they strong, where are they absent? That gap is your opportunity.',
-            'Adapt channels for MENA: WhatsApp > LinkedIn in Egypt/Jordan. Arabic content increases response rates.',
-            'Attend one offline event from your list. Verify: Is your buyer there? How many?'
-        ],
-        'D': [
-            'Research market growth with named analyst sources: Gartner, Statista, IBISWorld. Cite year and numbers.',
-            'List 3+ specific tailwinds with dates and magnitude. Regulatory deadlines are strongest.',
-            'Use Crunchbase to find funded competitors: name, round, amount, date. Interpret what funding means.',
-            'Check Google Trends for 3-5 keywords. Report: volume, YoY change, geographic breakdown.',
-            'Assess MENA readiness honestly: are buyers already buying, aware, or resistant? Match GTM accordingly.'
+            'Find ONE good TAM source (Statista, Gartner, IBISWorld). Build SAM/SOM from there with MENA adjustments.',
+            'Use Crunchbase to find funded competitors in your space. Document: name, round, amount, date.',
+            'Check Google Trends for 3-5 keywords related to your solution. Report YoY change and geographic breakdown.',
+            'List 3+ specific growth signals with dates: regulatory deadlines, funding rounds, hiring trends.',
+            'For MENA markets: apply country adjustment factors. UAE = 1.2x premium, Egypt = 0.3x, Jordan = 0.25x.'
         ]
+    };
+
+    /* ===================================
+       ENGAGEMENT CONFIG
+       =================================== */
+    var ENGAGEMENT = {
+        afterB: {
+            type: 'pattern-break',
+            label: 'INSIGHT UNLOCK',
+            getText: function(scores) {
+                var bScore = scores.B || 0;
+                var strength = bScore >= 30 ? 'strong' : bScore >= 20 ? 'moderate' : 'weak';
+                var msgs = {
+                    strong: 'Your evidence base is strong. You\'re proving, not guessing — that\'s what separates funded startups from side projects. Your pain validation and purchasing evidence would hold up in an investor conversation.',
+                    moderate: 'Your evidence base is moderate. You have some real data, but there are gaps. The good news: you know what to validate next. One more round of buyer conversations could move this from "interesting" to "investable."',
+                    weak: 'Your evidence base needs work. Right now, you\'re operating on assumptions more than evidence. That\'s fixable — but it needs fixing before you spend money on GTM. Schedule 5 buyer conversations this week.'
+                };
+                return msgs[strength];
+            }
+        },
+        afterC: {
+            type: 'variable-reward',
+            label: 'MARKET POSITIONING',
+            getText: function() {
+                return 'Auto-generating your market positioning paragraph for investor conversations...';
+            }
+        },
+        investmentB: 'Your evidence base is real. No hand-waving. That alone puts you ahead of 80% of founders who skip validation.',
+        investmentC: 'Your market assessment has more rigor than most pitch decks. Evidence-based, not assumption-based.',
+        investmentFinal: '25 minutes invested. Your market assessment could anchor the market section of your funding deck.'
     };
 
     /* ===================================
        STATE
        =================================== */
-    var STORAGE_KEY = 'eo-market-attractiveness';
     var answers = {};
     var currentIndex = 0;
     var autoAdvanceTimer = null;
@@ -1156,6 +1081,8 @@ body.rtl .option-card { text-align: right; }
     var aiData = null;
     var upstreamPD = null;
     var upstreamICP = null;
+    var upstreamConfirmed = false;
+    var engagementShown = { afterB: false, afterC: false };
 
     /* ===================================
        DOM REFS
@@ -1163,7 +1090,7 @@ body.rtl .option-card { text-align: right; }
     var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
     var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
+    var $loadingOverlay, $resultsContent, $engagementSlot;
 
     /* ===================================
        INIT
@@ -1185,7 +1112,7 @@ body.rtl .option-card { text-align: right; }
         $btnSkipContact = document.getElementById('btnSkipContact');
         $loadingOverlay = document.getElementById('loadingOverlay');
         $resultsContent = document.getElementById('resultsContent');
-        $upstreamPanel = document.getElementById('upstreamPanel');
+        $engagementSlot = document.getElementById('engagementSlot');
 
         loadAnswers();
         loadUpstreamData();
@@ -1204,9 +1131,8 @@ body.rtl .option-card { text-align: right; }
             if (storedEmail) {
                 capturedEmail = storedEmail;
                 if ($emailInput) $emailInput.value = storedEmail;
-                currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
-                showScreen('screenStepper');
-                renderQuestion();
+                showUpstreamConfirmation();
+                return;
             }
         } catch (e) { /* show email screen by default */ }
     }
@@ -1221,29 +1147,55 @@ body.rtl .option-card { text-align: right; }
     function loadAnswers() {
         try {
             var saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) answers = JSON.parse(saved);
+            if (saved) {
+                var parsed = JSON.parse(saved);
+                /* Only load raw answer data, not downstream export data */
+                if (parsed && (parsed.b1 !== undefined || parsed.b2 !== undefined || parsed.b3 !== undefined)) {
+                    /* Check if this is old format (downstream export) vs raw answers */
+                    if (parsed.section_scores || parsed.total !== undefined) {
+                        /* Old downstream format — extract just answers */
+                        var rawAnswers = {};
+                        allQuestions.forEach(function(q) {
+                            if (parsed[q.id] !== undefined) {
+                                rawAnswers[q.id] = parsed[q.id];
+                            }
+                        });
+                        answers = rawAnswers;
+                    } else {
+                        answers = parsed;
+                    }
+                }
+            }
         } catch (e) { answers = {}; }
     }
 
     function saveAnswers() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {}
+        try {
+            var saveData = {};
+            allQuestions.forEach(function(q) {
+                if (answers[q.id] !== undefined) {
+                    saveData[q.id] = answers[q.id];
+                }
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+        } catch (e) {}
     }
 
     function loadUpstreamData() {
         try {
-            var pdData = localStorage.getItem('eo-project-definition');
-            if (pdData) upstreamPD = JSON.parse(pdData);
+            var pdRaw = localStorage.getItem('eo-project-definition');
+            if (pdRaw) upstreamPD = JSON.parse(pdRaw);
         } catch (e) { upstreamPD = null; }
         try {
-            var icpData = localStorage.getItem('eo-icp-clarity');
-            if (icpData) upstreamICP = JSON.parse(icpData);
+            var icpRaw = localStorage.getItem('eo-icp-clarity');
+            if (icpRaw) upstreamICP = JSON.parse(icpRaw);
         } catch (e) { upstreamICP = null; }
     }
 
     function findFirstUnanswered() {
         for (var i = 0; i < allQuestions.length; i++) {
             var q = allQuestions[i];
-            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
+            if (q.type === Q_MC) {
                 if (!(q.id in answers)) return i;
             } else if (q.type === Q_FREETEXT) {
                 if (!(q.id in answers) || !answers[q.id].trim()) return i;
@@ -1268,7 +1220,7 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
-       RTL TOGGLE
+       RTL
        =================================== */
     function restoreRTL() {
         try {
@@ -1296,65 +1248,95 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
-       UPSTREAM REFERENCE PANEL
+       SECTION A: UPSTREAM CONFIRMATION
        =================================== */
-    function renderUpstreamPanel() {
-        if (!upstreamPD && !upstreamICP) { $upstreamPanel.innerHTML = ''; return; }
-
+    function showUpstreamConfirmation() {
+        var panel = document.getElementById('upstreamConfirmPanel');
         var html = '';
 
-        /* SC1 Reference */
+        html += '<div style="text-align:center;margin-bottom:24px;">';
+        html += '<h2 style="font-size:24px;font-weight:800;margin-bottom:8px;">Section A: Upstream Confirmation</h2>';
+        html += '<p style="color:#9CA3AF;font-size:14px;">Based on your SC1 and SC2 work, here\'s what I know about your market. Confirm or flag updates.</p>';
+        html += '</div>';
+
+        /* SC1 Data */
         if (upstreamPD) {
-            var niche = upstreamPD.niche || upstreamPD.b3 || '';
-            var positioning = upstreamPD.positioning || upstreamPD.c1 || '';
-            var geography = upstreamPD.geography || '';
-
-            if (niche || positioning || geography) {
-                html += '<div class="upstream-ref">';
-                html += '<button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc1\')">';
-                html += '<span class="arrow" id="arrowSC1">▶</span> SC1 Reference: Project Definition';
-                html += '</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC1">';
-                if (niche) html += '<div class="upstream-ref-item"><div class="label">Niche</div><div class="value">' + escapeHtml(niche) + '</div></div>';
-                if (positioning) html += '<div class="upstream-ref-item"><div class="label">Positioning</div><div class="value">' + escapeHtml(positioning) + '</div></div>';
-                if (geography) html += '<div class="upstream-ref-item"><div class="label">Geography</div><div class="value">' + escapeHtml(geography) + '</div></div>';
-                html += '</div></div>';
-            }
-        }
-
-        /* SC2 Reference */
-        if (upstreamICP) {
-            var customerIdentity = upstreamICP.a1 || '';
-            var topPains = [];
-            for (var i = 1; i <= 3; i++) {
-                var p = upstreamICP['b' + i] || '';
-                if (p) topPains.push(p);
-            }
-            var budget = '';
-            if (upstreamICP.a5 !== undefined) {
-                budget = upstreamICP.a5 || '';
-            }
-            var congregation = upstreamICP.e1 || '';
-
-            if (customerIdentity || topPains.length > 0 || congregation) {
-                html += '<div class="upstream-ref">';
-                html += '<button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc2\')">';
-                html += '<span class="arrow" id="arrowSC2">▶</span> SC2 Reference: ICP Clarity';
-                html += '</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC2">';
-                if (customerIdentity) html += '<div class="upstream-ref-item"><div class="label">Customer Identity</div><div class="value">' + escapeHtml(customerIdentity.substring(0, 200)) + '</div></div>';
-                if (topPains.length > 0) {
-                    html += '<div class="upstream-ref-item"><div class="label">Top Pain Statements</div><div class="value">';
-                    topPains.forEach(function(p, idx) { html += (idx + 1) + '. ' + escapeHtml(p.substring(0, 100)) + '<br>'; });
-                    html += '</div></div>';
+            html += '<div class="upstream-card">';
+            html += '<h3>From SC1: Project Definition</h3>';
+            var sc1Fields = [
+                { key: 'niche', alt: 'b3', label: 'Niche & Sub-market' },
+                { key: 'positioning', alt: 'c1', label: 'Positioning' },
+                { key: 'geography', alt: '', label: 'Target Geography' },
+                { key: 'product_scope', alt: 'd1', label: 'Product Scope' }
+            ];
+            sc1Fields.forEach(function(f) {
+                var val = upstreamPD[f.key] || upstreamPD[f.alt] || '';
+                if (val) {
+                    html += '<div class="upstream-item">';
+                    html += '<div class="label">' + f.label + '</div>';
+                    html += '<div class="value">' + escapeHtml(val.substring(0, 300)) + '</div>';
+                    html += '</div>';
                 }
-                if (budget) html += '<div class="upstream-ref-item"><div class="label">Budget Range</div><div class="value">' + escapeHtml(budget) + '</div></div>';
-                if (congregation) html += '<div class="upstream-ref-item"><div class="label">Congregation Points</div><div class="value">' + escapeHtml(congregation.substring(0, 200)) + '</div></div>';
-                html += '</div></div>';
-            }
+            });
+            html += '</div>';
         }
 
-        $upstreamPanel.innerHTML = html;
+        /* SC2 Data */
+        if (upstreamICP) {
+            html += '<div class="upstream-card">';
+            html += '<h3>From SC2: ICP Clarity</h3>';
+            var sc2Fields = [
+                { key: 'a1', label: 'Customer Identity' },
+                { key: 'b1', label: 'Top Pain #1' },
+                { key: 'b2', label: 'Top Pain #2' },
+                { key: 'b3', label: 'Top Pain #3' },
+                { key: 'a5', label: 'Budget Range' },
+                { key: 'e1', label: 'Congregation Points' }
+            ];
+            sc2Fields.forEach(function(f) {
+                var val = upstreamICP[f.key] || '';
+                if (val) {
+                    html += '<div class="upstream-item">';
+                    html += '<div class="label">' + f.label + '</div>';
+                    html += '<div class="value">' + escapeHtml(val.substring(0, 200)) + '</div>';
+                    html += '</div>';
+                }
+            });
+            html += '</div>';
+        }
+
+        if (!upstreamPD && !upstreamICP) {
+            html += '<div class="upstream-card">';
+            html += '<p style="color:#9CA3AF;text-align:center;">No upstream data found. Your SC1/SC2 answers will be loaded when available.</p>';
+            html += '</div>';
+        }
+
+        /* Pattern Break: Section A transition */
+        html += '<div class="pattern-break-card" style="margin-top:16px;">';
+        html += '<div class="pb-label">CONTEXT LOADED</div>';
+        html += '<div class="pb-text">I\'ve loaded your SC1 and SC2 data. Now we validate it against market reality. 6 focused questions — evidence only, no assumptions.</div>';
+        html += '</div>';
+
+        html += '<div class="upstream-confirm-bar" style="margin-top:20px;">';
+        html += '<div class="confirm-label">Are these still accurate, or do you want to update your SC1/SC2 data first?</div>';
+        html += '</div>';
+        html += '<div style="display:flex;gap:12px;margin-top:16px;justify-content:center;">';
+        html += '<button class="btn-confirm" id="btnConfirmUpstream">Confirmed — Let\'s Go</button>';
+        html += '<a href="EO-Assessment-Dashboard.html" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;display:inline-block;">Update SC1/SC2 First</a>';
+        html += '</div>';
+
+        panel.innerHTML = html;
+        showScreen('screenUpstream');
+
+        document.getElementById('btnConfirmUpstream').addEventListener('click', function() {
+            upstreamConfirmed = true;
+            currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
+            if (Object.keys(answers).length > 0) {
+                showToast('Welcome back! Resuming where you left off.');
+            }
+            showScreen('screenStepper');
+            renderQuestion();
+        });
     }
 
     /* ===================================
@@ -1371,18 +1353,81 @@ body.rtl .option-card { text-align: right; }
         $emailInput.style.borderColor = '';
         try { localStorage.setItem('eo_user_email', email); } catch (e) {}
 
-        if (Object.keys(answers).length > 0) {
-            currentIndex = findFirstUnanswered();
-            showToast('Welcome back! Resuming where you left off.');
-        } else {
-            currentIndex = 0;
-        }
-        showScreen('screenStepper');
-        renderQuestion();
+        showUpstreamConfirmation();
     }
 
     /* ===================================
-       RENDER QUESTION (supports all 3 types)
+       ENGAGEMENT RENDERING
+       =================================== */
+    function renderEngagement() {
+        $engagementSlot.innerHTML = '';
+        var q = allQuestions[currentIndex];
+
+        /* After Section B (when transitioning to C) */
+        if (q.sectionId === 'C' && !engagementShown.afterB) {
+            engagementShown.afterB = true;
+            var scores = calculateSectionScores();
+            var html = '';
+
+            /* Pattern Break */
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">' + ENGAGEMENT.afterB.label + '</div>';
+            html += '<div class="pb-text">' + ENGAGEMENT.afterB.getText(scores) + '</div>';
+            html += '</div></div>';
+
+            /* Investment Signal */
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += ENGAGEMENT.investmentB;
+            html += '</div></div>';
+
+            $engagementSlot.innerHTML = html;
+            return;
+        }
+
+        /* After Section C (when showing results / before AI synthesis) */
+        if (currentIndex === allQuestions.length - 1 && !engagementShown.afterC) {
+            engagementShown.afterC = true;
+            var html = '';
+            html += '<div class="pattern-break"><div class="pattern-break-card">';
+            html += '<div class="pb-label">' + ENGAGEMENT.afterC.label + '</div>';
+            html += '<div class="pb-text">' + ENGAGEMENT.afterC.getText(calculateSectionScores()) + '</div>';
+            html += '</div></div>';
+            html += '<div class="investment-signal"><div class="investment-signal-card">';
+            html += 'You\'ve completed all 6 evidence-based questions. The AI synthesis will combine your answers with upstream SC1/SC2 data to generate a market verdict.';
+            html += '</div></div>';
+            $engagementSlot.innerHTML = html;
+            return;
+        }
+
+        /* Show acknowledgment for strong/weak answers on previous question */
+        if (currentIndex > 0) {
+            var prevQ = allQuestions[currentIndex - 1];
+            var ack = getAcknowledgment(prevQ);
+            if (ack) {
+                $engagementSlot.innerHTML = '<div class="acknowledgment"><div class="acknowledgment-card">' + ack + '</div></div>';
+            }
+        }
+    }
+
+    function getAcknowledgment(q) {
+        if (q.type === Q_MC) {
+            var idx = answers[q.id];
+            if (idx === undefined) return null;
+            var opt = q.options[idx];
+            var pct = opt.score / q.maxScore;
+            if (pct >= 0.8) return 'That\'s specific. Most founders stay vague here — you gave me something I can actually work with.';
+            if (pct < 0.4) return 'I need more from you here. The difference between a funded startup and a side project often hides in this answer.';
+        } else if (q.type === Q_FREETEXT) {
+            var text = answers[q.id] || '';
+            var wc = countWords(text);
+            if (wc > 80) return 'That\'s the kind of evidence that makes investors lean forward. You\'re proving, not guessing.';
+            if (wc < 20 && wc > 0) return 'I need more from you here. Can you add specific names, numbers, or sources? Evidence beats assertion every time.';
+        }
+        return null;
+    }
+
+    /* ===================================
+       RENDER QUESTION
        =================================== */
     function renderQuestion() {
         var q = allQuestions[currentIndex];
@@ -1394,7 +1439,6 @@ body.rtl .option-card { text-align: right; }
         $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
         $questionText.textContent = q.text;
 
-        /* Help text */
         if (q.help) {
             $questionHelp.textContent = q.help;
             $questionHelp.style.display = 'block';
@@ -1404,27 +1448,20 @@ body.rtl .option-card { text-align: right; }
 
         $optionsList.innerHTML = '';
 
-        /* Show upstream panel */
-        renderUpstreamPanel();
+        /* Show engagement */
+        renderEngagement();
 
         if (q.type === Q_FREETEXT) {
             renderFreetextQuestion(q);
-        } else if (q.type === Q_MC_EVIDENCE) {
-            renderMcEvidenceQuestion(q);
         } else {
             renderMcQuestion(q);
         }
 
-        /* Prev button visibility */
-        if (currentIndex === 0) {
-            $btnPrev.classList.add('hidden');
-        } else {
-            $btnPrev.classList.remove('hidden');
-        }
+        /* Prev button */
+        $btnPrev.classList.toggle('hidden', currentIndex === 0);
 
         /* Next button label */
-        var isLast = currentIndex === allQuestions.length - 1;
-        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+        $btnNext.textContent = currentIndex === allQuestions.length - 1 ? 'Submit Assessment' : 'Next';
     }
 
     function renderMcQuestion(q) {
@@ -1449,17 +1486,13 @@ body.rtl .option-card { text-align: right; }
 
         var charDiv = document.createElement('div');
         charDiv.className = 'char-count';
-        var wordCount = countWords(ta.value);
-        charDiv.textContent = wordCount + ' / ' + (q.wordLimit || 200) + ' words';
+        var wc = countWords(ta.value);
+        charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
 
         ta.addEventListener('input', function() {
-            var wc = countWords(ta.value);
-            charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
-            if (wc > (q.wordLimit || 200)) {
-                charDiv.classList.add('over');
-            } else {
-                charDiv.classList.remove('over');
-            }
+            var wc2 = countWords(ta.value);
+            charDiv.textContent = wc2 + ' / ' + (q.wordLimit || 200) + ' words';
+            charDiv.classList.toggle('over', wc2 > (q.wordLimit || 200));
             answers[q.id] = ta.value;
             saveAnswers();
             $btnNext.disabled = !ta.value.trim();
@@ -1470,56 +1503,13 @@ body.rtl .option-card { text-align: right; }
         $btnNext.disabled = !(q.id in answers && answers[q.id] && answers[q.id].trim());
     }
 
-    function renderMcEvidenceQuestion(q) {
-        /* MC part */
-        q.options.forEach(function(opt, idx) {
-            var div = document.createElement('div');
-            div.className = 'option-card';
-            div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
-            if (answers[q.id] === idx) div.classList.add('selected');
-            div.addEventListener('click', function() { selectMcEvidence(idx); });
-            $optionsList.appendChild(div);
-        });
-
-        /* Evidence part */
-        var label = document.createElement('div');
-        label.className = 'evidence-label';
-        label.textContent = q.evidencePrompt || 'Provide supporting evidence:';
-        $optionsList.appendChild(label);
-
-        var ta = document.createElement('textarea');
-        ta.className = 'freetext-input evidence-input';
-        ta.placeholder = 'Share specific examples or evidence...';
-        ta.rows = 3;
-        ta.value = answers[q.id + '_evidence'] || '';
-        ta.addEventListener('input', function() {
-            answers[q.id + '_evidence'] = ta.value;
-            saveAnswers();
-        });
-        $optionsList.appendChild(ta);
-
-        $btnNext.disabled = !(q.id in answers);
-    }
-
-    function selectMcEvidence(idx) {
-        var q = allQuestions[currentIndex];
-        answers[q.id] = idx;
-        saveAnswers();
-        var cards = $optionsList.querySelectorAll('.option-card');
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
-        cards[idx].classList.add('selected');
-        $btnNext.disabled = false;
-        /* No auto-advance for MC+Evidence */
-    }
-
     function countWords(text) {
         if (!text || !text.trim()) return 0;
         return text.trim().split(/\s+/).length;
     }
 
     /* ===================================
-       SELECT OPTION (MC only)
+       SELECT OPTION
        =================================== */
     function selectOption(idx) {
         var q = allQuestions[currentIndex];
@@ -1531,7 +1521,7 @@ body.rtl .option-card { text-align: right; }
         focusedOptionIndex = idx;
         $btnNext.disabled = false;
 
-        /* Auto-advance for pure MC only */
+        /* Auto-advance for MC */
         var isLast = currentIndex === allQuestions.length - 1;
         if (!isLast) {
             clearAutoAdvance();
@@ -1562,6 +1552,14 @@ body.rtl .option-card { text-align: right; }
         if (currentIndex === allQuestions.length - 1) {
             showScreen('screenContact');
             if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail;
+
+            /* Pre-fill venture name */
+            try {
+                var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+                if (status.ventureName) {
+                    document.getElementById('contactCompany').value = status.ventureName;
+                }
+            } catch (e) {}
             return;
         }
         currentIndex++;
@@ -1570,7 +1568,16 @@ body.rtl .option-card { text-align: right; }
 
     function prevQuestion() {
         clearAutoAdvance();
-        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+        if (currentIndex > 0) {
+            /* Reset engagement flags when going back to earlier section */
+            var prevQ = allQuestions[currentIndex - 1];
+            var curQ = allQuestions[currentIndex];
+            if (curQ.sectionId === 'C' && prevQ.sectionId === 'B') {
+                engagementShown.afterB = false;
+            }
+            currentIndex--;
+            renderQuestion();
+        }
     }
 
     /* ===================================
@@ -1579,7 +1586,7 @@ body.rtl .option-card { text-align: right; }
     function handleKeyboard(e) {
         if (!document.getElementById('screenStepper').classList.contains('active')) return;
         var q = allQuestions[currentIndex];
-        if (q.type === Q_FREETEXT || q.type === Q_MC_EVIDENCE) {
+        if (q.type === Q_FREETEXT) {
             if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); }
             return;
         }
@@ -1606,29 +1613,49 @@ body.rtl .option-card { text-align: right; }
     /* ===================================
        SCORING
        =================================== */
+    function calculateSectionScores() {
+        var scores = { 'B': 0, 'C': 0 };
+        allQuestions.forEach(function(q) {
+            if (q.type === Q_MC && q.id in answers) {
+                scores[q.sectionId] += q.options[answers[q.id]].score;
+            }
+            /* Free-text: scored 0 locally (AI scores via webhook) */
+        });
+        return scores;
+    }
+
     function calculateScores() {
-        var sectionScores = {};
-        var total = 0;
+        var sectionScores = { 'B': 0, 'C': 0, 'D': 0 };
         var mcTotal = 0;
         var mcMax = 0;
         var ftCount = 0;
-        Object.keys(SECTION_MAXES).forEach(function(s) { sectionScores[s] = 0; });
+        var ftMaxTotal = 0;
 
         allQuestions.forEach(function(q) {
-            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
-                if (q.id in answers && q.options) {
+            if (q.type === Q_MC) {
+                if (q.id in answers) {
                     var score = q.options[answers[q.id]].score;
                     sectionScores[q.sectionId] += score;
-                    total += score;
                     mcTotal += score;
                 }
                 mcMax += q.maxScore;
             } else if (q.type === Q_FREETEXT) {
                 ftCount++;
-                /* Free-text scored 0 locally — AI scores at export */
+                ftMaxTotal += q.maxScore;
             }
         });
-        return { sectionScores: sectionScores, total: total, mcTotal: mcTotal, mcMax: mcMax, ftCount: ftCount };
+
+        /* Total = B + C (MC scored) + D (AI auto = 20 pts, scored 0 locally) */
+        var total = sectionScores['B'] + sectionScores['C'];
+
+        return {
+            sectionScores: sectionScores,
+            total: total,
+            mcTotal: mcTotal,
+            mcMax: mcMax,
+            ftCount: ftCount,
+            ftMaxTotal: ftMaxTotal
+        };
     }
 
     function getBand(score) {
@@ -1664,9 +1691,6 @@ body.rtl .option-card { text-align: right; }
         allQuestions.forEach(function(q) {
             if (q.type === Q_FREETEXT) {
                 answersMap[q.id] = answers[q.id] || '';
-            } else if (q.type === Q_MC_EVIDENCE) {
-                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
-                answersMap[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
             } else {
                 answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
             }
@@ -1677,13 +1701,30 @@ body.rtl .option-card { text-align: right; }
             sectionScoresNamed[SECTION_NAME_MAP[key]] = result.sectionScores[key] || 0;
         });
 
+        /* Get venture name */
+        var ventureName = '';
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            ventureName = status.ventureName || '';
+        } catch (e) {}
+
         return {
             assessment: ASSESSMENT_ID,
+            version: '3.0',
+            venture_name: ventureName,
             answers: answersMap,
+            upstream_data: {
+                sc1: upstreamPD ? { niche: upstreamPD.niche || upstreamPD.b3 || '', positioning: upstreamPD.positioning || upstreamPD.c1 || '', geography: upstreamPD.geography || '' } : null,
+                sc2: upstreamICP ? { top_pains: [upstreamICP.b1 || '', upstreamICP.b2 || '', upstreamICP.b3 || ''].filter(Boolean), budget: upstreamICP.a5 || '', congregation: upstreamICP.e1 || '' } : null
+            },
             section_scores: sectionScoresNamed,
-            total_score: result.total,
             mc_score: result.mcTotal,
+            mc_max: result.mcMax,
+            ft_count: result.ftCount,
+            ft_max: result.ftMaxTotal,
+            total_score: result.total,
             band: getWebhookBand(result.total),
+            engagement_data: { upstream_confirmed: upstreamConfirmed },
             contact: contact
         };
     }
@@ -1748,41 +1789,32 @@ body.rtl .option-card { text-align: right; }
     function showResults() {
         var result = calculateScores();
         var sectionScores = result.sectionScores;
-        var total = result.mcTotal;
-        var band = getBand(total);
+        var mcTotal = result.mcTotal;
+        var band = getBand(mcTotal);
 
         /* Save for dashboard */
-        saveCompletionStatus('mas', total);
+        saveCompletionStatus('mas', mcTotal);
 
-        /* Store answers for downstream scorecards (SC4, SC5) */
+        /* Store answers for downstream scorecards */
         try {
             var downstream = {};
             allQuestions.forEach(function(q) {
                 if (q.type === Q_FREETEXT) {
                     downstream[q.id] = answers[q.id] || '';
-                } else if (q.type === Q_MC_EVIDENCE) {
-                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
-                    downstream[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
                 } else if (q.type === Q_MC) {
                     downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
                 }
             });
-            downstream.pain_evidence = answers['a1'] || '';
-            downstream.pain_cost = answers['a3'] || '';
-            downstream.workarounds = answers['a4'] || '';
-            downstream.urgency = answers['a5'] || '';
-            downstream.existing_spend = answers['b1'] || '';
-            downstream.price_validation = answers['b3'] || '';
-            downstream.willingness_signal = answers['b5'] || '';
-            downstream.congregation_density = answers['c1'] || '';
-            downstream.reach_plan = answers['c2'] || '';
-            downstream.mena_channels = answers['c5'] || '';
-            downstream.market_direction = answers['d1'] !== undefined ? allQuestions.find(function(q) { return q.id === 'd1'; }).options[answers['d1']].label : '';
-            downstream.tailwinds = answers['d2'] || '';
-            downstream.competitive_landscape = answers['d3'] || '';
+            downstream.pain_evidence = answers['b1'] || '';
+            downstream.purchasing_evidence = answers['b2'] || '';
+            downstream.evidence_type = allQuestions[2].id in answers ? allQuestions[2].options[answers['b3']].label : '';
+            downstream.tam_sam_som = answers['c1'] || '';
+            downstream.growth_signals = answers['c2'] || '';
+            downstream.defensibility = allQuestions[5].id in answers ? allQuestions[5].options[answers['c3']].label : '';
             downstream.section_scores = sectionScores;
-            downstream.total = total;
+            downstream.total = mcTotal;
             downstream.band = band.label;
+            downstream.version = '3.0';
             localStorage.setItem('eo-market-attractiveness', JSON.stringify(downstream));
         } catch (e) {}
 
@@ -1791,26 +1823,29 @@ body.rtl .option-card { text-align: right; }
         /* Score Hero */
         html += '<div class="score-hero ' + band.className + '">';
         html += '<div class="score-circle"><div class="score-circle-inner">';
-        html += '<span class="score-number">' + total + '</span>';
+        html += '<span class="score-number">' + mcTotal + '</span>';
         html += '<span class="score-total">/ ' + result.mcMax + '</span>';
         html += '</div></div>';
         html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">Market Attractiveness MC Score</div>';
+        html += '<div class="band-subtitle">Market Attractiveness MC Score (v3.0)</div>';
         if (result.ftCount > 0) {
-            html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>';
+            html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers (' + result.ftMaxTotal + ' pts) pending AI review</div>';
         }
+        html += '<div class="pending-ai-badge" style="margin-top:4px;">Section D: AI Synthesis (20 pts) pending</div>';
         html += '</div>';
 
         /* Section Breakdown */
         html += '<div class="results-card"><h3>Section Breakdown</h3>';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
+        var displaySections = [
+            { id: 'B', name: 'Evidence Validation', max: 40 },
+            { id: 'C', name: 'Market Sizing & Growth', max: 40 },
+            { id: 'D', name: 'AI Synthesis (pending)', max: 20 }
+        ];
+        displaySections.forEach(function(sec) {
+            var score = sectionScores[sec.id] || 0;
+            var max = sec.max;
             var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var color = getBarColor(score, max);
+            var color = sec.id === 'D' ? '#6B7280' : getBarColor(score, max);
             html += '<div class="section-bar-row">';
             html += '<div class="section-bar-label">' + sec.name + '</div>';
             html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
@@ -1821,6 +1856,7 @@ body.rtl .option-card { text-align: right; }
 
         /* Answers Summary */
         html += '<div class="results-card"><h3>Your Answers</h3>';
+        var sectionOrder = ['B', 'C'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
@@ -1828,19 +1864,13 @@ body.rtl .option-card { text-align: right; }
             allQuestions.forEach(function(q) {
                 if (q.sectionId !== sid) return;
                 html += '<div class="answer-block">';
-                html += '<div class="q-label">' + q.id.toUpperCase() + '</div>';
+                html += '<div class="q-label">' + q.id.toUpperCase() + ' (' + q.maxScore + ' pts)</div>';
                 html += '<div class="q-text">' + escapeHtml(q.text) + '</div>';
                 if (q.type === Q_FREETEXT) {
                     html += '<div class="a-text">' + escapeHtml(answers[q.id] || '(No answer)') + '</div>';
-                } else if (q.type === Q_MC_EVIDENCE) {
+                } else {
                     var opt = q.id in answers ? q.options[answers[q.id]] : null;
                     html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
-                    if (answers[q.id + '_evidence']) {
-                        html += '<div class="a-text" style="margin-top:8px;font-size:13px;"><strong>Evidence:</strong> ' + escapeHtml(answers[q.id + '_evidence']) + '</div>';
-                    }
-                } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    html += '<div class="a-mc">' + (opt2 ? escapeHtml(opt2.label) + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
                 }
                 html += '</div>';
             });
@@ -1848,7 +1878,7 @@ body.rtl .option-card { text-align: right; }
         html += '</div>';
 
         /* Recommendations */
-        html += '<div class="results-card"><h3>Recommendations by Section</h3>';
+        html += '<div class="results-card"><h3>Recommendations</h3>';
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
@@ -1858,7 +1888,7 @@ body.rtl .option-card { text-align: right; }
             var icon = pct >= 80 ? '\u2705' : pct >= 60 ? '\uD83D\uDFE1' : '\u26A0\uFE0F';
             html += '<div class="reco-section">';
             html += '<div class="reco-header"><span class="reco-icon">' + icon + '</span>';
-            html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')</span></div>';
+            html += '<span class="reco-title">' + sec.fullName + ' (' + score + '/' + max + ')</span></div>';
             if (RECOMMENDATIONS[sid]) {
                 html += '<ul class="reco-list">';
                 RECOMMENDATIONS[sid].forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; });
@@ -1871,9 +1901,12 @@ body.rtl .option-card { text-align: right; }
         /* AI Section */
         if (aiData) {
             html += '<div class="ai-section">';
-            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
+            html += '<span class="ai-badge">AI Synthesis — Section D (20 pts)</span>';
             if (aiData.key_insight || aiData.keyInsight) {
                 html += '<h3>Key Insight</h3><p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
+            }
+            if (aiData.d_score !== undefined) {
+                html += '<h3>AI Synthesis Score</h3><p class="ai-insight">Section D Score: ' + aiData.d_score + '/20</p>';
             }
             if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
                 var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
@@ -1891,11 +1924,17 @@ body.rtl .option-card { text-align: right; }
             html += '</div>';
         }
 
+        /* Final Engagement: Investment Signal */
+        html += '<div class="pattern-break-card" style="margin:0 0 20px;">';
+        html += '<div class="pb-label">ASSESSMENT COMPLETE</div>';
+        html += '<div class="pb-text">' + ENGAGEMENT.investmentFinal + '</div>';
+        html += '</div>';
+
         /* Gate Warning if score low */
-        if (total < 40) {
+        if (mcTotal < 10) {
             html += '<div class="gate-warning">';
             html += '<h3>Market Validation Needed</h3>';
-            html += '<p>Your market attractiveness score suggests core assumptions may need revisiting. Consider 10+ buyer interviews and revisiting SC1/SC2 before moving to Strategy (SC4).</p>';
+            html += '<p>Your MC score suggests core assumptions may need revisiting. Consider 10+ buyer interviews and revisiting SC1/SC2 before moving to Strategy (SC4). Submit your contact info above for AI-scored results.</p>';
             html += '</div>';
         }
 
@@ -1931,51 +1970,74 @@ body.rtl .option-card { text-align: right; }
         var today = new Date();
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
         var band = getBand(result.mcTotal);
+        var ventureName = '';
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            ventureName = status.ventureName || '';
+        } catch (e) {}
 
         var md = '';
-        md += '# Market Attractiveness Scorecard Results\n\n';
+        md += '# Market Attractiveness Scorecard Results (v3.0)\n\n';
+        if (ventureName) md += '**Venture:** ' + ventureName + '\n';
         md += '**Student:** ' + capturedEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
-        md += '**Free-text questions:** ' + result.ftCount + ' (pending AI review)\n\n';
+        md += '**Free-text questions:** ' + result.ftCount + ' (' + result.ftMaxTotal + ' pts pending AI review)\n';
+        md += '**Section D (AI Synthesis):** 20 pts pending\n\n';
         md += '---\n\n';
 
         /* Section Breakdown */
         md += '## Section Breakdown\n\n';
-        var sectionOrder = ['A', 'B', 'C', 'D'];
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var strength = pct >= 80 ? '\u2705 Strong' : pct >= 60 ? '\uD83D\uDFE1 Needs Work' : '\u26A0\uFE0F Weak';
-            md += '- **' + sec.name + ': ' + sec.fullName + '** \u2014 ' + score + '/' + max + ' (' + pct + '%) ' + strength + '\n';
+        md += '| Section | Score | Max | Status |\n';
+        md += '|---------|-------|-----|--------|\n';
+        var displaySections = [
+            { id: 'B', name: 'Evidence Validation', max: 40 },
+            { id: 'C', name: 'Market Sizing & Growth', max: 40 },
+            { id: 'D', name: 'AI Synthesis', max: 20 }
+        ];
+        displaySections.forEach(function(sec) {
+            var score = sectionScores[sec.id] || 0;
+            var status2 = sec.id === 'D' ? 'Pending AI' : (score / sec.max >= 0.8 ? '\u2705 Strong' : score / sec.max >= 0.6 ? '\uD83D\uDFE1 Needs Work' : '\u26A0\uFE0F Weak');
+            md += '| ' + sec.name + ' | ' + score + ' | ' + sec.max + ' | ' + status2 + ' |\n';
         });
         md += '\n---\n\n';
 
-        /* Full Answers by Section */
+        /* Upstream Data */
+        md += '## Upstream Data (From SC1 + SC2)\n\n';
+        if (upstreamPD) {
+            md += '### SC1: Project Definition\n';
+            if (upstreamPD.niche || upstreamPD.b3) md += '- **Niche:** ' + (upstreamPD.niche || upstreamPD.b3) + '\n';
+            if (upstreamPD.positioning || upstreamPD.c1) md += '- **Positioning:** ' + (upstreamPD.positioning || upstreamPD.c1) + '\n';
+            if (upstreamPD.geography) md += '- **Geography:** ' + upstreamPD.geography + '\n';
+            md += '\n';
+        }
+        if (upstreamICP) {
+            md += '### SC2: ICP Clarity\n';
+            if (upstreamICP.a1) md += '- **Customer Identity:** ' + upstreamICP.a1.substring(0, 200) + '\n';
+            for (var pi = 1; pi <= 3; pi++) {
+                if (upstreamICP['b' + pi]) md += '- **Pain #' + pi + ':** ' + upstreamICP['b' + pi].substring(0, 150) + '\n';
+            }
+            if (upstreamICP.a5) md += '- **Budget Range:** ' + upstreamICP.a5 + '\n';
+            md += '\n';
+        }
+        md += '---\n\n';
+
+        /* Full Answers */
         md += '## Answers\n\n';
+        var sectionOrder = ['B', 'C'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';
+            md += '### Section ' + sid + ': ' + sec.fullName + ' (' + SECTION_MAXES[sid] + ' pts)\n\n';
             allQuestions.forEach(function(q) {
                 if (q.sectionId !== sid) return;
-                md += '**' + q.id.toUpperCase() + '.** ' + q.text + '\n\n';
+                md += '**' + q.id.toUpperCase() + '.** (' + q.maxScore + ' pts) ' + q.text + '\n\n';
                 if (q.type === Q_FREETEXT) {
                     md += '> ' + (answers[q.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
-                    if (q.rubric) md += '_Rubric: ' + q.rubric + '_\n\n';
-                } else if (q.type === Q_MC_EVIDENCE) {
+                    md += '_Rubric: ' + q.rubric + '_\n\n';
+                } else {
                     var opt = q.id in answers ? q.options[answers[q.id]] : null;
                     md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
-                    if (answers[q.id + '_evidence']) {
-                        md += '**Evidence:** ' + answers[q.id + '_evidence'] + '\n\n';
-                    }
-                    if (q.evidenceRubric) md += '_Evidence Rubric: ' + q.evidenceRubric + '_\n\n';
-                } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt2 ? opt2.label + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
                 }
             });
         });
@@ -1986,8 +2048,7 @@ body.rtl .option-card { text-align: right; }
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
             var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')\n\n';
+            md += '### ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')\n\n';
             if (RECOMMENDATIONS[sid]) {
                 RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
             }
@@ -1996,8 +2057,9 @@ body.rtl .option-card { text-align: right; }
 
         /* AI Analysis */
         if (aiData) {
-            md += '---\n\n## Advanced Analysis\n\n';
+            md += '---\n\n## AI Synthesis (Section D)\n\n';
             if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
+            if (aiData.d_score !== undefined) md += '**Section D Score:** ' + aiData.d_score + '/20\n\n';
             if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
                 var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
                 md += '### 30-Day Validation Plan\n\n';
@@ -2013,15 +2075,15 @@ body.rtl .option-card { text-align: right; }
 
         /* AI Scoring Instructions */
         md += '---\n\n## AI Scoring Instructions\n\n';
-        md += 'To score the free-text answers, copy this file into Claude.ai along with:\n';
-        md += '- `market-attractiveness-scoring/SKILL.md`\n\n';
-        md += 'Ask: "Score these Market Attractiveness answers using the rubric provided. Return section scores and total."\n\n';
+        md += 'To score the free-text answers + Section D synthesis, copy this file into Claude.ai along with:\n';
+        md += '- `market-attractiveness-scoring/SKILL.md` (v3.0)\n\n';
+        md += 'Ask: "Score these Market Attractiveness v3.0 answers. Score B1, B2 (free-text rubrics), then synthesize Section D using the Hormozi Grand Slam framework. Return total /100."\n\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'market-attractiveness-results-' + dateStr + '.md';
+        a.download = (ventureName || 'market-attractiveness') + '-results-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -2029,7 +2091,7 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
-       PDF EXPORT (Print-Friendly Div)
+       PDF EXPORT
        =================================== */
     function generatePdfExport() {
         var printDiv = document.createElement('div');
@@ -2040,7 +2102,6 @@ body.rtl .option-card { text-align: right; }
         if (!source) return;
         var clone = source.cloneNode(true);
 
-        /* Convert textareas to styled divs */
         var tas = clone.querySelectorAll('textarea');
         for (var i = 0; i < tas.length; i++) {
             var div = document.createElement('div');
@@ -2049,7 +2110,6 @@ body.rtl .option-card { text-align: right; }
             tas[i].parentNode.replaceChild(div, tas[i]);
         }
 
-        /* Fix colors for PDF readability */
         clone.style.color = '#1A1A2E';
         var allEls = clone.querySelectorAll('*');
         for (var j = 0; j < allEls.length; j++) {
@@ -2090,6 +2150,8 @@ body.rtl .option-card { text-align: right; }
         answers = {};
         currentIndex = 0;
         aiData = null;
+        upstreamConfirmed = false;
+        engagementShown = { afterB: false, afterC: false };
         try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
         $emailInput.value = '';
         showScreen('screenEmail');
@@ -2114,19 +2176,6 @@ function toggleRTL() {
     document.documentElement.lang = isRTL ? 'ar' : 'en';
     document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
     try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
-}
-
-/* Upstream Toggle (global scope) */
-function toggleUpstream(panel) {
-    var content = document.getElementById('upstream' + panel.toUpperCase());
-    var arrow = document.getElementById('arrow' + panel.toUpperCase());
-    if (content) {
-        content.classList.toggle('open');
-        if (arrow) {
-            var toggle = content.parentElement.querySelector('.upstream-ref-toggle');
-            if (toggle) toggle.classList.toggle('open');
-        }
-    }
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>

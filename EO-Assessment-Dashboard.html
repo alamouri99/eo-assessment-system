@@ -815,6 +815,7 @@
                     <div class="eo-logo-text">
                         <div class="eo-logo-main">EO Founder Assessment</div>
                         <div class="eo-logo-sub">by Entrepreneurs Oasis MENA</div>
+                        <div id="venture-name-display" style="font-size: 13px; color: #FF6600; font-weight: 600; margin-top: 2px; display: none;"></div>
                     </div>
                 </div>
                 <div class="eo-nav">
@@ -860,8 +861,8 @@
                         <div class="eo-card-icon">🎯</div>
                         <div class="eo-card-badge">SC3</div>
                         <div class="eo-card-title">Market Attractiveness Scoring</div>
-                        <div class="eo-card-desc">Deep 20-question assessment of your market opportunity strength.</div>
-                        <div class="eo-card-source">Based on $100M Offers + Ultimate Sales Machine</div>
+                        <div class="eo-card-desc">6-question evidence-based assessment with upstream SC1/SC2 data inheritance.</div>
+                        <div class="eo-card-source">Based on $100M Offers + Hormozi Grand Slam Framework</div>
                         <button class="eo-card-btn" onclick="openTool('market')">Score Your Market →</button>
                     </div>
 
@@ -1132,6 +1133,8 @@
                     <button class="eo-cta-button" onclick="alert('Join the EO Community: 91+ MENA founders on the same journey.')">Join EO Community →</button>
                     <button class="eo-cta-button" onclick="generateProjectBrief()">Download Scorecard (MD)</button>
                     <button class="eo-cta-button" onclick="generateProjectBriefPdf()">Download Scorecard (PDF)</button>
+                    <button class="eo-cta-button" onclick="generateAllAnswersHtml()" style="background:#1a1a1a; color:#FF6600; border:1px solid #FF6600;">Download All Answers (HTML)</button>
+                    <button class="eo-cta-button" onclick="generateStrategicSummaryHtml()" style="background:#1a1a1a; color:#FF6600; border:1px solid #FF6600;">Download Strategic Summary (HTML)</button>
                 </div>
 
                 <!-- Score History -->
@@ -2009,6 +2012,223 @@ https://eomicro.saas/eo-assessment
             const status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
             updateHubStates(status);
         })();
+
+        // Load and display venture name
+        (function() {
+            try {
+                var statusData = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+                var vName = (statusData && statusData.ventureName) || '';
+                if (!vName) {
+                    var pfAnswers = JSON.parse(localStorage.getItem('eo-project-definition') || '{}');
+                    if (pfAnswers.s0_2) vName = pfAnswers.s0_2;
+                }
+                if (vName) {
+                    var el = document.getElementById('venture-name-display');
+                    if (el) { el.textContent = vName; el.style.display = 'block'; }
+                }
+            } catch(e) {}
+        })();
+
+        // Get venture name helper
+        function getVentureName() {
+            try {
+                var statusData = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+                if (statusData && statusData.ventureName) return statusData.ventureName;
+                var pfAnswers = JSON.parse(localStorage.getItem('eo-project-definition') || '{}');
+                if (pfAnswers && pfAnswers.s0_2) return pfAnswers.s0_2;
+            } catch(e) {}
+            return 'MyVenture';
+        }
+
+        // Generate All Answers HTML download
+        function generateAllAnswersHtml() {
+            var ventureName = getVentureName();
+            var overall = getOverallScore();
+            var bandInfo = getBandInfo(overall);
+            var dateStr = new Date().toISOString().split('T')[0];
+
+            var scorecards = [
+                { key: 'eo-project-definition', name: 'SC1: Project Definition', label: 'project-files' },
+                { key: 'eo-icp-clarity', name: 'SC2: ICP Clarity', label: 'icp-clarity' },
+                { key: 'eo-market-attractiveness', name: 'SC3: Market Attractiveness', label: 'market-attractiveness' },
+                { key: 'eo-strategy-selector', name: 'SC4: Strategy Selector', label: 'strategy-selector' },
+                { key: 'eo-gtm-fitness', name: 'SC5: GTM Fitness', label: 'gtm-fitness' }
+            ];
+
+            var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">';
+            html += '<title>' + ventureName + ' - All Answers</title>';
+            html += '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">';
+            html += '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:#000;color:#fff;padding:40px 20px;max-width:900px;margin:0 auto}';
+            html += 'h1{font-size:28px;margin-bottom:8px}h2{font-size:20px;color:#FF6600;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid #2a2a2a}';
+            html += 'h3{font-size:16px;margin:20px 0 8px;color:#ccc}.meta{color:#888;font-size:13px;margin-bottom:24px}';
+            html += '.score-badge{display:inline-block;padding:6px 16px;border-radius:20px;font-weight:700;font-size:14px;margin:8px 0}';
+            html += '.qa-pair{background:#111;border:1px solid #222;border-radius:8px;padding:16px;margin-bottom:12px}';
+            html += '.qa-pair .q{font-weight:600;font-size:14px;margin-bottom:8px;color:#ddd}.qa-pair .a{font-size:14px;color:#aaa;white-space:pre-wrap;line-height:1.6}';
+            html += '@media print{body{background:#fff;color:#000}h2{color:#E94D1B}.qa-pair{background:#f5f5f5;border-color:#ddd}.qa-pair .q{color:#333}.qa-pair .a{color:#555}}</style></head><body>';
+            html += '<h1>' + ventureName + ' — All Answers</h1>';
+            html += '<div class="meta">Generated: ' + dateStr + ' | Overall Score: ' + overall + '/100 (' + bandInfo.band + ')</div>';
+
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+
+            scorecards.forEach(function(sc) {
+                html += '<h2>' + sc.name + '</h2>';
+                var answersRaw = localStorage.getItem(sc.key);
+                if (!answersRaw) {
+                    html += '<p style="color:#666;font-style:italic">No answers recorded for this scorecard.</p>';
+                    return;
+                }
+                var answers = JSON.parse(answersRaw);
+                var keys = Object.keys(answers);
+                if (keys.length === 0) {
+                    html += '<p style="color:#666;font-style:italic">No answers recorded for this scorecard.</p>';
+                    return;
+                }
+
+                var scoreVal = '';
+                var statusKeys = { 'project-files': 'pd', 'icp-clarity': 'icp', 'market-attractiveness': 'mas', 'strategy-selector': 'strategy', 'gtm-fitness': 'gtm' };
+                var sKey = statusKeys[sc.label];
+                if (sKey && status[sKey] && status[sKey].score !== undefined) {
+                    scoreVal = status[sKey].score;
+                    var bg = scoreVal >= 80 ? '#00C853' : scoreVal >= 60 ? '#FF6600' : scoreVal >= 40 ? '#FFD600' : scoreVal >= 20 ? '#FF5722' : '#D50000';
+                    html += '<div class="score-badge" style="background:' + bg + ';color:#000">' + scoreVal + '/100</div>';
+                }
+
+                keys.sort().forEach(function(qid) {
+                    var val = answers[qid];
+                    var displayVal = typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val);
+                    html += '<div class="qa-pair"><div class="q">' + qid.toUpperCase() + '</div><div class="a">' + displayVal.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div></div>';
+                });
+            });
+
+            html += '<hr style="border:none;border-top:1px solid #333;margin:32px 0"><p style="color:#666;font-size:12px;text-align:center">Generated by Entrepreneurs Oasis MENA Founder Assessment Suite</p>';
+            html += '</body></html>';
+
+            var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = ventureName.replace(/[^a-zA-Z0-9]/g, '-') + '-All-Answers.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Generate Strategic Summary HTML download
+        function generateStrategicSummaryHtml() {
+            var ventureName = getVentureName();
+            var overall = getOverallScore();
+            var bandInfo = getBandInfo(overall);
+            var dateStr = new Date().toISOString().split('T')[0];
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+
+            var scoreColor = overall >= 80 ? '#00C853' : overall >= 60 ? '#FF6600' : overall >= 40 ? '#FFD600' : overall >= 20 ? '#FF5722' : '#D50000';
+
+            // Determine strongest/weakest pillar
+            var pillars = [
+                { name: 'Market Attractiveness', score: scores.mas, weight: 0.35 },
+                { name: 'ICP Clarity', score: scores.icp, weight: 0.35 },
+                { name: 'GTM Fitness', score: scores.gtm, weight: 0.30 }
+            ];
+            var strongest = pillars.reduce(function(a, b) { return a.score >= b.score ? a : b; });
+            var weakest = pillars.reduce(function(a, b) { return a.score <= b.score ? a : b; });
+
+            // Strategy path from SC4
+            var strategyPath = (status.strategy && status.strategy.path) ? status.strategy.path : 'Not determined';
+            var strategyArchetype = (status.strategy && status.strategy.archetype) ? status.strategy.archetype : '';
+
+            // Top 3 GTM motions
+            var gtmMotions = '';
+            if (dashboardAiData && dashboardAiData.gtmPrescription && dashboardAiData.gtmPrescription.primary) {
+                dashboardAiData.gtmPrescription.primary.slice(0, 3).forEach(function(m, i) {
+                    gtmMotions += '<div style="background:#111;border:1px solid #222;border-radius:8px;padding:16px;margin-bottom:8px"><strong style="color:#FF6600">' + (i + 1) + '. ' + (m.motion || '') + '</strong><span style="background:#22C55E;color:#000;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;margin-left:8px">PRIMARY</span><div style="color:#aaa;font-size:13px;margin-top:6px">' + (m.why || '') + '</div></div>';
+                });
+            }
+            if (!gtmMotions) gtmMotions = '<p style="color:#666;font-style:italic">Complete all assessments to generate GTM motion recommendations.</p>';
+
+            // MENA context
+            var menaContext = (dashboardAiData && dashboardAiData.menaAdjustments) ? dashboardAiData.menaAdjustments : 'Complete all assessments to generate MENA-specific context analysis.';
+
+            var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">';
+            html += '<title>' + ventureName + ' - Strategic Summary</title>';
+            html += '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">';
+            html += '<style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Inter,sans-serif;background:#000;color:#fff;padding:0;max-width:900px;margin:0 auto}';
+            html += '.hero{text-align:center;padding:60px 40px;background:linear-gradient(135deg,#0a0a0a,#111)}.hero h1{font-size:32px;margin-bottom:4px}.hero .subtitle{color:#888;font-size:14px;margin-bottom:32px}';
+            html += '.score-ring{width:180px;height:180px;border-radius:50%;border:6px solid ' + scoreColor + ';display:flex;flex-direction:column;justify-content:center;align-items:center;margin:0 auto 16px}';
+            html += '.score-ring .num{font-size:56px;font-weight:800;color:' + scoreColor + '}.score-ring .lbl{font-size:11px;font-weight:700;letter-spacing:1px;color:#888;text-transform:uppercase}';
+            html += '.band-label{font-size:18px;font-weight:700;color:' + scoreColor + ';margin-bottom:8px}.band-desc{color:#888;font-size:14px}';
+            html += '.section{padding:32px 40px}.section-title{font-size:18px;font-weight:700;margin-bottom:20px;padding-bottom:8px;border-bottom:1px solid #222}';
+            html += '.pillar-row{display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap}.pillar-card{flex:1;min-width:200px;background:#111;border:1px solid #222;border-radius:8px;padding:20px;text-align:center}';
+            html += '.pillar-card .p-name{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}.pillar-card .p-score{font-size:36px;font-weight:800}.pillar-card .p-weight{font-size:11px;color:#666;margin-top:4px}';
+            html += '.insight-box{background:#111;border-left:4px solid #FF6600;border-radius:0 8px 8px 0;padding:16px 20px;margin-bottom:16px}';
+            html += '.insight-box .label{font-size:11px;font-weight:700;color:#FF6600;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}.insight-box .text{font-size:14px;color:#ccc;line-height:1.6}';
+            html += '.next-step{background:#111;border:1px solid #222;border-radius:8px;padding:16px;margin-bottom:8px;font-size:14px;color:#ccc;line-height:1.6}';
+            html += '@media print{body{background:#fff;color:#000}.hero{background:#f5f5f5}.score-ring{border-color:#E94D1B}.score-ring .num{color:#E94D1B}.section{border-bottom:1px solid #ddd}';
+            html += '.pillar-card,.insight-box,.next-step{background:#f9f9f9;border-color:#ddd}.pillar-card .p-name,.insight-box .label{color:#E94D1B}}</style></head><body>';
+
+            // Hero section
+            html += '<div class="hero"><h1>' + ventureName + '</h1><div class="subtitle">Strategic Assessment Summary | ' + dateStr + '</div>';
+            html += '<div class="score-ring"><div class="num">' + overall + '</div><div class="lbl">out of 100</div></div>';
+            html += '<div class="band-label">' + bandInfo.band + '</div><div class="band-desc">' + bandInfo.desc + '</div></div>';
+
+            // Three-pillar breakdown
+            html += '<div class="section"><div class="section-title">Three-Pillar Breakdown</div>';
+            html += '<div class="pillar-row">';
+            pillars.forEach(function(p) {
+                var c = p.score >= 80 ? '#00C853' : p.score >= 60 ? '#FF6600' : p.score >= 40 ? '#FFD600' : '#D50000';
+                html += '<div class="pillar-card"><div class="p-name">' + p.name + '</div><div class="p-score" style="color:' + c + '">' + p.score + '</div><div class="p-weight">Weight: ' + (p.weight * 100) + '%</div></div>';
+            });
+            html += '</div></div>';
+
+            // Strategy path
+            html += '<div class="section"><div class="section-title">Strategy Path</div>';
+            html += '<div class="insight-box"><div class="label">Recommended Path</div><div class="text"><strong>' + strategyPath + '</strong>';
+            if (strategyArchetype) html += ' — ' + strategyArchetype;
+            html += '</div></div></div>';
+
+            // Key insights
+            html += '<div class="section"><div class="section-title">Key Insights</div>';
+            html += '<div class="insight-box"><div class="label">Strongest Pillar</div><div class="text">' + strongest.name + ' (' + strongest.score + '/100)</div></div>';
+            html += '<div class="insight-box"><div class="label">Weakest Pillar (Critical Gap)</div><div class="text">' + weakest.name + ' (' + weakest.score + '/100) — Focus improvement efforts here first.</div></div>';
+            html += '</div>';
+
+            // MENA context
+            html += '<div class="section"><div class="section-title">MENA Market Context</div>';
+            html += '<div class="insight-box"><div class="label">Regional Considerations</div><div class="text">' + menaContext + '</div></div></div>';
+
+            // Top 3 GTM motions
+            html += '<div class="section"><div class="section-title">Top GTM Motion Recommendations</div>' + gtmMotions + '</div>';
+
+            // Next steps
+            html += '<div class="section"><div class="section-title">Next Steps</div>';
+            var nextStepsText = document.getElementById('nextsteps-content') ? document.getElementById('nextsteps-content').textContent : '';
+            if (nextStepsText) {
+                html += '<div class="next-step">' + nextStepsText + '</div>';
+            }
+            if (overall < 80) {
+                html += '<div class="next-step">1. Address ' + weakest.name + ' — your biggest growth bottleneck.</div>';
+                html += '<div class="next-step">2. Re-take the assessment in 2 weeks to track improvement.</div>';
+                html += '<div class="next-step">3. Join the MENA MicroSaaS Movement for guided execution support.</div>';
+            } else {
+                html += '<div class="next-step">1. Execute your primary GTM motions within 72 hours.</div>';
+                html += '<div class="next-step">2. Build your MicroSaaS MVP targeting first 10 paying customers.</div>';
+                html += '<div class="next-step">3. Track weekly metrics against your 90-day roadmap.</div>';
+            }
+            html += '</div>';
+
+            html += '<div style="text-align:center;padding:32px;color:#666;font-size:12px;border-top:1px solid #222;margin-top:16px">Generated by Entrepreneurs Oasis MENA Founder Assessment Suite</div>';
+            html += '</body></html>';
+
+            var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = ventureName.replace(/[^a-zA-Z0-9]/g, '-') + '-Strategic-Summary.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>

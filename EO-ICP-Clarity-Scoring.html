@@ -730,6 +730,20 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 
+/* Engagement Layer */
+.pattern-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.pattern-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px 24px; }
+.pattern-break-card .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.pattern-break-card .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
+.variable-reward { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.variable-reward-card { background: linear-gradient(135deg, var(--eo-orange), #d4441a); border-radius: var(--eo-radius-sm); padding: 20px 24px; color: #FFFFFF; }
+.variable-reward-card .vr-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.9; }
+.variable-reward-card .vr-text { font-size: 14px; line-height: 1.6; }
+.investment-signal { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.investment-signal-card { background: rgba(233,77,27,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
+.acknowledgment { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.acknowledgment-card { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #D1D5DB; font-style: italic; border-left: 3px solid var(--eo-orange); }
+
 /* Shake animation */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
@@ -788,7 +802,7 @@ body.rtl .option-card { text-align: right; }
 <div class="screen" id="screenEmail">
     <div class="email-capture">
         <h2>ICP Clarity Scorecard</h2>
-        <p>Build your Ideal Customer Profile through 27 guided questions. Free-text + multiple choice. ~20 minutes.</p>
+        <p>Build your Ideal Customer Profile through 22 guided questions. Free-text + multiple choice. ~20 minutes.</p>
         <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
         <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
@@ -799,7 +813,7 @@ body.rtl .option-card { text-align: right; }
     <div class="progress-wrapper">
         <div class="progress-meta">
             <div class="section-label" id="sectionLabel">Section A: WHO</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 27</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 22</div>
         </div>
         <div class="progress-track">
             <div class="progress-fill" id="progressFill"></div>
@@ -807,6 +821,8 @@ body.rtl .option-card { text-align: right; }
     </div>
     <!-- Upstream Reference Panel -->
     <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <!-- Engagement Slot -->
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
         <div class="question-help" id="questionHelp" style="display:none;"></div>
@@ -851,10 +867,11 @@ body.rtl .option-card { text-align: right; }
 
 <script>
 /* ═══════════════════════════════════════════════════
-   EO ICP CLARITY SCORING — SCORECARD 2
-   32 Questions | 5 Sections (A-E) | 100 Points
+   EO ICP CLARITY SCORING — SCORECARD 2 (v1.1)
+   22 Questions | 5 Sections (A-E) | 100 Points
    Question Types: MC, Free-Text, MC+Evidence
    Prerequisites: SC1 (Project Definition) completed
+   B/C reduced: TOP 5 pains + TOP 5 dream outcomes
    ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
@@ -891,7 +908,7 @@ body.rtl .option-card { text-align: right; }
     };
 
     /* ===================================
-       QUESTION DEFINITIONS (32 Questions)
+       QUESTION DEFINITIONS (22 Questions)
        =================================== */
     var allQuestions = [
         /* ── SECTION A: WHO — Dream Customer Profile (25 pts) ── */
@@ -949,168 +966,87 @@ body.rtl .option-card { text-align: right; }
             evidenceRubric: '2.5=Strong evidence (actual spend data, conversations, competitor pricing); 1=Vague evidence; 0=No evidence'
         },
 
-        /* ── SECTION B: PAIN STATEMENTS (20 pts, 2 pts each) ── */
+        /* ── SECTION B: PAIN STATEMENTS (20 pts, 4 pts each) ── */
         {
             id: 'b1', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #1 (HIGHEST urgency): Write a specific pain your ideal customer would say out loud. Something they\'re RUNNING AWAY FROM.',
-            help: 'Write it as a direct quote. Include cost, frequency, or emotion. Not "managing is hard" but "I lose $200/week to scope creep because my contracts don\'t clarify deliverables."',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Pain #1 (HIGHEST urgency): Write a specific pain your ideal customer would say out loud. Something they\'re RUNNING AWAY FROM.',
+            help: 'List your TOP 5 pains, not 10. Quality over quantity. Write it as a direct quote. Include cost, frequency, or emotion. Not "managing is hard" but "I lose $200/week to scope creep because my contracts don\'t clarify deliverables."',
             placeholder: 'e.g., "Every Friday I spend 4 hours manually updating our project status spreadsheet because no tool integrates with our chaos..."',
-            rubric: '2=Specific, quotable, includes cost/frequency/emotion; 1=Generic pain with some context; 0=Blank or completely generic'
+            rubric: '4=Specific, quotable, includes cost/frequency/emotion with clear urgency; 2-3=Specific with some context but missing urgency detail; 1=Generic pain; 0=Blank or completely generic'
         },
         {
             id: 'b2', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #2 (HIGH urgency): Another specific pain — different from #1. Should be a different pain axis.',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Pain #2 (HIGH urgency): Another specific pain — different from #1. Must be a different pain axis.',
             help: 'Avoid repeating the same pain in different words. Cover different areas: time, cost, quality, reputation, control, compliance.',
             placeholder: 'e.g., "I told a freelancer the deadline was Monday. He delivered Wednesday. Client found out about the delay before I did..."',
-            rubric: '2=Specific, quotable, different axis from #1; 1=Generic with some context; 0=Blank or repeats #1'
+            rubric: '4=Specific, quotable, different axis from #1 with clear impact; 2-3=Specific with some context; 1=Generic; 0=Blank or repeats #1'
         },
         {
             id: 'b3', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #3 (HIGH urgency): A third distinct pain that would trigger buying within 30 days.',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Pain #3 (HIGH urgency): A third distinct pain that would trigger buying within 30 days.',
             help: 'Top 3 pains should be urgent enough that your customer would pay to solve them THIS MONTH.',
             placeholder: 'e.g., "I have three freelancers ready to work but I can\'t track their quality, so I bottleneck on myself..."',
-            rubric: '2=Specific, quotable, buying-trigger urgency; 1=Generic with some context; 0=Blank or generic'
+            rubric: '4=Specific, quotable, buying-trigger urgency with measurable impact; 2-3=Specific with some context; 1=Generic; 0=Blank'
         },
         {
             id: 'b4', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #4 (MEDIUM urgency): A pain that bothers them weekly but wouldn\'t trigger immediate buying.',
-            help: 'Medium pains create dissatisfaction but not urgency. They reinforce the top pains in your messaging.',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Pain #4 (MEDIUM urgency): A pain that bothers them weekly but may not trigger immediate buying alone.',
+            help: 'Medium pains create dissatisfaction but not urgency. They reinforce the top pains in your messaging. Cover a different axis than #1-3.',
             placeholder: 'e.g., "My agency processes invoices manually. When a freelancer double-bills me, it takes 2 days to find the original contract..."',
-            rubric: '2=Specific, quotable, clear medium urgency; 1=Generic; 0=Blank'
+            rubric: '4=Specific, quotable, clear medium urgency on different axis; 2-3=Some specificity; 1=Generic; 0=Blank'
         },
         {
             id: 'b5', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #5 (MEDIUM urgency): Another medium-urgency pain on a different axis.',
-            help: 'Keep diversifying. If your top pains are about communication, try cost, quality, or team dynamics.',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Pain #5 (MEDIUM urgency): Final pain — review: do your 5 pains cover at least 3 different pain axes?',
+            help: 'Diversity matters. Cover: time, cost, quality, reputation, control, compliance. 5 focused pains are more powerful than 10 scattered ones.',
             placeholder: '',
-            rubric: '2=Specific, different axis; 1=Generic; 0=Blank'
+            rubric: '4=Specific, completes diverse set across multiple axes; 2-3=Some specificity; 1=Generic; 0=Blank or repeats existing'
         },
-        {
-            id: 'b6', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #6 (MEDIUM urgency): A pain related to growth, scaling, or quality control.',
-            help: 'Think about what happens when their business grows: what breaks? What costs more?',
-            placeholder: '',
-            rubric: '2=Specific growth/scale pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b7', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #7 (MEDIUM urgency): A pain about visibility, tracking, or decision-making.',
-            help: 'Do they lack data to make decisions? Can they see what\'s happening in real-time?',
-            placeholder: '',
-            rubric: '2=Specific visibility/data pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b8', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #8 (LOWER urgency): A pain they\'d love to solve but wouldn\'t pay extra for alone.',
-            help: 'These become feature-level priorities for your product roadmap, not top-line messaging.',
-            placeholder: '',
-            rubric: '2=Specific lower-urgency pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b9', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #9 (LOWER urgency): Another lower-priority pain, ideally a different domain.',
-            help: 'Think beyond your core solution. What else keeps them up at night?',
-            placeholder: '',
-            rubric: '2=Specific, different domain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b10', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #10 (LOWER urgency): Final pain statement. Review: do your 10 pains cover at least 4 different pain axes?',
-            help: 'Diversity matters. Clustering penalty applies if 8+ are variations of the same theme. Cover: time, cost, quality, reputation, control, compliance.',
-            placeholder: '',
-            rubric: '2=Specific, completes diverse set; 1=Generic; 0=Blank or repeats existing'
-        },
-
-        /* ── SECTION C: PLEASURE STATEMENTS (20 pts, 2 pts each) ── */
+        /* ── SECTION C: PLEASURE STATEMENTS (20 pts, 4 pts each) ── */
         {
             id: 'c1', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #1 (STRATEGIC): Write a specific outcome your ideal customer DREAMS about. Something they\'re RUNNING TOWARD.',
-            help: 'Not "more money." Think vivid, aspirational: "I want to know exactly which leads are hot so I call them first and close before my competitor."',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Dream Outcome #1 (STRATEGIC): Write a specific outcome your ideal customer DREAMS about. Something they\'re RUNNING TOWARD.',
+            help: 'List your TOP 5 dream outcomes, not 10. Quality over quantity. Not "more money." Think vivid, aspirational: "I want to know exactly which leads are hot so I call them first and close before my competitor."',
             placeholder: 'e.g., "Every month I review one report and see exactly which freelancers are delivering on time, on budget, and on quality..."',
-            rubric: '2=Specific, vivid, emotionally resonant; 1=Generic desire with context; 0=Blank or completely generic'
+            rubric: '4=Specific, vivid, emotionally resonant with clear aspirational pull; 2-3=Specific with some context; 1=Generic desire; 0=Blank or completely generic'
         },
         {
             id: 'c2', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #2 (STRATEGIC): A business-level outcome that impacts revenue, efficiency, or strategy.',
-            help: 'Think about what changes at the business level when their problem is solved.',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Dream Outcome #2 (STRATEGIC): A business-level outcome that impacts revenue, efficiency, or strategy.',
+            help: 'Think about what changes at the business level when their problem is solved. This should be measurable.',
             placeholder: 'e.g., "A freelancer submits work. I give feedback. They iterate once. Done. No back-and-forth hell..."',
-            rubric: '2=Specific, business-level impact; 1=Generic; 0=Blank'
+            rubric: '4=Specific, business-level impact with measurable change; 2-3=Specific with some context; 1=Generic; 0=Blank'
         },
         {
             id: 'c3', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #3 (STRATEGIC): An outcome that would make them recommend your product to peers.',
-            help: 'What\'s the "wow moment" they\'d tell a colleague about at a conference?',
-            placeholder: '',
-            rubric: '2=Specific referral-worthy outcome; 1=Generic; 0=Blank'
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Dream Outcome #3 (OPERATIONAL): A day-to-day transformation that reduces friction and would make them recommend your product to peers.',
+            help: 'What\'s the "wow moment" they\'d tell a colleague about? Think about their daily workflow: what would change?',
+            placeholder: 'e.g., "Friday afternoon I\'m not updating spreadsheets. I\'m thinking about next month\'s strategy..."',
+            rubric: '4=Specific operational transformation with referral-worthy impact; 2-3=Some specificity; 1=Generic; 0=Blank'
         },
         {
             id: 'c4', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #4 (OPERATIONAL): A day-to-day transformation that reduces friction.',
-            help: 'Think about their daily workflow. What would be different? What would they stop doing?',
-            placeholder: 'e.g., "Friday afternoon I\'m not updating spreadsheets. I\'m thinking about next month\'s strategy..."',
-            rubric: '2=Specific operational transformation; 1=Generic; 0=Blank'
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Dream Outcome #4 (PERSONAL): How does the founder/user FEEL when the problem is solved? Confidence, relief, pride, identity?',
+            help: 'Not business metrics. Emotional: "I feel like a real CEO, not a firefighter." "I\'m proud to show my team how organized we are." "Known as the founder who built an agency that runs without grinding."',
+            placeholder: '',
+            rubric: '4=Specific emotional/identity outcome that drives purchasing decisions; 2-3=Some emotional specificity; 1=Generic; 0=Blank'
         },
         {
             id: 'c5', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #5 (OPERATIONAL): Another operational outcome about increased predictability or control.',
-            help: 'What can they predict or control that they currently can\'t?',
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 75,
+            text: 'TOP Dream Outcome #5: Final dream outcome. Review: do your 5 pleasures cover strategic, operational, AND personal outcomes?',
+            help: 'Diversity matters. Not all about efficiency. Include ambition, pride, and freedom. 5 vivid dream outcomes are more powerful than 10 scattered ones. Map at least one to a specific pain from Section B.',
             placeholder: '',
-            rubric: '2=Specific predictability/control outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c6', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #6 (OPERATIONAL): An outcome about team or collaboration improvement.',
-            help: 'How does the team dynamic change when the problem is solved?',
-            placeholder: '',
-            rubric: '2=Specific team/collaboration outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c7', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #7 (OPERATIONAL): An outcome that directly resolves one of your pain statements.',
-            help: 'Map this to a specific pain from Section B. Each pleasure should resolve a pain.',
-            placeholder: '',
-            rubric: '2=Specific, maps to a pain statement; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c8', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #8 (PERSONAL): How does the founder/user FEEL when the problem is solved? Confidence, relief, pride?',
-            help: 'Not business metrics. Emotional: "I feel like a real CEO, not a firefighter." "I\'m proud to show my team how organized we are."',
-            placeholder: '',
-            rubric: '2=Specific emotional outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c9', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #9 (PERSONAL): Another personal/emotional outcome about identity or reputation.',
-            help: 'Think about how others see them: "known as the founder who built an agency that runs without grinding."',
-            placeholder: '',
-            rubric: '2=Specific identity/reputation outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c10', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #10 (PERSONAL): Final pleasure. Review: do your 10 pleasures cover strategic, operational, AND personal outcomes?',
-            help: 'Like pains, diversity matters. Not all about efficiency — include ambition, pride, and freedom.',
-            placeholder: '',
-            rubric: '2=Specific, completes diverse set; 1=Generic; 0=Blank'
+            rubric: '4=Specific, completes diverse set covering multiple outcome dimensions; 2-3=Some specificity; 1=Generic; 0=Blank'
         },
 
         /* ── SECTION D: HERO JOURNEY (20 pts) ── */
@@ -1187,17 +1123,17 @@ body.rtl .option-card { text-align: right; }
         ],
         'B': [
             'Each pain should be quotable — something a customer would say in a rant to a friend.',
-            'Ensure diversity: cover at least 4 different pain axes (time, cost, quality, reputation, control, compliance).',
+            'Ensure diversity across your 5 pains: cover at least 3 different pain axes (time, cost, quality, reputation, control, compliance).',
             'Escalate from surface pains to deep pains: "organizing files is slow" → "clients fired us because we delivered late."',
-            'Top 3 should trigger buying within 30 days. Bottom 3 should be real but lower priority.',
-            'If all 10 pains cluster around one theme, brainstorm 3-5 OTHER problems your customer has.'
+            'Top 3 should trigger buying within 30 days. The remaining 2 should reinforce your messaging with different angles.',
+            'Quality over quantity: 5 sharp, specific pains are more powerful than 10 generic ones.'
         ],
         'C': [
-            'Each pleasure should be vivid and aspirational — not absence of pain ("no problems") but positive outcome.',
-            'Ensure diversity: cover strategic outcomes, operational improvements, AND personal/emotional wins.',
-            'Map pleasures to pains: if pain is "miscommunication," pleasure could be "every request is crystal clear, no one asks twice."',
-            'Include at least 2-3 personal/emotional pleasures: confidence, pride, freedom, identity.',
-            'Test: could you use these as benefit statements in your marketing copy?'
+            'Each dream outcome should be vivid and aspirational — not absence of pain ("no problems") but a positive outcome they\'re running TOWARD.',
+            'Ensure diversity across your 5 outcomes: cover strategic, operational, AND personal/emotional dimensions.',
+            'Map outcomes to pains: if pain is "miscommunication," dream outcome could be "every request is crystal clear, no one asks twice."',
+            'Include at least 1-2 personal/emotional outcomes: confidence, pride, freedom, identity.',
+            'Test: could you use these as benefit statements in your marketing copy? 5 vivid outcomes beat 10 generic ones.'
         ],
         'D': [
             'Current state (D1) should be vivid enough for a VSL opening scene. Include failed attempts with named tools.',
@@ -1231,7 +1167,7 @@ body.rtl .option-card { text-align: right; }
     var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
     var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
     var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
+    var $loadingOverlay, $resultsContent, $upstreamPanel, $engagementSlot;
 
     /* ===================================
        INIT
@@ -1254,6 +1190,7 @@ body.rtl .option-card { text-align: right; }
         $loadingOverlay = document.getElementById('loadingOverlay');
         $resultsContent = document.getElementById('resultsContent');
         $upstreamPanel = document.getElementById('upstreamPanel');
+        $engagementSlot = document.getElementById('engagementSlot');
 
         loadAnswers();
         loadUpstreamData();
@@ -1400,6 +1337,119 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
+       ENGAGEMENT LAYER
+       =================================== */
+    function renderEngagement() {
+        $engagementSlot.innerHTML = '';
+        if (currentIndex === 0) return;
+
+        var prevQ = allQuestions[currentIndex - 1];
+        var currQ = allQuestions[currentIndex];
+        var prevSection = prevQ.sectionId;
+        var currSection = currQ.sectionId;
+
+        /* Transition from Section A to Section B: After A5 (WHO complete) */
+        if (prevSection === 'A' && currSection === 'B') {
+            var customerName = answers['a1'] || '';
+            var snippet = customerName.length > 80 ? customerName.substring(0, 80) + '...' : customerName;
+            $engagementSlot.innerHTML =
+                '<div class="pattern-break"><div class="pattern-break-card">' +
+                '<div class="pb-label">Insight Unlock</div>' +
+                '<div class="pb-text">Your ICP is already more specific than 90% of the pitches I see. ' +
+                (snippet ? 'The way you described your customer \u2014 that level of detail is rare. ' : '') +
+                'Most founders say "small businesses" or "marketers." You gave me someone I could find on LinkedIn. That specificity is your unfair advantage in messaging.</div>' +
+                '</div></div>';
+        }
+
+        /* Transition from Section B to Section C: After B section (Pains complete) */
+        if (prevSection === 'B' && currSection === 'C') {
+            var topPain = answers['b1'] || 'your #1 pain';
+            var painSnippet = topPain.length > 60 ? topPain.substring(0, 60) + '...' : topPain;
+            $engagementSlot.innerHTML =
+                '<div class="pattern-break"><div class="pattern-break-card">' +
+                '<div class="pb-label">Competitor Reveal</div>' +
+                '<div class="pb-text">Companies charging premium prices are solving these exact pains. But nobody is touching your #1 pain the way you described it: "' +
+                escapeHtml(painSnippet) + '" \u2014 That\'s your wedge. The gap between what exists and what your customer needs is where your product lives.</div>' +
+                '</div></div>' +
+                '<div class="investment-signal"><div class="investment-signal-card">' +
+                'Your pain matrix has more depth than most consultants charge $5K for. 5 focused pains, each on a different axis \u2014 that\'s a messaging goldmine.' +
+                '</div></div>';
+        }
+
+        /* Transition from Section C to Section D: After C section (Pleasures complete) */
+        if (prevSection === 'C' && currSection === 'D') {
+            var painSummary = '';
+            var pleasureSummary = '';
+            for (var pi = 1; pi <= 5; pi++) {
+                var p = answers['b' + pi];
+                if (p && p.trim()) painSummary += (painSummary ? ', ' : '') + '#' + pi;
+            }
+            for (var pli = 1; pli <= 5; pli++) {
+                var pl = answers['c' + pli];
+                if (pl && pl.trim()) pleasureSummary += (pleasureSummary ? ', ' : '') + '#' + pli;
+            }
+            $engagementSlot.innerHTML =
+                '<div class="variable-reward"><div class="variable-reward-card">' +
+                '<div class="vr-label">Your Pain-Pleasure Matrix</div>' +
+                '<div class="vr-text">You\'ve mapped ' + (painSummary || 'your') + ' pains (what they\'re running FROM) and ' +
+                (pleasureSummary || 'your') + ' dream outcomes (what they\'re running TOWARD). ' +
+                'This is the foundation of every piece of sales copy, every ad, every landing page you\'ll ever write. ' +
+                'Now let\'s connect them through your customer\'s Hero Journey.</div>' +
+                '</div></div>';
+        }
+
+        /* Transition from Section D to Section E: After D section (Hero Journey complete) */
+        if (prevSection === 'D' && currSection === 'E') {
+            var currentState = answers['d1'] || '';
+            var futureState = answers['d2'] || '';
+            var csSnippet = currentState.length > 50 ? currentState.substring(0, 50) + '...' : currentState;
+            var fsSnippet = futureState.length > 50 ? futureState.substring(0, 50) + '...' : futureState;
+            $engagementSlot.innerHTML =
+                '<div class="pattern-break"><div class="pattern-break-card">' +
+                '<div class="pb-label">Offer Preview</div>' +
+                '<div class="pb-text">Your transformation statement is taking shape: You take your ICP from "' +
+                escapeHtml(csSnippet) + '" to "' + escapeHtml(fsSnippet) + '" \u2014 ' +
+                'That\'s the core of every pitch, every demo, every sales conversation. The Hero Journey you just mapped is the foundation.</div>' +
+                '</div></div>' +
+                '<div class="investment-signal"><div class="investment-signal-card">' +
+                'You\'ve just mapped the complete hero journey. This is the foundation of every piece of content, every sales conversation, every ad you\'ll ever run.' +
+                '</div></div>';
+        }
+
+        /* Last question (e3): show final investment signal */
+        if (currQ.id === 'e3') {
+            $engagementSlot.innerHTML =
+                '<div class="investment-signal"><div class="investment-signal-card">' +
+                'Almost there. Your ICP document could anchor a $50K GTM strategy. One more answer and your complete ICP profile is ready.' +
+                '</div></div>';
+            return;
+        }
+
+        /* Acknowledgment protocol — between individual questions */
+        if (currentIndex > 0 && prevSection === currSection) {
+            var prevAnswer = answers[prevQ.id];
+            if (prevAnswer !== undefined && prevAnswer !== '') {
+                var ackText = '';
+                if (prevQ.type === Q_MC || prevQ.type === Q_MC_EVIDENCE) {
+                    var optIdx = prevAnswer;
+                    if (prevQ.options && prevQ.options[optIdx]) {
+                        var ratio = prevQ.options[optIdx].score / prevQ.maxScore;
+                        if (ratio >= 0.8) ackText = 'Strong answer. That level of specificity separates funded founders from dreamers.';
+                        else if (ratio <= 0.3) ackText = 'This is where most founders stay vague. Push deeper — the specifics are your competitive advantage.';
+                    }
+                } else if (prevQ.type === Q_FREETEXT) {
+                    var wordCount = (prevAnswer || '').trim().split(/\s+/).filter(function(w) { return w; }).length;
+                    if (wordCount >= 40) ackText = 'That\'s detailed. This kind of depth makes your ICP profile strategy-grade.';
+                    else if (wordCount > 0 && wordCount < 15) ackText = 'Can you go deeper? The difference between a generic pitch and a compelling one hides in these details.';
+                }
+                if (ackText) {
+                    $engagementSlot.innerHTML = '<div class="acknowledgment"><div class="acknowledgment-card">' + ackText + '</div></div>';
+                }
+            }
+        }
+    }
+
+    /* ===================================
        EMAIL CAPTURE
        =================================== */
     function startAssessment() {
@@ -1448,6 +1498,9 @@ body.rtl .option-card { text-align: right; }
 
         /* Show upstream panel in stepper */
         renderUpstreamPanel();
+
+        /* Show engagement elements */
+        renderEngagement();
 
         if (q.type === Q_FREETEXT) {
             renderFreetextQuestion(q);
@@ -1818,11 +1871,11 @@ body.rtl .option-card { text-align: right; }
             downstream.decision_authority = answers['a4'] !== undefined ? allQuestions.find(function(q) { return q.id === 'a4'; }).options[answers['a4']].label : '';
             downstream.budget = answers['a5'] !== undefined ? allQuestions.find(function(q) { return q.id === 'a5'; }).options[answers['a5']].label : '';
             downstream.pain_statements = [];
-            for (var pi = 1; pi <= 10; pi++) {
+            for (var pi = 1; pi <= 5; pi++) {
                 downstream.pain_statements.push(answers['b' + pi] || '');
             }
             downstream.pleasure_statements = [];
-            for (var pli = 1; pli <= 10; pli++) {
+            for (var pli = 1; pli <= 5; pli++) {
                 downstream.pleasure_statements.push(answers['c' + pli] || '');
             }
             downstream.current_state = answers['d1'] || '';
@@ -2075,8 +2128,8 @@ body.rtl .option-card { text-align: right; }
         md += '- `icp-clarity-scoring/SKILL.md`\n\n';
         md += 'Ask: "Score these ICP Clarity answers using the rubric provided. Include set-level evaluation for Sections B and C (Pain/Pleasure). Return section scores and total."\n\n';
         md += '### Special Scoring Notes\n\n';
-        md += '- **Section B (Pain):** Score each statement 0-2, then evaluate set-level: diversity, escalation, ICP consistency. Bonuses/penalties per SKILL.md.\n';
-        md += '- **Section C (Pleasure):** Score each statement 0-2, then evaluate set-level: specificity escalation, pain-pleasure mapping, ICP consistency.\n';
+        md += '- **Section B (Pain):** TOP 5 pains. Score each statement 0-4, then evaluate set-level: diversity across pain axes, escalation, ICP consistency. AI probes top 2 pains for depth.\n';
+        md += '- **Section C (Pleasure):** TOP 5 dream outcomes. Score each statement 0-4, then evaluate set-level: specificity escalation, pain-pleasure mapping, ICP consistency. AI probes top 2 outcomes for vision.\n';
         md += '- **Consistency Engine:** Check for contradictions between SC1 outputs and ICP answers.\n\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
