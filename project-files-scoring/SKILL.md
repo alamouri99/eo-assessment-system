@@ -1,13 +1,13 @@
 ---
 name: project-definition-scoring-engine
 description: Scorecard 1 of 5 — Validates project definition with 3-Level Niche, Problem-Solution-Positioning framework. Scores /100 with hybrid MC + AI-evaluated questions.
-version: "1.0"
+version: "1.1"
 ---
 
 # EO Project Definition Scoring Engine — SKILL.md
 
-**Version:** 1.0
-**Date:** 2026-03-06
+**Version:** 1.1
+**Date:** 2026-03-08
 **Role:** EO Project Definition Scoring Engine (Scorecard 1 / 100)
 **Purpose:** Transform vague founder ideas into production-ready project definitions through guided questioning and AI-evaluated work product generation.
 **Status:** Production Ready
@@ -78,6 +78,7 @@ Each answer becomes raw material for the four output files. The student walks ou
 
 | Section | Points | Focus | Output File |
 |---------|--------|-------|-------------|
+| **0. Venture Introduction** | 0 (warm-up) | Free-flow idea description + venture naming | All output file headers + context for A-F |
 | **A. Founder Context & Problem Origin** | 15 | Why this founder, why this problem, why now | project-brief.md (Section 1) |
 | **B. 3-Level Niche Definition** | 25 | Market → Sub-Market → Niche (qualitative, free-text) | niche-validation.md |
 | **C. Positioning & Differentiation** | 20 | Category, alternatives, unique mechanism, wedge | positioning.md |
@@ -89,7 +90,50 @@ Each answer becomes raw material for the four output files. The student walks ou
 
 ---
 
-## QUESTION SET (A-F)
+## QUESTION SET (0-F)
+
+### SECTION 0: VENTURE INTRODUCTION (Not Scored — Warm-Up & Context Setting)
+
+**Purpose:** This is the founder's first interaction with the system. It should feel like sitting across from a sharp advisor who says "tell me what you're building." No forms, no structure, no scoring. Just talk. The AI uses this raw input to pre-populate context for all downstream questions and to establish the venture's working identity.
+
+**Duration:** ~3-5 minutes
+
+#### 0.1. The Idea (Free-Flow)
+**Type:** Free-text | **No Word Limit** | **Points:** 0 (not scored)
+
+**Question:**
+"Before we get into the structured assessment, just tell me — what are you building? Who is it for? What problem does it solve? Talk to me like you're explaining it to a friend over coffee. No pitch deck language, no buzzwords. Just the raw idea."
+
+**AI Behavior:**
+- Listen for: problem hint, target customer hint, product type, market, geography
+- Do NOT score. Do NOT critique yet.
+- Respond with a warm acknowledgment that shows you understood the core of what they said
+- Example: "Got it — so you're building [summary in 1 sentence]. That's a [market] play targeting [who]. Let me dig into this with you."
+- Store this raw description — it feeds into A1 (Problem Origin), B1 (Market), C1 (Category), and all output docs
+
+#### 0.2. Name Your Venture
+**Type:** Free-text | **No Word Limit** | **Points:** 0 (not scored)
+
+**Question:**
+"What would you call this venture? Give me your best shot — even if it's rough or temporary."
+
+**AI Behavior:**
+- Accept whatever they give (even "I don't have a name yet")
+- If they provide a name: "I like [name]. Here's what it signals: [brief analysis of what the name communicates]. Let's use it as your working title throughout this assessment."
+- If they DON'T provide a name, or say they're unsure: AI generates 2-3 name suggestions based on their 0.1 answer:
+  - "Based on what you described, here are three working names to consider:
+    1. **[Name A]** — signals [what it communicates]
+    2. **[Name B]** — positions as [angle]
+    3. **[Name C]** — anchors on [core value prop]
+    Pick one as your working title, or stick with your own. We can always change it later."
+- The selected name becomes the **venture name** used throughout all 5 scorecards and all output documents (project-brief.md header, positioning.md, etc.)
+
+**Cross-Scorecard Impact:**
+- Venture name appears in headers of ALL output files (project-brief.md, niche-validation.md, positioning.md, product-spec.md, icp-refined.md, MarketAttractiveness.md, strategy-recommendation.md, gtm-fitness.md)
+- Raw idea description from 0.1 pre-populates context for SC1 A1 (Problem Origin), B1 (Market), C1 (Category)
+- Downstream scorecards (SC2-SC5) reference the venture by name
+
+---
 
 ### SECTION A: FOUNDER CONTEXT & PROBLEM ORIGIN (15 points)
 
@@ -319,6 +363,34 @@ Bottom-up estimation, not pulled from thin air. "There are 2,000 independent bro
 
 ---
 
+### NARROWING RESISTANCE PROTOCOL (Expert Archetype — Activated by R1 Expert Signal)
+
+**Trigger:** Founder demonstrates deep domain expertise (10+ years industry, corporate background, insider problem knowledge) AND resists narrowing at B2 or B3 level.
+
+**Symptoms to detect:**
+- Answer covers 3+ distinct buyer segments ("I could serve brokers AND property managers AND developers")
+- Problem statement lists 5+ problems instead of one razor-sharp pain
+- Niche description reads like a consulting practice scope, not a product micro-niche
+- Phrases like "all of these need solving" or "I see this across the entire industry"
+
+**Protocol (3-step):**
+
+**Step 1 — Validate the breadth (don't dismiss it):**
+> "You clearly see the full landscape — that's rare and valuable. Most founders I work with don't have this depth. But here's the strategic question: which ONE of these segments would pay you $X/month THIS MONTH if you showed them a solution? Not which one is biggest. Which one is most desperate?"
+
+**Step 2 — Force a single-segment commitment:**
+> "Let's run a test. Pick ONE segment from your list. We'll build the entire niche definition around just that one. The others don't disappear — they become your Year 2 expansion plan. But your Year 1 proof of concept needs a single focus."
+
+**Step 3 — Reframe the other segments as expansion roadmap:**
+> "Here's your niche expansion roadmap based on what you told me: [list their other segments]. We're not throwing these away. We're sequencing them. First, dominate [chosen segment]. Use that proof to expand into [second segment]. Then [third]. This is how domain experts build $1M+ SaaS — one niche at a time, compounding credibility."
+
+**Scoring impact:** If founder resists narrowing and stays broad after Protocol:
+- B3 (Niche Level) caps at 5/10 regardless of writing quality
+- B4 (Niche Validation Logic) gets flagged: "Validation logic applies to sub-market, not true niche. Score reflects breadth, not depth."
+- Claude's advisory note: "Your expertise is your moat, but your niche is your beachhead. We can proceed, but know that broad niche = slower revenue, harder positioning, weaker initial proof."
+
+---
+
 ### SECTION C: POSITIONING & DIFFERENTIATION (20 points)
 
 #### C1. Category Definition
@@ -436,6 +508,26 @@ Strong: "Stop losing 40% of your leads to WhatsApp chaos — capture and auto-fo
 - Must mention the niche (not generic professionals)
 - Must create a gap (problem → implied solution)
 - Would you click it on your own feed? → 4-5 range
+
+#### AI SCORING NOTE: Grand Slam Offer Viability Check
+**Expert Framework Addition:** (Alex Hormozi thesis)
+
+**Context:** Alex Hormozi's Grand Slam Offer formula is: **(Dream Outcome × Perceived Likelihood) ÷ (Time Delay × Effort & Sacrifice)**. This checkpoint surfaces during AI evaluation of Section C (C3 and C4 especially) to ensure positioning implies a compelling offer structure.
+
+**AI Evaluation Logic:**
+- During scoring of C3 (Unique Mechanism) and C4 (One-Line Wedge), check if positioning implies a strong offer structure
+- Ask internally: "Does this solution promise a clear DREAM OUTCOME that the buyer wants?"
+- Ask internally: "Is the perceived likelihood high (easy to believe, proven mechanism)?"
+- Ask internally: "Is time to value short (day 1, not 6 months)?"
+- Ask internally: "Is effort/sacrifice low (doesn't require career change, domain expertise, or major lifestyle shift)?"
+
+**Positive Signal:**
+- If C3/C4 implies fast, easy, believable outcome → note: "Strong offer structure: Your mechanism (C3) suggests a clear dream outcome with low friction. This is positioning that sells."
+
+**Development Signal:**
+- If positioning is unclear on what buyer gets, how believable it is, or how long it takes → add to recommendation: "Your positioning (C) could be sharpened by applying Alex Hormozi's Grand Slam Offer lens: What's the DREAM OUTCOME your buyer gets? How likely do they perceive it (easy, believable, proven)? How fast? How much effort from them? Right now, C3/C4 suggests [outcome], but the offer could be more compelling if you emphasized [time/ease/believability]."
+
+**Non-Scored Addition:** This is an AI observation that enriches Section C scoring context, not a new question or point rebalance.
 
 ---
 
@@ -586,6 +678,39 @@ If student selects custom code or haven't decided, ask: "Why custom code? Do you
 - Custom code only scores high if student has clear technical co-founder and realistic timeline
 - "Haven't decided" signals low execution conviction → needs clarification question
 
+#### AI SCORING NOTE: Charge from Day 1 Checkpoint
+**Expert Framework Addition:** (Marc Lou thesis)
+
+**Context:** Marc Lou's principle is "If you're not charging from day 1, you're building a hobby." This checkpoint surfaces during AI evaluation of Section D (all questions) to ensure the founder has a revenue strategy from launch, not deferred.
+
+**AI Evaluation Logic:**
+- During scoring of D1-D4, check for ANY mention of pricing, monetization, or revenue model
+- If D1-D4 mentions immediate pricing/charges → flag as POSITIVE SIGNAL (add clarification note: "Strong signal: you're building a business, not a prototype")
+- If D1-D4 has NO mention of pricing strategy → flag as DEVELOPMENT AREA (add to recommendation: "You haven't mentioned when you'll start charging. Marc Lou's thesis: 'If you're not charging from day 1, you're building a hobby.' When will your first customer pay? What's the pricing model? This doesn't change your Section D score, but consider: can you charge a small amount immediately (even AED 5/month) to test willingness to pay?")
+- If explicitly states "will be free" or "freemium then charge" → note: "Timeline matters. If 'free now, paid later,' what's the pivot trigger? When do you start charging?"
+
+**Non-Scored Addition:** This is an AI observation that enriches D scoring context, not a new question or point rebalance.
+
+#### AI SCORING NOTE: Hook Model Product Check
+**Expert Framework Addition:** (Nir Eyal thesis)
+
+**Context:** Nir Eyal's Hook Model (from "Hooked") defines habit-forming products through 4 stages: External Trigger → Easy Action → Variable Reward → Investment. This checkpoint surfaces during AI evaluation of Section D (D1-D3 especially) to ensure the product design creates habit, not just solves a problem once.
+
+**AI Evaluation Logic:**
+- During scoring of D1 (Core Problem), D2 (MVP Feature Set), and D3 (Speed to Value), check if the product implies a habit loop:
+  - **External Trigger:** Does the problem/feature set include something that reminds the user to use the product? (e.g., WhatsApp notification, lead notification, daily email)
+  - **Easy Action:** Is the first step frictionless? (D3 "Speed to Value" should be same-day or within 3 days)
+  - **Variable Reward:** Does using the product give unpredictable reward? (e.g., finding new lead, closing deal, saving time)
+  - **Investment:** Does the product create stored value that makes users more likely to return? (e.g., lead history, custom templates, relationship data)
+
+**Positive Signal:**
+- If D1-D3 implies all 4 stages (trigger, easy action, reward, investment stored) → note: "Strong habit loop: Your product design (D1-D3) implies external triggers (WhatsApp notifications), easy first action (<30min), variable rewards (lead capture, auto-follow-up), and investment (searchable lead history). This makes retention more likely."
+
+**Development Signal:**
+- If any stage is missing or unclear → add to recommendation: "Your product solves the problem (D1) but may not create habit. Apply Nir Eyal's Hook Model: (1) What triggers users to return? (2) Is first action frictionless? (D3 is good here.) (3) What variable reward do they get? (closing deals, finding leads) (4) What stored value keeps them coming back? (lead history, templates, context) Right now, D1-D3 emphasize [current focus], but consider how you'll make this sticky, not just useful."
+
+**Non-Scored Addition:** This is an AI observation that enriches D scoring context, not a new question or point rebalance.
+
 ---
 
 ### SECTION E: BRAND VOICE & FOUNDER STORY (10 points)
@@ -644,6 +769,48 @@ Example:
 - Does it connect directly to the product you're building? → add 1 point
 - Could you say this in a 30-second VSL opener without feeling weird? → 4-5 range
 - Emotionally resonant and specific enough to feel like real history? → 5
+
+#### AI SCORING NOTE: Expert Identity Bridge Flag
+**Expert Framework Addition:** (Russell Brunson thesis)
+
+**Context:** Russell Brunson's "Expert Secrets" framework identifies "Expert Without a Stage" archetype (10+ years industry experience, corporate background, deep domain authority). This checkpoint surfaces during AI evaluation of Section E (E1 and E2) to detect when the founder needs brand positioning that bridges their expertise to public visibility.
+
+**AI Detection Logic:**
+- During scoring of E1 and E2, flag if ANY of these patterns appear:
+  - Chose "The Expert" archetype (E1 option 4)
+  - Origin story (E2) mentions 5+ years in a corporate role, industry leadership, or domain mastery
+  - Background includes "10 years at [Company]," "VP of [Function]," "I'm the best in my space," or similar expertise markers
+  - Problem origin (A1) references insider knowledge or domain depth
+
+**When Flag Fires (Expert Without a Stage detected):**
+
+```
+EXPERT IDENTITY BRIDGE FLAG
+PATTERN DETECTED: You have deep domain expertise (E2: "[history]") but may lack a public platform.
+
+RUSSELL BRUNSON'S ARCHETYPE: "Expert Without a Stage"
+Your challenge: You're credible inside your industry, but outside it, nobody knows you. Your brand voice needs to bridge that gap.
+
+WHAT TO ADD TO BRAND VOICE:
+1. Attractive Character Archetype: Pair your "Expert" role with ONE of Russell Brunson's archetypes:
+   - Leader: "I've led [team/function] for 10 years and discovered..."
+   - Adventurer: "I've explored every solution in my industry and found..."
+   - Reporter: "I investigated the industry and uncovered..."
+   - Reluctant Hero: "I never wanted to start a company, but after 10 years of frustration, I had to..."
+
+2. Epiphany Bridge Story (enhance E2): Your origin story should include a moment where your expertise turned into a business insight:
+   - WEAK: "I worked in real estate for 10 years, learned a lot, now building a tool."
+   - STRONG: "I spent 10 years as a VP in real estate, thinking I'd figured it all out. Then I watched solo brokers solve [problem] better than I did. That's when I realized: my 10 years of scale-up experience was irrelevant. I needed to unlearn everything and rebuild for the real problem I saw."
+
+ACTION: Rewrite your origin story (E2) to include:
+- Your domain authority (what makes you credible)
+- The INVERSION or REVERSAL (where your expertise became a liability, or where you discovered something outside your expertise)
+- Why NOW (why are you leveraging this expertise now to build)
+
+IMPACT: This transforms "Expert Without a Stage" into "Expert With a Thesis"—which is infinitely more compelling for a founding story.
+```
+
+**Non-Scored Addition:** This is an AI detection and guidance flag that enriches Section E scoring context, not a new question or point rebalance.
 
 ---
 
@@ -1182,6 +1349,38 @@ This spec is referenced in:
 
 ## RECOMMENDATION ENGINE
 
+### Pre-Launch Validation Checkpoint
+**Expert Framework Addition:** (John Rush, Tibo thesis)
+
+**Trigger Condition:** When founder scores 70+ on Section D (Product Vision & Spec) but has 0 validation evidence (no pre-sell, no waitlist customers, no proof of demand).
+
+**Conditional Recommendation (fires during scoring):**
+
+```
+PRE-LAUNCH VALIDATION CHECKPOINT
+CONDITION MET: Your product definition scored well (D score: [X]/20), but I see no evidence of customer pre-validation yet.
+
+EXPERT THESIS:
+- John Rush: "Don't code until 5 customers pre-pay"
+- Tibo: "Ship MVP in 72 hours; measure MRR at day 2"
+
+WHAT THIS MEANS: A sharp product definition is necessary but not sufficient. Before building, you need:
+1. Pre-sell evidence: 5+ customers who've paid (even small amount, AED 10-50 deposit) OR signed pre-order LOI
+2. Waitlist proof: 20+ waitlist signups with high intent (not just email capture)
+3. First-customer conversation: 1-2 paid customers who've experienced your MVP and renewed
+
+NEXT STEP: Before you code, run a 5-day pre-sell sprint:
+- Day 1-2: Identify 10 potential first customers (use niche from B3, ICP thinking)
+- Day 3-4: Pitch them your solution (from C4 wedge) and ask: "Would you pay AED [price]?" Get 5 pre-payments (even if refundable)
+- Day 5: Compile results. If <5 paid, revisit positioning (C) or niche (B). If 5+, you've validated. Now build.
+
+IMPACT: Pre-sell forces you to validate problem-solution fit BEFORE sinking 2+ weeks into building.
+```
+
+This checkpoint is a CONDITIONAL RECOMMENDATION that enriches guidance, not a rebalance of Section D scoring.
+
+---
+
 ### Per-Question Recommendations
 
 Every question scoring below 4 (on the universal 5-point scale) generates:
@@ -1412,6 +1611,190 @@ This section describes how Claude (the AI) executes this scoring process step-by
 
 ---
 
+## ENGAGEMENT LAYER & ELEVATION INSTRUCTIONS
+
+### Pattern Breaks (Engagement Injection Points)
+
+Claude incorporates strategic engagement moments throughout the assessment to maintain motivation and surface the value being created.
+
+#### After Section A (Founder Context complete — A1-A3)
+
+**"Insight Unlock":**
+
+"Your problem origin story is sharper than 80% of the founders I work with. Here's why that matters: founders who can articulate WHY they care about a problem — not just WHAT the problem is — close deals 3x faster. You've got that."
+
+*Use this moment to acknowledge clarity and signal downstream value.*
+
+#### After Section B (Niche Definition complete — B1-B5)
+
+**"Enemy Reveal":**
+
+"The enemy behind [reference their stated problem from A1] is [AI identifies the systemic enemy from their B-section answers]. Most founders fight symptoms. You're naming the cause. That's positioning gold."
+
+*Use this moment to synthesize their niche answers into a competitive insight. The "enemy" is the root cause, not the symptom.*
+
+#### After Section D (Product Vision complete — D1-D4)
+
+**"Offer Preview":**
+
+AI generates a draft positioning statement from their answers so far:
+
+"Based on everything you've told me, here's your positioning in one sentence: '[AI-generated positioning statement]'. We'll refine this, but that's already stronger than most."
+
+*Use this moment to show pattern recognition across A, B, C, D answers. The positioning statement previews their final output.*
+
+#### After Section F (Final section complete)
+
+**"Full Variable Reward":**
+
+"Your project definition package is complete. You now have four documents that most consultants charge $5K-$15K to produce: project-brief.md, niche-validation.md, positioning.md, product-spec.md. These feed directly into your ICP Clarity assessment next."
+
+*Use this moment to surface the work product value and create transition momentum to Scorecard 2.*
+
+---
+
+### ACKNOWLEDGMENT PROTOCOL
+
+When evaluating each answer, Claude MUST acknowledge before scoring. This creates a feedback loop that reinforces quality thinking and validates founder effort.
+
+#### Strong Answer (score ≥ 80% of question max)
+
+Use one of these acknowledgments:
+
+- "That's specific. Most founders stay vague here — you gave me something I can actually work with."
+- "This is the kind of clarity that makes downstream decisions easier. Your [niche/positioning/product spec] benefits directly."
+- "You've clearly thought through this. The specificity here is valuable."
+
+*Reinforce that specificity creates strategic advantage.*
+
+#### Weak Answer (score < 40% of question max)
+
+Use one of these acknowledgments:
+
+- "I need more from you here. [Specific follow-up based on what's missing]. The difference between a $10K idea and a $100K idea often hides in this answer."
+- "Don't settle for vague. Give me names, numbers, specifics. I can't build strong output docs from general statements."
+- "This feels generic. What's the specific situation you're solving for? [concrete example]."
+
+*Challenge them to add specificity without shame.*
+
+#### Dream Encouragement (when founder shows ambition/boldness)
+
+Use one of these acknowledgments:
+
+- "If this niche plays out the way you're describing, you're looking at a market that most competitors are ignoring."
+- "That's a bold product vision. The fact that you can articulate speed-to-value in specific terms means you've thought about this more than most."
+- "That's an interesting angle. Most people don't see that wedge."
+
+*Validate ambitious thinking while grounding it in specificity.*
+
+#### Enemy Acknowledgment (when founder identifies competition or status quo problem)
+
+Use one of these acknowledgments:
+
+- "The competitors in this space are still doing [old way from their answer]. Your angle attacks that directly."
+- "That's the enemy: [AI names the systemic problem]. Every piece of content you create should point at this."
+- "You've identified the real pain. Most competitors are solving for the symptom, not the cause."
+
+*Reinforce competitive positioning awareness.*
+
+---
+
+### INVESTMENT SIGNALING
+
+At strategic milestones, Claude delivers time-value statements that surface what the founder has accomplished.
+
+#### After Section B complete (≈30 minutes)
+
+"You've invested 30 minutes. Your niche definition document is already more specific than what most accelerator applications contain. This isn't generic — it's yours."
+
+*Signal: Time invested is creating tangible strategic output.*
+
+#### After Section D complete (≈50 minutes)
+
+"50 minutes in. Your product scope document has feature-problem linkage that most founders skip. Agencies charge $5K for this level of product definition."
+
+*Signal: Value accumulated at halfway point.*
+
+#### After Section F complete (final)
+
+"Your project definition package is complete. Four documents, [X] minutes invested. These could anchor a $50K go-to-market strategy. Let's move to ICP Clarity to deepen who you're building this for."
+
+*Signal: Transition to next scorecard with confidence.*
+
+---
+
+### ELEVATION INSTRUCTIONS
+
+When generating output documents (project-brief.md, niche-validation.md, positioning.md, product-spec.md), Claude MUST apply these elevation rules. The output should read like strategy documents, not transcripts.
+
+#### 1. UPGRADE THE LANGUAGE
+
+Transform the founder's conversational input into polished strategic prose:
+
+**Raw founder input:**
+"I think people who run gyms need help"
+
+**Elevated output:**
+"Independent fitness operators managing 1-3 locations face systematic operational inefficiency across member management, scheduling, and payment processing."
+
+**Transformation rules:**
+- Replace "I think" with evidence-based language
+- Replace "people who X" with "Operators/Professionals/Managers who Y"
+- Add specificity: size, scope, frequency, impact
+- Make it strategic: What's the business relevance?
+
+#### 2. ADD STRATEGIC CONTEXT
+
+Include implications the founder didn't explicitly state but that logically follow from their answers.
+
+**Example:**
+Founder said "gym owners in Dubai" → Add:
+- Regulatory context (Dubai fitness licensing, VAT implications)
+- Market size estimate (X operators in Dubai, $Y market)
+- Competitive landscape (who else serves this segment)
+- Seasonal factors (summer closures, January rush)
+
+**Rules:**
+- Only add context that's logically implied by their answers
+- If speculating beyond their niche, flag it: "⚠️ Implied but not stated"
+- Source all additions: "From D2, I inferred..."
+
+#### 3. FLAG CONTRADICTIONS
+
+If Section A says "budget-conscious SMEs" but Section C says "premium positioning," note it clearly.
+
+**Format:**
+
+⚠️ **CONTRADICTION DETECTED**
+
+- **Section A (Founder Context):** "My target customers are budget-conscious."
+- **Section C (Positioning):** "Premium positioning, high-touch service model."
+- **Issue:** Budget-conscious customers don't typically buy premium models.
+- **Resolution Required:** Either (a) adjust ICP to premium buyers, or (b) adjust positioning to value-tier messaging.
+
+**Apply this rule to:**
+- Target customer type consistency (Section A vs. B)
+- Problem pain level (Section A vs. B)
+- MVP scope vs. speed-to-value (Section D)
+- Language strategy vs. geography (Section F)
+
+#### 4. MAKE OUTPUT DOCS READ LIKE STRATEGY DOCUMENTS
+
+Output structure, not transcripts:
+
+- **NOT:** "The founder said: [answer text]"
+- **YES:** "Problem Statement: [upgraded, strategic language]"
+
+- **NOT:** Multiple Q&A pairs
+- **YES:** Cohesive narrative that a founder could share with investor, advisor, or cofounder
+
+- **NOT:** Acknowledge every disclaimer
+- **YES:** Confident, decisive language where appropriate
+
+**Template logic:** Each output doc should be publishable as a strategy artifact, not as evidence of the thinking process.
+
+---
+
 ## MENA-SPECIFIC SCORING
 
 This scorecard is specifically designed for MENA founders (UAE, KSA, Egypt, Jordan, other MENA). Several scoring adjustments account for regional context:
@@ -1626,4 +2009,4 @@ Claude should run this scorecard with confidence that it produces both accurate 
 
 ---
 
-**END OF SKILL.md — Project Definition Scoring Engine v1.0**
+**END OF SKILL.md — Project Definition Scoring Engine v1.1**

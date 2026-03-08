@@ -1,7 +1,7 @@
 ---
 name: icp-clarity-scoring-engine
 description: Scorecard 2 of 5 — Evaluates ICP clarity across WHO, Pain, Pleasure, Hero Journey, and Access dimensions. Scores /100 with hybrid MC + AI-evaluated questions.
-version: "1.0"
+version: "1.1"
 ---
 
 # ICP Clarity Scoring Engine
@@ -66,12 +66,56 @@ If any are missing, I pause and ask for them before proceeding.
 | Section | Questions | Points | Framework | Output |
 |---------|-----------|--------|-----------|--------|
 | **A. WHO** | A1-A5 | 25 | ICP Matrix (customer identity, buying behavior, budget) | Dream Customer Profile |
-| **B. WHAT (Pain)** | B1-B10 | 20 | Pain/Pleasure (away-from drivers, frequency, cost, urgency) | Pain Map (10 statements ranked) |
-| **C. WHAT (Pleasure)** | C1-C10 | 20 | Pain/Pleasure (toward drivers, aspiration, resonance) | Pleasure Map (10 statements ranked) |
+| **B. WHAT (Pain)** | B1-B5 | 20 | Pain/Pleasure (away-from drivers, frequency, cost, urgency) | Pain Map (5 statements ranked, with deep-dive follow-ups) |
+| **C. WHAT (Pleasure)** | C1-C5 | 20 | Pain/Pleasure (toward drivers, aspiration, resonance) | Pleasure Map (5 statements ranked, with vision follow-ups) |
 | **D. WHY** | D1-D4 | 20 | Hero Journey (current state, future state, obstacles, bridge) | Hero Journey narrative + solution mapping |
 | **E. WHERE** | E1-E3 | 15 | Congregation/Access (online, offline, strategy) | Congregation points + 30-day reach plan |
 
 **Total: 100 points**
+
+---
+
+## VALIDATION REALITY CHECK: Customer Interview Gate
+
+**Steve Blank Mandate: "Get out of the building."**
+
+This system prevents a critical failure: founders scoring 85-95/100 on ICP Clarity without having had a single real conversation with their target customer. To address this, SC2 includes an interview validation gate BEFORE scoring proceeds.
+
+### Interview Validation Protocol
+
+**At the START of SC2, ask:**
+> "How many real, unscripted conversations have you had with people matching this ICP in the last 30 days? (These must be 1-on-1 conversations — not group interviews, not hypotheticals, not your own assumptions.)"
+
+**Founder's answer maps to one of three tracks:**
+
+| Conversation Count | Track | Output | Score Impact |
+|---|---|---|---|
+| **0 conversations** | Red Flag | Flag Warning + Strong Recommendation | No penalty to final score, but BLOCKADE: "Before you continue, please schedule 3 customer conversations in the next 5 days. Return with notes. SC2 isn't a replacement for customer discovery." |
+| **1-4 conversations** | Moderate Advisory | Advisory Note in icp-refined.md | No penalty, but include notation: "ICP validated against [N] customer conversations. Recommend 3 more before GTM launch." |
+| **5+ conversations** | Validated | Clean Progression | No flag; proceed normally. Include: "ICP validated against [N] customer conversations." |
+
+### Validation Track Determines Recommendation Engine
+
+**If Red Flag (0 conversations):**
+- Display this before SC2 proceeds:
+  > "Your ICP is well-articulated on paper, but it's untested. Steve Blank's core principle applies here: you don't have an ICP until a real customer confirms it by saying 'Yes, that's me.' Right now, this is a hypothesis. We recommend you pause SC2 and conduct 3 quick interviews (20 minutes each) with people you THINK match this profile. Here's a template: [INTERVIEW_TEMPLATE]. Come back when you have notes."
+- Option: **Allow continuation with warning** ("Skip this check and continue") — but flag in final output.
+
+**If Moderate Advisory (1-4 conversations):**
+- Include in `icp-refined.md` header:
+  > "**Validation Note:** This ICP is based on [N] customer conversations. It's directionally sound but not fully validated. Recommend conducting 2-3 more conversations in parallel with GTM to confirm messaging resonates."
+
+**If Validated (5+):**
+- Include in `icp-refined.md` header:
+  > "**Validation Note:** This ICP is validated against [N] real customer conversations. Confidence: HIGH."
+
+### How This Feeds Recommendation Engine (Not Score Itself)
+
+The interview count does NOT reduce the 100-point score. Instead, it:
+1. **Flags confidence level** in the final output
+2. **Prioritizes which Section scores matter most** (e.g., if 0 conversations, all answers are hypothesis-quality, so recommendations focus on "validate this assumption")
+3. **Shapes GTM recommendations** (if 5+ conversations, skip discovery-phase GTM; if 0 conversations, build discovery-phase GTM)
+4. **Suggests interview topics for next phase** (e.g., "Section C (Pleasure) felt generic. Ask customers directly: 'What does success look like?'")
 
 ---
 
@@ -215,9 +259,9 @@ If any are missing, I pause and ask for them before proceeding.
 
 ## SECTION B: WHAT — Pain Statements (20 pts)
 
-### B1-B10: Top 10 Pain Statements (2 pts each, 20 total)
+### B1-B5: Top 5 Pain Statements (4 pts each, 20 total)
 
-**Question:** "List 10 specific pain statements your ideal customer would say out loud. These are things they're RUNNING AWAY FROM. Write them as direct quotes — how your customer would actually say it, in their words."
+**Question:** "List your ICP's TOP 5 pain statements — the most acute, frequent pains they experience. These are things they're RUNNING AWAY FROM. For each, include: (1) What the pain IS, (2) When it occurs, (3) What it costs (time, money, reputation). Write them as direct quotes — how your customer would actually say it, in their words. Focus on the 5 most transformative pains, not a comprehensive list."
 
 **Word limit per statement:** 50 words max
 
@@ -228,21 +272,23 @@ If any are missing, I pause and ask for them before proceeding.
 **Scoring rubric per statement:**
 - **0 pts:** Blank, or completely generic ("hard to manage projects")
 - **1 pt:** Generic pain with some context ("getting clients is hard", "managing teams is exhausting")
-- **2 pts:** Specific, quotable, includes cost/frequency/emotion ("I'm losing $200/week to scope creep because my contracts don't clarify deliverables, and I find out AFTER the work's done")
+- **2-3 pts:** Specific pain with cost/frequency/emotion but missing full narrative
+- **4 pts:** Specific, quotable, includes cost/frequency/emotion with clear impact ("I'm losing $200/week to scope creep because my contracts don't clarify deliverables, and I find out AFTER the work's done")
 
 **AI scoring approach for individual statements:**
 - **Specificity check:** Does it name a number, frequency, emotion, or cost?
 - **Quotability check:** Could you use this exact wording in copy?
 - **Owner-obvious check:** Is this genuinely painful for A1's customer, or is it a solution-feature disguised as a pain?
+- **Impact assessment:** Is this a top-5 pain or a surface-level inconvenience?
 
 **CRITICAL: Set-level evaluation (bonus/penalty)**
 
-After scoring all 10 individually, AI evaluates the SET for:
+After scoring all 5 individually, AI evaluates the SET for:
 
-1. **Diversity (no clustering):** Are all 10 versions of the same pain, or do they represent different pain axes?
-   - Red flag: All 10 are variations of "I don't have a system"
-   - Green: 2 pains about visibility, 3 about timeliness, 2 about collaboration, 2 about scale, 1 about compliance
-   - **Penalty:** -5 pts if top 10 are 8+ repetitions of same pain
+1. **Diversity (no clustering):** Are all 5 versions of the same pain, or do they represent different pain axes?
+   - Red flag: All 5 are variations of "I don't have a system"
+   - Green: 1 pain about visibility, 1 about timeliness, 1 about collaboration, 1 about scale, 1 about quality/reputation
+   - **Penalty:** -5 pts if top 5 are mostly repetitions of same pain
 
 2. **Escalation (surface to deep):** Do pains escalate from surface-level (inconvenience) to deep (existential to business)?
    - Surface: "Organizing my files takes time"
@@ -254,12 +300,12 @@ After scoring all 10 individually, AI evaluates the SET for:
    - Red flag: Customer is a 50-person agency ops head, but pain is "I code JavaScript and debugging is hard"
    - **Penalty:** -5 pts for major inconsistency with A1 identity
 
-4. **Intensity hierarchy:** Are the pains ranked by real intensity for the customer, or random?
-   - Top 3 should be the ones that would trigger buying within 30 days
-   - Bottom 3 should be real but lower priority
+4. **Intensity hierarchy:** Are the pains ranked by real intensity for the customer?
+   - Top 2 should be the ones that would trigger buying within 30 days
+   - Bottom pains should be real but lower priority
    - No penalty for ordering, but AI notes in recommendations if top pains don't align with A3 buying triggers
 
-**Example strong pain statements (scored 2 each):**
+**Example strong pain statements (scored 4 each):**
 - "Every Friday I spend 4 hours manually updating our project status spreadsheet because no tool integrates with our chaos. AED 4,000 in billable time spent on non-billable work."
 - "I told a freelancer the deadline was Monday. He delivered Wednesday. I didn't follow up because I was in back-to-back meetings. Client found out about the delay before I did. Lost the retainer."
 - "I have three freelancers who are ready to work but I don't trust them with new clients yet because I can't track their quality consistently. So I'm bottlenecking on myself."
@@ -274,11 +320,34 @@ After scoring all 10 individually, AI evaluates the SET for:
 
 ---
 
+### AI FOLLOW-UP: Deep-Dive Pain Narratives
+
+After receiving the TOP 5 pain statements and scoring, Claude performs targeted follow-ups:
+
+**For the TOP 2 pains (by specificity score and stated cost):**
+
+Claude asks a probing follow-up for each:
+
+"You mentioned [Pain #X: specific quote]. Tell me more — **when was the last time this happened to a real person?** What did they do? How much did it actually cost them (in time, money, confidence, lost opportunity)?"
+
+**Purpose:** This question transforms scrappy pain statements into narrative-ready stories suitable for:
+- Landing page copy ("Here's what it cost Sarah last month...")
+- Sales conversations ("Does this ever happen to your team?")
+- Content marketing ("The hidden cost of [pain] most founders ignore")
+
+**Claude's job:** Listen for a story — a real moment with names, timelines, and quantified impact. If the founder gives another generic answer, push once more:
+
+"I need the specific story. Not 'we lose time' but 'last Tuesday, Sarah spent 6 hours on [specific task] and discovered too late that [consequence].' Can you give me that?"
+
+**Output:** The founder walks away with 2 deeply validated, narrative-ready pain stories that can immediately power GTM messaging and customer research.
+
+---
+
 ## SECTION C: WHAT — Pleasure Statements (20 pts)
 
-### C1-C10: Top 10 Pleasure Statements (2 pts each, 20 total)
+### C1-C5: Top 5 Dream Outcomes (4 pts each, 20 total)
 
-**Question:** "List 10 specific outcomes your ideal customer DREAMS about. These are things they're RUNNING TOWARD. Write them as aspirational statements in your customer's voice."
+**Question:** "List your ICP's TOP 5 dream outcomes — what life/business looks like AFTER the pain is solved. These are things they're RUNNING TOWARD. For each, be specific: (1) What changes, (2) How they feel, (3) What becomes possible. Write them as aspirational statements in your customer's voice. Focus on the 5 most transformative outcomes, not a comprehensive list."
 
 **Word limit per statement:** 50 words max
 
@@ -289,17 +358,19 @@ After scoring all 10 individually, AI evaluates the SET for:
 **Scoring rubric per statement:**
 - **0 pts:** Blank or completely generic ("more money", "better systems")
 - **1 pt:** Generic desire with context ("I want my team to be happier")
-- **2 pts:** Specific, vivid, emotionally resonant outcome that's clearly aspirational for A1's customer ("I want to spend my mornings on strategy and client relationships, not firefighting freelancer miscommunications")
+- **2-3 pts:** Specific, vivid outcome with some emotional resonance but missing full transformation narrative
+- **4 pts:** Specific, vivid, emotionally resonant outcome that's clearly aspirational for A1's customer ("I want to spend my mornings on strategy and client relationships, not firefighting freelancer miscommunications")
 
 **AI scoring approach for individual statements:**
 - **Specificity check:** Is this outcome concrete, or is it another abstraction?
 - **Vividness check:** Can you picture the desired state?
 - **Emotion resonance check:** Does it tap into pride, relief, ambition, or confidence?
 - **Owner-obvious check:** Is this genuinely aspirational for A1, or is it generic?
+- **Transformation potential:** Is this a top-5 outcome or a secondary benefit?
 
 **CRITICAL: Set-level evaluation (bonus/penalty)**
 
-After scoring all 10 individually, AI evaluates the SET for:
+After scoring all 5 individually, AI evaluates the SET for:
 
 1. **Specificity escalation (surface pleasure to deep satisfaction):**
    - Surface: "I want my calendar to be less busy"
@@ -308,7 +379,7 @@ After scoring all 10 individually, AI evaluates the SET for:
    - **Penalty:** -3 pts if all pleasures are shallow convenience fixes
 
 2. **Pain-pleasure mapping (each pleasure should resolve a pain):**
-   - If B5 is "I lose $200/week to scope creep", then a corresponding pleasure might be "Every contract is crystal clear on deliverables, revision limits, and payment terms"
+   - If B2 is "I lose $200/week to scope creep", then a corresponding pleasure might be "Every contract is crystal clear on deliverables, revision limits, and payment terms"
    - AI checks if pleasure set addresses the pain set holistically
    - **Penalty:** -5 pts if pleasure set doesn't map to pain set (suggests founder hasn't thought through resolution)
 
@@ -322,7 +393,7 @@ After scoring all 10 individually, AI evaluates the SET for:
    - Red: "I want to be a billionaire" (not your job to deliver)
    - No scoring penalty, but AI flags in recommendations if pleasures are misaligned with solution scope
 
-**Example strong pleasure statements (scored 2 each):**
+**Example strong pleasure statements (scored 4 each):**
 - "Every month I review one report and see exactly which freelancers are delivering on time, on budget, and on quality. I know who to promote and who to phase out."
 - "A freelancer submits work. I give feedback. They iterate once. Done. No back-and-forth hell. No missed context."
 - "I'm in a client call and a freelancer messages me a question. I answer in our tool. Client never knows we had to clarify something. Seamless delivery every time."
@@ -334,6 +405,29 @@ After scoring all 10 individually, AI evaluates the SET for:
 - "Better communication" (1 pt — this is a feature, not a felt outcome)
 - "I want a system" (1 pt — vague, not aspirational)
 - "No problems" (0 pts — this is absence of pain, not pleasure)
+
+---
+
+### AI FOLLOW-UP: Transformation Narratives
+
+After receiving the TOP 5 dream outcomes and scoring, Claude performs targeted follow-ups:
+
+**For the TOP 2 outcomes (by specificity score and transformative potential):**
+
+Claude asks a probing follow-up for each:
+
+"You said [Outcome #X: specific quote]. Paint me a picture — **what does a Tuesday morning look like for your customer AFTER this outcome is real?** Be specific about what they're doing, who's involved, how they feel."
+
+**Purpose:** This question transforms generic pleasure statements into story-ready transformation narratives suitable for:
+- Landing page hero copy ("Imagine your Tuesday morning when...")
+- Sales conversations ("Help me picture what success looks like...")
+- Case studies ("Here's what Sarah's week looks like now...")
+
+**Claude's job:** Listen for a vivid scene — a named moment, an emotional shift, a specific activity that shows the transformation. If the founder gives another generic answer, push once more:
+
+"I need the scene, not the summary. Not 'I'll have more time' but 'Tuesday morning, I'm in my coffee shop at 8am opening my email, I see the performance report just loaded, and instead of that pit in my stomach about freelancer status, I see [specific good thing]. How does that feel? What do you do next?'"
+
+**Output:** The founder walks away with 2 deeply validated, vision-ready outcome stories that can immediately power landing pages, sales conversations, and customer research.
 
 ---
 
@@ -443,6 +537,127 @@ After scoring all 10 individually, AI evaluates the SET for:
 
 ---
 
+### EXPERT FRAMEWORK ADDITION: Engagement & Habit Loop Analysis (D4 Enhancement)
+
+**After evaluating D4's obstacle-to-solution mapping, apply Nir Eyal's Hook Model to assess habit formation potential.**
+
+The solution bridge you've described in D4 should not just solve a problem — it should create a behavior loop that becomes habitual. Use this framework to evaluate the bridge's engagement stickiness:
+
+**Hook Model Evaluation (4 components):**
+
+1. **Trigger (External + Internal)**
+   - External: What prompts your customer to use your solution? ("New freelancer uploads work", "End of week report reminder", "Client feedback arrives")
+   - Internal: What emotional state drives the habit? ("Anxiety about project status" → opens dashboard; "Uncertainty about freelancer quality" → checks scores)
+   - **Scoring note:** Green if both external and internal triggers are clear. Yellow if only external (requires marketing). Red if neither is clear (solution is optional, not habitual).
+
+2. **Action (Minimal Effort)**
+   - What's the simplest action that satisfies the trigger?
+   - **Good:** "Sarah gets Slack notification of new work. Clicks one link. Reviews in 30 seconds. Approves or requests revision in one comment."
+   - **Bad:** "Sarah has to log into the tool, navigate to the project, download the file, open in another tool, find the previous revision, compare, then type feedback."
+   - **Scoring note:** Count clicks/steps to first value. <3 clicks = habit-ready. >5 clicks = friction-heavy.
+
+3. **Variable Reward (What's unexpected/novel)**
+   - What makes the customer want to return unprompted?
+   - **Weak:** "The tool shows their work is done" (predictable, expected)
+   - **Strong:** "The dashboard shows a new pattern — Designer A is improving their revision cycles week-over-week. Sarah discovers this unexpectedly and uses the insight to promote Designer A to lead role. The tool became her strategic advisor, not just a tracker."
+   - **Scoring note:** Green if there's an element of discovery or insight that delights. Yellow if benefit is transactional only.
+
+4. **Investment (Stored Value Increases)**
+   - What does the customer invest (time, data, relationships) that makes the tool stickier over time?
+   - **Weak:** "They enter freelancer names." (Trivial investment)
+   - **Strong:** "They rate freelancer quality, tag their strengths, write case notes. Over 6 months, they have a freelancer performance database that's specific to their agency's standards. Leaving the tool = losing that database. Switching cost is now high."
+   - **Scoring note:** Green if investment compounds over time and creates lock-in.
+
+**AI Scoring Note to Include in Recommendation:**
+
+> "**Habit Loop Assessment (D4 Extension):** The solution bridge you've described engages the customer through [describe triggers] and removes [describe friction]. The habit loop strength is: [Strong/Moderate/Weak] because [specific Hook Model element is strong/missing]. Recommendation: [If weak, suggest how to increase trigger clarity, reduce action friction, add variable reward, or deepen investment.]"
+
+**Example assessment (Strong habit loop):**
+> "The habit loop is strong. External trigger: 'New freelancer deliverable arrives, Slack notification fires.' Internal trigger: 'Uncertainty about timeline.' Action: '2 clicks to review + approve.' Variable reward: 'Dashboard score updates in real-time; Sarah can see if freelancer is trending up or down.' Investment: 'Over 90 days, Sarah has built 6 months of freelancer performance history she can't replicate anywhere else.' This is a sticky engagement model."
+
+**Example assessment (Weak habit loop):**
+> "The habit loop is risky. External trigger is clear ('Weekly report reminder'). But the action is friction-heavy (requires 6 clicks to see the data you care about), and the reward is transactional (it shows what you already know about your team). There's no variable reward. Investment is minimal (could export data anytime). Recommendation: reduce action friction to 2-3 clicks, add real-time alerts for anomalies (Designer missed deadline), and create performance trends view that reveals patterns Sarah can't see manually."
+
+---
+
+### HERO VIABILITY CHECK (Expert Archetype — Activated by R1 Expert Signal)
+
+**Trigger:** Founder demonstrates deep domain expertise AND any of these signals appear in Section D answers:
+
+**Symptoms to detect:**
+1. **Hero Confusion:** Founder describes THEMSELVES as the hero instead of the CUSTOMER. ("I've been dealing with this problem for 15 years" — the hero is the customer who STILL has this problem, not the expert who already solved it internally.)
+2. **Guide Inflation:** The "Guide" section (D3) reads like a resume instead of credibility proof relevant to the CUSTOMER's journey. ("I managed 200 implementations at Cisco" vs "I've seen what happens when companies implement this wrong — I know the 3 patterns that always fail.")
+3. **Transformation Mismatch:** Desired future state (D2) describes what the founder wants to BUILD, not what the customer wants to BECOME. ("I want to build the best CX platform" vs "My customer wants to stop losing 30% of leads to missed follow-ups.")
+
+**Protocol (2-step):**
+
+**Step 1 — Redirect the lens:**
+> "Your expertise is clearly deep. But in the Hero Journey framework, YOU are the guide, not the hero. The hero is your customer — the person still stuck in the problem you already know how to solve. Let me ask it differently: describe your customer's current state as if you're watching them struggle with the exact problem you've spent years solving internally. What does their day look like?"
+
+**Step 2 — Bridge expertise to customer language:**
+> "Now here's where your expertise becomes your moat: you know the REAL obstacles better than your customer does. They think the problem is [surface pain]. You know the real problem is [root cause from your experience]. That gap between what they THINK and what you KNOW is your unique mechanism. That's what makes you the guide they'll trust."
+
+**Scoring impact:** If Hero Viability Check detects hero confusion:
+- D1-D4 scores are not penalized (the answers may be good, just misdirected)
+- Claude adds an advisory note to `icp-refined.md`: "NOTE: Founder's deep domain expertise creates strong Guide positioning but initial Hero Journey was self-referential. Reframed to customer-centric during advisory session."
+- Cross-check: Ensure D4 (Solution Bridge) maps obstacles to CUSTOMER outcomes, not founder capabilities
+
+---
+
+### EXPERT FRAMEWORK ADDITION: Movement Building Seed Assessment (Section D Extension)
+
+**After completing D1-D4 (the hero journey narrative), evaluate whether your solution implies a movement-building opportunity using Russell Brunson's Opportunity-vs-Improvement framework.**
+
+Not all solutions are created equal for movement building. Some position as incremental "improvement" on an existing category. Others position as a "new opportunity" — a fundamentally different way forward. Movement building (scaling beyond early adopters) requires the latter.
+
+### Opportunity vs. Improvement Framework:
+
+**The Question:**
+> "Are you offering your customer a path to a **New Opportunity** they haven't considered before, or an **Improvement** to how they currently solve the problem?"
+
+**IMPROVEMENT OFFER (Harder to move markets, stays within status quo):**
+- **Customer's current state:** "I manage freelancers manually via Slack and spreadsheets"
+- **Improvement offer:** "Use our tool instead of spreadsheets — it's more organized and saves time"
+- **Why it's hard to move:** Customer thinks "I could just get better at spreadsheets" or "I could try another tool." No fundamental shift in thinking. Competes on features/price.
+- **Movement potential:** Low (competitive, feature-driven, price-sensitive market)
+
+**NEW OPPORTUNITY OFFER (Easier to build movements, requires belief shift):**
+- **Customer's current state:** "I run my agency solo because I can't trust a distributed team"
+- **New opportunity offer:** "What if you could build a global freelancer network that works as an extension of your team, not a risk? You could go from $100K/year agency to $1M/year by scaling without scaling headcount."
+- **Why it moves:** Customer thinks differently about what's possible. Not just "better tool" but "different business model." No direct competitors because it's a new category.
+- **Movement potential:** High (mission-driven, founder-identity-aligning, creates early-adopter community)
+
+### Evaluation Protocol:
+
+**1. State your improvement:**
+   - "Our tool reduces [pain] by [feature]"
+   - Example: "Reduces admin time by 4 hours/week through integrated Slack workflow"
+
+**2. Ask the deeper question:**
+   - "What becomes possible for my customer if they believe this pain is solvable?"
+   - Example: "If freelancer coordination isn't the bottleneck, what does my customer become? An agency owner who can hire globally. A founder who can scale without burning out. A business owner who competes on quality, not desperation."
+
+**3. Define the new opportunity:**
+   - "My customer can pursue a [new path/identity/business model] they thought was impossible"
+   - Example: "Your customer can become a 'distributed-team agency operator' (new identity) instead of 'solo owner managing chaos' (old identity)"
+
+**4. Assess movement-building potential:**
+   - Green flag (New Opportunity): Customer believes your solution enables a fundamentally different path. Willing to become an early adopter and evangelist because the win is identity-shifting.
+   - Yellow flag (Hybrid): Solution has improvement + opportunity elements. Improvement messaging works faster, opportunity messaging builds longer-term movement.
+   - Red flag (Improvement only): Customer sees your solution as a better version of what they're already doing. Will buy if it's convenient and cheap. Won't become a missionary.
+
+### AI Scoring Note to Include in Recommendation:
+
+> "**Movement Building Assessment (Section D Extension):** Your positioning is currently [Improvement-based/Opportunity-based/Hybrid]. Dream outcome from D2 suggests: [Improvement: customer stays in same identity with less friction / Opportunity: customer becomes a different type of founder/operator]. Movement-building potential: [High/Medium/Low]. If positioning is Improvement-heavy, consider reframing around the New Opportunity (e.g., 'The system that lets agencies scale to 7-figures without hiring staff' vs. 'Better freelancer management tool'). Opportunity positioning attracts evangelists; Improvement positioning attracts price-shoppers."
+
+**Example assessment (Strong opportunity positioning):**
+> "Your D1-D4 describes an Improvement offer ('better freelancer coordination'). But your D2 (desired future state) hints at a larger opportunity: 'Founder goes from managing chaos to strategic leadership.' Recommendation: Reframe positioning around the New Opportunity: 'Build a global freelance team that scales your agency.' The improvement (better coordination) is the mechanism. The opportunity (different business model) is the movement. This attracts founders who dream bigger and creates room for premium pricing + community-driven GTM."
+
+**Example assessment (Weak movement potential):**
+> "Your positioning stays firmly in Improvement territory: 'Easier project management for agencies.' This is crowded (100+ competitors offer the same). D2's desired state is also improvement-focused ('Less time on admin'). Movement potential: Low. Recommendation: Shift D2 to an Opportunity state ('You become a founder who runs a global team') and reframe your whole positioning. If you can't find an Opportunity angle, your GTM will be pure feature-price competition against Asana, Monday, etc."
+
+---
+
 ## SECTION E: WHERE — Access & Congregation (15 pts)
 
 ### E1. Online Congregation Points (5 pts)
@@ -471,6 +686,60 @@ After scoring all 10 individually, AI evaluates the SET for:
 
 **Example weak answer:**
 "LinkedIn and Facebook"
+
+---
+
+### EXPERT FRAMEWORK ADDITION: Content Strategy Congregation Analysis (E1 Enhancement)
+
+**After identifying congregation points in E1, evaluate each one for content engagement potential using Brendan Kane's Pattern Interrupt framework.**
+
+Not all congregation points are created equal. Some are high-trust, content-responsive environments (where expert content builds authority). Others are transactional only (where people come to buy, not to learn). Your GTM approach depends on which type each congregation is.
+
+**Content Engagement Assessment (per congregation point):**
+
+**For each online congregation you identified, ask:**
+
+1. **Pattern Interrupt Potential: "Can you stop the scroll here?"**
+   - LinkedIn group: Members see daily discussions. Can your expertise-based content (case study, framework, opinion) cut through the noise and spark discussion?
+   - WhatsApp group: Fast-moving, relationship-based. Does expert content fit, or is it pure peer-to-peer advice?
+   - Reddit: High-information density, skepticism-native. Does your thought leadership earn credibility in this community?
+   - Twitter hashtag: Crowded, algorithmic. Is your perspective differentiated enough to trend in #DubaiAgency?
+   - **Scoring note:** Green = high pattern interrupt potential (expert content will be read). Yellow = medium (relevance-dependent). Red = low (transactional only, expert content ignored).
+
+2. **Trust-Building vs. Transactional: Where does this congregation sit?"**
+   - **Trust-building congregation (expert content earns influence):**
+     - Example: "LinkedIn group for agency owners — they come to learn trends, ask questions, seek advice. Expert content (e.g., 'The 3 Freelancer Management Mistakes I See Weekly') gets 40+ comments and DMs."
+     - Use case: Thought leadership content, frameworks, case studies, educational threads
+     - Timeline: Slower trust build (6-8 weeks of consistent presence), but converts at higher quality
+   - **Transactional congregation (direct pitch works):**
+     - Example: "WhatsApp group where someone asks 'Anyone know a freelancer management tool?' and 10 people pitch. Selling environment, not learning environment."
+     - Use case: Direct recommendations, webinar invites, limited-time offers, product demos
+     - Timeline: Faster conversion (days to weeks), but lower-quality leads (price-sensitive, problem-hunting)
+   - **Hybrid congregation (both work):**
+     - Example: "Twitter #AgencyLife is 60% advice-seeking, 40% direct promotion. You can build trust AND launch offers."
+
+3. **Expert Content Fit: What types of content would resonate?**
+   - Framework content: "Here's how I think about freelancer quality scoring"
+   - Case study content: "Went from 40% on-time delivery to 95% — here's what changed"
+   - Problem-first content: "You're doing freelancer management wrong. Here's the mistake I see every time."
+   - Question-first content: "What's your #1 freelancer management pain? Asking for research."
+   - Thought leadership: "The future of agency work is freelancer ecosystems, not employment"
+   - **Scoring note:** If the congregation fits 2+ of these, it's content-responsive.
+
+4. **Founder Presence Requirement: Can you show up consistently?**
+   - Red flag: "LinkedIn is a congregation point" BUT "I have no LinkedIn presence and I post twice a year."
+   - Green: "LinkedIn group — I engage in comments 3x/week" OR "WhatsApp groups — I answer questions daily."
+   - **Scoring note:** Congregation points where you can't/won't show up authentically are GTM liabilities. Better to pick 2-3 high-presence congregations than 5 you ignore.
+
+**AI Scoring Note to Include in Recommendation:**
+
+> "**Congregation Content Analysis (E1 Extension):** Of your [N] online congregation points, [X] are high-trust, content-responsive environments where expert positioning accelerates GTM. [Y] are transactional-primary, where direct outreach is faster. Recommendation: Allocate content strategy 60% to trust-building congregations and 40% to transactional outreach. For high-impact congregations, plan: [specific content type] posted [frequency] to establish authority before pitching."
+
+**Example assessment (Strong content strategy alignment):**
+> "LinkedIn 'MENA Digital Agencies' group (4K members) is a trust-building congregation where case studies and frameworks earn engagement. WhatsApp groups are transactional-primary but high-conversion. Recommendation: Post one weekly case study or framework in the LinkedIn group (30 min/week). When appropriate (e.g., 'Anyone using a freelancer management tool?'), reply directly in WhatsApp groups with a relevant example, then take 1-on-1. This creates a 'heard-of-you' effect from LinkedIn that increases WhatsApp conversion."
+
+**Example assessment (Weak content strategy alignment):**
+> "Most congregation points you identified are transactional-primary (WhatsApp, direct pitches on Twitter). You have only one trust-building congregation (LinkedIn group), and you're not active there yet. Recommendation: Before scaling outreach, spend 2 weeks establishing authority in the LinkedIn group by answering 3-4 top questions with frameworks/advice. This creates a 'warm' environment for your eventual pitch. Without this, you're competing on price and urgency in a crowded marketplace."
 
 ---
 
@@ -564,7 +833,7 @@ Each question's rubric (above) takes precedence over the universal rubric. E.g.,
 - **Penalty -5:** If pleasure set doesn't map to pain set
 
 Example:
-- B1-B10 scored individually: 2+2+2+1+2+2+2+1+2+2 = 18 pts
+- B1-B5 scored individually: 4+4+3+4+4 = 19 pts
 - Set-level evaluation: Strong diversity (+0), good escalation (+0), excellent consistency with A1 (+2 bonus)
 - **Final B Score: 20 pts** (capped at 20, not 25)
 
@@ -583,7 +852,7 @@ After all sections are complete, I scan for contradictions between SC1 outputs a
 
 2. **Positioning vs. Pain mismatch**
    - SC1 positioning: "We help you save time on freelancer management"
-   - ICP B1-B10: Top pains are all about cost/revenue, none about time
+   - ICP B1-B5: Top pains are all about cost/revenue, none about time
    - Flag: "Your positioning emphasizes time-saving, but your ICP's top pains are cost-driven. Which is the real problem? Consider repositioning or refocusing ICP."
 
 3. **Geography vs. Congregation mismatch**
@@ -603,13 +872,13 @@ After all sections are complete, I scan for contradictions between SC1 outputs a
    - Flag: "ROI numbers don't match budget sensitivity. A buyer only willing to spend $50-200/mo won't justify a product with $100K value. Either budget is wrong or value is overstated."
 
 6. **Pain statements vs. Hero Journey mismatch**
-   - ICP B1-B10: Pains are all about "miscommunication with freelancers"
+   - ICP B1-B5: Pains are all about "miscommunication with freelancers"
    - ICP D1 (Current state): "Situation is fine, just looking to optimize"
    - Flag: "Pain statements suggest crisis, but current state suggests optimization. Is your customer desperate or optimizing? This affects buying timeline in A3."
 
 7. **Pleasure statements vs. Obstacle mismatch**
    - ICP D3 Obstacle: "Freelancers are in different time zones"
-   - ICP C1-C10: No pleasure statement addressing time zone challenge
+   - ICP C1-C5: No pleasure statement addressing time zone challenge
    - Flag: "Your main obstacle (time zones) doesn't have a corresponding pleasure statement. Add one or reconsider if this obstacle is primary."
 
 **Yellow flag warnings (notify, but don't block):**
@@ -706,7 +975,7 @@ After each section scores, offer specific improvement suggestions:
 "A4 (Decision Authority) scored 2/5. You said 'the ops manager decides, but the owner might have a say.' That vagueness will hurt your sales process. Next time we talk, find out: Does the ops manager have budget authority up to $X without approval? If yes, you're selling to one person. If no, you're selling to two. Find out which, and revise."
 
 **Section B (Pain) recommendation example:**
-"B1-B10 total: 18/20. Individual scores are strong (mostly 2s), but set-level evaluation: your top 10 pains are 8 variations of the same pain (miscommunication). This tells me you've identified the problem but not explored the full problem space. Before GTM, spend an hour brainstorming: What are 3-5 OTHER pains your customer has? E.g., cost control? Quality assurance? Freelancer retention? Add those to your list."
+"B1-B5 total: 19/20. Individual scores are strong (mostly 4s), but set-level evaluation: your top 5 pains are still 4 variations of the same pain (miscommunication). This tells me you've identified the core problem but may be missing a secondary pain axis. Before GTM, validate: Is there a cost/quality/retention pain alongside the communication pain? Consider probing one more axis to round out your pain map."
 
 **Section D (WHY) recommendation example:**
 "D3 (Obstacles) scored 2/5. You listed 'they don't have a good system.' That's feature language, not obstacle language. Real obstacle: 'Each freelancer works in isolation; Sarah can't see if one is blocked waiting for another, so parallel work becomes sequential and timelines slip.' That's a blocker your solution uniquely addresses. Rephrase and resubmit."
@@ -821,40 +1090,42 @@ After scoring is complete and locked, I generate `icp-refined.md` with this stru
 
 ---
 
-## 2. Pain Map (Top 10 Pains)
+## 2. Pain Map (Top 5 Pains)
 
 ### High-Urgency Pains (Trigger buying within 30 days)
-[B1, B2, B3 listed with scores, ranking by founder-stated urgency]
+[B1, B2 listed with scores, ranking by founder-stated urgency — the 2 deepest pains from follow-up questions]
 
 ### Medium-Urgency Pains (Trigger buying within 90 days)
-[B4, B5, B6 listed]
+[B3, B4 listed]
 
-### Lower-Urgency Pains (Nice-to-have, trigger eventual upgrade)
-[B7, B8, B9, B10 listed]
+### Lower-Urgency Pains (Supporting secondary pain)
+[B5 listed]
 
 ### Pain Set Analysis
-- **Diversity:** [Y statements about 5+ distinct pain axes vs. clustering]
-- **Escalation:** [X covers surface-level to deep stakes]
+- **Diversity:** [Whether distinct pain axes represented across 5 statements]
+- **Escalation:** [Covers surface-level to deep stakes]
 - **Consistency:** [Aligned with customer identity]
+- **Deep-Dive narratives:** [Top 2 pains expanded with specific customer stories from follow-up questions]
 - **Set Score:** [0-20 with any bonuses/penalties noted]
 
 ---
 
-## 3. Pleasure Map (Top 10 Pleasures)
+## 3. Pleasure Map (Top 5 Dream Outcomes)
 
-### Strategic Outcomes (Business-level impact)
-[C1, C2, C3 — outcomes that impact revenue, efficiency, strategy]
+### High-Impact Outcomes (Business-level transformation)
+[C1, C2 — outcomes that impact revenue, efficiency, strategy; expanded with vision narratives from follow-up questions]
 
 ### Operational Outcomes (Day-to-day transformation)
-[C4, C5, C6, C7 — outcomes that reduce friction, increase predictability]
+[C3, C4 — outcomes that reduce friction, increase predictability, improve quality of life]
 
-### Personal Outcomes (How the founder feels)
-[C8, C9, C10 — confidence, relief, pride, being seen as a leader]
+### Personal Outcome (How the customer feels)
+[C5 — confidence, relief, pride, being seen as a leader/expert]
 
 ### Pleasure Set Analysis
 - **Specificity Escalation:** [Surfaces to deep aspirations?]
 - **Pain-Pleasure Mapping:** [Each pain addressed by a corresponding pleasure?]
 - **Consistency with ICP:** [Aspirations realistic for customer identity?]
+- **Vision narratives:** [Top 2 outcomes expanded with specific Tuesday-morning scenes from follow-up questions]
 - **Set Score:** [0-20 with bonuses/penalties noted]
 
 ---
@@ -981,7 +1252,7 @@ After scoring is complete and locked, I generate `icp-refined.md` with this stru
 **If A5 scores 0-2:**
 "Your budget assumption isn't evidence-based. Check: (1) What do they currently pay for alternatives? (2) Ask 3 people directly: 'What would you pay for a solution that solved X?' (3) Look up competitor pricing."
 
-**If B1-B10 individual scores are mostly 0-1:**
+**If B1-B5 individual scores are mostly 0-1:**
 "Your pain statements are too generic. Each one should be quotable — something a customer would say in a rant to a friend. Rewrite them as specific moments: not 'managing is hard,' but 'Last Tuesday, I realized I had no idea which freelancer was closest to deadline, so I had to check 5 different Slack conversations to figure it out.'"
 
 **If B set-level score penalized for clustering:**
@@ -1088,8 +1359,75 @@ Throughout scoring, I account for MENA-specific nuances:
 
 ---
 
+## ENGAGEMENT PROTOCOL
+
+### Pattern Breaks
+
+1. **After Section A complete (WHO — ~15 min):**
+   "Insight Unlock" — "Your ICP is already more specific than 90% of the pitches I see. Here's what's interesting about who you chose: [AI generates 1-2 sentence insight about their ICP specificity — what makes this ICP targetable]."
+
+2. **After Section B complete (Pains — ~25 min):**
+   "Competitor Reveal" — "Companies charging $[reference from SC1 competitors]/month are solving pains #2 and #3. Nobody is touching pain #1. That's your wedge."
+
+3. **After Section C complete (Pleasures — ~35 min):**
+   "Variable Reward" — Auto-generate Pain-Pleasure Matrix:
+   "Here's your Pain → Pleasure map:
+   Pain 1: [pain] → Outcome 1: [pleasure]
+   Pain 2: [pain] → Outcome 2: [pleasure]
+   ...
+   This is the transformation arc for every piece of content, every sales conversation, every ad you'll ever run."
+
+4. **After Section D complete (Hero Journey — ~45 min):**
+   "Offer Preview" — AI drafts the transformation statement:
+   "You take [WHO] from [PAIN STATE] to [PLEASURE STATE] in [TIMEFRAME]. That's your ICP transformation in one sentence."
+
+5. **After Section E complete (Final — ~55 min):**
+   "Ultimate Variable Reward" — Full polished icp-refined.md delivered with:
+   "Your ICP document is complete. This is a deployable customer profile — not a persona poster. Every decision from here (market assessment, strategy, GTM motions) flows from this document."
+
+### Acknowledgment Protocol
+
+**Strong answer:** "That's specific. Most founders stay vague here — you gave me something I can actually work with."
+
+**Weak answer:** "I need more from you here. [Specific follow-up]. An ICP that's too broad targets nobody. Give me names, numbers, specifics."
+
+**Dream encouragement:** "If this ICP plays out the way you're describing, your conversion rates will be 3-5x better than broad targeting."
+
+**Enemy acknowledgment:** "Your ICP's current solution is [workaround from their answer]. Every time they use it and it fails, that's a signal for you."
+
+### Investment Signaling
+
+- **After B (pains complete, ~25 min):** "Your pain matrix has more depth than most consultants charge $5K for. Five pains, ranked by severity, with evidence. That's not a guess — that's a weapon."
+- **After D (hero journey, ~45 min):** "You've just mapped the complete hero journey. This is the foundation of every piece of content, every sales conversation, every ad you'll ever run."
+- **After E (final, ~55 min):** "55 minutes invested. Your ICP document could anchor a $50K GTM strategy. Most founders spend months getting to this level of clarity. You did it in under an hour."
+
+---
+
+## ELEVATION INSTRUCTIONS
+
+When generating the output document (icp-refined.md), Claude MUST:
+
+1. **Take scrappy pain statements and rewrite as professional pain narratives.**
+   - Founder says: "gym owners hate dealing with no-shows"
+   - Output doc says: "Independent fitness operators experience 15-25% daily no-show rates, resulting in $2,000-5,000/month in unrealized revenue and 4-6 hours/week of manual rescheduling effort."
+
+2. **Take raw pleasure statements and craft as outcome promises.**
+   - Founder says: "they want to not worry about schedules"
+   - Output doc says: "Automated scheduling with predictive no-show prevention reduces manual effort by 85% and recovers $3,000+/month in otherwise-lost revenue."
+
+3. **Synthesize the Hero Journey (D section) into a transformation arc** suitable for:
+   - Landing page hero sections
+   - Pitch deck problem/solution slides
+   - Sales conversation frameworks
+   - Content marketing angles
+
+4. **The output icp-refined.md should read like a professional strategy document** — not a transcript of survey answers. A founder should be able to hand this to an investor and say "this is who we serve and why."
+
+---
+
 ## VERSION HISTORY
 
+- **v1.1** — 2026-03-08 — Reduced B and C from 10 to 5 statements each; added engagement protocol; added elevation instructions for output document refinement.
 - **v2.0** — 2026-03-07 — Complete rewrite per BRD Section 4 specifications. Production-ready ICP Clarity Engine.
 
 ---

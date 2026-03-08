@@ -1,12 +1,12 @@
 ---
 name: strategy-selector-engine
 description: Scorecard 4 of 5 — Maps founders to one of 4 strategy paths and 8 archetypes based on founder DNA, market conditions, and resource profile. Scores /100.
-version: "2.0"
+version: "2.1"
 ---
 
 # SKILL: Strategy Selector Engine
 
-**Version:** 2.0
+**Version:** 2.1
 **Created:** 2026-03-06
 **Input Sources:** SC1 (Project Definition) + SC2 (ICP Clarity) + SC3 (Market Attractiveness)
 **Output File:** `strategy-recommendation.md`
@@ -61,6 +61,40 @@ This scorecard requires completed data from Scorecards 1-3:
 
 **Goal:** Understand founder's starting position and constraints.
 
+### EXPERT FRAMEWORK ADDITION: EARLY PATTERN OF INACTION CHECK
+
+**Purpose:** Detect potential "Pattern of Inaction" early in SC4, before strategy recommendation. Pattern of Inaction is typically detected in SC5, but early detection allows intervention at strategy-selection phase.
+
+**Activation Criteria (Check Before Proceeding to A1):**
+
+Ask: Does the founder show EITHER of these signals?
+
+1. **"Has the founder been thinking about this idea for >6 months without launching?"**
+   - Extract from SC1: "When did you first start working on this idea?" and "What have you shipped/launched so far?"
+   - If: Idea >6 months old AND no customer-facing launch (landing page, MVP, consulting client, first sale) → Red flag
+
+2. **"Has the founder completed SC1-SC3 with high scores but zero customer validation?"**
+   - Extract scores: SC1 (Project Definition), SC2 (ICP Clarity), SC3 (Market Attractiveness)
+   - If: All three >70 pts AND founder reports zero customer conversations, zero customer commitments, zero revenue → Red flag
+
+**If Pattern of Inaction Detected:**
+
+Trigger the **72-Hour Validation Sprint** before proceeding with full strategy recommendation:
+
+| Action | Timeline | Objective |
+|---|---|---|
+| **Pause SC4** | Now | Don't recommend a strategy; founder needs to prove they can execute ANY strategy |
+| **Activate 72-Hour Sprint** | Next 3 days | Founder completes 1 of 3 rapid validation tests (pick the easiest given their constraints) |
+| **Validation Options** | Pick ONE | (1) 10 customer interviews confirming pain exists, OR (2) 1 paying consulting client, OR (3) 10 pre-signups to landing page |
+| **Re-Enter SC4** | Day 4 | With proof of execution, founder completes strategy recommendation with higher confidence |
+| **Messaging to Founder** | Clear & Direct | "Your analysis is strong. Now let's validate it with real people. Pick ONE test from above; do it in 72 hours. This proves you can execute. Then we'll recommend your strategy." |
+
+**Rationale:** High scorecards + high inaction risk = founder may have analysis paralysis or perfectionism. Forcing a small 3-day sprint builds momentum, proves founder execution capacity, and provides real market data to inform strategy selection.
+
+**AI Processing Note:** If Pattern of Inaction is detected, Claude does NOT proceed to A1-A4. Instead, Claude presents the 72-hour sprint challenge, pauses SC4 scoring, and reschedules SC4 completion for post-validation.
+
+---
+
 ### A1. Core Skill (5 pts)
 **Type:** Multiple Choice
 **Question:** What's your strongest skill set?
@@ -75,6 +109,26 @@ This scorecard requires completed data from Scorecards 1-3:
 **Scoring:** Award points directly per option. Multiple answers allowed; score highest.
 
 **AI Processing:** Store selection for strategy path weighting (Section B).
+
+### EXPERT FRAMEWORK ADDITION: ATTRACTIVE CHARACTER MAPPING
+
+**Purpose:** Map each strategy path to recommended Attractive Character archetypes (Russell Brunson's 4 types) to guide brand voice and content positioning.
+
+**Character-to-Path Mapping:**
+
+| Strategy Path | Primary Archetype | Brand Voice | Narrative |
+|---|---|---|---|
+| **Replicate & Localize** | Reporter | "I discovered something working elsewhere; let me bring it here" | Credibility through proven model validation; you're introducing a tested solution to a new market |
+| **Consulting-First SaaS** | Leader | "I've solved this at scale; follow my system" | Authority through results; you position as the expert who has worked with many clients and refined a process |
+| **Boring Micro-SaaS** | Reluctant Hero | "I never wanted to build this, but the market needed it" | Humility through necessity; you're solving a real problem that frustrated you enough to act |
+| **Hammering Deep** | Adventurer | "I'm going deeper than anyone; come with me" | Exploration through specialization; you're inviting others into a specialized domain where you're the guide |
+
+**Expert Without a Stage Archetype Override:**
+If founder is classified as "Expert Without a Stage" (deep domain expertise, no platform), the default positioning is **Leader or Reluctant Hero**, depending on founder's communication style:
+- **Leader archetype if:** Founder leads with authority, has published work, or explicit credentials
+- **Reluctant Hero if:** Founder leads with humility, problem-first framing, or reluctance ("I didn't plan to be the expert, but...")
+
+**AI Processing:** Store character selection in upstream `brand-voice.md` for use in SC5 (GTM) and content strategy development.
 
 ---
 
@@ -214,6 +268,47 @@ This scorecard requires completed data from Scorecards 1-3:
 - Score 7-8: "Strong reasoning. Final check: Would this path work given your founder constraints (A1-A4)? If not, reconsider."
 
 **Section B Total:** B1+B2+B3+B4+B5 = 0-25 pts
+
+### EXPERT FRAMEWORK ADDITION: CONTENT-TO-PAID PIPELINE PER PATH
+
+**Purpose:** Map Alex Hormozi's 4-phase content-to-paid pipeline to each strategy path, showing how each path monetizes differently across 12 months.
+
+**4-Phase Pipeline Structure (12-Month Horizon):**
+
+| Phase | Timeline | Focus | Objective |
+|---|---|---|---|
+| **Phase 1** | Months 1-3 | Free Education | Build trust & authority; demonstrate expertise without asking for payment |
+| **Phase 2** | Months 4-6 | Lead Magnets | Capture intent; identify warm leads ready to transact |
+| **Phase 3** | Months 7-9 | Paid Training/Product | Monetize; move leads to first transaction (consulting project, SaaS subscription, course) |
+| **Phase 4** | Months 10-12 | Premium/Retainer | Scale; move transacted customers to high-value recurring revenue (retainer, premium tier, managed service) |
+
+**Path-Specific Implementation:**
+
+**REPLICATE & LOCALIZE (4-Phase Adaptation)**
+- Phase 1 (Months 1-3): Free content about global product + local adaptation trends → Blog, LinkedIn, webinars
+- Phase 2 (Months 4-6): Lead magnet = free localization audit or feasibility assessment → Capture leads interested in the product
+- Phase 3 (Months 7-9): Paid = SaaS subscription at localized pricing (e.g., $200-500/month vs. global $1000+) → First 10-20 customers
+- Phase 4 (Months 10-12): Premium = white-glove onboarding or dedicated support for enterprise customers → Expand ACV
+
+**CONSULTING-FIRST SAAS (4-Phase Adaptation)**
+- Phase 1 (Months 1-3): Free education = thought leadership (LinkedIn, case studies, frameworks) showing your methodology → Build authority
+- Phase 2 (Months 4-6): Lead magnet = free mini-audit, assessment, or workshop → Identify companies with acute pain
+- Phase 3 (Months 7-9): Paid = consulting project ($5K-20K) or service engagement → Generate revenue + productization insights
+- Phase 4 (Months 10-12): Premium = productized SaaS ($300-1000/month) or retainer consulting → Graduate best clients to software; land new clients at product level
+
+**BORING MICRO-SAAS (4-Phase Adaptation)**
+- Phase 1 (Months 1-3): Free education = "how-to" content, templates, checklists → Build awareness of problem + your solution existence
+- Phase 2 (Months 4-6): Lead magnet = free tool, template, or short course → Capture early adopters' emails
+- Phase 3 (Months 7-9): Paid = SaaS subscription ($29-99/month) → Monetize at low friction, high volume
+- Phase 4 (Months 10-12): Premium = upsell to pro tier ($99-299/month) or add-on modules → Increase LTV; expand across product family
+
+**HAMMERING DEEP (4-Phase Adaptation)**
+- Phase 1 (Months 1-3): Free education = niche-specific content (deep-dive articles, niche community participation, podcast interviews) → Establish authority in vertical
+- Phase 2 (Months 4-6): Lead magnet = niche-specific resource, assessment, or workshop → Build owned audience of niche members
+- Phase 3 (Months 7-9): Paid = consulting project, niche-specific SaaS, or training course → Establish paid transaction with niche; deepen positioning
+- Phase 4 (Months 10-12): Premium = retainer consulting, premium SaaS tier, or certification program → Become irreplaceable expert; highest ACV in niche
+
+**AI Processing Note:** Track which phase the founder is executing in; recommend next-phase actions based on timeline and current progress. Update monthly in GTM Fitness (SC5).
 
 ---
 
@@ -554,6 +649,139 @@ Based on strategy choice + founder profile:
 7. **Operator** (Operations-focused) → Replicate & Localize
 8. **Scrambler** (Early-stage; figuring out) → Consulting-First SaaS (revenue fast)
 
+### EXPERT FRAMEWORK ADDITION: FIRST EXPERIMENT DESIGN (BUILD-MEASURE-LEARN)
+
+**Purpose:** For each strategy path, define the default 30-day validation experiment that tests core hypotheses before full execution. Follows Build-Measure-Learn model.
+
+**Path-Specific 30-Day Experiments:**
+
+**REPLICATE & LOCALIZE — Validate Local Pain Exists**
+
+| Element | Specification |
+|---|---|
+| **Hypothesis** | "The #1 pain point from the global product is equally acute in [target geography/ICP]" |
+| **MVP Test** | 10 customer interviews (15-min discovery calls) + 1 landing page testing localized messaging |
+| **Build Activities** | Create landing page with localized value prop; set up calendar for interviews |
+| **Measure Metrics** | Interview % who confirm pain is #1 priority (target: 8/10); landing page CTR to "learn more" (target: >5%) |
+| **Success Criteria** | ≥7/10 interviews confirm pain; ≥20% express interest in solution |
+| **Pivot Criteria** | <5/10 confirm pain OR <2% landing page interest → Pain may not be #1 locally; revisit SC2 or consider different niche |
+
+**CONSULTING-FIRST SAAS — Validate Service Offering & Closability**
+
+| Element | Specification |
+|---|---|
+| **Hypothesis** | "I can close 3 consulting clients in 30 days using warm network + LinkedIn with service offering of [description] at price $[X]" |
+| **MVP Test** | 50 personalized outreach messages (LinkedIn + email) to warm network; 15-20 sales conversations; 3 target closes (LOI/contract) |
+| **Build Activities** | Define service scope (5-page document); create one-pager with pricing; develop 10-call pitch script |
+| **Measure Metrics** | Outreach-to-conversation rate (target: 30%+); conversation-to-close rate (target: 15%+); average deal size ($X) |
+| **Success Criteria** | ≥3 signed LOIs or contracts; average deal size within 10% of target pricing |
+| **Pivot Criteria** | <2 closes OR conversation-to-close <10% → Service offering may lack clarity or price point is misaligned; refine positioning and retry |
+
+**BORING MICRO-SAAS — Validate Product-Market Fit at Speed**
+
+| Element | Specification |
+|---|---|
+| **Hypothesis** | "I can launch a landing page + basic pricing, and get 5 pre-pays (customers willing to pay before product launch) in 14 days, demonstrating product-market fit" (Marc Lou / John Rush playbook) |
+| **MVP Test** | Landing page + basic SaaS onboarding flow; email outreach to 100 warm contacts; 2 weeks of paid acquisition testing |
+| **Build Activities** | Create landing page (value prop, pricing tiers, signup); minimal onboarding flow; prepare FAQ/support responses |
+| **Measure Metrics** | Pre-pays acquired (target: 5); landing page conversion (target: 2-5%); CAC from paid channels (vs. organic) |
+| **Success Criteria** | ≥5 customers willing to pre-pay for product; LTV estimate >3x CAC |
+| **Pivot Criteria** | <3 pre-pays after 14 days → Kill the feature/niche; use learning from 100 conversations to identify adjacent micro-SaaS opportunity and retest |
+
+**HAMMERING DEEP — Validate Niche Authority & Demand**
+
+| Element | Specification |
+|---|---|
+| **Hypothesis** | "I can establish credibility and prove niche demand by publishing 10 authority pieces + measuring engagement, then closing 1 pilot customer" |
+| **MVP Test** | 10 pieces of niche-specific content (LinkedIn posts, blog articles, forum answers); engagement tracking; 1 pilot customer on consulting/trial product |
+| **Build Activities** | Content calendar for 10 pieces; participate in 5 niche communities; prepare case study template for first pilot |
+| **Measure Metrics** | Content engagement (likes, shares, comments; target: avg 10+ engagement per piece); pilot customer value validation; positioning clarity in niche feedback |
+| **Success Criteria** | ≥100 cumulative engagement across 10 pieces; 1 niche customer pilots offering; feedback confirms positioning resonates |
+| **Pivot Criteria** | <50 cumulative engagement OR no pilot interest after 30 days → Niche may be too narrow or positioning unclear; widen niche or adjust messaging and retest |
+
+**AI Processing:** At the end of strategy recommendation, Claude presents the 30-day experiment template aligned to the selected path. Founder executes for 30 days; results inform whether to proceed to full 90-day roadmap or revisit strategy.
+
+**Measurement Cadence:** Check progress weekly; adjust outreach/content production based on early feedback (Days 7, 14, 21). Full pivot decision at Day 30.
+
+---
+
+### EXPERT WITHOUT A STAGE — Strategy Path Guidance (Activated by R1 Expert Signal)
+
+**Primary Archetype for this training.** When founder is classified as "Expert Without a Stage," Claude provides enhanced strategy path guidance:
+
+**Default Recommendation: Consulting-First SaaS**
+
+**Why this path is the expert's natural fit:**
+- They already HAVE the expertise — they don't need to build it
+- Consulting generates revenue in 30 days (vs 6+ months for product-first)
+- Consulting clients BECOME the product advisory board — they tell you exactly what to build
+- The expert's corporate network provides warm leads for consulting (no cold outreach needed for first 3-5 clients)
+- Consulting proof → SaaS credibility. "I've solved this for 10 companies manually" is the strongest possible positioning for a SaaS launch
+
+### EXPERT FRAMEWORK ADDITION: PORTFOLIO VS. SINGLE PRODUCT
+
+**Context:** John Rush and Marc Lou have both published frameworks for building portfolios of 20+ products as solopreneurs, with compounding revenue across multiple micro-SaaS products or ventures.
+
+**Applicability by Strategy Path:**
+
+For founders selected into **Boring Micro-SaaS** or **Hammering Deep** paths, Claude presents a secondary opportunity assessment:
+
+**PORTFOLIO OPTION: Post-Validation Product Expansion**
+
+After validating Product 1 through the 30-day experiment (and reaching initial traction), consider launching Product 2 in parallel IF all three conditions are met:
+
+| Condition | Specification | Evaluation |
+|---|---|---|
+| **(a) Product 1 is self-serve with minimal maintenance** | Product 1 requires <2 hours/week of your active time (no service delivery, support is automated/community-driven, or outsourced) | Boring Micro-SaaS is ideal here; Hammering Deep requires more founder time initially |
+| **(b) Adjacent ICP pain identified in SC2** | During SC2 ICP deep-dive, founder identified 2-3 adjacent pain points the same ICP suffers (not solved by Product 1) | Example: Product 1 solves invoicing; Product 2 opportunity is expense tracking for same ICP |
+| **(c) Technical skill allows rapid shipping** | Founder can build MVP for Product 2 in <4 weeks using same tech stack/skills as Product 1 | Requires either founder technical skill or access to co-builder/contractor already on payroll |
+
+**Portfolio Revenue Compounding Example:**
+- Month 3: Product 1 generates $500/month (5 customers × $100 MRR)
+- Month 6: Product 1 at $1500/month; Product 2 launches at $300/month → $1800 MRR total
+- Month 9: Product 1 at $2500/month; Product 2 at $1000/month; Product 3 launches → $3500/month total
+- By Month 12: 3 products × moderate ACV = $5000+/month with solo founder (vs. single product plateauing at $2500)
+
+**When to OVERRIDE (recommend single-product focus instead):**
+- If Product 1 is still <$1000/month MRR → Optimize before expanding; compounding only works if first product is stable
+- If Hammering Deep niche is not yet "dominated" (founder is still building authority) → Depth first; breadth later
+- If founder is explicitly anti-portfolio ("I want to go deep on ONE product") → Respect preference; note that portfolio approach compounds faster but requires systems/delegation
+
+**AI Processing:** At end of 30-day experiment, if conditions (a), (b), (c) are met and Product 1 shows strong traction, Claude flags "Portfolio Opportunity Detected" and recommends assessment: "You've validated Product 1. You've identified adjacent pain in SC2 (condition b). Do you have the capacity to build Product 2 in parallel? If yes, we can sequence your 90-day roadmap to include Product 2 MVP launch alongside Product 1 optimization."
+
+---
+
+**Path-Specific Playbook for Expert Archetype:**
+
+```
+MONTH 1: Package Expertise as Service
+- Define ONE service offering based on narrowed niche (from SC1)
+- Price at $2K-5K/month or $5K-15K/project (NOT $500 — expert pricing)
+- Reach out to 20 warm contacts from corporate network
+- Close 2-3 consulting clients
+- Deliver manually (this IS the product research phase)
+
+MONTH 2: Systematize & Document
+- Document every workflow you repeat across clients
+- Identify the 3-5 tasks that should be software, not manual
+- Start building MVP of the repeatable workflow
+- Continue consulting (revenue funds the build)
+
+MONTH 3: Productize the Pattern
+- Launch MVP to existing consulting clients as "beta" of the SaaS product
+- Price SaaS at $200-500/month (consulting clients get lifetime discount)
+- Use consulting case studies as proof for SaaS marketing
+- Begin GTM motions from SC5 (with proof, credibility, and revenue already in hand)
+```
+
+**When to OVERRIDE the default (recommend different path):**
+- If founder has ZERO corporate network in target geography → Boring Micro-SaaS (need product-led growth)
+- If founder's expertise is in a commodity space (no differentiation) → Hammering Deep (niche deeper first)
+- If founder explicitly refuses services ("I only want to build product") → Boring Micro-SaaS, but flag: "Building without consulting first means you're guessing what the market wants. Consulting is the fastest validation path for your expertise level."
+
+**Advisory note for Section D (Execution Readiness):**
+When Expert archetype is detected, D1-D4 should use the **Consulting-First SaaS** question set by default. If founder chose a different path in B5, Claude should surface this: "Based on your profile — deep domain expertise, corporate background, strong network — the natural strategy path is Consulting-First SaaS. You selected [other path]. Let me ask: is there a specific reason you want to skip the consulting phase? Most experts who skip it end up spending 6 months building something the market doesn't want."
+
 ---
 
 ## 12. OUTPUT FILE: strategy-recommendation.md
@@ -569,9 +797,60 @@ Based on strategy choice + founder profile:
 - 90-Day Strategic Roadmap (month-by-month)
 - Re-Assessment Triggers
 
+### EXPERT FRAMEWORK ADDITION: MOVEMENT BRIEF OUTPUT
+
+**New Output Section:** Include a "Movement Brief" that articulates the founder's larger purpose and positioning narrative. This section feeds from the Conversational Advisor Framework's movement-brief.md deliverable.
+
+**Movement Brief Prompts (to populate in output):**
+
+| Question | Purpose | Example Output |
+|---|---|---|
+| **What cause does this founder champion?** | Identify the larger mission beyond the product | "Democratize financial compliance for MENA SMEs" or "Return autonomy to finance teams over-burdened by manual processes" |
+| **What's the New Opportunity (vs. Improvement Offer)?** | Distinguish if founder is improving existing category or opening new market | New Opportunity: "MENA founders now can scale without hiring FP&A teams" vs. Improvement: "Faster ZATCA reporting than competitors" |
+| **Who's the enemy?** | Identify the specific problem or system the founder opposes | "Manual spreadsheet workflows that consume 20 hours/week" or "Global SaaS vendors who don't understand MENA tax requirements" |
+| **What future are they building?** | Vision for how the world changes if their product wins | "MENA companies compete globally without compliance overhead" or "Finance teams spend time on strategy, not data entry" |
+
+**AI Processing:** Movement Brief is synthesized from:
+1. Founder's stated purpose in SC1 (if available)
+2. ICP pain + amplification from SC2
+3. Market opportunity positioning from SC3
+4. Strategy path selection + Attractive Character archetype (from SC4)
+
+Store Movement Brief in `strategy-recommendation.md` as narrative framing for all downstream GTM activities (SC5).
+
 ---
 
-## 13. CLAUDE EXECUTION FLOW
+## 13. ENGAGEMENT PROTOCOL
+
+### Pattern Breaks
+
+1. **After Section A (Founder DNA complete):**
+   "Your founder profile maps to the [Archetype Name] pattern. Here's what that means for your next 90 days: [AI generates 2-3 sentence insight about what this archetype typically does well and where they stumble]."
+
+2. **After Section C (Strategy-Market Fit complete):**
+   **Variable Reward** — Show draft strategy recommendation BEFORE final scoring:
+   "Based on your founder DNA, market data, and resource profile, here's your preliminary strategy path: [Strategy Path Name]. Here's why: [AI explains the fit in 2-3 sentences]. We'll confirm this after the final analysis."
+
+3. **After Section E (Final — Strategy Recommendation delivered):**
+   "Your 90-day strategic recommendation is ready. This maps your specific strengths to the highest-probability path. Most founders try 3-4 strategies simultaneously and execute none well. You now have ONE clear path with a sequenced action plan."
+
+### Acknowledgment Protocol
+
+**Strong answer:** "That's a clear self-assessment. Founders who know their strengths AND limits make better strategic choices."
+
+**Weak answer:** "I need more honesty here. The strategy recommendation is only as good as the inputs. If you overstate your resources or understate your constraints, the recommendation breaks."
+
+**When founder shows self-awareness:** "That kind of honest self-assessment is rare. Most founders inflate their capabilities. You're giving me data I can actually work with."
+
+### Investment Signaling
+
+- **After Section A (Founder DNA):** "Your founder profile is mapped. This isn't a personality quiz — it's a strategic asset inventory that determines which GTM motions you can realistically execute."
+- **After Section C (Strategy Fit):** "Your strategy-market fit analysis is deeper than what most accelerators provide. You have a data-backed path, not a guess."
+- **After Section E (Final):** "Strategy recommendation complete. Your archetype, resources, and market data point to [Strategy Path]. This recommendation accounts for your market data, ICP clarity, and personal bandwidth. It's custom, not template."
+
+---
+
+## 14. CLAUDE EXECUTION FLOW
 
 1. **Load Upstream Data (2 min):** SC1, SC2, SC3 complete
 2. **Administer Sections A-E (25 min):** Questions in sequence
@@ -584,7 +863,7 @@ Based on strategy choice + founder profile:
 
 ---
 
-## 14. NOTES FOR DEVELOPERS
+## 15. NOTES FOR DEVELOPERS
 
 - All Section A questions are deterministic MC (no interpretation)
 - Sections B, C, E use AI auto-generation from upstream data
