@@ -888,13 +888,28 @@ After all sections are complete, I scan for contradictions between SC1 outputs a
 
 ---
 
+## SCORING DISCIPLINE
+
+**Push Toward Max, Not Band Floor:**
+When scoring any question, if the answer scores at the top of its rubric (e.g., 5/5 on a 5-point question), award the full points. Do NOT default to "4 out of 5" when the answer genuinely earns 5. The scoring system must reward exceptional answers, not compress them.
+
+**Expert vs Sharp Differentiation:**
+- **Sharp (typically 4/5):** Specific, evidence-backed, internally consistent. Would guide action. Could be used in materials with minor editing.
+- **Expert (5/5):** Exceeds Sharp on ALL axes simultaneously. Passes the "pitch deck test": could be copy-pasted into investor deck, sales page, or product spec without editing. Uses 3+ distinct evidence types. Includes quantified outcomes. A stranger reading it would understand the business in 30 seconds.
+
+Apply this differentiation to every per-question rubric. Score 5 is RARE but must be awarded when genuinely earned.
+
+---
+
 ## SCORING BANDS
 
 Final ICP Clarity Score: **0-100 pts**
 
 | Band | Score | Interpretation | Recommendation |
 |------|-------|-----------------|-----------------|
-| **Elite** | 85-100 | ICP is vivid, specific, evidence-backed, GTM-ready | Launch GTM immediately. Data for all downstream scorecards ready. |
+| **Exceptional** | 95-100 | ICP is pitch-ready. Every section uses 3+ evidence types, quantified data, and vivid specificity. A stranger could build GTM from this alone. Rare — most strong ICPs score 85-94. | Launch GTM immediately. ICP document is a competitive asset — use as-is in sales materials, ad targeting, and investor conversations. |
+| **Elite** | 90-94 | ICP is vivid, specific, evidence-backed, GTM-ready. Minor polish only — nothing blocking execution. All sections internally consistent with quantified claims. | Launch GTM immediately. Data for all downstream scorecards ready. Consider using ICP directly in landing page copy. |
+| **Strong Elite** | 85-89 | ICP is clear and actionable across all sections. One or two answers could benefit from additional evidence or sharper specificity, but the foundation is solid. | Launch GTM. Get 3-5 additional customer conversations to strengthen any section scoring below 85. Proceed to Scorecard 3 with confidence. |
 | **Strong** | 70-84 | ICP is clear and actionable with minor gaps | One revision round; fix highest-impact gaps (usually pain/pleasure set diversity, or obstacle clarity). Proceed to Scorecard 3. |
 | **Adequate** | 55-69 | ICP has foundation but needs rework on 1-2 sections | Revise identified sections. Common: Day-in-the-life lacks specificity, or congregation points are too generic. Resubmit before proceeding. |
 | **Weak** | 40-54 | ICP is generic; feels like educated guessing | Major rework needed. Likely: founder hasn't validated assumptions with customers yet. Recommend 3-5 customer conversations before resubmitting. |
@@ -1169,12 +1184,12 @@ After scoring is complete and locked, I generate `icp-refined.md` with this stru
 
 | Section | Points | Score | Status |
 |---------|--------|-------|--------|
-| A. WHO | 25 | [X] | [Elite/Strong/Adequate/Weak] |
-| B. Pain Statements | 20 | [X] | [Elite/Strong/Adequate/Weak] |
-| C. Pleasure Statements | 20 | [X] | [Elite/Strong/Adequate/Weak] |
-| D. Hero Journey | 20 | [X] | [Elite/Strong/Adequate/Weak] |
-| E. Congregation & Access | 15 | [X] | [Elite/Strong/Adequate/Weak] |
-| **TOTAL** | **100** | **[X]** | **[Elite/Strong/Adequate/Weak]** |
+| A. WHO | 25 | [X] | [Exceptional/Elite/Strong Elite/Strong/Adequate/Weak] |
+| B. Pain Statements | 20 | [X] | [Exceptional/Elite/Strong Elite/Strong/Adequate/Weak] |
+| C. Pleasure Statements | 20 | [X] | [Exceptional/Elite/Strong Elite/Strong/Adequate/Weak] |
+| D. Hero Journey | 20 | [X] | [Exceptional/Elite/Strong Elite/Strong/Adequate/Weak] |
+| E. Congregation & Access | 15 | [X] | [Exceptional/Elite/Strong Elite/Strong/Adequate/Weak] |
+| **TOTAL** | **100** | **[X]** | **[Exceptional/Elite/Strong Elite/Strong/Adequate/Weak]** |
 
 ### Consistency Notes
 [Any red/yellow flags from consistency engine, plus founder's response]

@@ -914,8 +914,8 @@ Every free-text question in this scorecard uses a 5 (or 6-10 variant) point scal
 | **1** | Generic | Could apply to any business; no specificity; vague assertions |
 | **2** | Directional | Right direction but vague; missing names, numbers, evidence; statements without support |
 | **3** | Specific | Named entities, some numbers, clear direction; usable but not sharp; could be sharper |
-| **4** | Sharp | Specific, evidence-backed, internally consistent; would guide action; could be used in materials |
-| **5** | Expert | Could be used as-is in pitch deck, campaign, or spec; vivid, memorable, actionable |
+| **4** | Sharp | Specific, evidence-backed, internally consistent; would guide action; could be used in materials. Has named entities + numbers + clear logic. Meets the "useful in a meeting" test. |
+| **5** | Expert | Exceeds Sharp on ALL three axes simultaneously. Passes the "pitch deck test": could be copy-pasted into investor deck, sales page, or product spec without editing. Uses 3+ distinct evidence types (interviews, data, competitor analysis, personal experience). Includes quantified outcomes or measurable claims. Vivid enough that a stranger reading it would understand the business in 30 seconds. Score 5 is RARE — most strong answers are 4. Only award 5 when the answer is genuinely exceptional across specificity, evidence, AND consistency. |
 | **6-10** | Variants | Some questions have 6, 8, or 10-point scales; same logic applies with finer gradation |
 
 **Axis of Evaluation (all free-text):**
@@ -951,7 +951,8 @@ Each question has a detailed rubric in the Question Set section above. AI scorin
    - Multiple evidence types: +1 point
    - Contradicts upstream answer (from other sections): -1 point
    - Quantified claim (numbers, timelines): no automatic bonus, but required for higher scores
-5. **Cap at question max** (don't exceed point ceiling)
+5. **Push toward max before capping:** If base score is 4 on all three axes (Specificity + Evidence + Consistency), actively evaluate for Score 5 using Expert criteria. Do NOT default to 4 when 5 is earned. The scoring system should reward exceptional answers, not compress them. Ask: "Would this answer survive unchanged in a pitch deck?" If yes → Score 5.
+6. **Cap at question max** (don't exceed point ceiling after bonuses)
 
 ---
 
@@ -1044,7 +1045,7 @@ This scorecard generates four markdown files from student answers. These are NOT
 
 **Total Points (Sections A, E, F):** [A1+A2+A3+E1+E2+F1+F2+F3]
 **Maximum Points:** 30
-**Score Band:** [LAUNCH READY / ALMOST THERE / NEEDS WORK / EARLY STAGE / RESET]
+**Score Band:** [EXCEPTIONAL / STRONG LAUNCH READY / LAUNCH READY / ALMOST THERE / NEEDS WORK / EARLY STAGE / RESET]
 
 ---
 
@@ -1467,7 +1468,9 @@ All Scorecard 1 scores fall into five bands:
 
 | Range | Band | Meaning | Action |
 |-------|------|---------|--------|
-| **85-100** | LAUNCH READY | Your project definition is solid. Minor refinements only. You have clarity on problem, niche, positioning, and MVP. You can move to ICP Clarity (Scorecard 2) with confidence. | **Proceed to Module 2 (ICP Deep Dive).** Get 5+ conversations with your exact niche to validate your ICP definition. |
+| **95-100** | EXCEPTIONAL | Pitch-ready definition. Every section is vivid, evidence-backed, and internally consistent. A VC or customer could read this and immediately understand the business. Rare — most strong projects score 85-94. | **Proceed to Module 2 immediately.** Your project definition is a competitive advantage. Use it as-is in pitch decks, landing pages, and investor conversations. |
+| **90-94** | STRONG LAUNCH READY | Clear, specific, evidence-backed across all sections. Minor polish opportunities but nothing blocking. Definition is actionable and GTM-ready. | **Proceed to Module 2 (ICP Deep Dive).** Consider using your project definition as foundation for landing page copy and pitch materials. |
+| **85-89** | LAUNCH READY | Solid foundation with clarity on problem, niche, positioning, and MVP. One or two answers could be sharper with more evidence or specificity, but nothing fundamental is missing. | **Proceed to Module 2.** Get 5+ conversations with your exact niche to validate your ICP definition. Revisit any dimension scoring below 85 for quick sharpening. |
 | **70-84** | ALMOST THERE | You have the core right. One or two sections need sharpening (usually niche validation logic, speed to value, or cultural fit). Spend 3-5 hours tightening weak sections, then move forward. | **Spend 1 week refining weak sections.** Then re-run this scorecard for updated score. If still 70+, move to Scorecard 2. |
 | **55-69** | NEEDS WORK | You have directional thinking but significant gaps. Usually: niche is too broad, positioning is generic, problem origin lacks evidence, or MENA context is missing. Spend 1-2 weeks on foundational work before reassessing. | **Prioritize:** Sharpen niche (B1-B4), ground problem in evidence (A1-A3), research MENA context (F). Then reassess. Do not proceed to Scorecard 2 until 70+. |
 | **40-54** | EARLY STAGE | You're still in idea exploration mode. Niche is very broad, problem is still vague, or founder-problem fit is unclear. This is normal for pre-idea founders. Spend 2-4 weeks on problem validation and niche research before re-running. | **Go talk to 10+ potential customers.** Record what problems they mention. Use their language to redefine your niche. Validate your founder-problem fit with real domain experience or network access. Re-run in 3-4 weeks. |
@@ -1530,7 +1533,7 @@ This section describes how Claude (the AI) executes this scoring process step-by
 
 4. **Calculate total score** (out of 100)
    - Sum all section scores
-   - Determine band (LAUNCH READY, ALMOST THERE, NEEDS WORK, EARLY STAGE, RESET)
+   - Determine band (EXCEPTIONAL, STRONG LAUNCH READY, LAUNCH READY, ALMOST THERE, NEEDS WORK, EARLY STAGE, RESET)
 
 ### Phase 3: Output File Generation
 
@@ -1929,7 +1932,7 @@ When Claude completes scoring, it produces a summary in this format:
 **Project:** [Project Name]
 **Date:** [Today]
 **Total Score:** [X]/100
-**Score Band:** [LAUNCH READY / ALMOST THERE / NEEDS WORK / EARLY STAGE / RESET]
+**Score Band:** [EXCEPTIONAL / STRONG LAUNCH READY / LAUNCH READY / ALMOST THERE / NEEDS WORK / EARLY STAGE / RESET]
 
 ---
 
@@ -1972,7 +1975,7 @@ When Claude completes scoring, it produces a summary in this format:
 
 ## NEXT STEPS
 
-**If LAUNCH READY (85-100):**
+**If LAUNCH READY or above (85-100):**
 Proceed directly to Scorecard 2 (ICP Clarity). Use your four output files as reference documents.
 
 **If ALMOST THERE (70-84):**

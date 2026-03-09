@@ -58,11 +58,25 @@ This scorecard builds on upstream data. Do not administer until student has comp
 | **D. AI Synthesis** | 20 | 0 (AI auto) | 2 min | AI scores overall MAS from upstream + new data |
 | **TOTAL** | **100** | **6 user-facing** | **~25 min** | |
 
+### Scoring Discipline
+
+**Push Toward Max, Not Band Floor:**
+When scoring any question, if the answer meets ALL criteria for the top rubric score (e.g., 15/15 "Expert evidence"), award the full points. Do NOT default to 12 when 15 is earned. The scoring system must reward exceptional answers, not compress them into a safe middle.
+
+**Expert vs Strong Differentiation (for 0-15 rubrics):**
+- **Strong (9/15):** 2+ evidence types, named sources, specific numbers. Solid but could be sharper.
+- **Very Strong (12/15):** 3+ evidence types, all named/specific, internally consistent. Would hold up in a strategy meeting.
+- **Expert (15/15):** All of Very Strong PLUS pitch-deck ready. Could be copy-pasted into investor deck without editing. Uses quantified outcomes. A stranger reading it would fund this market.
+
+Score 15 is RARE but must be awarded when genuinely earned. Do not anchor at 12.
+
 ### Score Bands
 
 | Range | Band | Meaning | Risk | Action |
 |-------|------|---------|------|--------|
-| **85-100** | LAUNCH READY | Strong evidence across all dimensions | Low | Execute GTM; move to SC5 |
+| **95-100** | EXCEPTIONAL | Pitch-ready evidence across all dimensions. Every section uses 3+ evidence types with quantified data. Rare — most strong markets score 85-94. | Very Low | Execute GTM immediately. Use market analysis as-is in investor materials. |
+| **90-94** | STRONG LAUNCH READY | Strong evidence across all dimensions with minor polish opportunities. All claims quantified and internally consistent. | Low | Execute GTM; move to SC5. Consider using market data in pitch deck. |
+| **85-89** | LAUNCH READY | Solid evidence across all dimensions. One or two areas could be sharper with additional data points. | Low | Execute GTM; move to SC5. Get 2-3 additional data points for weakest section. |
 | **70-84** | ALMOST THERE | Solid core appeal; 1-2 sections need validation | Low-Med | Fix weakest section; re-score; confirm |
 | **55-69** | NEEDS WORK | Right direction but significant gaps | Medium | 30-day validation plan required |
 | **40-54** | EARLY STAGE | Fundamental validation needed | Med-High | 10+ buyer interviews before GTM |

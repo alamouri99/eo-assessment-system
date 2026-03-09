@@ -95,6 +95,17 @@ Trigger the **72-Hour Validation Sprint** before proceeding with full strategy r
 
 ---
 
+### Scoring Discipline (Applies to All Questions)
+
+**Push Toward Max, Not Band Floor:**
+When scoring any question, if the answer meets ALL criteria for the top rubric score (e.g., 9/9 "Expert"), award the full points. Do NOT default to 7-8 when 9 is earned. The scoring system must reward exceptional answers, not compress them.
+
+**Expert vs Strong Differentiation (for 0-9 rubrics):**
+- **Strong (7-8/9):** Clear alignment with data, sound reasoning, demonstrates understanding. Would hold up in a strategy discussion.
+- **Expert (9/9):** All of Strong PLUS could defend strategy to investors. Demonstrates deep understanding of strategy-market fit. References specific data points from upstream scorecards. Addresses tradeoffs explicitly. Score 9 is RARE but must be awarded when genuinely earned.
+
+---
+
 ### A1. Core Skill (5 pts)
 **Type:** Multiple Choice
 **Question:** What's your strongest skill set?
@@ -543,7 +554,9 @@ Where:
 **Readiness Interpretation:**
 | Readiness | Assessment | Meaning |
 |-----------|-----------|---------|
-| 80-100 | READY | Strong execution confidence; move to GTM immediately |
+| 95-100 | EXCEPTIONAL | Strategy-market-founder alignment is pitch-ready. Could defend entire strategy in investor meeting. Rare — most strong strategies score 80-94. |
+| 90-94 | STRONG READY | Strong execution confidence with clear data alignment. Minor polish only. Strategy is GTM-ready. |
+| 80-89 | READY | Strong execution confidence; move to GTM immediately. One or two areas could use additional validation. |
 | 60-79 | CONFIDENT | Good foundation; execution readiness strong; minor gaps in market/ICP |
 | 40-59 | CAUTIOUS | Some gaps; either market/ICP unclear OR execution readiness weak |
 | 20-39 | UNCERTAIN | Significant gaps; validate before executing strategy |

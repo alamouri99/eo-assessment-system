@@ -309,6 +309,26 @@ The market will teach you what's missing — but only if you show up.
 
 ---
 
+## SCORING DISCIPLINE (Applies to All 0-5 AI-Scored Questions in Sections C, D, E)
+
+### Push Toward Max Before Capping
+When scoring any free-text answer on a 0-5 rubric, actively evaluate whether the answer earns the maximum score BEFORE applying any caps. Do NOT default to Score 4 when Score 5 is earned. The scoring system must reward exceptional answers, not compress them into a "good enough" band.
+
+### Expert vs Sharp Differentiation (0-5 Rubric)
+The difference between Score 4 (Sharp) and Score 5 (Expert) is the difference between "good practitioner answer" and "would survive in a pitch deck unchanged":
+
+| Score | Label | Standard |
+|-------|-------|----------|
+| **4** | Sharp | Specific, evidence-backed, actionable. Names entities, includes numbers, shows clear logic. Meets the "useful in a strategy meeting" test. Most strong answers land here. |
+| **5** | Expert | Exceeds Sharp on ALL three axes simultaneously: (1) Specificity - uses 3+ distinct evidence types (market data, competitor analysis, personal experience, customer quotes); (2) Evidence Quality - includes quantified outcomes or measurable claims; (3) Consistency - integrates with answers from earlier sections without contradiction. Passes the "pitch deck test": could be copy-pasted into investor materials without editing. Score 5 is RARE but must be awarded when genuinely earned. |
+
+### Three Evaluation Axes (Same Weight)
+1. **Specificity:** Named entities, concrete numbers, real examples vs. generic statements
+2. **Evidence Quality:** Multiple evidence types, quantified claims, verifiable data
+3. **Internal Consistency:** Aligns with ICP, market, and strategy answers from SC1-SC4
+
+---
+
 ## 6. SECTION C: MOTION-SPECIFIC DEEP DIVE (40 POINTS)
 
 **Goal:** Score founder's readiness for each of the 13 GTM motions; identify top 5 for focus.
@@ -738,10 +758,23 @@ Motion Score = (Fit × 0.4) + (Readiness × 0.3) + (MENA Viability × 0.3)
 **Motion Tiers (Classification):**
 | Tier | Score | Action | Meaning |
 |------|-------|--------|---------|
-| **PRIMARY** | 4.0-5.0 | Activate immediately | High fit, high readiness, high MENA viability → Fastest ROI |
+| **PRIMARY EXCEPTIONAL** | 4.7-5.0 | Activate immediately with full conviction | Perfect alignment across all three dimensions. Rare — reserve for genuinely exceptional fit. |
+| **PRIMARY STRONG** | 4.3-4.6 | Activate immediately | High fit, high readiness, high MENA viability → Fastest ROI |
+| **PRIMARY** | 4.0-4.2 | Activate immediately | Strong fit with minor optimization opportunities |
 | **SECONDARY** | 3.0-3.9 | Start after PRIMARY | Good fit, moderate readiness → Do next quarter |
 | **CONDITIONAL** | 2.0-2.9 | Activate only if [X] | Fit exists but gaps → Fix gaps first, then activate |
 | **SKIP** | 1.0-1.9 | Deprioritize | Low fit or low readiness → Not worth effort |
+
+**Overall GTM Fitness Score Bands:**
+| Range | Band | Meaning | Action |
+|-------|------|---------|--------|
+| **95-100** | EXCEPTIONAL | GTM-ready across all dimensions. Capability + motion fit + MENA context all strong. Rare. | Execute immediately. Use assessment as investor-grade GTM strategy document. |
+| **90-94** | STRONG READY | Strong GTM readiness with minor optimization opportunities. All sections solid. | Execute GTM. Address any capability gap scoring below 85% of section max. |
+| **85-89** | READY | Solid GTM readiness. One or two capability areas could be strengthened. | Execute top 2-3 motions. Build capability in weakest areas during first 30 days. |
+| **70-84** | ALMOST THERE | Good foundation; 1-2 sections need strengthening before full GTM execution. | Fix weakest capability area; re-score that section. Begin PRIMARY motion only. |
+| **55-69** | NEEDS WORK | Directional but significant capability or fit gaps. | 30-day capability building plan before GTM. Focus on Section B gaps. |
+| **40-54** | EARLY STAGE | Major GTM readiness gaps. | Return to SC4 strategy selection; validate strategy-capability alignment. |
+| **0-39** | NOT READY | Foundational gaps. | Revisit SC1-SC4 before attempting GTM. |
 
 ---
 
