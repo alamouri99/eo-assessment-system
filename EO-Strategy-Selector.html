@@ -4,217 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrepreneurs Oasis MENA — Strategy Selector</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
-    --eo-dark: #1A1A2E;
-    --eo-orange: #E94D1B;
-    --eo-beige: #FAF5EF;
-    --eo-card-bg: #FFFFFF;
-    --eo-gray-text: #6B7280;
-    --eo-gray-border: #E5E7EB;
-    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    --eo-radius: 12px;
+    --eo-dark: #050A12;
+    --eo-orange: #FF6600;
+    --eo-beige: #0C1220;
+    --eo-card-bg: #111827;
+    --eo-gray-text: #94A3B8;
+    --eo-gray-border: rgba(255,255,255,0.06);
+    --eo-radius: 14px;
     --eo-radius-sm: 8px;
     --eo-transition: 300ms ease;
+    --green: #22C55E;
+    --red: #EF4444;
+    --gold: #D97706;
+    --teal: #0D9488;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-dark);
-    color: #FFFFFF;
-    min-height: 100vh;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--eo-dark); color: #FFFFFF; min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 body.rtl { direction: rtl; text-align: right; }
 body.rtl .nav-buttons { flex-direction: row-reverse; }
-body.rtl .section-bar-row { flex-direction: row-reverse; }
-body.rtl .reco-list li { padding: 6px 24px 6px 0; }
-body.rtl .progress-meta { flex-direction: row-reverse; }
 body.rtl .option-card { text-align: right; }
+body.rtl .pattern-break-card { border-left: none; border-right: 4px solid var(--eo-orange); }
+body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(--eo-orange); }
+body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orange); }
 .rtl-toggle { position: fixed; top: 12px; right: 12px; z-index: 999; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: var(--eo-radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; transition: all var(--eo-transition); }
 .rtl-toggle:hover { background: rgba(255,255,255,0.2); }
 .eo-header { text-align: center; padding: 28px 20px 12px; }
-.eo-header h1 { font-size: 22px; font-weight: 800; color: #FFFFFF; }
+.eo-header h1 { font-size: 22px; font-weight: 800; }
 .eo-header h1 span { color: var(--eo-orange); }
-.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; text-align: center; margin-bottom: 4px; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Auth */
+.auth-screen { max-width: 480px; margin: 60px auto; padding: 0 20px; text-align: center; }
+.auth-screen h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.auth-screen p { color: #9CA3AF; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+.intro-badge { display: inline-block; background: rgba(255,102,0,0.15); color: var(--eo-orange); font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 1px; }
+.email-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--eo-radius); padding: 28px 24px; text-align: left; }
+.email-box label { display: block; font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.email-input { width: 100%; padding: 14px 16px; border: 2px solid #2D2D44; border-radius: var(--eo-radius-sm); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); margin-bottom: 16px; }
+.email-input:focus { border-color: var(--eo-orange); }
+.email-input::placeholder { color: #6B7280; }
+.btn-full { width: 100%; padding: 14px 32px; background: var(--eo-orange); color: #fff; border: none; border-radius: var(--eo-radius-sm); font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background var(--eo-transition); }
+.btn-full:hover { background: #E65C00; }
+.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* Progress */
 .progress-wrapper { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
 .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; text-align: center; margin-bottom: 4px; }
 .progress-counter { font-size: 13px; color: #9CA3AF; }
 .progress-track { height: 6px; background: #2D2D44; border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--eo-orange); border-radius: 3px; transition: width 0.3s ease; }
-.screen { display: none; }
-.screen.active { display: block; }
-.email-capture { max-width: 480px; margin: 60px auto; padding: 0 20px; text-align: center; }
-.email-capture h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-.email-capture p { color: #9CA3AF; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
-.email-capture input { width: 100%; padding: 14px 16px; border: 2px solid #2D2D44; border-radius: var(--eo-radius-sm); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); margin-bottom: 16px; }
-.email-capture input:focus { border-color: var(--eo-orange); }
-.email-capture input::placeholder { color: #6B7280; }
+
+/* Question */
 .question-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.question-text { font-size: 20px; font-weight: 700; color: var(--eo-dark); margin-bottom: 8px; line-height: 1.4; }
+.question-text { font-size: 20px; font-weight: 700; color: #F1F5F9; margin-bottom: 8px; line-height: 1.4; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); margin-bottom: 20px; line-height: 1.5; font-style: italic; }
 .options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--eo-dark); transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
+.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #F1F5F9; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
 .option-card:hover { border-color: var(--eo-orange); }
 .option-card.selected { background: var(--eo-orange); border-color: var(--eo-orange); color: #FFFFFF; }
 .option-card.focused { outline: 2px solid var(--eo-orange); outline-offset: 2px; }
-.freetext-input { width: 100%; min-height: 120px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: var(--eo-dark); resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
+.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #F1F5F9; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; }
-.evidence-label { font-size: 14px; font-weight: 600; color: var(--eo-dark); margin-top: 16px; margin-bottom: 8px; }
-.evidence-input { min-height: 80px; }
 .char-count { font-size: 12px; color: var(--eo-gray-text); text-align: right; margin-top: 6px; }
 .char-count.over { color: #EF4444; font-weight: 600; }
+
+/* Nav */
 .nav-buttons { max-width: 640px; margin: 20px auto 60px; padding: 0 20px; display: flex; justify-content: space-between; gap: 12px; }
 .btn { padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all var(--eo-transition); }
 .btn-prev { background: rgba(255,255,255,0.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); }
 .btn-prev:hover { background: rgba(255,255,255,0.2); }
 .btn-prev.hidden { visibility: hidden; }
 .btn-next { background: var(--eo-orange); color: #FFFFFF; margin-left: auto; }
-.btn-next:hover { background: #D4411A; }
+.btn-next:hover { background: #E65C00; }
 .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-primary { background: var(--eo-orange); color: #FFFFFF; border: none; padding: 14px 32px; border-radius: var(--eo-radius-sm); font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background var(--eo-transition); }
-.btn-primary:hover { background: #D4411A; }
+.btn-primary:hover { background: #E65C00; }
 .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1E293B; color: #FFFFFF; padding: 14px 28px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.3s ease; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.contact-screen { max-width: 480px; margin: 60px auto; padding: 0 20px; }
-.contact-card { background: var(--eo-beige); border-radius: var(--eo-radius); padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.contact-card h2 { font-size: 24px; font-weight: 800; color: var(--eo-dark); margin-bottom: 4px; }
-.contact-card .subtitle { color: var(--eo-gray-text); font-size: 14px; margin-bottom: 24px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--eo-dark); margin-bottom: 6px; }
-.form-group input { width: 100%; padding: 12px 14px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; color: var(--eo-dark); font-family: inherit; outline: none; transition: border-color var(--eo-transition); }
-.form-group input:focus { border-color: var(--eo-orange); }
-.contact-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-.btn-skip { background: transparent; color: var(--eo-gray-text); font-size: 14px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; text-decoration: underline; }
 .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.9); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
 .loading-overlay.active { display: flex; }
 .spinner { width: 48px; height: 48px; border: 4px solid #2D2D44; border-top-color: var(--eo-orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-overlay p { font-size: 16px; font-weight: 500; }
+
+/* Results */
 .results-container { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
-.score-hero { text-align: center; padding: 40px 20px 32px; }
-.score-circle { width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-.score-circle-inner { text-align: center; }
-.score-number { font-size: 48px; font-weight: 800; display: block; }
-.score-total { font-size: 16px; color: #9CA3AF; }
-.band-label { font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
-.band-subtitle { font-size: 14px; color: #9CA3AF; }
-.band-ready .score-number, .band-ready .band-label { color: #22C55E; }
-.band-partial .score-number, .band-partial .band-label { color: #3B82F6; }
-.band-gaps .score-number, .band-gaps .band-label { color: #F59E0B; }
-.band-startover .score-number, .band-startover .band-label { color: #EF4444; }
-.pending-ai-badge { display: inline-block; background: rgba(233,77,27,0.15); color: var(--eo-orange); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-top: 8px; }
 .results-card { background: rgba(255,255,255,0.06); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; }
 .results-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #FFFFFF; }
-.section-bar-row { display: flex; align-items: center; margin-bottom: 14px; gap: 12px; }
-.section-bar-label { width: 100px; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
-.section-bar-track { flex: 1; height: 12px; background: #2D2D44; border-radius: 6px; overflow: hidden; }
-.section-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
-.section-bar-score { width: 60px; text-align: right; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
-.reco-section { margin-bottom: 16px; }
-.reco-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.reco-icon { font-size: 16px; }
-.reco-title { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-.reco-list { list-style: none; padding: 0; margin: 0 0 0 24px; }
-.reco-list li { position: relative; padding: 4px 0 4px 16px; font-size: 13px; color: #D1D5DB; line-height: 1.5; }
-.reco-list li::before { content: '\2022'; position: absolute; left: 0; color: var(--eo-orange); }
-.ai-section { background: rgba(233,77,27,0.08); border: 1px solid rgba(233,77,27,0.2); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; }
-.ai-badge { display: inline-block; background: var(--eo-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
-.ai-section h3 { font-size: 15px; margin-bottom: 8px; }
-.ai-insight { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.6; }
-.ai-plan { margin-bottom: 16px; }
-.ai-plan h4 { font-size: 14px; margin-bottom: 8px; color: var(--eo-orange); }
-.ai-plan ul { margin: 0; padding: 0 0 0 20px; }
-.ai-plan li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-.ai-reco-list { margin: 0; padding: 0 0 0 20px; }
-.ai-reco-list li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-.answer-block { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 16px; margin-bottom: 12px; }
-.answer-block .q-label { font-size: 13px; font-weight: 700; color: var(--eo-orange); margin-bottom: 4px; }
-.answer-block .q-text { font-size: 13px; color: #9CA3AF; margin-bottom: 8px; }
-.answer-block .a-text { font-size: 14px; color: #D1D5DB; white-space: pre-wrap; line-height: 1.5; }
-.answer-block .a-mc { font-size: 14px; color: #22C55E; font-weight: 600; }
-.prereq-gate { max-width: 480px; margin: 80px auto; padding: 0 20px; text-align: center; }
-.prereq-card { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--eo-radius); padding: 40px 32px; }
-.prereq-card h2 { color: #EF4444; font-size: 22px; font-weight: 800; margin-bottom: 12px; }
-.prereq-card p { color: #D1D5DB; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
-.prereq-card .btn-primary { display: inline-block; text-decoration: none; }
-.upstream-ref { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--eo-radius-sm); overflow: hidden; margin-bottom: 12px; }
-.upstream-ref-toggle { width: 100%; background: transparent; border: none; color: #9CA3AF; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; font-family: inherit; display: flex; align-items: center; gap: 8px; transition: color var(--eo-transition); }
-.upstream-ref-toggle:hover { color: #D1D5DB; }
-.upstream-ref-toggle .arrow { font-size: 10px; transition: transform 0.2s ease; }
-.upstream-ref-toggle.open .arrow { transform: rotate(90deg); }
-.upstream-ref-content { display: none; padding: 0 16px 12px; }
-.upstream-ref-content.open { display: block; }
-.upstream-ref-item { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.upstream-ref-item:last-child { border-bottom: none; }
-.upstream-ref-item .label { font-size: 11px; font-weight: 600; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-.upstream-ref-item .value { font-size: 13px; color: #D1D5DB; line-height: 1.4; }
-.path-card { background: rgba(233,77,27,0.08); border: 1px solid rgba(233,77,27,0.2); border-radius: var(--eo-radius); padding: 20px; margin-bottom: 16px; }
-.path-card h4 { color: var(--eo-orange); font-size: 16px; margin-bottom: 8px; }
-.path-card p { font-size: 14px; color: #D1D5DB; line-height: 1.5; }
-.gate-warning { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--eo-radius); padding: 20px; margin-bottom: 20px; text-align: center; }
-.gate-warning h3 { color: #EF4444; font-size: 16px; margin-bottom: 8px; }
-.gate-warning p { color: #D1D5DB; font-size: 14px; }
-.results-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
-.results-cta .btn-primary { min-width: 280px; }
-.results-cta .btn-retake { background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
-.results-cta .btn-download-md { background: transparent; border: 2px solid var(--eo-orange); color: var(--eo-orange); padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-download-md:hover { background: var(--eo-orange); color: #FFFFFF; }
-.results-cta .btn-download-pdf { background: transparent; border: 2px solid #6B7280; color: #6B7280; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-download-pdf:hover { background: #6B7280; color: #FFFFFF; }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.shake { animation: shake 0.4s ease; }
-@media (max-width: 680px) { .question-card { margin: 0 16px; padding: 24px 20px; } .nav-buttons { padding: 0 16px; } .question-text { font-size: 18px; } .progress-wrapper { padding: 0 16px; } .freetext-input { min-height: 100px; } }
-@media (max-width: 400px) { .nav-buttons { flex-direction: column; } .btn-prev.hidden { display: none; } .option-card { padding: 14px 16px; font-size: 14px; } .question-text { font-size: 17px; } }
-/* ── Engagement Layer ── */
+
+/* Strategy Path Cards */
+.strategy-card { background: linear-gradient(135deg, rgba(255,102,0,0.15), rgba(255,102,0,0.05)); border: 1px solid rgba(255,102,0,0.3); border-radius: var(--eo-radius); padding: 28px; margin-bottom: 20px; }
+.strategy-card h3 { font-size: 20px; font-weight: 800; color: var(--eo-orange); margin-bottom: 4px; }
+.strategy-card .path-desc { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.5; }
+.strategy-card .why-section { margin-top: 16px; }
+.strategy-card .why-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.strategy-card .why-item { font-size: 13px; color: #D1D5DB; padding: 4px 0 4px 16px; position: relative; line-height: 1.5; }
+.strategy-card .why-item::before { content: '→'; position: absolute; left: 0; color: var(--eo-orange); }
+
+.secondary-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--eo-radius); padding: 20px; margin-bottom: 20px; }
+.secondary-card h4 { font-size: 14px; font-weight: 700; color: #D1D5DB; margin-bottom: 4px; }
+.secondary-card .activate { font-size: 12px; color: var(--eo-orange); font-style: italic; margin-bottom: 8px; }
+.secondary-card p { font-size: 13px; color: #9CA3AF; line-height: 1.5; }
+
+/* Archetype Badge */
+.archetype-badge { text-align: center; margin-bottom: 20px; padding: 24px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--eo-radius); }
+.archetype-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(255,102,0,0.15); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 28px; }
+.archetype-name { font-size: 18px; font-weight: 800; color: var(--eo-orange); margin-bottom: 4px; }
+.archetype-desc { font-size: 13px; color: #9CA3AF; line-height: 1.5; }
+
+/* Roadmap */
+.roadmap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+.roadmap-col { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--eo-radius-sm); padding: 16px; }
+.roadmap-col h4 { font-size: 13px; font-weight: 700; color: var(--eo-orange); margin-bottom: 10px; text-align: center; }
+.roadmap-item { font-size: 12px; color: #D1D5DB; padding: 4px 0; line-height: 1.4; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.roadmap-item:last-child { border-bottom: none; }
+
+/* Raise Cards */
+.raise-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px; margin-bottom: 14px; }
+.raise-card h4 { font-size: 14px; font-weight: 700; color: var(--eo-orange); margin-bottom: 8px; }
+.raise-card p { font-size: 13px; color: #D1D5DB; line-height: 1.6; }
+
+/* Engagement */
 .pattern-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
 .pattern-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 20px 24px; }
 .pattern-break-card .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
 .pattern-break-card .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
 .investment-signal { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
-.investment-signal-card { background: rgba(233,77,27,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
+.investment-signal-card { background: rgba(255,102,0,0.08); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 12px; color: #D1D5DB; font-style: italic; }
 .acknowledgment { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
 .acknowledgment-card { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #D1D5DB; font-style: italic; border-left: 3px solid var(--eo-orange); }
-body.rtl .pattern-break-card { border-left: none; border-right: 4px solid var(--eo-orange); }
-body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(--eo-orange); }
+
+/* CTAs */
+.results-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
+.results-cta a, .results-cta button { min-width: 280px; text-align: center; }
+.btn-download-md { background: transparent; border: 2px solid var(--eo-orange); color: var(--eo-orange); padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); }
+.btn-download-md:hover { background: var(--eo-orange); color: #FFFFFF; }
+.btn-retake { background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); }
+.btn-retake:hover { background: rgba(255,255,255,0.15); }
+
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.shake { animation: shake 0.4s ease; }
+
+@media (max-width: 680px) {
+    .question-card { margin: 0 16px; padding: 24px 20px; }
+    .nav-buttons { padding: 0 16px; }
+    .question-text { font-size: 18px; }
+    .progress-wrapper { padding: 0 16px; }
+    .auth-screen { padding: 0 16px; }
+    .results-container { padding: 0 16px 60px; }
+    .roadmap-grid { grid-template-columns: 1fr; }
+    .email-box { padding: 24px 20px; }
+}
+@media (max-width: 400px) {
+    .nav-buttons { flex-direction: column; }
+    .btn-prev.hidden { display: none; }
+    .option-card { padding: 14px 16px; font-size: 14px; }
+    .question-text { font-size: 17px; }
+}
 </style>
 </head>
 <body>
 <button class="rtl-toggle" onclick="toggleRTL()">EN / عربي</button>
 <div class="toast" id="toast"></div>
-<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><p>Generating your strategy analysis...</p></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><p>Building your strategy recommendation...</p></div>
 <div class="eo-header"><h1>Entrepreneurs <span>Oasis MENA</span></h1></div>
 
-<div class="screen" id="screenPrereq">
-    <div class="prereq-gate"><div class="prereq-card">
-        <h2>Prerequisites Required</h2>
-        <p>You must complete <strong>SC1: Project Definition</strong>, <strong>SC2: ICP Clarity</strong>, and <strong>SC3: Market Attractiveness</strong> before starting Strategy Selector.<br><br>This assessment synthesizes all upstream data to recommend your optimal strategy path.</p>
-        <a href="EO-Assessment-Dashboard.html" class="btn-primary">Go to Dashboard →</a>
-    </div></div>
-</div>
-
-<div class="screen" id="screenEmail">
-    <div class="email-capture">
-        <h2>Strategy Selector Scorecard</h2>
-        <p>Find your optimal strategy path across 20 guided questions. Synthesizes SC1-SC3 data. ~15 minutes.</p>
-        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
-        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
+<!-- Auth Screen -->
+<div class="screen active" id="screenAuth">
+    <div class="auth-screen">
+        <div class="intro-badge">STEP 4 OF 5</div>
+        <h2>Strategy <em>Selector</em></h2>
+        <p>10 questions. ~20 minutes. Find your optimal strategy path.</p>
+        <div class="email-box">
+            <label>YOUR EMAIL</label>
+            <input type="email" id="auth-email" class="email-input" placeholder="founder@company.com" required>
+            <button class="btn-full" onclick="handleEmailEntry()">Continue →</button>
+            <div id="venture-selector" style="display:none;margin-top:16px"></div>
+            <div id="auth-error" style="color:#EF4444;font-size:13px;margin-top:12px;display:none"></div>
+        </div>
+        <div id="retrieval-banner" style="display:none"></div>
     </div>
 </div>
 
+<!-- Stepper -->
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: FOUNDER</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
+            <div class="section-label" id="sectionLabel">FOUNDER PROFILE</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 10</div>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
     <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
@@ -227,349 +213,195 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
     </div>
 </div>
 
-<div class="screen" id="screenContact">
-    <div class="contact-screen"><div class="contact-card">
-        <h2>Almost Done!</h2>
-        <p class="subtitle">Get your personalized strategy recommendation.</p>
-        <div class="form-group"><label>Full Name *</label><input type="text" id="contactName" placeholder="Your full name" autocomplete="name"></div>
-        <div class="form-group"><label>Email *</label><input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email"></div>
-        <div class="form-group"><label>Company / Project *</label><input type="text" id="contactCompany" placeholder="Your company or project name"></div>
-        <div class="contact-actions">
-            <button class="btn-primary" id="btnSubmitContact">Get My Strategy</button>
-            <button class="btn-skip" id="btnSkipContact">Skip and see results</button>
-        </div>
-    </div></div>
-</div>
-
+<!-- Results -->
 <div class="screen" id="screenResults">
     <div class="results-container" id="resultsContent"></div>
 </div>
 
 <script>
 /* ═══════════════════════════════════════════════════
-   EO STRATEGY SELECTOR — SCORECARD 4
-   20 Questions | 5 Sections (A-E) | 100 Points
-   Features: Dynamic path-specific questions (Section D)
+   EO STRATEGY SELECTOR v3.0 — SCORECARD 4
+   10 Questions | TYPE 3 RESULTS (Recommendation)
    Prerequisites: SC1 + SC2 + SC3
    ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
 
+    var SC_NUMBER = 4;
     var Q_MC = 1;
     var Q_FREETEXT = 2;
-    var Q_MC_EVIDENCE = 3;
-
-    var ASSESSMENT_ID = 'strategy-selector';
-    var ASSESSMENT_TITLE = 'Strategy Selector';
-
-    var SECTIONS = [
-        { id: 'A', name: 'FOUNDER', fullName: 'Founder-Strategy Alignment' },
-        { id: 'B', name: 'MARKET FIT', fullName: 'Market-Strategy Fit' },
-        { id: 'C', name: 'ICP FIT', fullName: 'ICP-Strategy Fit' },
-        { id: 'D', name: 'EXECUTION', fullName: 'Execution Readiness' },
-        { id: 'E', name: 'MENA', fullName: 'MENA Strategy Fit' }
-    ];
-
-    var SECTION_MAXES = { 'A': 20, 'B': 25, 'C': 25, 'D': 20, 'E': 10 };
-
-    var SECTION_NAME_MAP = {
-        'A': 'Founder-Strategy Alignment',
-        'B': 'Market-Strategy Fit',
-        'C': 'ICP-Strategy Fit',
-        'D': 'Execution Readiness',
-        'E': 'MENA Strategy Fit'
-    };
-
-    var STRATEGY_PATHS = [
-        'Replicate & Localize',
-        'Consulting-First SaaS',
-        'Boring Micro-SaaS',
-        'Hammering Deep'
-    ];
 
     /* ===================================
-       PATH-SPECIFIC QUESTIONS (Section D)
-       Indexed by B5 MC answer (0-3)
+       SHARED PATTERNS (EXACT COPY)
        =================================== */
+    function slugify(text) {
+      return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+    }
+    function getVentures(email) { try { return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]'); } catch(e) { return []; } }
+    function saveVenture(email, vName) {
+      var slug = slugify(vName); var ventures = getVentures(email);
+      var existing = ventures.find(function(v) { return v.venture_slug === slug; });
+      if (existing) { existing.last_active = new Date().toISOString().split('T')[0]; localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures)); return { venture_name: existing.venture_name, venture_slug: slug, isNew: false }; }
+      var v = { venture_name: vName.trim(), venture_slug: slug, created_at: new Date().toISOString().split('T')[0], last_active: new Date().toISOString().split('T')[0] };
+      ventures.push(v); localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures)); return { venture_name: v.venture_name, venture_slug: slug, isNew: true };
+    }
+    function updateVentureActivity(email, slug) { var v = getVentures(email); var f = v.find(function(x) { return x.venture_slug === slug; }); if (f) { f.last_active = new Date().toISOString().split('T')[0]; localStorage.setItem('eo_ventures_' + email, JSON.stringify(v)); } }
+    function storageKey(type, scNum, email, slug) { return 'eo_sc' + scNum + '_' + type + '_' + email + '_' + slug; }
+    function getScores(email, slug) { try { return JSON.parse(localStorage.getItem('eo_scores_' + email + '_' + slug) || '{}'); } catch(e) { return {}; } }
+    function saveScore(email, slug, scNum, score) { var s = getScores(email, slug); s['sc' + scNum] = score; localStorage.setItem('eo_scores_' + email + '_' + slug, JSON.stringify(s)); }
+    function getUpstreamAnswers(scNum, email, slug) { try { return JSON.parse(localStorage.getItem(storageKey('answers', scNum, email, slug)) || '{}'); } catch(e) { return {}; } }
+    function getUpstreamResult(scNum, email, slug) { try { return JSON.parse(localStorage.getItem(storageKey('result', scNum, email, slug)) || 'null'); } catch(e) { return null; } }
+    function migrateOldData() {
+      for (var i = 0; i < localStorage.length; i++) { var key = localStorage.key(i); var m = key.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/);
+        if (m) { var p = {}; try { p = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {} if (!p[m[2]]) p[m[2]] = []; if (p[m[2]].indexOf(parseInt(m[1])) === -1) p[m[2]].push(parseInt(m[1])); localStorage.setItem('eo_migration_pending', JSON.stringify(p)); } }
+    }
+    function showError(msg) { var el = document.getElementById('auth-error'); el.innerHTML = msg; el.style.display = 'block'; setTimeout(function() { el.style.display = 'none'; }, 8000); }
+
+    /* ===================================
+       STRATEGY PATHS
+       =================================== */
+    var STRATEGY_PATHS = [
+        { id: 'replicate', name: 'Replicate & Localize', desc: 'Take a proven global product and adapt it for your specific MENA market. Leverages proven demand with local execution advantage.' },
+        { id: 'consulting', name: 'Consulting-First SaaS', desc: 'Sell services first for fast revenue and deep learning, then productize into SaaS. Low risk, relationship-driven, revenue from day 1.' },
+        { id: 'microsaas', name: 'Boring Micro-SaaS', desc: 'Build a minimal product, charge from day 1, and optimize unit economics. Lean, fast, profitable. No investor needed.' },
+        { id: 'hammering', name: 'Hammering Deep', desc: 'Go vertical and deep in one niche. Own it completely before expanding. Patient, defensible, high retention.' }
+    ];
+
+    /* Path-specific execution questions (Q6-Q9) */
     var PATH_QUESTIONS = {
         0: [ /* Replicate & Localize */
             { text: 'Which global product will you replicate and localize?', help: 'Name a specific product or category you\'ll adapt for MENA.',
-              options: [ { label: 'Named product identified + researched', score: 5 }, { label: 'Category identified, specific product TBD', score: 3 }, { label: 'Not yet identified', score: 0 } ] },
+              options: [ { label: 'Named product identified + researched', score: 5 }, { label: 'Category identified, specific product TBD', score: 3 }, { label: 'Not yet identified', score: 1 } ] },
             { text: 'What\'s your localization advantage?', help: 'Why can YOU localize this better than someone else?',
-              options: [ { label: 'Cultural expertise + language + existing network', score: 5 }, { label: 'Language fluency + market knowledge', score: 5 }, { label: 'Existing network in target market', score: 4 }, { label: 'Unsure of my advantage', score: 0 } ] },
-            { text: 'When can you launch the localized version?', help: 'Speed to market matters. Faster = less risk.',
-              options: [ { label: 'Less than 3 months', score: 5 }, { label: '3-6 months', score: 4 }, { label: '6-12 months', score: 3 }, { label: 'More than 1 year', score: 1 }, { label: 'Unknown', score: 0 } ] },
+              options: [ { label: 'Cultural expertise + language + existing network', score: 5 }, { label: 'Language fluency + market knowledge', score: 4 }, { label: 'Existing network in target market', score: 3 }, { label: 'Unsure of my advantage', score: 1 } ] },
+            { text: 'When can you launch the localized version?', help: 'Speed to market matters.',
+              options: [ { label: 'Less than 3 months', score: 5 }, { label: '3-6 months', score: 4 }, { label: '6-12 months', score: 3 }, { label: 'More than 1 year', score: 1 } ] },
             { text: 'How will you reach your first customers?', help: 'Go-to-market for replicated products needs local distribution.',
-              options: [ { label: 'Partnership with global vendor', score: 5 }, { label: 'Community/network-based distribution', score: 5 }, { label: 'Direct sales team', score: 4 }, { label: 'Unsure', score: 0 } ] }
+              options: [ { label: 'Partnership with global vendor', score: 5 }, { label: 'Community/network-based distribution', score: 5 }, { label: 'Direct sales team', score: 4 }, { label: 'Unsure', score: 1 } ] }
         ],
         1: [ /* Consulting-First SaaS */
-            { text: 'What service will you sell first?', help: 'Your consulting offer should be clearly defined, priced, and deliverable.',
+            { text: 'What service will you sell first?', help: 'Your consulting offer should be clearly defined and priced.',
               options: [ { label: 'Defined, priced, 3+ pilot clients lined up', score: 5 }, { label: 'Defined and priced, no pilots yet', score: 3 }, { label: 'Vague idea of the service', score: 1 }, { label: 'Not defined yet', score: 0 } ] },
-            { text: 'Can you personally deliver the service?', help: 'Founder-delivered is ideal for learning. Hiring adds cost.',
+            { text: 'Can you personally deliver the service?', help: 'Founder-delivered is ideal for learning.',
               options: [ { label: 'Yes, for 20+ clients/month', score: 5 }, { label: 'Yes, for 5-10 clients/month', score: 4 }, { label: 'Need to hire help', score: 2 }, { label: 'Can\'t deliver this myself', score: 0 } ] },
             { text: 'When will you start building the SaaS product?', help: 'Consulting funds the build. Don\'t build too early.',
-              options: [ { label: 'Month 4-6 (consulting funded the build)', score: 5 }, { label: 'Year 2 (consulting stabilized first)', score: 4 }, { label: 'Unknown timeline', score: 0 }, { label: 'Won\'t productize — staying consulting', score: 1 } ] },
-            { text: 'Do you have a signed client for month 1?', help: 'Fastest path to revenue. Even verbal commitment counts.',
+              options: [ { label: 'Month 4-6 (consulting funded)', score: 5 }, { label: 'Year 2 (consulting stabilized first)', score: 4 }, { label: 'Unknown timeline', score: 1 }, { label: 'Won\'t productize — staying consulting', score: 1 } ] },
+            { text: 'Do you have a signed client for month 1?', help: 'Fastest path to revenue.',
               options: [ { label: 'Yes, signed LOI or contract', score: 5 }, { label: 'Verbal commitment from named buyer', score: 4 }, { label: 'Warm lead in progress', score: 3 }, { label: 'Cold outreach only', score: 1 }, { label: 'No leads yet', score: 0 } ] }
         ],
         2: [ /* Boring Micro-SaaS */
-            { text: 'What is your MVP (minimum viable product)?', help: 'Lean is key. 1-3 core features max.',
+            { text: 'What is your MVP scope?', help: 'Lean is key. 1-3 core features max.',
               options: [ { label: '1-3 core features, buildable in 2 weeks', score: 5 }, { label: 'Clear features, needs 4-6 weeks', score: 4 }, { label: 'Vague scope, need to narrow', score: 1 }, { label: 'Undefined', score: 0 } ] },
-            { text: 'Can you build the MVP?', help: 'Technical capability is key for Micro-SaaS. Can you or your co-founder build it?',
+            { text: 'Can you build the MVP?', help: 'Technical capability is key for Micro-SaaS.',
               options: [ { label: 'Myself, in under 4 weeks', score: 5 }, { label: 'With 1 co-founder/partner', score: 5 }, { label: 'Need to hire a developer', score: 3 }, { label: 'Can\'t build — no technical path', score: 0 } ] },
-            { text: 'When will you charge customers?', help: 'Micro-SaaS = charge from day 1. Free products are not Micro-SaaS.',
-              options: [ { label: 'Less than 4 weeks', score: 5 }, { label: '4-8 weeks', score: 4 }, { label: '8-12 weeks', score: 3 }, { label: 'More than 12 weeks', score: 0 }, { label: 'Unknown', score: 0 } ] },
-            { text: 'How will you get your first 10 paying customers?', help: 'Acquisition plan matters. Not "build it and they will come."',
+            { text: 'When will you charge customers?', help: 'Micro-SaaS = charge from day 1.',
+              options: [ { label: 'Less than 4 weeks', score: 5 }, { label: '4-8 weeks', score: 4 }, { label: '8-12 weeks', score: 3 }, { label: 'More than 12 weeks', score: 1 } ] },
+            { text: 'How will you get your first 10 paying customers?', help: 'Acquisition plan matters.',
               options: [ { label: 'Defined channel + 20+ outreach attempts in pipeline', score: 5 }, { label: 'Rough plan for a specific channel', score: 3 }, { label: 'Untested channel idea', score: 1 }, { label: 'No acquisition plan', score: 0 } ] }
         ],
         3: [ /* Hammering Deep */
-            { text: 'How deep is your niche?', help: 'The deeper, the better. Specific role + company size + geography = ideal.',
-              options: [ { label: 'Specific role + company size + geography (e.g., "Finance managers at 50-500 companies in Saudi")', score: 5 }, { label: 'Specific role + geography', score: 3 }, { label: 'Broad role only', score: 1 }, { label: 'Undefined niche', score: 0 } ] },
-            { text: 'What\'s your unique advantage in this niche?', help: 'Domain expertise, network, lived experience — what gives you an edge?',
-              options: [ { label: 'Domain expertise + strong network in niche', score: 5 }, { label: '1-2 specific advantages (expertise OR network)', score: 4 }, { label: 'Unclear advantage', score: 1 }, { label: 'Generic — no niche advantage', score: 0 } ] },
-            { text: 'How long will you focus on this niche before expanding?', help: 'Hammering Deep requires patience. 12+ months of focus is ideal.',
-              options: [ { label: '12+ months (committed to niche dominance)', score: 5 }, { label: '6-12 months', score: 4 }, { label: 'Less than 6 months', score: 2 }, { label: 'Will expand immediately', score: 0 } ] },
-            { text: 'Do you have proof this niche is winnable?', help: 'Customers, advisors, or advocates who confirm the niche opportunity.',
-              options: [ { label: 'Customers, advisors, or advocates already in niche', score: 5 }, { label: 'Conversations with 5+ niche people', score: 4 }, { label: 'Research done but no conversations', score: 3 }, { label: 'Assumption only', score: 0 } ] }
+            { text: 'How deep is your niche?', help: 'Specific role + company size + geography = ideal.',
+              options: [ { label: 'Specific role + company size + geography', score: 5 }, { label: 'Specific role + geography', score: 3 }, { label: 'Broad role only', score: 1 }, { label: 'Undefined niche', score: 0 } ] },
+            { text: 'What\'s your unique advantage in this niche?', help: 'Domain expertise, network, lived experience.',
+              options: [ { label: 'Domain expertise + strong network in niche', score: 5 }, { label: '1-2 specific advantages', score: 4 }, { label: 'Unclear advantage', score: 1 }, { label: 'Generic — no niche advantage', score: 0 } ] },
+            { text: 'How long will you focus on this niche?', help: 'Hammering Deep requires patience.',
+              options: [ { label: '12+ months committed', score: 5 }, { label: '6-12 months', score: 4 }, { label: 'Less than 6 months', score: 2 }, { label: 'Will expand immediately', score: 0 } ] },
+            { text: 'Do you have proof this niche is winnable?', help: 'Customers, advisors, or advocates who confirm the opportunity.',
+              options: [ { label: 'Customers/advisors already in niche', score: 5 }, { label: 'Conversations with 5+ niche people', score: 4 }, { label: 'Research done but no conversations', score: 2 }, { label: 'Assumption only', score: 0 } ] }
         ]
     };
 
     /* ===================================
-       QUESTION DEFINITIONS (20 Questions)
+       10 QUESTIONS (reduced from 20)
        =================================== */
+    var SECTION_LABELS = {
+        founder: 'FOUNDER PROFILE',
+        strategy: 'STRATEGY HYPOTHESIS',
+        execution: 'EXECUTION READINESS',
+        mena: 'MENA FIT'
+    };
+
     var allQuestions = [
-        /* ── SECTION A: FOUNDER-STRATEGY ALIGNMENT (20 pts) ── */
-        { id: 'a1', sectionId: 'A', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'What\'s your strongest skill set?',
-          help: 'Be honest. This shapes which strategy path fits you best.',
+        /* Q1-Q4: Founder Profile (MC) */
+        { id: 'core_skill', section: 'founder', type: Q_MC, maxScore: 5,
+          text: 'What\'s your strongest skill set?', help: 'Be honest. This shapes which strategy path fits you best.',
           options: [
-              { label: 'Technical — I can build products', score: 5 },
-              { label: 'Sales — I can close deals', score: 5 },
-              { label: 'Content — I can teach and write', score: 4 },
-              { label: 'Operations — I can systematize', score: 5 },
-              { label: 'Relationships — I have a deep network', score: 5 }
-          ]
-        },
-        { id: 'a2', sectionId: 'A', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'How much can you invest in the next 90 days?',
-          help: 'All budgets can work — different paths require different capital levels.',
+              { label: 'Technical — I can build products', score: 5, archetype: 'builder' },
+              { label: 'Sales — I can close deals', score: 5, archetype: 'closer' },
+              { label: 'Content — I can teach and write', score: 4, archetype: 'educator' },
+              { label: 'Operations — I can systematize', score: 5, archetype: 'operator' },
+              { label: 'Relationships — I have a deep network', score: 5, archetype: 'connector' }
+          ] },
+        { id: 'capital', section: 'founder', type: Q_MC, maxScore: 5,
+          text: 'How much can you invest in the next 90 days?', help: 'All budgets work — different paths need different capital levels.',
           options: [
               { label: '$0 (time only)', score: 5 },
               { label: '$500-2K', score: 5 },
               { label: '$2K-10K', score: 5 },
               { label: '$10K-50K', score: 4 },
               { label: '$50K+', score: 3 }
-          ]
-        },
-        { id: 'a3', sectionId: 'A', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'How much time can you dedicate weekly?',
-          help: 'Matched correctly, all time bands can work. Less time = different path.',
+          ] },
+        { id: 'time', section: 'founder', type: Q_MC, maxScore: 5,
+          text: 'How many hours per week can you dedicate?', help: 'Less time = different path, not worse path.',
           options: [
               { label: '<10 hrs/week (side project)', score: 5 },
               { label: '10-20 hrs/week (serious side)', score: 5 },
               { label: '20-40 hrs/week (part-time founder)', score: 4 },
               { label: '40+ hrs/week (full-time)', score: 5 }
-          ]
-        },
-        { id: 'a4', sectionId: 'A', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'What\'s your risk tolerance?',
-          help: 'Conservative = need revenue fast. Aggressive = can wait longer for bigger payoff.',
+          ] },
+        { id: 'risk', section: 'founder', type: Q_MC, maxScore: 5,
+          text: 'What\'s your risk profile?', help: 'Conservative = need revenue fast. Aggressive = can wait for bigger payoff.',
           options: [
               { label: 'Conservative — need revenue in 30 days', score: 5 },
               { label: 'Moderate — 90 days to revenue is fine', score: 5 },
               { label: 'Aggressive — 6+ months runway available', score: 4 },
               { label: 'Already have other income — can be patient', score: 5 }
-          ]
-        },
+          ] },
 
-        /* ── SECTION B: MARKET-STRATEGY FIT (25 pts) ── */
-        { id: 'b1', sectionId: 'B', sectionIndex: 1, type: Q_MC, maxScore: 4,
-          text: 'Based on your Market Attractiveness results, how would you describe your market\'s maturity?',
-          help: 'Think about pain intensity and competition level from SC3.',
-          options: [
-              { label: 'Emerging — buyers know the pain, limited solutions exist', score: 4 },
-              { label: 'Mature — multiple solutions exist, buyers are choosing between options', score: 3 },
-              { label: 'Very early stage — buyers don\'t know the problem exists yet', score: 2 },
-              { label: 'Saturated — many competitors, price-driven', score: 1 }
-          ]
-        },
-        { id: 'b2', sectionId: 'B', sectionIndex: 1, type: Q_MC, maxScore: 4,
-          text: 'How would you describe the purchasing dynamic in your market?',
-          help: 'Think about budget authority and decision complexity from SC3.',
-          options: [
-              { label: 'Simple decision — user/manager approves, fast cycle', score: 4 },
-              { label: 'High purchasing power — premium pricing viable', score: 3 },
-              { label: 'Complex decision — committee/C-suite, slow cycle', score: 2 },
-              { label: 'Budget-constrained — low willingness to pay', score: 1 }
-          ]
-        },
-        { id: 'b3', sectionId: 'B', sectionIndex: 1, type: Q_MC, maxScore: 4,
-          text: 'How accessible is your ICP based on your market research?',
-          help: 'Think about congregation density and reach from SC3.',
-          options: [
-              { label: 'High density — easy reach, own congregation points', score: 4 },
-              { label: 'Medium density — reachable but requires marketing', score: 3 },
-              { label: 'Low density — hard to reach, fragmented', score: 2 },
-              { label: 'Very low density — custom reach per customer', score: 1 }
-          ]
-        },
-        { id: 'b4', sectionId: 'B', sectionIndex: 1, type: Q_MC, maxScore: 4,
-          text: 'What does the market growth trajectory suggest?',
-          help: 'Think about growth direction and tailwinds from SC3.',
-          options: [
-              { label: 'Rapidly growing with strong tailwinds', score: 4 },
-              { label: 'Stable/slow growth, limited but present tailwinds', score: 3 },
-              { label: 'Declining, few tailwinds, competitive pressure', score: 1 },
-              { label: 'Unknown/unclear market direction', score: 0 }
-          ]
-        },
-        { id: 'b5', sectionId: 'B', sectionIndex: 1, type: Q_MC_EVIDENCE, maxScore: 9,
-          text: 'Based on your market analysis, which strategy path feels most natural?',
-          help: 'Choose one of 4 paths. Your reasoning matters more than the choice itself.',
-          options: [
-              { label: 'Replicate & Localize — adapt proven global product for MENA', score: 2 },
-              { label: 'Consulting-First SaaS — sell services first, productize later', score: 2 },
-              { label: 'Boring Micro-SaaS — build lean, charge from day 1', score: 2 },
-              { label: 'Hammering Deep — dominate one niche before expanding', score: 2 }
-          ],
-          evidencePrompt: 'Explain WHY this path matches your market. Reference your MAS scores, founder skills, and market conditions. (100 words)',
-          evidenceRubric: '7=Expert reasoning matching upstream data; 5-6=Strong alignment; 3-4=Reasonable but incomplete; 1-2=Weak reasoning; 0=Blank'
-        },
+        /* Q5: Strategy Hypothesis (Free-text) */
+        { id: 'strategy_hypothesis', section: 'strategy', type: Q_FREETEXT, maxScore: 10, wordLimit: 200,
+          text: 'Based on everything you know about your market and ICP, which of these 4 strategy paths feels right and why?\n\n(1) Replicate & Localize\n(2) Consulting-First SaaS\n(3) Boring Micro-SaaS\n(4) Hammering Deep',
+          help: 'Choose one path and explain WHY it matches your market, ICP, and founder profile. Reference your SC1-SC3 insights.',
+          placeholder: 'e.g., "Consulting-First SaaS feels right because: (1) My SC3 showed complex buying decisions in my market — relationships matter; (2) I have sales skills and an existing network; (3) I need revenue within 30 days; (4) My ICP (finance managers) trusts advisors more than software demos..."' },
 
-        /* ── SECTION C: ICP-STRATEGY FIT (25 pts) ── */
-        { id: 'c1', sectionId: 'C', sectionIndex: 2, type: Q_MC, maxScore: 4,
-          text: 'How does your ICP typically make buying decisions?',
-          help: 'Think about decision authority and buying behavior from SC2.',
-          options: [
-              { label: 'Individual decision-maker, fast buying cycle', score: 4 },
-              { label: 'Small team decision (2-3 people), moderate cycle', score: 3 },
-              { label: 'Committee/complex decision (4+ approvers), slow cycle', score: 2 },
-              { label: 'Highly political/complex', score: 1 }
-          ]
-        },
-        { id: 'c2', sectionId: 'C', sectionIndex: 2, type: Q_MC, maxScore: 4,
-          text: 'What\'s the pain urgency level for your ICP?',
-          help: 'Think about how quickly your ICP wants to solve the problem.',
-          options: [
-              { label: 'Extreme urgency — solve within 1 week', score: 4 },
-              { label: 'High urgency — solve within 1 month', score: 3 },
-              { label: 'Moderate urgency — solve within 3 months', score: 2 },
-              { label: 'Low/aspirational urgency — timeline flexible', score: 1 }
-          ]
-        },
-        { id: 'c3', sectionId: 'C', sectionIndex: 2, type: Q_MC, maxScore: 4,
-          text: 'What\'s your ICP\'s budget level and payment willingness?',
-          help: 'Think about budget range and evidence from SC2.',
-          options: [
-              { label: 'Mid-range budget, ROI-focused', score: 4 },
-              { label: 'High budget, willing to invest, relationship-driven', score: 3 },
-              { label: 'Varies by buyer, mixed willingness', score: 2 },
-              { label: 'Low budget, looking for cheapest option', score: 1 }
-          ]
-        },
-        { id: 'c4', sectionId: 'C', sectionIndex: 2, type: Q_MC, maxScore: 4,
-          text: 'How easy is it to reach your ICP through channels?',
-          help: 'Think about congregation points and access strategy from SC2.',
-          options: [
-              { label: 'High density — easy to reach via specific channels', score: 4 },
-              { label: 'Medium reach — requires marketing mix', score: 3 },
-              { label: 'Low reach — hard to reach at scale', score: 2 },
-              { label: 'Fragmented — no clear access pattern', score: 1 }
-          ]
-        },
-        { id: 'c5', sectionId: 'C', sectionIndex: 2, type: Q_FREETEXT, maxScore: 9, wordLimit: 100,
-          text: 'Looking at your ICP\'s buying behavior, pain urgency, and budget — does your chosen strategy path (from B5) still make sense? Or would you reconsider?',
-          help: 'Cross-reference your strategy choice with ICP data. Address: buying complexity, urgency, budget, and accessibility.',
-          placeholder: 'e.g., "My ICP (finance managers at mid-market Saudi companies) show: Complex decision (finance team + CFO); 1-month urgency (ZATCA deadline); $150-500/month budget. Consulting-First still makes sense because complex decisions require relationship building..."',
-          rubric: '9=Expert synthesis; 7-8=Strong alignment; 5-6=Aligns with most factors; 3-4=Some tension; 0-2=Strategy contradicts ICP'
-        },
+        /* Q6-Q9: Dynamic path-specific execution (MC) */
+        { id: 'exec_d1', section: 'execution', type: Q_MC, maxScore: 5, dynamic: true },
+        { id: 'exec_d2', section: 'execution', type: Q_MC, maxScore: 5, dynamic: true },
+        { id: 'exec_d3', section: 'execution', type: Q_MC, maxScore: 5, dynamic: true },
+        { id: 'exec_d4', section: 'execution', type: Q_MC, maxScore: 5, dynamic: true },
 
-        /* ── SECTION D: EXECUTION READINESS (20 pts) — Dynamic ── */
-        { id: 'd1', sectionId: 'D', sectionIndex: 3, type: Q_MC, maxScore: 5, dynamic: true },
-        { id: 'd2', sectionId: 'D', sectionIndex: 3, type: Q_MC, maxScore: 5, dynamic: true },
-        { id: 'd3', sectionId: 'D', sectionIndex: 3, type: Q_MC, maxScore: 5, dynamic: true },
-        { id: 'd4', sectionId: 'D', sectionIndex: 3, type: Q_MC, maxScore: 5, dynamic: true },
-
-        /* ── SECTION E: MENA STRATEGY FIT (10 pts) ── */
-        { id: 'e1', sectionId: 'E', sectionIndex: 4, type: Q_MC, maxScore: 5,
-          text: 'How well does your chosen strategy align with MENA business culture?',
-          help: 'Consider relationship-based selling, WhatsApp preference, trust-first buying.',
-          options: [
-              { label: 'Strong alignment — strategy leverages MENA business culture', score: 5 },
-              { label: 'Good alignment — most aspects fit MENA context', score: 4 },
-              { label: 'Moderate alignment — some adaptation needed', score: 3 },
-              { label: 'Weak alignment — significant MENA adaptation required', score: 1 },
-              { label: 'Not sure how strategy fits MENA', score: 0 }
-          ]
-        },
-        { id: 'e2', sectionId: 'E', sectionIndex: 4, type: Q_MC, maxScore: 5,
-          text: 'What\'s your biggest execution challenge in your MENA geography?',
-          help: 'Be honest about barriers. Identifying challenges early is a strength.',
-          options: [
-              { label: 'None — confident in execution', score: 5 },
-              { label: 'Payment infrastructure (setting up BNPL, bank transfers)', score: 3 },
-              { label: 'Language/localization (Arabic content creation)', score: 2 },
-              { label: 'Regulatory/compliance requirements', score: 1 },
-              { label: 'Hiring/team building challenges', score: 1 }
-          ]
-        }
+        /* Q10: MENA Fit (Free-text) */
+        { id: 'mena_fit', section: 'mena', type: Q_FREETEXT, maxScore: 10, wordLimit: 150,
+          text: 'What\'s your MENA execution advantage, and what\'s the biggest challenge you\'ll face in your target geography?',
+          help: 'Consider: relationship-based selling, WhatsApp preference, trust-first buying, payment infrastructure, Arabic content, regulatory requirements.',
+          placeholder: 'e.g., "Advantage: I grew up in Riyadh and have a network of 200+ HR managers from my previous role. Challenge: Payment infrastructure — most SMBs prefer bank transfers over card payments, so I need to support both..."' }
     ];
-
-    /* ===================================
-       RECOMMENDATIONS BY SECTION
-       =================================== */
-    var RECOMMENDATIONS = {
-        'A': [
-            'Your strongest skill shapes your path. Technical → Micro-SaaS/Hammering Deep. Sales → Consulting-First/Replicate.',
-            'Capital constraints are not blockers. $0 = Consulting-First (services). $500-2K = Micro-SaaS (lean build).',
-            'Match time commitment to path: <10 hrs = Micro-SaaS. 40+ hrs = all paths viable.',
-            'Conservative risk? Start with Consulting-First (fastest revenue). Aggressive? Hammering Deep pays off long-term.'
-        ],
-        'B': [
-            'Emerging markets with limited solutions favor Hammering Deep and Consulting-First approaches.',
-            'Simple buying decisions favor Micro-SaaS and direct sales. Complex decisions favor Consulting-First.',
-            'High-density ICPs enable fast scaling. Low-density requires relationship-based approach.',
-            'Clearly articulate WHY your chosen path matches your market data. Reference specific SC3 scores.'
-        ],
-        'C': [
-            'Match strategy to ICP buying behavior: self-serve buyers → Micro-SaaS. Relationship buyers → Consulting-First.',
-            'High urgency + simple decision = fastest revenue potential. Prioritize speed.',
-            'Budget level should match your strategy: premium → Replicate & Localize. Budget-conscious → Micro-SaaS.',
-            'Validate strategy-ICP fit by asking 1-2 ICPs: "Does this approach match how you\'d want to buy?"'
-        ],
-        'D': [
-            'Execution readiness is the #1 predictor of success. Skills + Plan + Timeline = Readiness.',
-            'If any D-section answer scored 0, that\'s a critical gap. Fix it before executing.',
-            'For Consulting-First: Get a signed client this month. For Micro-SaaS: Ship MVP in 4 weeks.',
-            'For Replicate: Identify the global product this week. For Hammering Deep: Commit to 12+ months.'
-        ],
-        'E': [
-            'MENA culture is relationship-first. Factor trust-building into your timeline.',
-            'Address your execution challenge within 30 days. Payment infrastructure? Set up before launch.',
-            'Language strategy matters: Arabic content increases response rates 2-3x in Egypt/Jordan/Saudi.'
-        ]
-    };
 
     /* ===================================
        STATE
        =================================== */
-    var STORAGE_KEY = 'eo-strategy-selector';
+    var userEmail = '';
+    var ventureSlug = '';
+    var ventureName = '';
     var answers = {};
     var currentIndex = 0;
-    var autoAdvanceTimer = null;
     var focusedOptionIndex = -1;
-    var capturedEmail = '';
-    var aiData = null;
+    var autoAdvanceTimer = null;
+    var selectedPathIndex = -1;
     var upstreamPD = null;
     var upstreamICP = null;
     var upstreamMAS = null;
 
-    var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
-    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
-    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
+    var $toast, $sectionLabel, $progressCounter, $progressFill;
+    var $questionText, $questionHelp, $optionsList, $questionCard;
+    var $btnPrev, $btnNext, $engagementSlot, $resultsContent, $loadingOverlay;
 
+    /* ===================================
+       INIT
+       =================================== */
     function init() {
+        $toast = document.getElementById('toast');
         $sectionLabel = document.getElementById('sectionLabel');
         $progressCounter = document.getElementById('progressCounter');
         $progressFill = document.getElementById('progressFill');
@@ -579,249 +411,199 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
         $questionCard = document.getElementById('questionCard');
         $btnPrev = document.getElementById('btnPrev');
         $btnNext = document.getElementById('btnNext');
-        $toast = document.getElementById('toast');
-        $emailInput = document.getElementById('emailInput');
-        $btnStart = document.getElementById('btnStartAssessment');
-        $btnSubmitContact = document.getElementById('btnSubmitContact');
-        $btnSkipContact = document.getElementById('btnSkipContact');
-        $loadingOverlay = document.getElementById('loadingOverlay');
+        $engagementSlot = document.getElementById('engagementSlot');
         $resultsContent = document.getElementById('resultsContent');
-        $upstreamPanel = document.getElementById('upstreamPanel');
+        $loadingOverlay = document.getElementById('loadingOverlay');
 
-        loadAnswers();
-        loadUpstreamData();
-        bindEvents();
-        restoreRTL();
-
-        if (!checkPrerequisites()) { showScreen('screenPrereq'); return; }
-
-        try {
-            var storedEmail = localStorage.getItem('eo_user_email');
-            if (storedEmail) {
-                capturedEmail = storedEmail;
-                if ($emailInput) $emailInput.value = storedEmail;
-                currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
-                showScreen('screenStepper');
-                renderQuestion();
-            }
-        } catch (e) {}
-    }
-
-    function checkPrerequisites() {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            return (status.pd && status.pd.score !== undefined) &&
-                   (status.icp && status.icp.score !== undefined) &&
-                   (status.mas && status.mas.score !== undefined);
-        } catch (e) { return false; }
-    }
-
-    function loadAnswers() { try { var s = localStorage.getItem(STORAGE_KEY); if (s) answers = JSON.parse(s); } catch (e) { answers = {}; } }
-    function saveAnswers() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {} }
-
-    function loadUpstreamData() {
-        try { var d = localStorage.getItem('eo-project-definition'); if (d) upstreamPD = JSON.parse(d); } catch (e) {}
-        try { var d = localStorage.getItem('eo-icp-clarity'); if (d) upstreamICP = JSON.parse(d); } catch (e) {}
-        try { var d = localStorage.getItem('eo-market-attractiveness'); if (d) upstreamMAS = JSON.parse(d); } catch (e) {}
-    }
-
-    function findFirstUnanswered() {
-        for (var i = 0; i < allQuestions.length; i++) {
-            var q = getEffectiveQuestion(i);
-            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) { if (!(q.id in answers)) return i; }
-            else if (q.type === Q_FREETEXT) { if (!(q.id in answers) || !answers[q.id].trim()) return i; }
-        }
-        return allQuestions.length - 1;
-    }
-
-    /* Get effective question (handles dynamic D-section) */
-    function getEffectiveQuestion(idx) {
-        var q = allQuestions[idx];
-        if (!q.dynamic) return q;
-        var pathIdx = answers['b5'] !== undefined ? answers['b5'] : 0;
-        var dIdx = parseInt(q.id.charAt(1)) - 1;
-        var pathQ = PATH_QUESTIONS[pathIdx] && PATH_QUESTIONS[pathIdx][dIdx] ? PATH_QUESTIONS[pathIdx][dIdx] : PATH_QUESTIONS[0][dIdx];
-        return {
-            id: q.id, sectionId: q.sectionId, sectionIndex: q.sectionIndex,
-            type: Q_MC, maxScore: q.maxScore, dynamic: true,
-            text: pathQ.text, help: pathQ.help, options: pathQ.options
-        };
-    }
-
-    function bindEvents() {
-        $btnStart.addEventListener('click', startAssessment);
         $btnPrev.addEventListener('click', prevQuestion);
         $btnNext.addEventListener('click', nextQuestion);
-        $btnSubmitContact.addEventListener('click', submitContact);
-        $btnSkipContact.addEventListener('click', skipContact);
-        $emailInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') { e.preventDefault(); startAssessment(); } });
         document.addEventListener('keydown', handleKeyboard);
+
+        try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
+        try { var e = localStorage.getItem('eo_user_email'); if (e) document.getElementById('auth-email').value = e; } catch(e) {}
+        migrateOldData();
     }
 
-    function restoreRTL() { try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch (e) {} }
     function showScreen(id) { var s = document.querySelectorAll('.screen'); for (var i = 0; i < s.length; i++) s[i].classList.remove('active'); document.getElementById(id).classList.add('active'); }
     function showToast(msg) { $toast.textContent = msg; $toast.classList.add('show'); setTimeout(function() { $toast.classList.remove('show'); }, 3000); }
 
-    function renderUpstreamPanel() {
-        if (!upstreamPD && !upstreamICP && !upstreamMAS) { $upstreamPanel.innerHTML = ''; return; }
-        var html = '';
-        if (upstreamPD) {
-            var niche = upstreamPD.niche || upstreamPD.b3 || '';
-            var pos = upstreamPD.positioning || upstreamPD.c1 || '';
-            var geo = upstreamPD.geography || '';
-            if (niche || pos || geo) {
-                html += '<div class="upstream-ref"><button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc1\')"><span class="arrow" id="arrowSC1">▶</span> SC1: Project Definition</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC1">';
-                if (niche) html += '<div class="upstream-ref-item"><div class="label">Niche</div><div class="value">' + escapeHtml(niche.substring(0, 200)) + '</div></div>';
-                if (pos) html += '<div class="upstream-ref-item"><div class="label">Positioning</div><div class="value">' + escapeHtml(pos.substring(0, 150)) + '</div></div>';
-                if (geo) html += '<div class="upstream-ref-item"><div class="label">Geography</div><div class="value">' + escapeHtml(geo) + '</div></div>';
-                html += '</div></div>';
-            }
-        }
-        if (upstreamMAS) {
-            var band = upstreamMAS.band || '';
-            var total = upstreamMAS.total || '';
-            if (band || total) {
-                html += '<div class="upstream-ref"><button class="upstream-ref-toggle" onclick="toggleUpstream(\'sc3\')"><span class="arrow" id="arrowSC3">▶</span> SC3: Market Attractiveness</button>';
-                html += '<div class="upstream-ref-content" id="upstreamSC3">';
-                if (band) html += '<div class="upstream-ref-item"><div class="label">MAS Band</div><div class="value">' + escapeHtml(band) + (total ? ' (' + total + ' pts)' : '') + '</div></div>';
-                html += '</div></div>';
-            }
-        }
-        $upstreamPanel.innerHTML = html;
-    }
-
     /* ===================================
-       ENGAGEMENT LAYER
-       Pattern breaks, acknowledgments,
-       investment signals between questions
+       AUTH: VENTURE SELECTOR
        =================================== */
-    var $engagementSlot;
+    window.handleEmailEntry = function() {
+        var email = document.getElementById('auth-email').value.trim().toLowerCase();
+        if (!email || !email.includes('@')) { showError('Please enter a valid email address'); return; }
+        userEmail = email;
+        try { localStorage.setItem('eo_user_email', email); } catch(e) {}
+        var ventures = getVentures(email);
+        if (ventures.length === 0) { showError('No assessment found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Complete Step 1 first →</a>'); return; }
+        if (ventures.length === 1) selectVenture(ventures[0]);
+        else showVentureSelector(ventures);
+    };
 
-    function renderEngagement() {
-        if (!$engagementSlot) $engagementSlot = document.getElementById('engagementSlot');
-        if (!$engagementSlot) return;
-        $engagementSlot.innerHTML = '';
-
-        var q = getEffectiveQuestion(currentIndex);
-        var prevQ = currentIndex > 0 ? getEffectiveQuestion(currentIndex - 1) : null;
-
-        /* ── Pattern Breaks at section transitions ── */
-        if (prevQ && prevQ.sectionId !== q.sectionId) {
-            var prevSection = prevQ.sectionId;
-
-            /* After Section A (Founder DNA) → entering Section B */
-            if (prevSection === 'A') {
-                var founderSkill = answers['a1'] !== undefined ? allQuestions[0].options[answers['a1']].label : 'your unique combination';
-                var html = '<div class="pattern-break"><div class="pattern-break-card">';
-                html += '<div class="pb-label">Insight Unlock</div>';
-                html += '<div class="pb-text">Your founder profile is emerging. ' + escapeHtml(founderSkill) + ' is a strong foundation. Here\'s what that means for your next 90 days: the strategy path we identify will be specifically calibrated to leverage this strength.</div>';
-                html += '</div></div>';
-                $engagementSlot.innerHTML = html;
-                return;
-            }
-
-            /* After Section C (ICP-Strategy Fit) → entering Section D */
-            if (prevSection === 'C') {
-                var selectedPath = answers['b5'] !== undefined ? STRATEGY_PATHS[answers['b5']] : null;
-                if (selectedPath) {
-                    var html = '<div class="pattern-break"><div class="pattern-break-card">';
-                    html += '<div class="pb-label">Strategy Preview</div>';
-                    html += '<div class="pb-text">Here\'s your draft strategy recommendation before final scoring: <strong>' + escapeHtml(selectedPath) + '</strong>. The next questions will test whether you\'re truly ready to execute this path. Your answers so far suggest alignment — now let\'s validate execution readiness.</div>';
-                    html += '</div></div>';
-                    $engagementSlot.innerHTML = html;
-                    return;
-                }
-            }
-
-            /* After Section D (Execution) → entering Section E (Final/MENA) */
-            if (prevSection === 'D') {
-                var html = '<div class="investment-signal"><div class="investment-signal-card">';
-                html += 'Your strategy recommendation accounts for your market data, ICP clarity, and personal resources. This is custom, not template. Two final questions to calibrate for MENA context.';
-                html += '</div></div>';
-                $engagementSlot.innerHTML = html;
-                return;
-            }
-        }
-
-        /* ── Acknowledgment protocol between questions within same section ── */
-        if (prevQ && prevQ.sectionId === q.sectionId && currentIndex > 0) {
-            var ack = getAcknowledgment(prevQ);
-            if (ack) {
-                var html = '<div class="acknowledgment"><div class="acknowledgment-card">' + escapeHtml(ack) + '</div></div>';
-                $engagementSlot.innerHTML = html;
-                return;
-            }
-        }
+    function showVentureSelector(ventures) {
+        var sel = document.getElementById('venture-selector');
+        sel.innerHTML = '<label style="display:block;font-size:11px;font-weight:700;color:var(--eo-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">SELECT VENTURE</label>' +
+            '<select id="venture-select" class="email-input" onchange="handleVentureSelect()">' +
+            '<option value="">— Choose your venture —</option>' +
+            ventures.map(function(v) { return '<option value="' + v.venture_slug + '">' + v.venture_name + '</option>'; }).join('') + '</select>';
+        sel.style.display = 'block';
     }
 
-    function getAcknowledgment(prevQ) {
-        if (!prevQ || !(prevQ.id in answers)) return null;
+    window.handleVentureSelect = function() {
+        var slug = document.getElementById('venture-select').value;
+        if (!slug) return;
+        var v = getVentures(userEmail).find(function(x) { return x.venture_slug === slug; });
+        if (v) selectVenture(v);
+    };
 
-        if (prevQ.type === Q_MC || prevQ.type === Q_MC_EVIDENCE) {
-            var selectedIdx = answers[prevQ.id];
-            var opt = prevQ.options[selectedIdx];
-            if (!opt) return null;
-            var maxScore = prevQ.maxScore;
-            var ratio = opt.score / maxScore;
-
-            if (ratio >= 0.8) {
-                var strongAcks = [
-                    'That\'s specific. Most founders stay vague here \u2014 you gave me something I can actually work with.',
-                    'Strong signal. This kind of clarity separates builders from dreamers.',
-                    'Noted. That answer tells me you\'ve thought about this more than most.'
-                ];
-                return strongAcks[Math.floor(Math.random() * strongAcks.length)];
-            } else if (ratio <= 0.4) {
-                var weakAcks = [
-                    'I need more from you here. The difference between a $10K idea and a $100K idea often hides in this answer.',
-                    'That\'s honest, but it flags a gap. Worth revisiting before you commit to a strategy path.',
-                    'This is a pressure point. Founders who address this early save months of wasted effort.'
-                ];
-                return weakAcks[Math.floor(Math.random() * weakAcks.length)];
-            }
-        } else if (prevQ.type === Q_FREETEXT) {
-            var text = answers[prevQ.id] || '';
-            var wc = countWords(text);
-            if (wc >= 40) {
-                return 'That\'s the depth I\'m looking for. Your reasoning here will directly shape the strategy recommendation.';
-            } else if (wc > 0 && wc < 15) {
-                return 'I need more from you here. A few more sentences will sharpen the strategy recommendation significantly.';
-            }
-        }
-        return null;
+    function selectVenture(venture) {
+        ventureSlug = venture.venture_slug;
+        ventureName = venture.venture_name;
+        updateVentureActivity(userEmail, ventureSlug);
+        var existing = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+        if (existing) showRetrievalBanner(existing);
+        else checkPrerequisites();
     }
 
-    function startAssessment() {
-        var email = $emailInput.value.trim().toLowerCase();
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $emailInput.style.borderColor = '#EF4444'; $emailInput.focus(); return; }
-        capturedEmail = email;
-        $emailInput.style.borderColor = '';
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-        if (Object.keys(answers).length > 0) { currentIndex = findFirstUnanswered(); showToast('Welcome back! Resuming where you left off.'); }
-        else { currentIndex = 0; }
+    function showRetrievalBanner(result) {
+        var b = document.getElementById('retrieval-banner');
+        b.innerHTML = '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:4px solid var(--green);border-radius:var(--eo-radius);padding:20px;max-width:440px;margin:24px auto 0">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || 0) + '</div>' +
+            '<div><div style="font-weight:700;color:#F1F5F9;font-size:15px">Previously Completed</div><div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
+            '<div style="display:flex;gap:10px"><button class="btn-secondary" onclick="viewPreviousResults()" style="flex:1;padding:10px">View Results</button><button class="btn-full" onclick="startFresh()" style="flex:1;padding:10px;font-size:14px">Start Fresh</button></div></div>';
+        b.style.display = 'block';
+    }
+
+    window.viewPreviousResults = function() { var r = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug); if (r) renderResults(r); };
+    window.startFresh = function() {
+        localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+        localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
+        document.getElementById('retrieval-banner').style.display = 'none';
+        checkPrerequisites();
+    };
+
+    function checkPrerequisites() {
+        var scores = getScores(userEmail, ventureSlug);
+        var missing = [1, 2, 3].filter(function(n) { return !scores['sc' + n] && scores['sc' + n] !== 0; });
+        if (missing.length > 0) {
+            var names = { 1: 'Project Definition', 2: 'ICP Clarity', 3: 'Market Attractiveness' };
+            var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html', 3: 'EO-Market-Attractiveness-Scoring.html' };
+            showError('Please complete <a href="' + files[missing[0]] + '" style="color:var(--eo-orange)">' + names[missing[0]] + '</a> first.');
+            return;
+        }
+        startQuestions();
+    }
+
+    function startQuestions() {
+        upstreamPD = getUpstreamAnswers(1, userEmail, ventureSlug);
+        upstreamICP = getUpstreamAnswers(2, userEmail, ventureSlug);
+        upstreamMAS = getUpstreamAnswers(3, userEmail, ventureSlug);
+        try { var s = localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug)); if (s) answers = JSON.parse(s); } catch(e) {}
+        detectPathFromHypothesis();
+        currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
+        if (Object.keys(answers).length > 0) showToast('Welcome back! Resuming where you left off.');
         showScreen('screenStepper');
         renderQuestion();
     }
 
+    function findFirstUnanswered() {
+        for (var i = 0; i < allQuestions.length; i++) {
+            var q = getEffective(i);
+            if (q.type === Q_FREETEXT) { if (!answers[q.id] || !answers[q.id].trim()) return i; }
+            else { if (!(q.id in answers)) return i; }
+        }
+        return allQuestions.length - 1;
+    }
+
+    /* ===================================
+       DYNAMIC QUESTION HANDLING
+       =================================== */
+    function detectPathFromHypothesis() {
+        var hyp = (answers['strategy_hypothesis'] || '').toLowerCase();
+        if (hyp.indexOf('replicate') !== -1 || hyp.indexOf('localize') !== -1 || hyp.indexOf('(1)') !== -1 || hyp.indexOf('path 1') !== -1) selectedPathIndex = 0;
+        else if (hyp.indexOf('consulting') !== -1 || hyp.indexOf('service') !== -1 || hyp.indexOf('(2)') !== -1 || hyp.indexOf('path 2') !== -1) selectedPathIndex = 1;
+        else if (hyp.indexOf('micro-saas') !== -1 || hyp.indexOf('microsaas') !== -1 || hyp.indexOf('boring') !== -1 || hyp.indexOf('(3)') !== -1 || hyp.indexOf('path 3') !== -1) selectedPathIndex = 2;
+        else if (hyp.indexOf('hammering') !== -1 || hyp.indexOf('deep') !== -1 || hyp.indexOf('niche') !== -1 || hyp.indexOf('(4)') !== -1 || hyp.indexOf('path 4') !== -1) selectedPathIndex = 3;
+        else selectedPathIndex = 1; /* Default to Consulting-First if unclear */
+    }
+
+    function getEffective(idx) {
+        var q = allQuestions[idx];
+        if (!q.dynamic) return q;
+        var pathIdx = selectedPathIndex >= 0 ? selectedPathIndex : 1;
+        var dIdx = ['exec_d1', 'exec_d2', 'exec_d3', 'exec_d4'].indexOf(q.id);
+        var pathQ = PATH_QUESTIONS[pathIdx] && PATH_QUESTIONS[pathIdx][dIdx] ? PATH_QUESTIONS[pathIdx][dIdx] : PATH_QUESTIONS[1][dIdx];
+        return { id: q.id, section: q.section, type: Q_MC, maxScore: q.maxScore, dynamic: true, text: pathQ.text, help: pathQ.help, options: pathQ.options };
+    }
+
+    /* ===================================
+       ENGAGEMENT
+       =================================== */
+    function renderEngagement() {
+        $engagementSlot.innerHTML = '';
+        if (currentIndex === 0) return;
+        var q = allQuestions[currentIndex];
+        var prev = allQuestions[currentIndex - 1];
+
+        if (prev.section !== q.section) {
+            var html = '<div class="pattern-break"><div class="pattern-break-card">';
+            if (prev.section === 'founder') {
+                var skill = answers['core_skill'] !== undefined ? allQuestions[0].options[answers['core_skill']].label : 'your skills';
+                html += '<div class="pb-label">FOUNDER PROFILE COMPLETE</div>';
+                html += '<div class="pb-text">' + escapeHtml(skill) + ' is a strong foundation. Now choose your strategy path — the one that matches your market data, ICP, and founder profile.</div>';
+            } else if (prev.section === 'strategy') {
+                var pathName = selectedPathIndex >= 0 ? STRATEGY_PATHS[selectedPathIndex].name : 'your chosen path';
+                html += '<div class="pb-label">STRATEGY LOCKED: ' + escapeHtml(pathName).toUpperCase() + '</div>';
+                html += '<div class="pb-text">Now I\'ll test your execution readiness for this specific path. These 4 questions are calibrated to ' + escapeHtml(pathName) + ' — not generic.</div>';
+            } else if (prev.section === 'execution') {
+                html += '<div class="pb-label">ALMOST DONE</div>';
+                html += '<div class="pb-text">One final question to calibrate your strategy for MENA context. Your advantage and your challenge — both matter.</div>';
+            }
+            html += '</div></div>';
+            $engagementSlot.innerHTML = html;
+            return;
+        }
+
+        if (currentIndex > 0) {
+            var prevQ = getEffective(currentIndex - 1);
+            var ack = getAcknowledgment(prevQ);
+            if (ack) $engagementSlot.innerHTML = '<div class="acknowledgment"><div class="acknowledgment-card">' + ack + '</div></div>';
+        }
+    }
+
+    function getAcknowledgment(q) {
+        if (q.type === Q_MC && q.id in answers && q.options) {
+            var opt = q.options[answers[q.id]];
+            if (!opt) return null;
+            var ratio = opt.score / q.maxScore;
+            if (ratio >= 0.8) return 'Strong signal. This shapes your strategy recommendation in a specific way.';
+            if (ratio <= 0.4) return 'That\'s honest. Better to know this now than discover it mid-execution.';
+        } else if (q.type === Q_FREETEXT) {
+            var wc = countWords(answers[q.id] || '');
+            if (wc >= 40) return 'That\'s the depth I\'m looking for. Your reasoning directly shapes the strategy recommendation.';
+            if (wc > 0 && wc < 15) return 'A few more sentences would sharpen the recommendation significantly.';
+        }
+        return null;
+    }
+
+    /* ===================================
+       RENDER QUESTION
+       =================================== */
     function renderQuestion() {
-        var q = getEffectiveQuestion(currentIndex);
-        var section = SECTIONS[q.sectionIndex];
+        var q = getEffective(currentIndex);
         focusedOptionIndex = -1;
-        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' \u2014 ' + section.fullName;
+        $sectionLabel.textContent = SECTION_LABELS[allQuestions[currentIndex].section] || '';
         $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
         $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
         $questionText.textContent = q.text;
         if (q.help) { $questionHelp.textContent = q.help; $questionHelp.style.display = 'block'; } else { $questionHelp.style.display = 'none'; }
         $optionsList.innerHTML = '';
-        renderUpstreamPanel();
         renderEngagement();
-        if (q.type === Q_FREETEXT) { renderFreetextQuestion(q); }
-        else if (q.type === Q_MC_EVIDENCE) { renderMcEvidenceQuestion(q); }
-        else { renderMcQuestion(q); }
-        if (currentIndex === 0) { $btnPrev.classList.add('hidden'); } else { $btnPrev.classList.remove('hidden'); }
-        var isLast = currentIndex === allQuestions.length - 1;
-        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+        if (q.type === Q_FREETEXT) renderFreetextQuestion(q);
+        else renderMcQuestion(q);
+        $btnPrev.classList.toggle('hidden', currentIndex === 0);
+        $btnNext.textContent = currentIndex === allQuestions.length - 1 ? 'Submit Assessment' : 'Next';
     }
 
     function renderMcQuestion(q) {
@@ -829,7 +611,6 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
             var div = document.createElement('div');
             div.className = 'option-card';
             div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
             if (answers[q.id] === idx) div.classList.add('selected');
             div.addEventListener('click', function() { selectOption(idx); });
             $optionsList.appendChild(div);
@@ -845,79 +626,43 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
         ta.value = answers[q.id] || '';
         var charDiv = document.createElement('div');
         charDiv.className = 'char-count';
-        var wc = countWords(ta.value);
-        charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
+        charDiv.textContent = countWords(ta.value) + ' / ' + (q.wordLimit || 200) + ' words';
         ta.addEventListener('input', function() {
             var wc = countWords(ta.value);
             charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
-            if (wc > (q.wordLimit || 200)) { charDiv.classList.add('over'); } else { charDiv.classList.remove('over'); }
+            charDiv.classList.toggle('over', wc > (q.wordLimit || 200));
             answers[q.id] = ta.value;
-            saveAnswers();
+            saveAnswersToStorage();
             $btnNext.disabled = !ta.value.trim();
+            /* Detect path from hypothesis text */
+            if (q.id === 'strategy_hypothesis') detectPathFromHypothesis();
         });
         $optionsList.appendChild(ta);
         $optionsList.appendChild(charDiv);
         $btnNext.disabled = !(q.id in answers && answers[q.id] && answers[q.id].trim());
     }
 
-    function renderMcEvidenceQuestion(q) {
-        q.options.forEach(function(opt, idx) {
-            var div = document.createElement('div');
-            div.className = 'option-card';
-            div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
-            if (answers[q.id] === idx) div.classList.add('selected');
-            div.addEventListener('click', function() { selectMcEvidence(idx); });
-            $optionsList.appendChild(div);
-        });
-        var label = document.createElement('div');
-        label.className = 'evidence-label';
-        label.textContent = q.evidencePrompt || 'Provide supporting evidence:';
-        $optionsList.appendChild(label);
-        var ta = document.createElement('textarea');
-        ta.className = 'freetext-input evidence-input';
-        ta.placeholder = 'Share your reasoning...';
-        ta.rows = 3;
-        ta.value = answers[q.id + '_evidence'] || '';
-        ta.addEventListener('input', function() { answers[q.id + '_evidence'] = ta.value; saveAnswers(); });
-        $optionsList.appendChild(ta);
-        $btnNext.disabled = !(q.id in answers);
-    }
-
-    function selectMcEvidence(idx) {
-        var q = getEffectiveQuestion(currentIndex);
-        answers[q.id] = idx;
-        saveAnswers();
-        var cards = $optionsList.querySelectorAll('.option-card');
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
-        cards[idx].classList.add('selected');
-        $btnNext.disabled = false;
-    }
-
     function countWords(text) { if (!text || !text.trim()) return 0; return text.trim().split(/\s+/).length; }
 
     function selectOption(idx) {
-        var q = getEffectiveQuestion(currentIndex);
+        var q = getEffective(currentIndex);
         answers[q.id] = idx;
-        saveAnswers();
+        saveAnswersToStorage();
         var cards = $optionsList.querySelectorAll('.option-card');
         for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
         cards[idx].classList.add('selected');
         focusedOptionIndex = idx;
         $btnNext.disabled = false;
-        var isLast = currentIndex === allQuestions.length - 1;
-        if (!isLast) { clearAutoAdvance(); autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300); }
+        if (currentIndex < allQuestions.length - 1) { clearAutoAdvance(); autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300); }
     }
 
     function clearAutoAdvance() { if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; } }
 
     function nextQuestion() {
-        var q = getEffectiveQuestion(currentIndex);
-        var answered = false;
-        if (q.type === Q_FREETEXT) { answered = q.id in answers && answers[q.id] && answers[q.id].trim(); }
-        else { answered = q.id in answers; }
+        var q = getEffective(currentIndex);
+        var answered = q.type === Q_FREETEXT ? (answers[q.id] && answers[q.id].trim()) : (q.id in answers);
         if (!answered) { $questionCard.classList.add('shake'); setTimeout(function() { $questionCard.classList.remove('shake'); }, 400); return; }
-        if (currentIndex === allQuestions.length - 1) { showScreen('screenContact'); if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail; return; }
+        if (currentIndex === allQuestions.length - 1) { submitAssessment(); return; }
         currentIndex++;
         renderQuestion();
     }
@@ -926,217 +671,234 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
 
     function handleKeyboard(e) {
         if (!document.getElementById('screenStepper').classList.contains('active')) return;
-        var q = getEffectiveQuestion(currentIndex);
-        if (q.type === Q_FREETEXT || q.type === Q_MC_EVIDENCE) { if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); } return; }
+        var q = getEffective(currentIndex);
+        if (q.type === Q_FREETEXT) { if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); } return; }
         var cards = $optionsList.querySelectorAll('.option-card');
-        var numOpts = cards.length;
-        if (numOpts === 0) return;
+        if (cards.length === 0) return;
         switch (e.key) {
-            case 'ArrowDown': e.preventDefault(); focusedOptionIndex = (focusedOptionIndex + 1) % numOpts; updateFocus(cards); break;
-            case 'ArrowUp': e.preventDefault(); focusedOptionIndex = focusedOptionIndex <= 0 ? numOpts - 1 : focusedOptionIndex - 1; updateFocus(cards); break;
+            case 'ArrowDown': e.preventDefault(); focusedOptionIndex = (focusedOptionIndex + 1) % cards.length; updateFocus(cards); break;
+            case 'ArrowUp': e.preventDefault(); focusedOptionIndex = focusedOptionIndex <= 0 ? cards.length - 1 : focusedOptionIndex - 1; updateFocus(cards); break;
             case 'Enter': e.preventDefault(); if (focusedOptionIndex >= 0) selectOption(focusedOptionIndex); break;
             case 'ArrowRight': e.preventDefault(); nextQuestion(); break;
             case 'ArrowLeft': e.preventDefault(); prevQuestion(); break;
         }
     }
 
-    function updateFocus(cards) {
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('focused');
-        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) { cards[focusedOptionIndex].classList.add('focused'); cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' }); }
+    function updateFocus(cards) { for (var i = 0; i < cards.length; i++) cards[i].classList.remove('focused'); if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) { cards[focusedOptionIndex].classList.add('focused'); cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' }); } }
+
+    function saveAnswersToStorage() { try { localStorage.setItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(answers)); } catch(e) {} }
+
+    /* ===================================
+       SCORING
+       =================================== */
+    function calculateScores() {
+        var total = 0;
+        var maxTotal = 0;
+        allQuestions.forEach(function(q, idx) {
+            var eq = getEffective(idx);
+            maxTotal += eq.maxScore;
+            if (eq.type === Q_MC && eq.id in answers && eq.options) {
+                total += eq.options[answers[eq.id]].score;
+            } else if (eq.type === Q_FREETEXT && answers[eq.id]) {
+                total += scoreFreeText(eq, answers[eq.id]);
+            }
+        });
+        return { total: total, maxTotal: maxTotal, normalized: Math.round((total / maxTotal) * 100) };
     }
 
-    function calculateScores() {
-        var sectionScores = {};
-        var total = 0; var mcTotal = 0; var mcMax = 0; var ftCount = 0;
-        Object.keys(SECTION_MAXES).forEach(function(s) { sectionScores[s] = 0; });
-        allQuestions.forEach(function(q, idx) {
-            var eq = getEffectiveQuestion(idx);
-            if (eq.type === Q_MC || eq.type === Q_MC_EVIDENCE) {
-                if (eq.id in answers && eq.options) {
-                    var score = eq.options[answers[eq.id]].score;
-                    sectionScores[eq.sectionId] += score;
-                    total += score; mcTotal += score;
-                }
-                mcMax += eq.maxScore;
-            } else if (eq.type === Q_FREETEXT) { ftCount++; }
-        });
-        return { sectionScores: sectionScores, total: total, mcTotal: mcTotal, mcMax: mcMax, ftCount: ftCount };
+    function scoreFreeText(q, text) {
+        if (!text || !text.trim()) return 0;
+        var wc = countWords(text);
+        var max = q.maxScore;
+        var score = 0;
+        if (wc >= 80) score += max * 0.3;
+        else if (wc >= 40) score += max * 0.2;
+        else if (wc >= 20) score += max * 0.1;
+        var lower = text.toLowerCase();
+        var strategyTerms = ['market', 'icp', 'customer', 'pain', 'revenue', 'sales', 'product', 'niche', 'evidence', 'data', 'validate', 'interview', 'network', 'advantage', 'competition', 'pricing'];
+        var hits = 0;
+        strategyTerms.forEach(function(t) { if (lower.indexOf(t) !== -1) hits++; });
+        if (hits >= 5) score += max * 0.3;
+        else if (hits >= 3) score += max * 0.2;
+        else if (hits >= 1) score += max * 0.1;
+        var menaTerms = ['mena', 'gcc', 'uae', 'saudi', 'dubai', 'qatar', 'egypt', 'arabic', 'vision 2030', 'whatsapp', 'relationship'];
+        var menaHits = 0;
+        menaTerms.forEach(function(t) { if (lower.indexOf(t) !== -1) menaHits++; });
+        if (menaHits >= 3) score += max * 0.2;
+        else if (menaHits >= 1) score += max * 0.1;
+        var numbers = (text.match(/\d+/g) || []).length;
+        if (numbers >= 3) score += max * 0.2;
+        else if (numbers >= 1) score += max * 0.1;
+        return Math.min(Math.round(score), max);
     }
 
     function getBand(score) {
-        if (score >= 85) return { label: 'Launch Ready', className: 'band-ready' };
-        if (score >= 70) return { label: 'Almost There', className: 'band-partial' };
-        if (score >= 55) return { label: 'Needs Work', className: 'band-gaps' };
-        if (score >= 40) return { label: 'Early Stage', className: 'band-gaps' };
-        return { label: 'Reset', className: 'band-startover' };
-    }
-    function getWebhookBand(score) { if (score >= 85) return 'LAUNCH_READY'; if (score >= 70) return 'ALMOST_THERE'; if (score >= 55) return 'NEEDS_WORK'; if (score >= 40) return 'EARLY_STAGE'; return 'RESET'; }
-    function getBarColor(score, max) { var pct = max > 0 ? (score / max) * 100 : 0; if (pct >= 80) return '#22C55E'; if (pct >= 60) return '#3B82F6'; if (pct >= 40) return '#F59E0B'; return '#EF4444'; }
-
-    function buildWebhookPayload(contact) {
-        var result = calculateScores();
-        var answersMap = {};
-        allQuestions.forEach(function(q, idx) {
-            var eq = getEffectiveQuestion(idx);
-            if (eq.type === Q_FREETEXT) { answersMap[eq.id] = answers[eq.id] || ''; }
-            else if (eq.type === Q_MC_EVIDENCE) { answersMap[eq.id] = eq.id in answers ? eq.options[answers[eq.id]].score : 0; answersMap[eq.id + '_evidence'] = answers[eq.id + '_evidence'] || ''; }
-            else { answersMap[eq.id] = eq.id in answers ? eq.options[answers[eq.id]].score : 0; }
-        });
-        var sectionScoresNamed = {};
-        Object.keys(SECTION_NAME_MAP).forEach(function(k) { sectionScoresNamed[SECTION_NAME_MAP[k]] = result.sectionScores[k] || 0; });
-        return { assessment: ASSESSMENT_ID, answers: answersMap, section_scores: sectionScoresNamed, total_score: result.total, mc_score: result.mcTotal, band: getWebhookBand(result.total), selected_path: answers['b5'] !== undefined ? STRATEGY_PATHS[answers['b5']] : 'Unknown', contact: contact };
+        if (score >= 85) return { label: 'Launch Ready', color: '#22C55E' };
+        if (score >= 70) return { label: 'Almost There', color: '#FF6600' };
+        if (score >= 55) return { label: 'Needs Work', color: '#D97706' };
+        if (score >= 40) return { label: 'Early Stage', color: '#EF4444' };
+        return { label: 'Reset', color: '#EF4444' };
     }
 
-    function submitContact() {
-        var nameEl = document.getElementById('contactName'); var emailEl = document.getElementById('contactEmail'); var companyEl = document.getElementById('contactCompany');
-        var name = nameEl.value.trim(); var email = emailEl.value.trim().toLowerCase(); var company = companyEl.value.trim();
-        var valid = true;
-        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
-        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
-        if (!valid) return;
-        capturedEmail = email;
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-        var contact = { name: name, email: email, company: company };
-        var payload = buildWebhookPayload(contact);
+    /* ===================================
+       ARCHETYPE LOGIC
+       =================================== */
+    function getArchetype() {
+        var skill = answers['core_skill'];
+        var archetypes = {
+            0: { name: 'The Builder', icon: '🔧', desc: 'Technical founders who ship fast and iterate based on data. Your code is your moat.' },
+            1: { name: 'The Closer', icon: '🎯', desc: 'Revenue-first founders who validate by selling. You don\'t build until someone pays.' },
+            2: { name: 'Expert Without a Stage', icon: '📚', desc: 'Knowledge-rich founders who can teach and attract. Build audience, then monetize.' },
+            3: { name: 'The Operator', icon: '⚙️', desc: 'Systems thinkers who build processes. You make chaos repeatable and scalable.' },
+            4: { name: 'The Connector', icon: '🤝', desc: 'Network-driven founders. Your Rolodex is your distribution channel.' }
+        };
+        return archetypes[skill] || archetypes[0];
+    }
+
+    function getSecondaryPath() {
+        var primary = selectedPathIndex;
+        var skill = answers['core_skill'];
+        var secondaries = {
+            0: { path: 2, condition: 'If your localization target doesn\'t have enough market demand, pivot to building a lean tool for the same niche.' },
+            1: { path: 3, condition: 'If you struggle to find consulting clients within 30 days, build a micro-tool that solves one pain from your ICP interviews.' },
+            2: { path: 1, condition: 'If customer acquisition cost is too high for self-serve, switch to high-touch consulting first to build relationships.' },
+            3: { path: 1, condition: 'If your niche is too small for pure software, offer advisory services alongside the product.' }
+        };
+        return secondaries[primary] || secondaries[1];
+    }
+
+    function getRoadmap() {
+        var roadmaps = {
+            0: { m1: ['Research global product landscape', 'Select specific product to replicate', 'Map MENA localization requirements', 'Secure 3 design partners'], m2: ['Build localized MVP', 'Integrate local payment methods', 'Arabic content/UI localization', 'Beta test with design partners'], m3: ['Launch to first 20 customers', 'Iterate based on feedback', 'Establish local distribution channel', 'Track key metrics: activation, retention'] },
+            1: { m1: ['Define consulting offer + pricing', 'Sign first 3 clients', 'Deliver service manually', 'Document patterns and workflows'], m2: ['Expand to 8-10 clients', 'Identify top 3 automatable workflows', 'Start building productized features', 'Test pricing for software component'], m3: ['Launch software beta to existing clients', 'Measure time savings vs manual delivery', 'Onboard 5 software-only users', 'Set up recurring revenue billing'] },
+            2: { m1: ['Ship MVP in 2 weeks', 'Start charging from day 1', 'Run targeted outreach to 50 prospects', 'Get first 5 paying customers'], m2: ['Iterate based on user feedback', 'Reduce churn triggers', 'Test 2 acquisition channels', 'Reach 20 paying customers'], m3: ['Optimize unit economics', 'Automate onboarding', 'Double down on winning channel', 'Target 50 paying customers'] },
+            3: { m1: ['Map every player in your niche', 'Join 3 niche communities', 'Run 15+ ICP interviews', 'Publish 4 niche-specific content pieces'], m2: ['Launch niche-specific solution', 'Build reputation as niche expert', 'Sign 10 niche customers', 'Create niche benchmark/report'], m3: ['Achieve "go-to" status in niche', 'Build referral loops within niche', '25+ customers, 90%+ retention', 'Document expansion criteria'] }
+        };
+        return roadmaps[selectedPathIndex] || roadmaps[1];
+    }
+
+    /* ===================================
+       SUBMIT
+       =================================== */
+    function submitAssessment() {
         $loadingOverlay.classList.add('active');
-        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-strategy-selector', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-        .then(function(resp) { return resp.json(); })
-        .then(function(data) { aiData = data; $loadingOverlay.classList.remove('active'); showResults(); })
-        .catch(function() { $loadingOverlay.classList.remove('active'); showResults(); });
+        setTimeout(function() {
+            var result = calculateScores();
+            var band = getBand(result.normalized);
+            var archetype = getArchetype();
+            var secondary = getSecondaryPath();
+            var roadmap = getRoadmap();
+            var resultObj = {
+                score: result.normalized,
+                band: band.label,
+                total: result.total,
+                maxTotal: result.maxTotal,
+                selectedPath: selectedPathIndex >= 0 ? STRATEGY_PATHS[selectedPathIndex].name : 'Unknown',
+                selectedPathIndex: selectedPathIndex,
+                archetype: archetype.name,
+                secondary: { path: STRATEGY_PATHS[secondary.path].name, condition: secondary.condition }
+            };
+            resultObj.completed_at = new Date().toISOString().split('T')[0];
+            localStorage.setItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(resultObj));
+            saveScore(userEmail, ventureSlug, SC_NUMBER, result.normalized);
+
+            /* Backward compat */
+            try {
+                var ds = {};
+                allQuestions.forEach(function(q, idx) { var eq = getEffective(idx); if (eq.type === Q_FREETEXT) ds[eq.id] = answers[eq.id] || ''; else if (eq.id in answers && eq.options) ds[eq.id] = eq.options[answers[eq.id]].label; });
+                ds.selected_path = resultObj.selectedPath;
+                ds.archetype = archetype.name;
+                ds.total = result.normalized;
+                ds.band = band.label;
+                localStorage.setItem('eo-strategy-selector', JSON.stringify(ds));
+            } catch(e) {}
+
+            sendToWebhook(result, resultObj);
+            $loadingOverlay.classList.remove('active');
+            renderResults(resultObj);
+        }, 800);
     }
 
-    function skipContact() { aiData = null; showResults(); }
-
-    function saveCompletionStatus(scoreId, score) {
-        try { var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}'); status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] }; localStorage.setItem('eo_completion_status', JSON.stringify(status)); } catch (e) {}
+    function sendToWebhook(result, resultObj) {
+        var upstream = {};
+        for (var i = 1; i < SC_NUMBER; i++) { upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null; }
+        fetch('https://smorchestra.app.n8n.cloud/webhook/eo-assessment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userEmail, venture_name: ventureName, venture_slug: ventureSlug, scorecard: 'SC4', answers: answers, scores: { total: result.normalized, raw: result.total, max: result.maxTotal }, selected_path: resultObj.selectedPath, archetype: resultObj.archetype, upstream_data: upstream, timestamp: new Date().toISOString() })
+        }).catch(function(e) { console.warn('Webhook failed:', e); });
     }
 
-    function showResults() {
-        var result = calculateScores();
-        var sectionScores = result.sectionScores;
-        var total = result.mcTotal;
-        var band = getBand(total);
-        var selectedPath = answers['b5'] !== undefined ? STRATEGY_PATHS[answers['b5']] : 'Unknown';
-
-        saveCompletionStatus('strategy', total);
-
-        /* Store for downstream (SC5) */
-        try {
-            var downstream = {};
-            allQuestions.forEach(function(q, idx) {
-                var eq = getEffectiveQuestion(idx);
-                if (eq.type === Q_FREETEXT) { downstream[eq.id] = answers[eq.id] || ''; }
-                else if (eq.type === Q_MC_EVIDENCE) { downstream[eq.id] = eq.id in answers ? eq.options[answers[eq.id]].label : ''; downstream[eq.id + '_evidence'] = answers[eq.id + '_evidence'] || ''; }
-                else if (eq.type === Q_MC) { downstream[eq.id] = eq.id in answers ? eq.options[answers[eq.id]].label : ''; }
-            });
-            downstream.selected_path = selectedPath;
-            downstream.founder_skill = answers['a1'] !== undefined ? allQuestions[0].options[answers['a1']].label : '';
-            downstream.capital = answers['a2'] !== undefined ? allQuestions[1].options[answers['a2']].label : '';
-            downstream.time_commitment = answers['a3'] !== undefined ? allQuestions[2].options[answers['a3']].label : '';
-            downstream.risk_tolerance = answers['a4'] !== undefined ? allQuestions[3].options[answers['a4']].label : '';
-            downstream.section_scores = sectionScores;
-            downstream.total = total;
-            downstream.band = band.label;
-            localStorage.setItem('eo-strategy-selector', JSON.stringify(downstream));
-        } catch (e) {}
+    /* ===================================
+       RENDER RESULTS (TYPE 3: RECOMMENDATION)
+       =================================== */
+    function renderResults(resultObj) {
+        var score = resultObj.score || 0;
+        var band = getBand(score);
+        var pathName = resultObj.selectedPath || 'Unknown';
+        var pathIdx = resultObj.selectedPathIndex >= 0 ? resultObj.selectedPathIndex : selectedPathIndex;
+        var pathObj = STRATEGY_PATHS[pathIdx] || STRATEGY_PATHS[1];
+        var archetype = getArchetype();
+        var secondary = getSecondaryPath();
+        var roadmap = getRoadmap();
 
         var html = '';
 
-        /* Score Hero */
-        html += '<div class="score-hero ' + band.className + '">';
-        html += '<div class="score-circle"><div class="score-circle-inner"><span class="score-number">' + total + '</span><span class="score-total">/ ' + result.mcMax + '</span></div></div>';
-        html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">Strategy Selector MC Score</div>';
-        if (result.ftCount > 0) { html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>'; }
+        /* === RECOMMENDED STRATEGY PATH === */
+        html += '<div class="strategy-card">';
+        html += '<div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;">YOUR RECOMMENDED PATH</div>';
+        html += '<h3>' + escapeHtml(pathObj.name) + '</h3>';
+        html += '<div class="path-desc">' + escapeHtml(pathObj.desc) + '</div>';
+        html += '<div class="why-section"><div class="why-label">Why This Path</div>';
+        var whyItems = getWhyReasons(pathIdx);
+        whyItems.forEach(function(w) { html += '<div class="why-item">' + escapeHtml(w) + '</div>'; });
+        html += '</div></div>';
+
+        /* === SECONDARY PATH === */
+        html += '<div class="secondary-card">';
+        html += '<h4>Backup Path: ' + escapeHtml(STRATEGY_PATHS[secondary.path].name) + '</h4>';
+        html += '<div class="activate">Activate if: ' + escapeHtml(secondary.condition) + '</div>';
+        html += '<p>' + escapeHtml(STRATEGY_PATHS[secondary.path].desc) + '</p>';
         html += '</div>';
 
-        /* Selected Strategy Path */
-        html += '<div class="path-card">';
-        html += '<h4>Your Strategy Path: ' + escapeHtml(selectedPath) + '</h4>';
-        var pathDescs = {
-            'Replicate & Localize': 'Take a proven global product and adapt it for your specific MENA market and ICP. Leverages proven demand with local execution.',
-            'Consulting-First SaaS': 'Sell consulting/services first for fast revenue and learning, then productize into SaaS. Low risk, relationship-driven.',
-            'Boring Micro-SaaS': 'Build a minimal product, charge from day 1, and optimize unit economics. Lean, fast, profitable.',
-            'Hammering Deep': 'Go vertical and deep in one niche. Own it completely before expanding. Patient, defensible, high retention.'
-        };
-        html += '<p>' + (pathDescs[selectedPath] || '') + '</p>';
+        /* === ARCHETYPE BADGE === */
+        html += '<div class="archetype-badge">';
+        html += '<div class="archetype-icon">' + archetype.icon + '</div>';
+        html += '<div class="archetype-name">' + escapeHtml(archetype.name) + '</div>';
+        html += '<div class="archetype-desc">' + escapeHtml(archetype.desc) + '</div>';
         html += '</div>';
 
-        /* Section Breakdown */
-        html += '<div class="results-card"><h3>Section Breakdown</h3>';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0; var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            html += '<div class="section-bar-row"><div class="section-bar-label">' + sec.name + '</div>';
-            html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + getBarColor(score, max) + '"></div></div>';
-            html += '<div class="section-bar-score">' + score + ' / ' + max + '</div></div>';
-        });
-        html += '</div>';
-
-        /* Answers Summary */
-        html += '<div class="results-card"><h3>Your Answers</h3>';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            html += '<h4 style="font-size:14px;color:var(--eo-orange);margin:16px 0 8px;">Section ' + sid + ': ' + sec.fullName + '</h4>';
-            allQuestions.forEach(function(q, idx) {
-                if (q.sectionId !== sid) return;
-                var eq = getEffectiveQuestion(idx);
-                html += '<div class="answer-block"><div class="q-label">' + eq.id.toUpperCase() + '</div>';
-                html += '<div class="q-text">' + escapeHtml(eq.text) + '</div>';
-                if (eq.type === Q_FREETEXT) { html += '<div class="a-text">' + escapeHtml(answers[eq.id] || '(No answer)') + '</div>'; }
-                else if (eq.type === Q_MC_EVIDENCE) {
-                    var opt = eq.id in answers ? eq.options[answers[eq.id]] : null;
-                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + eq.maxScore + ')' : '(No answer)') + '</div>';
-                    if (answers[eq.id + '_evidence']) { html += '<div class="a-text" style="margin-top:8px;font-size:13px;"><strong>Reasoning:</strong> ' + escapeHtml(answers[eq.id + '_evidence']) + '</div>'; }
-                } else {
-                    var opt2 = eq.id in answers ? eq.options[answers[eq.id]] : null;
-                    html += '<div class="a-mc">' + (opt2 ? escapeHtml(opt2.label) + ' (Score: ' + opt2.score + '/' + eq.maxScore + ')' : '(No answer)') + '</div>';
-                }
-                html += '</div>';
-            });
-        });
-        html += '</div>';
-
-        /* Recommendations */
-        html += '<div class="results-card"><h3>Recommendations</h3>';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0; var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var icon = pct >= 80 ? '\u2705' : pct >= 60 ? '\uD83D\uDFE1' : '\u26A0\uFE0F';
-            html += '<div class="reco-section"><div class="reco-header"><span class="reco-icon">' + icon + '</span><span class="reco-title">' + sec.name + ' (' + score + '/' + max + ')</span></div>';
-            if (RECOMMENDATIONS[sid]) { html += '<ul class="reco-list">'; RECOMMENDATIONS[sid].forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; }); html += '</ul>'; }
+        /* === 90-DAY ROADMAP === */
+        html += '<div class="results-card"><h3>90-Day Roadmap Preview</h3>';
+        html += '<div class="roadmap-grid">';
+        ['m1', 'm2', 'm3'].forEach(function(m, idx) {
+            html += '<div class="roadmap-col"><h4>Month ' + (idx + 1) + '</h4>';
+            roadmap[m].forEach(function(item) { html += '<div class="roadmap-item">' + escapeHtml(item) + '</div>'; });
             html += '</div>';
         });
+        html += '</div></div>';
+
+        /* === STRENGTHEN YOUR STRATEGY === */
+        html += '<div class="results-card"><h3>Strengthen Your Strategy</h3>';
+        var gaps = getExecutionGaps(pathIdx);
+        gaps.forEach(function(gap) {
+            html += '<div class="raise-card"><h4>' + escapeHtml(gap.title) + '</h4><p>' + escapeHtml(gap.advice) + '</p></div>';
+        });
         html += '</div>';
 
-        /* AI Section */
-        if (aiData) {
-            html += '<div class="ai-section"><span class="ai-badge">Advanced Strategy Analysis</span>';
-            if (aiData.key_insight || aiData.keyInsight) html += '<h3>Key Insight</h3><p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
-            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'] || aiData['90_day_plan']) {
-                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'] || aiData['90_day_plan'];
-                html += '<div class="ai-plan"><h4>90-Day Strategic Roadmap</h4>';
-                if (typeof plan === 'string') html += '<p>' + escapeHtml(plan) + '</p>';
-                else if (Array.isArray(plan)) { html += '<ul>'; plan.forEach(function(item) { html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>'; }); html += '</ul>'; }
-                html += '</div>';
-            }
-            if (aiData.recommendations || aiData.ai_recommendations) {
-                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
-                html += '<h3>AI Recommendations</h3><ul class="ai-reco-list">';
-                if (Array.isArray(aiRecs)) aiRecs.forEach(function(r) { html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>'; });
-                html += '</ul>';
-            }
-            html += '</div>';
-        }
+        /* === SCORE SUMMARY === */
+        html += '<div class="results-card" style="text-align:center;padding:32px">';
+        html += '<div style="font-size:42px;font-weight:800;color:' + band.color + '">' + score + '</div>';
+        html += '<div style="font-size:12px;color:#9CA3AF;margin-bottom:8px">/ 100</div>';
+        html += '<div style="font-size:16px;font-weight:700;color:' + band.color + ';text-transform:uppercase;letter-spacing:1.5px">' + band.label + '</div>';
+        html += '<div style="font-size:13px;color:#9CA3AF;margin-top:4px">Strategy Selector Score — ' + escapeHtml(ventureName) + '</div>';
+        html += '</div>';
 
-        /* CTAs */
+        /* === CTAs === */
         html += '<div class="results-cta">';
-        html += '<a href="EO-Assessment-Dashboard.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Go to Dashboard</a>';
-        html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
-        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
+        html += '<a href="EO-GTM-Fitness-Scoring.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Continue to GTM Fitness →</a>';
+        html += '<button class="btn-download-md" id="btnDownloadMd">Download Full Analysis (MD)</button>';
+        html += '<a href="EO-Assessment-Dashboard.html" style="display:inline-block;text-decoration:none;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;padding:12px 28px;border-radius:var(--eo-radius-sm);font-size:15px;font-weight:600;min-width:280px;text-align:center;">Back to Dashboard</a>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1145,109 +907,114 @@ body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(-
         window.scrollTo({ top: 0, behavior: 'smooth' });
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
-        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
     }
 
-    function escapeHtml(text) { var d = document.createElement('div'); d.appendChild(document.createTextNode(text)); return d.innerHTML; }
+    function getWhyReasons(pathIdx) {
+        var skill = answers['core_skill'] !== undefined ? allQuestions[0].options[answers['core_skill']].label : '';
+        var time = answers['time'] !== undefined ? allQuestions[2].options[answers['time']].label : '';
+        var risk = answers['risk'] !== undefined ? allQuestions[3].options[answers['risk']].label : '';
+        var reasons = {
+            0: ['Your skill set (' + skill + ') enables fast localization execution', 'Market data from SC3 shows demand for adapted global solutions in your niche', 'Your time availability (' + time + ') supports the build-and-launch timeline'],
+            1: ['Your risk profile (' + risk + ') benefits from immediate consulting revenue', 'Your skill set (' + skill + ') transfers directly to service delivery', 'Consulting validates your product thesis with real customer data before you build'],
+            2: ['Your founder profile supports lean, self-serve product development', 'Time availability (' + time + ') is well-matched to iterative micro-product building', 'Conservative approach minimizes risk while validating product-market fit fast'],
+            3: ['Your skill set (' + skill + ') creates a defensible niche advantage', 'SC1-SC3 data suggests a specific enough niche for deep penetration', 'Your patience and resource profile support the longer-horizon niche strategy']
+        };
+        return reasons[pathIdx] || reasons[1];
+    }
 
+    function getExecutionGaps(pathIdx) {
+        var gaps = [];
+        var execAnswers = ['exec_d1', 'exec_d2', 'exec_d3', 'exec_d4'];
+        execAnswers.forEach(function(qId, idx) {
+            if (answers[qId] !== undefined) {
+                var eq = getEffective(5 + idx);
+                var opt = eq.options[answers[qId]];
+                if (opt && opt.score <= 2) {
+                    gaps.push({ title: eq.text, advice: 'Your answer here flagged a gap. Address this within the first 2 weeks of execution. Consider: seeking a mentor, partner, or resource specifically for this challenge.' });
+                }
+            }
+        });
+        if (gaps.length === 0) {
+            gaps.push({ title: 'Execution Readiness Looks Strong', advice: 'No critical gaps detected. Focus on speed — the biggest risk now is over-planning. Start executing your Month 1 roadmap this week.' });
+        }
+        return gaps.slice(0, 3);
+    }
+
+    /* ===================================
+       MARKDOWN EXPORT
+       =================================== */
     function generateMarkdownExport() {
         var result = calculateScores();
-        var sectionScores = result.sectionScores;
+        var band = getBand(result.normalized);
+        var archetype = getArchetype();
+        var secondary = getSecondaryPath();
+        var roadmap = getRoadmap();
+        var pathObj = STRATEGY_PATHS[selectedPathIndex] || STRATEGY_PATHS[1];
         var today = new Date();
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-        var band = getBand(result.mcTotal);
-        var selectedPath = answers['b5'] !== undefined ? STRATEGY_PATHS[answers['b5']] : 'Unknown';
 
-        var md = '# Strategy Selector Scorecard Results\n\n';
-        md += '**Student:** ' + capturedEmail + '\n';
+        var md = '# Strategy Selector Results (v3.0)\n\n';
+        md += '**Venture:** ' + ventureName + '\n';
+        md += '**Founder:** ' + userEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
-        md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
-        md += '**Selected Strategy Path:** ' + selectedPath + '\n';
-        md += '**Free-text questions:** ' + result.ftCount + ' (pending AI review)\n\n---\n\n';
+        md += '**Score:** ' + result.normalized + '/100 — ' + band.label + '\n\n---\n\n';
 
-        md += '## Section Breakdown\n\n';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0; var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            md += '- **' + sec.name + ': ' + sec.fullName + '** \u2014 ' + score + '/' + max + ' (' + pct + '%)\n';
-        });
-        md += '\n---\n\n## Answers\n\n';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';
-            allQuestions.forEach(function(q, idx) {
-                if (q.sectionId !== sid) return;
-                var eq = getEffectiveQuestion(idx);
-                md += '**' + eq.id.toUpperCase() + '.** ' + eq.text + '\n\n';
-                if (eq.type === Q_FREETEXT) {
-                    md += '> ' + (answers[eq.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
-                    if (eq.rubric) md += '_Rubric: ' + eq.rubric + '_\n\n';
-                } else if (eq.type === Q_MC_EVIDENCE) {
-                    var opt = eq.id in answers ? eq.options[answers[eq.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + eq.maxScore + ')' : '(No answer)') + '\n\n';
-                    if (answers[eq.id + '_evidence']) md += '**Reasoning:** ' + answers[eq.id + '_evidence'] + '\n\n';
-                    if (eq.evidenceRubric) md += '_Evidence Rubric: ' + eq.evidenceRubric + '_\n\n';
-                } else {
-                    var opt2 = eq.id in answers ? eq.options[answers[eq.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt2 ? opt2.label + ' (Score: ' + opt2.score + '/' + eq.maxScore + ')' : '(No answer)') + '\n\n';
-                }
-            });
-        });
+        md += '## Recommended Strategy Path: ' + pathObj.name + '\n\n';
+        md += pathObj.desc + '\n\n';
+        md += '### Why This Path\n\n';
+        getWhyReasons(selectedPathIndex).forEach(function(r) { md += '- ' + r + '\n'; });
+        md += '\n';
 
-        md += '---\n\n## Recommendations\n\n';
-        ['A', 'B', 'C', 'D', 'E'].forEach(function(sid) {
-            var sec = null; for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            md += '### ' + sec.fullName + ' (' + (sectionScores[sid] || 0) + '/' + SECTION_MAXES[sid] + ')\n\n';
-            if (RECOMMENDATIONS[sid]) RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
+        md += '## Backup Path: ' + STRATEGY_PATHS[secondary.path].name + '\n\n';
+        md += 'Activate if: ' + secondary.condition + '\n\n';
+
+        md += '## Founder Archetype: ' + archetype.name + '\n\n';
+        md += archetype.desc + '\n\n---\n\n';
+
+        md += '## 90-Day Roadmap\n\n';
+        ['m1', 'm2', 'm3'].forEach(function(m, idx) {
+            md += '### Month ' + (idx + 1) + '\n\n';
+            roadmap[m].forEach(function(item) { md += '- ' + item + '\n'; });
             md += '\n';
         });
 
-        if (aiData) {
-            md += '---\n\n## Advanced Analysis\n\n';
-            if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
-        }
+        md += '---\n\n## All 4 Paths Compared\n\n';
+        STRATEGY_PATHS.forEach(function(p, idx) {
+            var marker = idx === selectedPathIndex ? ' ← RECOMMENDED' : '';
+            md += '### ' + p.name + marker + '\n\n' + p.desc + '\n\n';
+        });
 
-        md += '---\n\n## AI Scoring Instructions\n\nTo score the free-text answers, copy this file into Claude.ai along with:\n- `strategy-selector/SKILL.md`\n\nAsk: "Score these Strategy Selector answers using the rubric provided."\n\n';
+        md += '---\n\n## Full Answers\n\n';
+        allQuestions.forEach(function(q, idx) {
+            var eq = getEffective(idx);
+            md += '**Q' + (idx + 1) + '.** ' + eq.text + '\n\n';
+            if (eq.type === Q_FREETEXT) md += '> ' + (answers[eq.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
+            else { var opt = eq.id in answers && eq.options ? eq.options[answers[eq.id]] : null; md += '→ ' + (opt ? opt.label + ' (' + opt.score + '/' + eq.maxScore + ')' : '(No answer)') + '\n\n'; }
+        });
+
+        md += '---\n\n## Execution Gaps\n\n';
+        getExecutionGaps(selectedPathIndex).forEach(function(g) { md += '### ' + g.title + '\n\n' + g.advice + '\n\n'; });
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
-        a.href = url; a.download = 'strategy-selector-results-' + dateStr + '.md';
+        a.href = url; a.download = (slugify(ventureName) || 'strategy-selector') + '-results-' + dateStr + '.md';
         document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 
-    function generatePdfExport() {
-        var printDiv = document.createElement('div');
-        printDiv.id = 'pdfPrintContainer';
-        printDiv.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;background:#FFFFFF;color:#1A1A2E;padding:40px;font-family:Inter,sans-serif;';
-        var source = document.getElementById('resultsContent');
-        if (!source) return;
-        var clone = source.cloneNode(true);
-        var tas = clone.querySelectorAll('textarea');
-        for (var i = 0; i < tas.length; i++) { var d = document.createElement('div'); d.style.cssText = 'border:1px solid #E5E7EB;border-radius:8px;padding:12px;min-height:40px;white-space:pre-wrap;font-size:14px;color:#1A1A2E;background:#F9FAFB;margin-bottom:8px;'; d.textContent = tas[i].value || '(No response)'; tas[i].parentNode.replaceChild(d, tas[i]); }
-        clone.style.color = '#1A1A2E';
-        var allEls = clone.querySelectorAll('*');
-        for (var j = 0; j < allEls.length; j++) { var el = allEls[j]; var cs = el.currentStyle || window.getComputedStyle(el); if (cs.color === 'rgb(255, 255, 255)' || cs.color === '#ffffff' || cs.color === '#FFFFFF') el.style.color = '#1A1A2E'; if (cs.backgroundColor && cs.backgroundColor.indexOf('26, 26, 46') !== -1) el.style.backgroundColor = '#FFFFFF'; }
-        printDiv.appendChild(clone); document.body.appendChild(printDiv);
-        var dateStr = new Date().toISOString().split('T')[0];
-        html2pdf().set({ margin: [10,10,10,10], filename: 'strategy-selector-results-' + dateStr + '.pdf', image: { type: 'jpeg', quality: 0.95 }, html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }, pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } }).from(printDiv).save().then(function() { document.body.removeChild(printDiv); }).catch(function() { try { document.body.removeChild(printDiv); } catch (e) {} });
-    }
-
     function retakeAssessment() {
-        answers = {}; currentIndex = 0; aiData = null;
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        $emailInput.value = '';
-        showScreen('screenEmail');
+        answers = {}; currentIndex = 0; selectedPathIndex = -1;
+        try { localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug)); localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug)); } catch(e) {}
+        showScreen('screenAuth');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+    function escapeHtml(text) { var d = document.createElement('div'); d.appendChild(document.createTextNode(text)); return d.innerHTML; }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
 
-function toggleRTL() { document.body.classList.toggle('rtl'); var isRTL = document.body.classList.contains('rtl'); document.documentElement.lang = isRTL ? 'ar' : 'en'; document.documentElement.dir = isRTL ? 'rtl' : 'ltr'; try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {} }
-function toggleUpstream(panel) { var c = document.getElementById('upstream' + panel.toUpperCase()); if (c) { c.classList.toggle('open'); var t = c.parentElement.querySelector('.upstream-ref-toggle'); if (t) t.classList.toggle('open'); } }
+function toggleRTL() { document.body.classList.toggle('rtl'); var r = document.body.classList.contains('rtl'); document.documentElement.lang = r ? 'ar' : 'en'; document.documentElement.dir = r ? 'rtl' : 'ltr'; try { localStorage.setItem('eo-rtl', r ? '1' : '0'); } catch(e) {} }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

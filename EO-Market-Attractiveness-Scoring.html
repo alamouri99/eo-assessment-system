@@ -4,25 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrepreneurs Oasis MENA — Market Attractiveness Scoring</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
-    --eo-dark: #1A1A2E;
-    --eo-orange: #E94D1B;
-    --eo-beige: #FAF5EF;
-    --eo-card-bg: #FFFFFF;
-    --eo-gray-text: #6B7280;
-    --eo-gray-border: #E5E7EB;
-    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    --eo-radius: 12px;
+    --eo-dark: #050A12;
+    --eo-orange: #FF6600;
+    --eo-beige: #0C1220;
+    --eo-card-bg: #111827;
+    --eo-gray-text: #94A3B8;
+    --eo-gray-border: rgba(255,255,255,0.06);
+    --eo-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    --eo-radius: 14px;
     --eo-radius-sm: 8px;
     --eo-transition: 300ms ease;
+    --green: #22C55E;
+    --red: #EF4444;
+    --gold: #D97706;
+    --teal: #0D9488;
+    --text: #F1F5F9;
+    --text-2: #94A3B8;
+    --text-3: #64748B;
+    --surface: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.06);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--eo-dark);
     color: #FFFFFF;
     min-height: 100vh;
@@ -37,6 +46,7 @@ body.rtl .section-bar-row { flex-direction: row-reverse; }
 body.rtl .reco-list li { padding: 6px 24px 6px 0; }
 body.rtl .progress-meta { flex-direction: row-reverse; }
 body.rtl .option-card { text-align: right; }
+body.rtl .dim-bar-row { flex-direction: row-reverse; }
 
 /* RTL Toggle */
 .rtl-toggle {
@@ -113,25 +123,52 @@ body.rtl .option-card { text-align: right; }
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* Email Capture */
-.email-capture {
+/* Auth Screen */
+.auth-screen {
     max-width: 480px;
     margin: 60px auto;
     padding: 0 20px;
     text-align: center;
 }
-.email-capture h2 {
+.auth-screen h2 {
     font-size: 28px;
     font-weight: 800;
     margin-bottom: 8px;
 }
-.email-capture p {
+.auth-screen p {
     color: #9CA3AF;
     font-size: 14px;
     margin-bottom: 24px;
     line-height: 1.5;
 }
-.email-capture input {
+.intro-badge {
+    display: inline-block;
+    background: rgba(255,102,0,0.15);
+    color: var(--eo-orange);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+.email-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--eo-radius);
+    padding: 28px 24px;
+    text-align: left;
+}
+.email-box label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.email-input {
     width: 100%;
     padding: 14px 16px;
     border: 2px solid #2D2D44;
@@ -144,8 +181,29 @@ body.rtl .option-card { text-align: right; }
     transition: border-color var(--eo-transition);
     margin-bottom: 16px;
 }
-.email-capture input:focus { border-color: var(--eo-orange); }
-.email-capture input::placeholder { color: #6B7280; }
+.email-input:focus { border-color: var(--eo-orange); }
+.email-input::placeholder { color: #6B7280; }
+.q-hint {
+    font-size: 12px;
+    color: var(--eo-gray-text);
+    margin-top: -8px;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+.btn-full {
+    width: 100%;
+    padding: 14px 32px;
+    background: var(--eo-orange);
+    color: #fff;
+    border: none;
+    border-radius: var(--eo-radius-sm);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background var(--eo-transition);
+}
+.btn-full:hover { background: #E65C00; }
 
 /* Question Card */
 .question-card {
@@ -159,7 +217,7 @@ body.rtl .option-card { text-align: right; }
 .question-text {
     font-size: 20px;
     font-weight: 700;
-    color: var(--eo-dark);
+    color: #F1F5F9;
     margin-bottom: 8px;
     line-height: 1.4;
 }
@@ -183,7 +241,7 @@ body.rtl .option-card { text-align: right; }
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    color: var(--eo-dark);
+    color: #F1F5F9;
     transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
     user-select: none;
     line-height: 1.4;
@@ -204,13 +262,13 @@ body.rtl .option-card { text-align: right; }
 /* Free-text Input */
 .freetext-input {
     width: 100%;
-    min-height: 120px;
+    min-height: 160px;
     padding: 14px 16px;
     border: 2px solid var(--eo-gray-border);
     border-radius: var(--eo-radius-sm);
     font-family: inherit;
     font-size: 15px;
-    color: var(--eo-dark);
+    color: #F1F5F9;
     resize: vertical;
     outline: none;
     background: var(--eo-card-bg);
@@ -260,7 +318,7 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
     margin-left: auto;
 }
-.btn-next:hover { background: #D4411A; }
+.btn-next:hover { background: #E65C00; }
 .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-primary {
     background: var(--eo-orange);
@@ -274,7 +332,18 @@ body.rtl .option-card { text-align: right; }
     font-family: inherit;
     transition: background var(--eo-transition);
 }
-.btn-primary:hover { background: #D4411A; }
+.btn-primary:hover { background: #E65C00; }
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 20px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+}
 
 /* Toast */
 .toast {
@@ -293,68 +362,6 @@ body.rtl .option-card { text-align: right; }
     transition: all 0.3s ease;
 }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Contact Form */
-.contact-screen {
-    max-width: 480px;
-    margin: 60px auto;
-    padding: 0 20px;
-}
-.contact-card {
-    background: var(--eo-beige);
-    border-radius: var(--eo-radius);
-    padding: 32px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-.contact-card h2 {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--eo-dark);
-    margin-bottom: 4px;
-}
-.contact-card .subtitle {
-    color: var(--eo-gray-text);
-    font-size: 14px;
-    margin-bottom: 24px;
-}
-.form-group {
-    margin-bottom: 16px;
-}
-.form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--eo-dark);
-    margin-bottom: 6px;
-}
-.form-group input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2px solid var(--eo-gray-border);
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    color: var(--eo-dark);
-    font-family: inherit;
-    outline: none;
-    transition: border-color var(--eo-transition);
-}
-.form-group input:focus { border-color: var(--eo-orange); }
-.contact-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 24px;
-}
-.btn-skip {
-    background: transparent;
-    color: var(--eo-gray-text);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    text-decoration: underline;
-}
 
 /* Loading */
 .loading-overlay {
@@ -386,51 +393,45 @@ body.rtl .option-card { text-align: right; }
     margin: 0 auto;
     padding: 0 20px 60px;
 }
-.score-hero {
+
+/* Gauge Ring */
+.gauge-container {
     text-align: center;
-    padding: 40px 20px 32px;
+    padding: 40px 20px 24px;
 }
-.score-circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
+.gauge-svg {
+    width: 180px;
+    height: 180px;
 }
-.score-circle-inner { text-align: center; }
-.score-number { font-size: 48px; font-weight: 800; display: block; }
-.score-total { font-size: 16px; color: #9CA3AF; }
+.gauge-bg { fill: none; stroke: #2D2D44; stroke-width: 10; }
+.gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.5s ease; }
+.gauge-score {
+    font-size: 42px;
+    font-weight: 800;
+    fill: #FFFFFF;
+    dominant-baseline: central;
+    text-anchor: middle;
+}
+.gauge-label {
+    font-size: 12px;
+    fill: #9CA3AF;
+    dominant-baseline: central;
+    text-anchor: middle;
+}
 .band-label {
     font-size: 18px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1.5px;
+    margin-top: 16px;
     margin-bottom: 4px;
 }
 .band-subtitle {
     font-size: 14px;
     color: #9CA3AF;
 }
-.band-ready .score-number, .band-ready .band-label { color: #22C55E; }
-.band-partial .score-number, .band-partial .band-label { color: #3B82F6; }
-.band-gaps .score-number, .band-gaps .band-label { color: #F59E0B; }
-.band-startover .score-number, .band-startover .band-label { color: #EF4444; }
 
-/* Pending AI badge */
-.pending-ai-badge {
-    display: inline-block;
-    background: rgba(233,77,27,0.15);
-    color: var(--eo-orange);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-top: 8px;
-}
-
+/* Results Cards */
 .results-card {
     background: rgba(255,255,255,0.06);
     border-radius: var(--eo-radius);
@@ -444,7 +445,96 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 
-/* Section bars */
+/* 4-Dimension Bars */
+.dim-bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 12px;
+}
+.dim-bar-label {
+    width: 150px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #D1D5DB;
+    flex-shrink: 0;
+}
+.dim-bar-track {
+    flex: 1;
+    height: 14px;
+    background: #2D2D44;
+    border-radius: 7px;
+    overflow: hidden;
+}
+.dim-bar-fill {
+    height: 100%;
+    border-radius: 7px;
+    transition: width 0.8s ease;
+}
+.dim-bar-score {
+    width: 50px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 700;
+    color: #D1D5DB;
+    flex-shrink: 0;
+}
+
+/* Verdict Card */
+.verdict-card {
+    background: linear-gradient(135deg, rgba(255,102,0,0.12), rgba(255,102,0,0.04));
+    border: 1px solid rgba(255,102,0,0.25);
+    border-radius: var(--eo-radius);
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.verdict-card h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--eo-orange);
+    margin-bottom: 12px;
+}
+.verdict-text {
+    font-size: 15px;
+    color: #D1D5DB;
+    line-height: 1.6;
+}
+
+/* Raise Score Cards */
+.raise-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 4px solid var(--eo-orange);
+    border-radius: var(--eo-radius-sm);
+    padding: 20px;
+    margin-bottom: 14px;
+}
+.raise-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    margin-bottom: 8px;
+}
+.raise-card p {
+    font-size: 13px;
+    color: #D1D5DB;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+.raise-card .current-score {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+.raise-card .current-score.low { background: rgba(239,68,68,0.15); color: #EF4444; }
+.raise-card .current-score.mid { background: rgba(217,119,6,0.15); color: #D97706; }
+.raise-card .current-score.ok { background: rgba(34,197,94,0.15); color: #22C55E; }
+
+/* Section bars (in results) */
 .section-bar-row {
     display: flex;
     align-items: center;
@@ -479,125 +569,7 @@ body.rtl .option-card { text-align: right; }
     flex-shrink: 0;
 }
 
-/* Recommendations */
-.reco-section { margin-bottom: 16px; }
-.reco-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-.reco-icon { font-size: 16px; }
-.reco-title { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-.reco-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 24px;
-}
-.reco-list li {
-    position: relative;
-    padding: 4px 0 4px 16px;
-    font-size: 13px;
-    color: #D1D5DB;
-    line-height: 1.5;
-}
-.reco-list li::before {
-    content: '\2022';
-    position: absolute;
-    left: 0;
-    color: var(--eo-orange);
-}
-
-/* AI Section */
-.ai-section {
-    background: rgba(233,77,27,0.08);
-    border: 1px solid rgba(233,77,27,0.2);
-    border-radius: var(--eo-radius);
-    padding: 24px;
-    margin-bottom: 20px;
-}
-.ai-badge {
-    display: inline-block;
-    background: var(--eo-orange);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-}
-.ai-section h3 { font-size: 15px; margin-bottom: 8px; }
-.ai-insight { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.6; }
-.ai-plan { margin-bottom: 16px; }
-.ai-plan h4 { font-size: 14px; margin-bottom: 8px; color: var(--eo-orange); }
-.ai-plan ul { margin: 0; padding: 0 0 0 20px; }
-.ai-plan li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-.ai-reco-list { margin: 0; padding: 0 0 0 20px; }
-.ai-reco-list li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-
-/* Answer Display in Results */
-.answer-block {
-    background: rgba(255,255,255,0.04);
-    border-radius: var(--eo-radius-sm);
-    padding: 16px;
-    margin-bottom: 12px;
-}
-.answer-block .q-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--eo-orange);
-    margin-bottom: 4px;
-}
-.answer-block .q-text {
-    font-size: 13px;
-    color: #9CA3AF;
-    margin-bottom: 8px;
-}
-.answer-block .a-text {
-    font-size: 14px;
-    color: #D1D5DB;
-    white-space: pre-wrap;
-    line-height: 1.5;
-}
-.answer-block .a-mc {
-    font-size: 14px;
-    color: #22C55E;
-    font-weight: 600;
-}
-
-/* Prerequisite Gate */
-.prereq-gate {
-    max-width: 480px;
-    margin: 80px auto;
-    padding: 0 20px;
-    text-align: center;
-}
-.prereq-card {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3);
-    border-radius: var(--eo-radius);
-    padding: 40px 32px;
-}
-.prereq-card h2 {
-    color: #EF4444;
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-.prereq-card p {
-    color: #D1D5DB;
-    font-size: 15px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-.prereq-card .btn-primary {
-    display: inline-block;
-    text-decoration: none;
-}
-
-/* Upstream Confirmation Panel */
+/* Upstream Panel */
 .upstream-panel {
     max-width: 640px;
     margin: 0 auto 24px;
@@ -659,7 +631,7 @@ body.rtl .option-card { text-align: right; }
     font-family: inherit;
     transition: background var(--eo-transition);
 }
-.btn-confirm:hover { background: #D4411A; }
+.btn-confirm:hover { background: #E65C00; }
 
 /* Engagement: Pattern Break Card */
 .pattern-break {
@@ -694,7 +666,7 @@ body.rtl .option-card { text-align: right; }
     padding: 0 20px;
 }
 .investment-signal-card {
-    background: rgba(233,77,27,0.08);
+    background: rgba(255,102,0,0.08);
     border-radius: var(--eo-radius-sm);
     padding: 12px 16px;
     font-size: 12px;
@@ -738,22 +710,11 @@ body.rtl .option-card { text-align: right; }
     gap: 12px;
     margin-top: 32px;
 }
-.results-cta .btn-primary { min-width: 280px; }
-.results-cta .btn-retake {
-    background: transparent;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
+.results-cta a, .results-cta button {
     min-width: 280px;
+    text-align: center;
 }
-.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
-.results-cta .btn-download-md {
+.btn-download-md {
     background: transparent;
     border: 2px solid var(--eo-orange);
     color: var(--eo-orange);
@@ -764,16 +725,15 @@ body.rtl .option-card { text-align: right; }
     cursor: pointer;
     font-family: inherit;
     transition: all var(--eo-transition);
-    min-width: 280px;
 }
-.results-cta .btn-download-md:hover {
+.btn-download-md:hover {
     background: var(--eo-orange);
     color: #FFFFFF;
 }
-.results-cta .btn-download-pdf {
+.btn-retake {
     background: transparent;
-    border: 2px solid #6B7280;
-    color: #6B7280;
+    border: 2px solid #FFFFFF;
+    color: #FFFFFF;
     padding: 12px 28px;
     border-radius: var(--eo-radius-sm);
     font-size: 15px;
@@ -781,12 +741,8 @@ body.rtl .option-card { text-align: right; }
     cursor: pointer;
     font-family: inherit;
     transition: all var(--eo-transition);
-    min-width: 280px;
 }
-.results-cta .btn-download-pdf:hover {
-    background: #6B7280;
-    color: #FFFFFF;
-}
+.btn-retake:hover { background: rgba(255,255,255,0.15); }
 
 /* Shake animation */
 @keyframes shake {
@@ -802,17 +758,24 @@ body.rtl .option-card { text-align: right; }
     .nav-buttons { padding: 0 16px; }
     .question-text { font-size: 18px; }
     .progress-wrapper { padding: 0 16px; }
-    .freetext-input { min-height: 100px; }
+    .freetext-input { min-height: 120px; }
     .upstream-panel { padding: 0 16px; }
     .pattern-break { padding: 0 16px; }
     .investment-signal { padding: 0 16px; }
     .acknowledgment { padding: 0 16px; }
+    .dim-bar-label { width: 110px; font-size: 12px; }
+    .auth-screen { padding: 0 16px; }
+    .results-container { padding: 0 16px 60px; }
+    .email-box { padding: 24px 20px; }
+    scroll-margin-top: 120px;
 }
 @media (max-width: 400px) {
     .nav-buttons { flex-direction: column; }
     .btn-prev.hidden { display: none; }
     .option-card { padding: 14px 16px; font-size: 14px; }
     .question-text { font-size: 17px; }
+    .dim-bar-row { flex-wrap: wrap; }
+    .dim-bar-label { width: 100%; margin-bottom: -8px; }
 }
 </style>
 </head>
@@ -827,7 +790,7 @@ body.rtl .option-card { text-align: right; }
 <!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
-    <p>Generating your market analysis...</p>
+    <p>Calculating your market analysis...</p>
 </div>
 
 <!-- Header -->
@@ -835,33 +798,35 @@ body.rtl .option-card { text-align: right; }
     <h1>Entrepreneurs <span>Oasis MENA</span></h1>
 </div>
 
-<!-- Screen 0: Prerequisite Gate -->
-<div class="screen" id="screenPrereq">
-    <div class="prereq-gate">
-        <div class="prereq-card">
-            <h2>Prerequisites Required</h2>
-            <p>You must complete <strong>SC1: Project Definition</strong> and <strong>SC2: ICP Clarity</strong> before starting Market Attractiveness Scoring.<br><br>This assessment inherits your niche, positioning, pain statements, and congregation data from SC1 and SC2.</p>
-            <a href="EO-Assessment-Dashboard.html" class="btn-primary">Go to Dashboard →</a>
+<!-- Screen 0: Auth -->
+<div class="screen active" id="screenAuth">
+    <div class="auth-screen">
+        <div class="intro-badge">STEP 3 OF 5</div>
+        <h2>Market <em>Attractiveness</em></h2>
+        <p>6 questions. ~25 minutes. Validate your market with evidence.</p>
+
+        <div class="email-box">
+            <label>YOUR EMAIL</label>
+            <input type="email" id="auth-email" class="email-input"
+                   placeholder="founder@company.com" required>
+            <button class="btn-full" onclick="handleEmailEntry()">
+                Continue →
+            </button>
+
+            <div id="venture-selector" style="display:none;margin-top:16px"></div>
+            <div id="auth-error" style="color:#EF4444;font-size:13px;margin-top:12px;display:none"></div>
         </div>
+
+        <div id="retrieval-banner" style="display:none"></div>
     </div>
 </div>
 
-<!-- Screen 1: Email Capture -->
-<div class="screen" id="screenEmail">
-    <div class="email-capture">
-        <h2>Market Attractiveness Scorecard</h2>
-        <p>Evidence-based market validation in 6 focused questions. Inherits 80% from your SC1 + SC2 work. ~25 minutes.</p>
-        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
-        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
-    </div>
-</div>
-
-<!-- Screen 2A: Upstream Confirmation -->
+<!-- Screen 1: Upstream Confirmation -->
 <div class="screen" id="screenUpstream">
     <div class="upstream-panel" id="upstreamConfirmPanel"></div>
 </div>
 
-<!-- Screen 2B: Stepper Questions -->
+<!-- Screen 2: Stepper Questions -->
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
@@ -872,7 +837,7 @@ body.rtl .option-card { text-align: right; }
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
-    <!-- Engagement slot (pattern breaks, acknowledgments) -->
+    <!-- Engagement slot -->
     <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
@@ -885,33 +850,7 @@ body.rtl .option-card { text-align: right; }
     </div>
 </div>
 
-<!-- Screen 3: Contact Form -->
-<div class="screen" id="screenContact">
-    <div class="contact-screen">
-        <div class="contact-card">
-            <h2>Almost Done!</h2>
-            <p class="subtitle">Get your personalized AI-powered market analysis.</p>
-            <div class="form-group">
-                <label>Full Name *</label>
-                <input type="text" id="contactName" placeholder="Your full name" autocomplete="name">
-            </div>
-            <div class="form-group">
-                <label>Email *</label>
-                <input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email">
-            </div>
-            <div class="form-group">
-                <label>Company / Project *</label>
-                <input type="text" id="contactCompany" placeholder="Your company or project name">
-            </div>
-            <div class="contact-actions">
-                <button class="btn-primary" id="btnSubmitContact">Get My Analysis</button>
-                <button class="btn-skip" id="btnSkipContact">Skip and see results</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Screen 4: Results -->
+<!-- Screen 3: Results -->
 <div class="screen" id="screenResults">
     <div class="results-container" id="resultsContent"></div>
 </div>
@@ -919,45 +858,178 @@ body.rtl .option-card { text-align: right; }
 <script>
 /* ═══════════════════════════════════════════════════
    EO MARKET ATTRACTIVENESS SCORING v3.0 — SCORECARD 3
-   6 Questions | 4 Sections (A-D) | 100 Points
-   A: Upstream Confirmation (auto, 0 pts)
-   B: Evidence Validation (3 Qs, 40 pts)
-   C: Market Sizing & Growth (3 Qs, 40 pts)
-   D: AI Synthesis (auto, 20 pts)
+   6 Questions | Sections B-C | TYPE 2 RESULTS
    Prerequisites: SC1 + SC2
    ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
 
-    /* ===================================
-       QUESTION TYPE CONSTANTS
-       =================================== */
+    var SC_NUMBER = 3;
     var Q_MC = 1;
     var Q_FREETEXT = 2;
 
     /* ===================================
-       ASSESSMENT CONFIG
+       SHARED PATTERNS (EXACT COPY)
        =================================== */
-    var ASSESSMENT_ID = 'market-attractiveness';
-    var ASSESSMENT_TITLE = 'Market Attractiveness';
-    var STORAGE_KEY = 'eo-market-attractiveness';
+    function slugify(text) {
+      return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+    }
 
+    function getVentures(email) {
+      try {
+        return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]');
+      } catch(e) { return []; }
+    }
+
+    function saveVenture(email, ventureName) {
+      var slug = slugify(ventureName);
+      var ventures = getVentures(email);
+      var existing = ventures.find(function(v) { return v.venture_slug === slug; });
+      if (existing) {
+        existing.last_active = new Date().toISOString().split('T')[0];
+        localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
+        return { venture_name: existing.venture_name, venture_slug: slug, isNew: false };
+      }
+      var venture = {
+        venture_name: ventureName.trim(),
+        venture_slug: slug,
+        created_at: new Date().toISOString().split('T')[0],
+        last_active: new Date().toISOString().split('T')[0]
+      };
+      ventures.push(venture);
+      localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
+      return { venture_name: venture.venture_name, venture_slug: slug, isNew: true };
+    }
+
+    function updateVentureActivity(email, slug) {
+      var ventures = getVentures(email);
+      var venture = ventures.find(function(v) { return v.venture_slug === slug; });
+      if (venture) {
+        venture.last_active = new Date().toISOString().split('T')[0];
+        localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
+      }
+    }
+
+    function storageKey(type, scNumber, email, ventureSlug) {
+      return 'eo_sc' + scNumber + '_' + type + '_' + email + '_' + ventureSlug;
+    }
+
+    function getScores(email, ventureSlug) {
+      try {
+        return JSON.parse(localStorage.getItem('eo_scores_' + email + '_' + ventureSlug) || '{}');
+      } catch(e) { return {}; }
+    }
+
+    function saveScore(email, ventureSlug, scNumber, score) {
+      var scores = getScores(email, ventureSlug);
+      scores['sc' + scNumber] = score;
+      localStorage.setItem('eo_scores_' + email + '_' + ventureSlug, JSON.stringify(scores));
+    }
+
+    function getUpstreamAnswers(scNumber, email, ventureSlug) {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey('answers', scNumber, email, ventureSlug)) || '{}');
+      } catch(e) { return {}; }
+    }
+
+    function getUpstreamResult(scNumber, email, ventureSlug) {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey('result', scNumber, email, ventureSlug)) || 'null');
+      } catch(e) { return null; }
+    }
+
+    function migrateOldData() {
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        var match = key.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/);
+        if (match) {
+          var email = match[2];
+          var scNum = match[1];
+          var migrationNeeded = {};
+          try { migrationNeeded = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
+          if (!migrationNeeded[email]) migrationNeeded[email] = [];
+          if (migrationNeeded[email].indexOf(parseInt(scNum)) === -1) {
+            migrationNeeded[email].push(parseInt(scNum));
+          }
+          localStorage.setItem('eo_migration_pending', JSON.stringify(migrationNeeded));
+        }
+      }
+    }
+
+    function executeMigration(email, ventureNameVal) {
+      var slug = slugify(ventureNameVal);
+      for (var sc = 1; sc <= 5; sc++) {
+        var oldAnswers = localStorage.getItem('eo_sc' + sc + '_answers_' + email);
+        if (oldAnswers) {
+          localStorage.setItem(storageKey('answers', sc, email, slug), oldAnswers);
+          localStorage.removeItem('eo_sc' + sc + '_answers_' + email);
+        }
+        var oldResult = localStorage.getItem('eo_sc' + sc + '_result');
+        if (oldResult) {
+          localStorage.setItem(storageKey('result', sc, email, slug), oldResult);
+          localStorage.removeItem('eo_sc' + sc + '_result');
+        }
+      }
+      var oldScores = localStorage.getItem('eo-scores');
+      if (oldScores) {
+        localStorage.setItem('eo_scores_' + email + '_' + slug, oldScores);
+        localStorage.removeItem('eo-scores');
+      }
+      saveVenture(email, ventureNameVal);
+      var pending = {};
+      try { pending = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
+      delete pending[email];
+      if (Object.keys(pending).length === 0) {
+        localStorage.removeItem('eo_migration_pending');
+      } else {
+        localStorage.setItem('eo_migration_pending', JSON.stringify(pending));
+      }
+    }
+
+    function showError(msg) {
+      var el = document.getElementById('auth-error');
+      el.innerHTML = msg;
+      el.style.display = 'block';
+      setTimeout(function() { el.style.display = 'none'; }, 8000);
+    }
+
+    /* ===================================
+       STATE
+       =================================== */
+    var userEmail = '';
+    var ventureSlug = '';
+    var ventureName = '';
+    var answers = {};
+    var currentIndex = 0;
+    var focusedOptionIndex = -1;
+    var autoAdvanceTimer = null;
+    var upstreamConfirmed = false;
+    var upstreamPD = null;
+    var upstreamICP = null;
+    var engagementShown = { afterB: false, afterC: false };
+
+    /* DOM refs */
+    var $toast, $sectionLabel, $progressCounter, $progressFill;
+    var $questionText, $questionHelp, $optionsList, $questionCard;
+    var $btnPrev, $btnNext, $engagementSlot, $resultsContent, $loadingOverlay;
+
+    /* ===================================
+       QUESTION DEFINITIONS (6 Questions — UNCHANGED)
+       =================================== */
     var SECTIONS = [
         { id: 'B', name: 'EVIDENCE', fullName: 'Evidence Validation' },
         { id: 'C', name: 'MARKET SIZE', fullName: 'Market Sizing & Growth' }
     ];
-
     var SECTION_MAXES = { 'B': 40, 'C': 40, 'D': 20 };
 
-    var SECTION_NAME_MAP = {
-        'B': 'Evidence Validation',
-        'C': 'Market Sizing & Growth',
-        'D': 'AI Synthesis'
-    };
-
-    /* ===================================
-       QUESTION DEFINITIONS (6 Questions)
-       =================================== */
     var allQuestions = [
         /* ── SECTION B: EVIDENCE VALIDATION (40 pts) ── */
         {
@@ -966,136 +1038,112 @@ body.rtl .option-card { text-align: right; }
             text: 'What EVIDENCE do you have that this pain is real? Cite: customer conversations, competitor reviews, market data, personal experience, regulatory signals. Don\'t tell me pain exists — SHOW me proof.',
             help: 'Reference your SC2 pain statements. Hierarchy: paid validation > customer interviews > competitor data > market research > assertion.',
             placeholder: 'e.g., "Pain: Invoice reconciliation wastes 15 hours/week. Evidence: (1) 4 finance managers confirmed in interviews; (2) 500+ FreshBooks reviews mention \'time-saving\'; (3) ZATCA mandate forces e-invoicing; (4) Google Trends shows 40% YoY increase for \'invoice automation MENA\'."',
-            rubric: '15=Expert (3+ types, pitch-ready); 12=Very strong (3+ types, all named/specific); 9=Strong (2+ types, named sources); 6=Decent (2 types, some specificity); 3=Partial (1-2 types, vague); 2=Generic; 1=Assertion only; 0=Blank'
+            rubric: '15=Expert (3+ types, pitch-ready); 12=Very strong (3+ types, all named/specific); 9=Strong (2+ types, named sources); 6=Decent (2 types, some specificity); 3=Partial (1-2 types, vague); 2=Generic; 1=Assertion only; 0=Blank',
+            dimension: 'pain'
         },
         {
             id: 'b2', sectionId: 'B', sectionIndex: 0,
             type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
-            text: 'What EVIDENCE do you have that your ICP can and will PAY? Cite: competitor pricing, customer interviews about budget, industry benchmark data, payment method availability. Show me willingness + ability.',
-            help: 'Cover all 4 if possible: (1) customer intent interviews, (2) competitor pricing benchmarks, (3) industry budget standards, (4) payment infrastructure in your geography.',
-            placeholder: 'e.g., "Evidence: (1) 5 ICPs said they\'d pay $200-300/month — quotes documented; (2) Competitor A charges $149/mo, Competitor B $299/mo; (3) Industry benchmark: mid-market finance teams spend $2K-5K/year on automation; (4) Saudi: credit card + bank transfer available; UAE: Apple Pay adoption 60%."',
-            rubric: '15=Expert (all 4 components); 12=Very strong (3+ types, specific prices, payment validated); 9=Strong (2+ types, named competitors, budget benchmarks); 6=Decent (2 types, some numbers); 3=Partial; 2=Generic; 1=Assertion only; 0=Blank'
+            text: 'What EVIDENCE do you have of purchasing power? Cite: industry pricing benchmarks, competitor prices customers pay, budget allocations, contract values, or relevant economic indicators for your MENA market.',
+            help: 'Show that your ICP can and does spend money on solutions. Hierarchy: signed LOI/pre-orders > competitor pricing data > industry spend data > budget mentions > assumption.',
+            placeholder: 'e.g., "Competitors charge $50-150/mo and have 10K+ users. HR managers in UAE have $5K/yr software budgets. LinkedIn shows 2,000+ HR Tech job postings in GCC — companies are investing."',
+            rubric: '15=Expert (3+ types, pricing + budget + evidence); 12=Very strong (multiple types, named sources); 9=Strong (2+ types, named sources); 6=Decent (2 types, some specificity); 3=Partial (1-2 types, vague); 2=Generic; 1=Assertion only; 0=Blank',
+            dimension: 'purchasing'
         },
         {
             id: 'b3', sectionId: 'B', sectionIndex: 0,
             type: Q_MC, maxScore: 10,
-            text: 'Which best describes your evidence base for purchasing power?',
-            help: 'Be honest. Primary research = you talked to real ICPs. Secondary = you analyzed existing data. Assumption = you believe but haven\'t validated.',
+            text: 'Which best describes your evidence base?',
+            help: 'Be honest about where your evidence comes from. Stronger evidence gets stronger scores.',
             options: [
-                { label: 'Primary research: I\'ve interviewed 5+ ICPs with documented responses about budget + willingness', score: 10 },
-                { label: 'Mixed research: Interviews (3-4) + competitor pricing analysis + some market data', score: 7 },
-                { label: 'Secondary research only: Analyzed competitor pricing, reviews, market reports (no direct conversations)', score: 5 },
-                { label: 'Assumption-based: Logical reasoning but no direct customer/market evidence', score: 2 }
-            ]
+                { label: 'I have paid users or signed LOIs + customer interviews + market data from MENA-specific sources', score: 10 },
+                { label: 'I have customer interviews (5+) + competitor analysis + some market data', score: 8 },
+                { label: 'I have 2-4 customer conversations + competitor analysis + secondary research', score: 6 },
+                { label: 'I have competitor analysis + secondary market research (no direct customer input)', score: 4 },
+                { label: 'Mostly secondary research and my own market observation', score: 2 },
+                { label: 'I\'m working mostly from assumptions and general market sense', score: 1 }
+            ],
+            dimension: 'pain'
         },
-
         /* ── SECTION C: MARKET SIZING & GROWTH (40 pts) ── */
         {
             id: 'c1', sectionId: 'C', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 15, wordLimit: 250,
-            text: 'Estimate your TAM → SAM → SOM. Show your math.',
-            help: 'Example: TAM = $50B global HR tech → SAM = $2B MENA mid-market → SOM = $50M UAE finance teams under 500 employees. Use named sources (Statista, Gartner, IBISWorld). For MENA, apply country adjustment factors.',
-            placeholder: 'e.g., "TAM: $12B global invoice automation (Gartner 2025). SAM: $800M MENA (applied 0.07x for MENA share, Statista). SOM: $40M UAE+Saudi mid-market finance teams. Bottom-up: 2,000 target companies × $2,400 ACV = $4.8M serviceable in Year 1."',
-            rubric: '15=Expert (all layers + bottom-up + MENA-specific + sensitivity); 12=Very strong (sources named, MENA adjustments); 9=Strong (all 3 layers, cited sources); 6=Decent (all 3 layers, some sources); 3=Some math (basic, unsourced); 2=Rough estimates; 1=No math; 0=Blank'
+            type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
+            text: 'Walk me through your TAM → SAM → SOM estimation. Show your math: what\'s the total addressable market, how do you narrow to your serviceable segment, and what\'s your realistic obtainable target in Year 1?',
+            help: 'Top-down or bottom-up math. Name your data sources. MENA-specific numbers are golden.',
+            placeholder: 'e.g., "TAM: 50K SMBs in UAE need invoicing (Statista). SAM: 12K in professional services (my niche). SOM: 500 in Y1 at $100/mo = $600K ARR. Math: 12K × 4% conversion = ~500 customers."',
+            rubric: '15=Expert (TAM/SAM/SOM with sources, MENA-specific, bottom-up math); 12=Very strong (all 3 levels, named sources); 9=Strong (TAM+SAM with some math); 6=Decent (rough estimates, some rationale); 3=Partial (TAM only, no narrowing); 2=Generic; 1=Assertion only; 0=Blank',
+            dimension: 'sizing'
         },
         {
             id: 'c2', sectionId: 'C', sectionIndex: 1,
             type: Q_FREETEXT, maxScore: 15, wordLimit: 200,
-            text: 'What growth signals exist in this market? (New entrants, funding rounds, regulatory changes, technology shifts, hiring trends, search volume trends) Show me this market is growing.',
-            help: 'Be specific: "12 companies funded in 2025, up from 4 in 2023" not "companies are getting funded." Include dates, numbers, and sources. MENA-specific signals: Vision 2030, ZATCA, fintech adoption.',
-            placeholder: 'e.g., "Signals: (1) 15 competitors funded in 2024-2025 totaling $180M (Crunchbase); (2) ZATCA e-invoicing mandate effective Q2 2026; (3) Google Trends: \'invoice automation Saudi\' +45% YoY; (4) LinkedIn: 200+ open roles for \'automation engineer\' in MENA; (5) STC Pay + Tabby adoption growing 30% QoQ."',
-            rubric: '15=Expert (comprehensive signal map + buyer urgency implications); 12=Very strong (5+ signals, diverse types, timeline clear); 9=Strong (4+ signals with dates/sources); 6=Decent (2-3 specific with dates); 3=Some specific (2-3, partial dates); 2=Generic; 1=Vague; 0=Blank'
+            text: 'What growth signals support this market RIGHT NOW? Cite: regulatory changes, technology shifts, cultural trends, funding activity, or emerging demand patterns in MENA.',
+            help: 'Growth signals = tailwinds. What macro forces make this market grow? MENA-specific signals score highest.',
+            placeholder: 'e.g., "Signals: (1) Saudi Vision 2030 mandates digital transformation for SMBs; (2) Stripe launched in UAE 2023, enabling SaaS payments; (3) 34% YoY growth in GCC SaaS adoption (Bain 2024); (4) 3 regional competitors raised $10M+ in past 12 months."',
+            rubric: '15=Expert (3+ signals, MENA-specific, named sources, timing); 12=Very strong (3+ signals, named sources); 9=Strong (2+ signals, named sources); 6=Decent (2 signals, some specificity); 3=Partial (1-2 signals, vague); 2=Generic; 1=Assertion only; 0=Blank',
+            dimension: 'growth'
         },
         {
             id: 'c3', sectionId: 'C', sectionIndex: 1,
             type: Q_MC, maxScore: 10,
             text: 'How defensible is your competitive gap in this market?',
-            help: 'Think about what stops a funded competitor from copying you in 6 months. Unique mechanism > first-mover > better execution > no gap.',
+            help: 'Think about what makes your position hard to replicate, especially in MENA.',
             options: [
-                { label: 'Unique mechanism: Proprietary tech, data moat, network effect, or regulatory barrier hard to replicate', score: 10 },
-                { label: 'First-mover advantage: First in specific sub-niche with execution head start', score: 7 },
-                { label: 'Better execution: Speed, price, UX, localization, or service better than competitors', score: 5 },
-                { label: 'No clear gap: Competing on effort and hustle; no structural advantage', score: 2 }
-            ]
+                { label: 'Strong moat: proprietary data/tech + MENA-specific advantage + network effects + switching costs', score: 10 },
+                { label: 'Good moat: 2-3 defensibility factors including some MENA advantage', score: 8 },
+                { label: 'Moderate moat: clear differentiation + one defensibility factor', score: 6 },
+                { label: 'Weak moat: feature differentiation only, easily replicated', score: 4 },
+                { label: 'No clear moat: competing on execution speed, which others can match', score: 2 },
+                { label: 'Commoditized space: no meaningful differentiation yet', score: 1 }
+            ],
+            dimension: 'growth'
         }
     ];
 
-    /* ===================================
-       RECOMMENDATIONS
-       =================================== */
     var RECOMMENDATIONS = {
         'B': [
-            'Schedule 3-5 buyer conversations this week. Ask: "How does this pain show up for you?" Document names + quotes.',
-            'Research 3 competitors\' pricing on G2/Capterra. Document: competitor name, plan, price, target segment.',
-            'Ask 5 ICPs directly: "Would you pay $[your price] to solve this?" Get documented yes/no + reasoning.',
-            'For MENA, validate payment methods: credit card adoption varies by country. Offer 2-3 options.',
-            'Run the no-brainer test: Price < 25% of pain cost AND ROI > 3x. Show the math.'
+            'Run 5+ buyer interviews using the "Mom Test" framework — record specific pain quotes.',
+            'Map competitor pricing: extract exact plans and user counts from G2/Capterra reviews.',
+            'Document MENA-specific regulatory or cultural signals that global competitors miss.',
+            'Build a pain-evidence matrix: Pain | Source | Strength | Quote/Stat.'
         ],
         'C': [
-            'Find ONE good TAM source (Statista, Gartner, IBISWorld). Build SAM/SOM from there with MENA adjustments.',
-            'Use Crunchbase to find funded competitors in your space. Document: name, round, amount, date.',
-            'Check Google Trends for 3-5 keywords related to your solution. Report YoY change and geographic breakdown.',
-            'List 3+ specific growth signals with dates: regulatory deadlines, funding rounds, hiring trends.',
-            'For MENA markets: apply country adjustment factors. UAE = 1.2x premium, Egypt = 0.3x, Jordan = 0.25x.'
+            'Build bottom-up TAM: count actual companies × realistic ACV, don\'t rely on top-down only.',
+            'Track 3+ MENA-specific growth signals with dates, sources, and trend direction.',
+            'Identify and document your defensibility moat — what gets harder to replicate over time?',
+            'Research recent MENA funding rounds in your category to validate investor interest.'
         ]
     };
 
-    /* ===================================
-       ENGAGEMENT CONFIG
-       =================================== */
     var ENGAGEMENT = {
         afterB: {
-            type: 'pattern-break',
-            label: 'INSIGHT UNLOCK',
+            label: 'EVIDENCE CHECK COMPLETE',
             getText: function(scores) {
-                var bScore = scores.B || 0;
-                var strength = bScore >= 30 ? 'strong' : bScore >= 20 ? 'moderate' : 'weak';
-                var msgs = {
-                    strong: 'Your evidence base is strong. You\'re proving, not guessing — that\'s what separates funded startups from side projects. Your pain validation and purchasing evidence would hold up in an investor conversation.',
-                    moderate: 'Your evidence base is moderate. You have some real data, but there are gaps. The good news: you know what to validate next. One more round of buyer conversations could move this from "interesting" to "investable."',
-                    weak: 'Your evidence base needs work. Right now, you\'re operating on assumptions more than evidence. That\'s fixable — but it needs fixing before you spend money on GTM. Schedule 5 buyer conversations this week.'
-                };
-                return msgs[strength];
+                var bScore = scores['B'] || 0;
+                if (bScore >= 30) return 'Your evidence is strong. You\'re proving your market, not guessing. The next 3 questions focus on market size and growth — same standard applies.';
+                if (bScore >= 20) return 'Decent evidence foundation, but I\'d push for more specificity. Can you name actual sources, quote actual numbers? Now let\'s see how big this market really is.';
+                return 'Your evidence needs work. Most founders skip this step and regret it later. Consider adding real data points before moving to Strategy (SC4). For now, let\'s size the market.';
             }
         },
         afterC: {
-            type: 'variable-reward',
-            label: 'MARKET POSITIONING',
-            getText: function() {
-                return 'Auto-generating your market positioning paragraph for investor conversations...';
+            label: 'MARKET ANALYSIS COMPLETE',
+            getText: function(scores) {
+                var total = (scores['B'] || 0) + (scores['C'] || 0);
+                if (total >= 60) return 'Strong market signal. You\'ve demonstrated both pain evidence and market sizing. Let\'s see your full results.';
+                if (total >= 40) return 'Moderate market signal. Some areas need strengthening before you commit resources. Let\'s review your results.';
+                return 'Weak market signal. I\'d recommend revisiting your assumptions before investing significant time. Let\'s review what needs fixing.';
             }
         },
-        investmentB: 'Your evidence base is real. No hand-waving. That alone puts you ahead of 80% of founders who skip validation.',
-        investmentC: 'Your market assessment has more rigor than most pitch decks. Evidence-based, not assumption-based.',
-        investmentFinal: '25 minutes invested. Your market assessment could anchor the market section of your funding deck.'
+        investmentB: 'Why this matters: investors evaluate market attractiveness before product quality. A strong market with a mediocre product beats a mediocre market with a great product — every time.',
+        investmentFinal: 'Market attractiveness scoring complete. Your evidence strength and market sizing clarity determine whether you\'re building in the right space. Use these results to strengthen your Strategy (SC4) decisions.'
     };
-
-    /* ===================================
-       STATE
-       =================================== */
-    var answers = {};
-    var currentIndex = 0;
-    var autoAdvanceTimer = null;
-    var focusedOptionIndex = -1;
-    var capturedEmail = '';
-    var aiData = null;
-    var upstreamPD = null;
-    var upstreamICP = null;
-    var upstreamConfirmed = false;
-    var engagementShown = { afterB: false, afterC: false };
-
-    /* ===================================
-       DOM REFS
-       =================================== */
-    var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
-    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
-    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $engagementSlot;
 
     /* ===================================
        INIT
        =================================== */
     function init() {
+        $toast = document.getElementById('toast');
         $sectionLabel = document.getElementById('sectionLabel');
         $progressCounter = document.getElementById('progressCounter');
         $progressFill = document.getElementById('progressFill');
@@ -1105,136 +1153,33 @@ body.rtl .option-card { text-align: right; }
         $questionCard = document.getElementById('questionCard');
         $btnPrev = document.getElementById('btnPrev');
         $btnNext = document.getElementById('btnNext');
-        $toast = document.getElementById('toast');
-        $emailInput = document.getElementById('emailInput');
-        $btnStart = document.getElementById('btnStartAssessment');
-        $btnSubmitContact = document.getElementById('btnSubmitContact');
-        $btnSkipContact = document.getElementById('btnSkipContact');
-        $loadingOverlay = document.getElementById('loadingOverlay');
-        $resultsContent = document.getElementById('resultsContent');
         $engagementSlot = document.getElementById('engagementSlot');
+        $resultsContent = document.getElementById('resultsContent');
+        $loadingOverlay = document.getElementById('loadingOverlay');
 
-        loadAnswers();
-        loadUpstreamData();
-        bindEvents();
-        restoreRTL();
-
-        /* Prerequisite Check */
-        if (!checkPrerequisites()) {
-            showScreen('screenPrereq');
-            return;
-        }
-
-        /* Auto-skip email if already captured */
-        try {
-            var storedEmail = localStorage.getItem('eo_user_email');
-            if (storedEmail) {
-                capturedEmail = storedEmail;
-                if ($emailInput) $emailInput.value = storedEmail;
-                showUpstreamConfirmation();
-                return;
-            }
-        } catch (e) { /* show email screen by default */ }
-    }
-
-    function checkPrerequisites() {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            return (status.pd && status.pd.score !== undefined) && (status.icp && status.icp.score !== undefined);
-        } catch (e) { return false; }
-    }
-
-    function loadAnswers() {
-        try {
-            var saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) {
-                var parsed = JSON.parse(saved);
-                /* Only load raw answer data, not downstream export data */
-                if (parsed && (parsed.b1 !== undefined || parsed.b2 !== undefined || parsed.b3 !== undefined)) {
-                    /* Check if this is old format (downstream export) vs raw answers */
-                    if (parsed.section_scores || parsed.total !== undefined) {
-                        /* Old downstream format — extract just answers */
-                        var rawAnswers = {};
-                        allQuestions.forEach(function(q) {
-                            if (parsed[q.id] !== undefined) {
-                                rawAnswers[q.id] = parsed[q.id];
-                            }
-                        });
-                        answers = rawAnswers;
-                    } else {
-                        answers = parsed;
-                    }
-                }
-            }
-        } catch (e) { answers = {}; }
-    }
-
-    function saveAnswers() {
-        try {
-            var saveData = {};
-            allQuestions.forEach(function(q) {
-                if (answers[q.id] !== undefined) {
-                    saveData[q.id] = answers[q.id];
-                }
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
-        } catch (e) {}
-    }
-
-    function loadUpstreamData() {
-        try {
-            var pdRaw = localStorage.getItem('eo-project-definition');
-            if (pdRaw) upstreamPD = JSON.parse(pdRaw);
-        } catch (e) { upstreamPD = null; }
-        try {
-            var icpRaw = localStorage.getItem('eo-icp-clarity');
-            if (icpRaw) upstreamICP = JSON.parse(icpRaw);
-        } catch (e) { upstreamICP = null; }
-    }
-
-    function findFirstUnanswered() {
-        for (var i = 0; i < allQuestions.length; i++) {
-            var q = allQuestions[i];
-            if (q.type === Q_MC) {
-                if (!(q.id in answers)) return i;
-            } else if (q.type === Q_FREETEXT) {
-                if (!(q.id in answers) || !answers[q.id].trim()) return i;
-            }
-        }
-        return allQuestions.length - 1;
-    }
-
-    /* ===================================
-       EVENT BINDING
-       =================================== */
-    function bindEvents() {
-        $btnStart.addEventListener('click', startAssessment);
         $btnPrev.addEventListener('click', prevQuestion);
         $btnNext.addEventListener('click', nextQuestion);
-        $btnSubmitContact.addEventListener('click', submitContact);
-        $btnSkipContact.addEventListener('click', skipContact);
-        $emailInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
-        });
         document.addEventListener('keydown', handleKeyboard);
-    }
 
-    /* ===================================
-       RTL
-       =================================== */
-    function restoreRTL() {
+        /* RTL restore */
         try {
             if (localStorage.getItem('eo-rtl') === '1') {
                 document.body.classList.add('rtl');
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
             }
-        } catch (e) {}
+        } catch(e) {}
+
+        /* Pre-fill email */
+        try {
+            var savedEmail = localStorage.getItem('eo_user_email');
+            if (savedEmail) document.getElementById('auth-email').value = savedEmail;
+        } catch(e) {}
+
+        /* Run migration check */
+        migrateOldData();
     }
 
-    /* ===================================
-       SCREEN NAVIGATION
-       =================================== */
     function showScreen(id) {
         var screens = document.querySelectorAll('.screen');
         for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
@@ -1248,7 +1193,137 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
-       SECTION A: UPSTREAM CONFIRMATION
+       AUTH: VENTURE SELECTOR (SC2-SC5 Pattern)
+       =================================== */
+    window.handleEmailEntry = function() {
+        var email = document.getElementById('auth-email').value.trim().toLowerCase();
+        if (!email || !email.includes('@')) {
+            showError('Please enter a valid email address');
+            return;
+        }
+
+        userEmail = email;
+        try { localStorage.setItem('eo_user_email', email); } catch(e) {}
+
+        var ventures = getVentures(email);
+
+        if (ventures.length === 0) {
+            showError('No assessment found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Complete Step 1 first →</a>');
+            return;
+        }
+
+        if (ventures.length === 1) {
+            selectVenture(ventures[0]);
+        } else {
+            showVentureSelector(ventures);
+        }
+    };
+
+    function showVentureSelector(ventures) {
+        var selector = document.getElementById('venture-selector');
+        selector.innerHTML = '<label style="display:block;font-size:11px;font-weight:700;color:var(--eo-orange);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">SELECT VENTURE</label>' +
+            '<select id="venture-select" class="email-input" onchange="handleVentureSelect()">' +
+            '<option value="">— Choose your venture —</option>' +
+            ventures.map(function(v) { return '<option value="' + v.venture_slug + '">' + v.venture_name + '</option>'; }).join('') +
+            '</select>';
+        selector.style.display = 'block';
+    }
+
+    window.handleVentureSelect = function() {
+        var slug = document.getElementById('venture-select').value;
+        if (!slug) return;
+        var ventures = getVentures(userEmail);
+        var venture = ventures.find(function(v) { return v.venture_slug === slug; });
+        if (venture) selectVenture(venture);
+    };
+
+    function selectVenture(venture) {
+        ventureSlug = venture.venture_slug;
+        ventureName = venture.venture_name;
+        updateVentureActivity(userEmail, ventureSlug);
+
+        /* Check for existing results (retrieval) */
+        var existingResult = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+        if (existingResult) {
+            showRetrievalBanner(existingResult);
+        } else {
+            checkPrerequisites();
+        }
+    }
+
+    /* ===================================
+       RETRIEVAL BANNER
+       =================================== */
+    function showRetrievalBanner(result) {
+        var banner = document.getElementById('retrieval-banner');
+        banner.innerHTML =
+            '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:4px solid var(--green);border-radius:var(--eo-radius);padding:20px;max-width:440px;margin:24px auto 0">' +
+              '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
+                '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || 0) + '</div>' +
+                '<div>' +
+                  '<div style="font-weight:700;color:#F1F5F9;font-size:15px">Previously Completed</div>' +
+                  '<div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div>' +
+                '</div>' +
+              '</div>' +
+              '<div style="display:flex;gap:10px">' +
+                '<button class="btn-secondary" onclick="viewPreviousResults()" style="flex:1;padding:10px">View Results</button>' +
+                '<button class="btn-full" onclick="startFresh()" style="flex:1;padding:10px;font-size:14px">Start Fresh</button>' +
+              '</div>' +
+            '</div>';
+        banner.style.display = 'block';
+    }
+
+    window.viewPreviousResults = function() {
+        var result = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+        if (result) renderResults(result);
+    };
+
+    window.startFresh = function() {
+        localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+        localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
+        document.getElementById('retrieval-banner').style.display = 'none';
+        checkPrerequisites();
+    };
+
+    /* ===================================
+       PREREQUISITE CHECK
+       =================================== */
+    function checkPrerequisites() {
+        var scores = getScores(userEmail, ventureSlug);
+        var prerequisites = [1, 2];
+        var names = { 1: 'Project Definition', 2: 'ICP Clarity' };
+        var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html' };
+
+        var missing = prerequisites.filter(function(n) { return !scores['sc' + n] && scores['sc' + n] !== 0; });
+
+        if (missing.length > 0) {
+            var firstMissing = missing[0];
+            showError('Please complete <a href="' + files[firstMissing] + '" style="color:var(--eo-orange)">' + names[firstMissing] + '</a> first.');
+            return;
+        }
+
+        startQuestions();
+    }
+
+    /* ===================================
+       START QUESTIONS
+       =================================== */
+    function startQuestions() {
+        /* Load upstream data */
+        upstreamPD = getUpstreamAnswers(1, userEmail, ventureSlug);
+        upstreamICP = getUpstreamAnswers(2, userEmail, ventureSlug);
+
+        /* Load saved answers */
+        try {
+            var saved = localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+            if (saved) answers = JSON.parse(saved);
+        } catch(e) {}
+
+        showUpstreamConfirmation();
+    }
+
+    /* ===================================
+       UPSTREAM CONFIRMATION
        =================================== */
     function showUpstreamConfirmation() {
         var panel = document.getElementById('upstreamConfirmPanel');
@@ -1259,15 +1334,14 @@ body.rtl .option-card { text-align: right; }
         html += '<p style="color:#9CA3AF;font-size:14px;">Based on your SC1 and SC2 work, here\'s what I know about your market. Confirm or flag updates.</p>';
         html += '</div>';
 
-        /* SC1 Data */
-        if (upstreamPD) {
+        if (upstreamPD && Object.keys(upstreamPD).length > 0) {
             html += '<div class="upstream-card">';
             html += '<h3>From SC1: Project Definition</h3>';
             var sc1Fields = [
                 { key: 'niche', alt: 'b3', label: 'Niche & Sub-market' },
                 { key: 'positioning', alt: 'c1', label: 'Positioning' },
-                { key: 'geography', alt: '', label: 'Target Geography' },
-                { key: 'product_scope', alt: 'd1', label: 'Product Scope' }
+                { key: 'mena_context', alt: '', label: 'MENA Context' },
+                { key: 'product_vision', alt: 'd1', label: 'Product Vision' }
             ];
             sc1Fields.forEach(function(f) {
                 var val = upstreamPD[f.key] || upstreamPD[f.alt] || '';
@@ -1281,20 +1355,17 @@ body.rtl .option-card { text-align: right; }
             html += '</div>';
         }
 
-        /* SC2 Data */
-        if (upstreamICP) {
+        if (upstreamICP && Object.keys(upstreamICP).length > 0) {
             html += '<div class="upstream-card">';
             html += '<h3>From SC2: ICP Clarity</h3>';
             var sc2Fields = [
-                { key: 'a1', label: 'Customer Identity' },
-                { key: 'b1', label: 'Top Pain #1' },
-                { key: 'b2', label: 'Top Pain #2' },
-                { key: 'b3', label: 'Top Pain #3' },
-                { key: 'a5', label: 'Budget Range' },
-                { key: 'e1', label: 'Congregation Points' }
+                { key: 'who', alt: 'a1', label: 'Customer Identity' },
+                { key: 'pain', alt: 'b1', label: 'Top Pains' },
+                { key: 'dream', alt: 'b2', label: 'Dream Outcome' },
+                { key: 'access', alt: 'e1', label: 'Where to Find Them' }
             ];
             sc2Fields.forEach(function(f) {
-                var val = upstreamICP[f.key] || '';
+                var val = upstreamICP[f.key] || upstreamICP[f.alt] || '';
                 if (val) {
                     html += '<div class="upstream-item">';
                     html += '<div class="label">' + f.label + '</div>';
@@ -1305,13 +1376,12 @@ body.rtl .option-card { text-align: right; }
             html += '</div>';
         }
 
-        if (!upstreamPD && !upstreamICP) {
+        if ((!upstreamPD || Object.keys(upstreamPD).length === 0) && (!upstreamICP || Object.keys(upstreamICP).length === 0)) {
             html += '<div class="upstream-card">';
             html += '<p style="color:#9CA3AF;text-align:center;">No upstream data found. Your SC1/SC2 answers will be loaded when available.</p>';
             html += '</div>';
         }
 
-        /* Pattern Break: Section A transition */
         html += '<div class="pattern-break-card" style="margin-top:16px;">';
         html += '<div class="pb-label">CONTEXT LOADED</div>';
         html += '<div class="pb-text">I\'ve loaded your SC1 and SC2 data. Now we validate it against market reality. 6 focused questions — evidence only, no assumptions.</div>';
@@ -1339,21 +1409,16 @@ body.rtl .option-card { text-align: right; }
         });
     }
 
-    /* ===================================
-       EMAIL CAPTURE
-       =================================== */
-    function startAssessment() {
-        var email = $emailInput.value.trim().toLowerCase();
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            $emailInput.style.borderColor = '#EF4444';
-            $emailInput.focus();
-            return;
+    function findFirstUnanswered() {
+        for (var i = 0; i < allQuestions.length; i++) {
+            var q = allQuestions[i];
+            if (q.type === Q_FREETEXT) {
+                if (!answers[q.id] || !answers[q.id].trim()) return i;
+            } else {
+                if (!(q.id in answers)) return i;
+            }
         }
-        capturedEmail = email;
-        $emailInput.style.borderColor = '';
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-
-        showUpstreamConfirmation();
+        return allQuestions.length - 1;
     }
 
     /* ===================================
@@ -1363,43 +1428,35 @@ body.rtl .option-card { text-align: right; }
         $engagementSlot.innerHTML = '';
         var q = allQuestions[currentIndex];
 
-        /* After Section B (when transitioning to C) */
         if (q.sectionId === 'C' && !engagementShown.afterB) {
             engagementShown.afterB = true;
             var scores = calculateSectionScores();
             var html = '';
-
-            /* Pattern Break */
             html += '<div class="pattern-break"><div class="pattern-break-card">';
             html += '<div class="pb-label">' + ENGAGEMENT.afterB.label + '</div>';
             html += '<div class="pb-text">' + ENGAGEMENT.afterB.getText(scores) + '</div>';
             html += '</div></div>';
-
-            /* Investment Signal */
             html += '<div class="investment-signal"><div class="investment-signal-card">';
             html += ENGAGEMENT.investmentB;
             html += '</div></div>';
-
             $engagementSlot.innerHTML = html;
             return;
         }
 
-        /* After Section C (when showing results / before AI synthesis) */
         if (currentIndex === allQuestions.length - 1 && !engagementShown.afterC) {
             engagementShown.afterC = true;
-            var html = '';
-            html += '<div class="pattern-break"><div class="pattern-break-card">';
-            html += '<div class="pb-label">' + ENGAGEMENT.afterC.label + '</div>';
-            html += '<div class="pb-text">' + ENGAGEMENT.afterC.getText(calculateSectionScores()) + '</div>';
-            html += '</div></div>';
-            html += '<div class="investment-signal"><div class="investment-signal-card">';
-            html += 'You\'ve completed all 6 evidence-based questions. The AI synthesis will combine your answers with upstream SC1/SC2 data to generate a market verdict.';
-            html += '</div></div>';
-            $engagementSlot.innerHTML = html;
+            var html2 = '';
+            html2 += '<div class="pattern-break"><div class="pattern-break-card">';
+            html2 += '<div class="pb-label">' + ENGAGEMENT.afterC.label + '</div>';
+            html2 += '<div class="pb-text">' + ENGAGEMENT.afterC.getText(calculateSectionScores()) + '</div>';
+            html2 += '</div></div>';
+            html2 += '<div class="investment-signal"><div class="investment-signal-card">';
+            html2 += 'You\'ve completed all 6 evidence-based questions. Your market verdict will synthesize evidence strength with market sizing to give you a clear signal.';
+            html2 += '</div></div>';
+            $engagementSlot.innerHTML = html2;
             return;
         }
 
-        /* Show acknowledgment for strong/weak answers on previous question */
         if (currentIndex > 0) {
             var prevQ = allQuestions[currentIndex - 1];
             var ack = getAcknowledgment(prevQ);
@@ -1434,7 +1491,7 @@ body.rtl .option-card { text-align: right; }
         var section = SECTIONS[q.sectionIndex];
         focusedOptionIndex = -1;
 
-        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' \u2014 ' + section.fullName;
+        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' — ' + section.fullName;
         $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
         $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
         $questionText.textContent = q.text;
@@ -1447,8 +1504,6 @@ body.rtl .option-card { text-align: right; }
         }
 
         $optionsList.innerHTML = '';
-
-        /* Show engagement */
         renderEngagement();
 
         if (q.type === Q_FREETEXT) {
@@ -1457,10 +1512,7 @@ body.rtl .option-card { text-align: right; }
             renderMcQuestion(q);
         }
 
-        /* Prev button */
         $btnPrev.classList.toggle('hidden', currentIndex === 0);
-
-        /* Next button label */
         $btnNext.textContent = currentIndex === allQuestions.length - 1 ? 'Submit Assessment' : 'Next';
     }
 
@@ -1494,7 +1546,7 @@ body.rtl .option-card { text-align: right; }
             charDiv.textContent = wc2 + ' / ' + (q.wordLimit || 200) + ' words';
             charDiv.classList.toggle('over', wc2 > (q.wordLimit || 200));
             answers[q.id] = ta.value;
-            saveAnswers();
+            saveAnswersToStorage();
             $btnNext.disabled = !ta.value.trim();
         });
 
@@ -1514,14 +1566,13 @@ body.rtl .option-card { text-align: right; }
     function selectOption(idx) {
         var q = allQuestions[currentIndex];
         answers[q.id] = idx;
-        saveAnswers();
+        saveAnswersToStorage();
         var cards = $optionsList.querySelectorAll('.option-card');
         for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
         cards[idx].classList.add('selected');
         focusedOptionIndex = idx;
         $btnNext.disabled = false;
 
-        /* Auto-advance for MC */
         var isLast = currentIndex === allQuestions.length - 1;
         if (!isLast) {
             clearAutoAdvance();
@@ -1550,16 +1601,7 @@ body.rtl .option-card { text-align: right; }
             return;
         }
         if (currentIndex === allQuestions.length - 1) {
-            showScreen('screenContact');
-            if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail;
-
-            /* Pre-fill venture name */
-            try {
-                var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-                if (status.ventureName) {
-                    document.getElementById('contactCompany').value = status.ventureName;
-                }
-            } catch (e) {}
+            submitAssessment();
             return;
         }
         currentIndex++;
@@ -1569,7 +1611,6 @@ body.rtl .option-card { text-align: right; }
     function prevQuestion() {
         clearAutoAdvance();
         if (currentIndex > 0) {
-            /* Reset engagement flags when going back to earlier section */
             var prevQ = allQuestions[currentIndex - 1];
             var curQ = allQuestions[currentIndex];
             if (curQ.sectionId === 'C' && prevQ.sectionId === 'B') {
@@ -1611,6 +1652,18 @@ body.rtl .option-card { text-align: right; }
     }
 
     /* ===================================
+       SAVE ANSWERS
+       =================================== */
+    function saveAnswersToStorage() {
+        try {
+            localStorage.setItem(
+                storageKey('answers', SC_NUMBER, userEmail, ventureSlug),
+                JSON.stringify(answers)
+            );
+        } catch(e) {}
+    }
+
+    /* ===================================
        SCORING
        =================================== */
     function calculateSectionScores() {
@@ -1619,330 +1672,296 @@ body.rtl .option-card { text-align: right; }
             if (q.type === Q_MC && q.id in answers) {
                 scores[q.sectionId] += q.options[answers[q.id]].score;
             }
-            /* Free-text: scored 0 locally (AI scores via webhook) */
+            if (q.type === Q_FREETEXT && q.id in answers) {
+                scores[q.sectionId] += scoreFreeText(q, answers[q.id]);
+            }
         });
         return scores;
     }
 
+    function scoreFreeText(q, text) {
+        if (!text || !text.trim()) return 0;
+        var wc = countWords(text);
+        var score = 0;
+        var max = q.maxScore;
+
+        /* Length baseline */
+        if (wc >= 100) score += max * 0.3;
+        else if (wc >= 60) score += max * 0.2;
+        else if (wc >= 30) score += max * 0.1;
+
+        /* Specificity: numbers, names, data */
+        var numberCount = (text.match(/\d+/g) || []).length;
+        if (numberCount >= 4) score += max * 0.25;
+        else if (numberCount >= 2) score += max * 0.15;
+        else if (numberCount >= 1) score += max * 0.08;
+
+        /* Evidence markers */
+        var evidenceTerms = ['interview', 'survey', 'data', 'research', 'report', 'study', 'source', 'stat', 'according', 'customer', 'user', 'review', 'competitor', 'analysis', 'evidence', 'confirm', 'validate', 'prove', 'benchmark', 'pricing', 'revenue', 'arr', 'mrr', 'conversion'];
+        var evidenceHits = 0;
+        var lowerText = text.toLowerCase();
+        evidenceTerms.forEach(function(term) { if (lowerText.indexOf(term) !== -1) evidenceHits++; });
+        if (evidenceHits >= 5) score += max * 0.2;
+        else if (evidenceHits >= 3) score += max * 0.12;
+        else if (evidenceHits >= 1) score += max * 0.06;
+
+        /* MENA awareness */
+        var menaTerms = ['mena', 'gcc', 'uae', 'saudi', 'dubai', 'qatar', 'bahrain', 'oman', 'kuwait', 'egypt', 'jordan', 'lebanon', 'arabic', 'vision 2030', 'zatca', 'difc', 'adgm', 'neom', 'fintech', 'khaleeji'];
+        var menaHits = 0;
+        menaTerms.forEach(function(term) { if (lowerText.indexOf(term) !== -1) menaHits++; });
+        if (menaHits >= 3) score += max * 0.15;
+        else if (menaHits >= 1) score += max * 0.08;
+
+        /* Quantification bonus */
+        var quantTerms = ['%', 'percent', 'yoy', 'y/y', 'cagr', 'growth', 'increase', 'decrease', 'million', 'billion', 'thousand', '$', 'usd', 'aed', 'sar'];
+        var quantHits = 0;
+        quantTerms.forEach(function(term) { if (lowerText.indexOf(term) !== -1) quantHits++; });
+        if (quantHits >= 3) score += max * 0.1;
+        else if (quantHits >= 1) score += max * 0.05;
+
+        return Math.min(Math.round(score), max);
+    }
+
     function calculateScores() {
-        var sectionScores = { 'B': 0, 'C': 0, 'D': 0 };
-        var mcTotal = 0;
-        var mcMax = 0;
-        var ftCount = 0;
-        var ftMaxTotal = 0;
+        var sectionScores = calculateSectionScores();
+        var total = (sectionScores['B'] || 0) + (sectionScores['C'] || 0);
+        var maxMC = SECTION_MAXES['B'] + SECTION_MAXES['C'];
 
-        allQuestions.forEach(function(q) {
-            if (q.type === Q_MC) {
-                if (q.id in answers) {
-                    var score = q.options[answers[q.id]].score;
-                    sectionScores[q.sectionId] += score;
-                    mcTotal += score;
-                }
-                mcMax += q.maxScore;
-            } else if (q.type === Q_FREETEXT) {
-                ftCount++;
-                ftMaxTotal += q.maxScore;
-            }
-        });
+        /* Normalize to 0-100 scale for display */
+        var normalized = Math.round((total / maxMC) * 100);
 
-        /* Total = B + C (MC scored) + D (AI auto = 20 pts, scored 0 locally) */
-        var total = sectionScores['B'] + sectionScores['C'];
+        /* Calculate 4 dimensions */
+        var dimensions = calculateDimensions();
 
         return {
             sectionScores: sectionScores,
-            total: total,
-            mcTotal: mcTotal,
-            mcMax: mcMax,
-            ftCount: ftCount,
-            ftMaxTotal: ftMaxTotal
+            rawTotal: total,
+            maxScore: maxMC,
+            score: normalized,
+            dimensions: dimensions
         };
     }
 
+    function calculateDimensions() {
+        /* Map questions to 4 dimensions */
+        var dims = {
+            pain: { score: 0, max: 0, label: 'Pain Reality' },
+            purchasing: { score: 0, max: 0, label: 'Purchasing Power' },
+            sizing: { score: 0, max: 0, label: 'Market Sizing' },
+            growth: { score: 0, max: 0, label: 'Growth Signals' }
+        };
+
+        allQuestions.forEach(function(q) {
+            var dim = q.dimension;
+            if (!dim || !dims[dim]) return;
+            dims[dim].max += q.maxScore;
+            if (q.type === Q_MC && q.id in answers) {
+                dims[dim].score += q.options[answers[q.id]].score;
+            }
+            if (q.type === Q_FREETEXT && q.id in answers) {
+                dims[dim].score += scoreFreeText(q, answers[q.id]);
+            }
+        });
+
+        return dims;
+    }
+
     function getBand(score) {
-        if (score >= 85) return { label: 'Launch Ready', className: 'band-ready' };
-        if (score >= 70) return { label: 'Almost There', className: 'band-partial' };
-        if (score >= 55) return { label: 'Needs Work', className: 'band-gaps' };
-        if (score >= 40) return { label: 'Early Stage', className: 'band-gaps' };
-        return { label: 'Reset', className: 'band-startover' };
+        if (score >= 85) return { label: 'Launch Ready', color: '#22C55E' };
+        if (score >= 70) return { label: 'Almost There', color: '#FF6600' };
+        if (score >= 55) return { label: 'Needs Work', color: '#D97706' };
+        if (score >= 40) return { label: 'Early Stage', color: '#EF4444' };
+        return { label: 'Reset', color: '#EF4444' };
     }
 
-    function getWebhookBand(score) {
-        if (score >= 85) return 'LAUNCH_READY';
-        if (score >= 70) return 'ALMOST_THERE';
-        if (score >= 55) return 'NEEDS_WORK';
-        if (score >= 40) return 'EARLY_STAGE';
-        return 'RESET';
-    }
-
-    function getBarColor(score, max) {
+    function getDimColor(score, max) {
         var pct = max > 0 ? (score / max) * 100 : 0;
         if (pct >= 80) return '#22C55E';
-        if (pct >= 60) return '#3B82F6';
-        if (pct >= 40) return '#F59E0B';
+        if (pct >= 60) return '#FF6600';
+        if (pct >= 40) return '#D97706';
         return '#EF4444';
     }
 
     /* ===================================
-       WEBHOOK PAYLOAD
+       SUBMIT ASSESSMENT
        =================================== */
-    function buildWebhookPayload(contact) {
-        var result = calculateScores();
-        var answersMap = {};
-        allQuestions.forEach(function(q) {
-            if (q.type === Q_FREETEXT) {
-                answersMap[q.id] = answers[q.id] || '';
-            } else {
-                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
-            }
-        });
-
-        var sectionScoresNamed = {};
-        Object.keys(SECTION_NAME_MAP).forEach(function(key) {
-            sectionScoresNamed[SECTION_NAME_MAP[key]] = result.sectionScores[key] || 0;
-        });
-
-        /* Get venture name */
-        var ventureName = '';
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            ventureName = status.ventureName || '';
-        } catch (e) {}
-
-        return {
-            assessment: ASSESSMENT_ID,
-            version: '3.0',
-            venture_name: ventureName,
-            answers: answersMap,
-            upstream_data: {
-                sc1: upstreamPD ? { niche: upstreamPD.niche || upstreamPD.b3 || '', positioning: upstreamPD.positioning || upstreamPD.c1 || '', geography: upstreamPD.geography || '' } : null,
-                sc2: upstreamICP ? { top_pains: [upstreamICP.b1 || '', upstreamICP.b2 || '', upstreamICP.b3 || ''].filter(Boolean), budget: upstreamICP.a5 || '', congregation: upstreamICP.e1 || '' } : null
-            },
-            section_scores: sectionScoresNamed,
-            mc_score: result.mcTotal,
-            mc_max: result.mcMax,
-            ft_count: result.ftCount,
-            ft_max: result.ftMaxTotal,
-            total_score: result.total,
-            band: getWebhookBand(result.total),
-            engagement_data: { upstream_confirmed: upstreamConfirmed },
-            contact: contact
-        };
-    }
-
-    /* ===================================
-       CONTACT FORM
-       =================================== */
-    function submitContact() {
-        var nameEl = document.getElementById('contactName');
-        var emailEl = document.getElementById('contactEmail');
-        var companyEl = document.getElementById('contactCompany');
-        var name = nameEl.value.trim();
-        var email = emailEl.value.trim().toLowerCase();
-        var company = companyEl.value.trim();
-
-        var valid = true;
-        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
-        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
-        if (!valid) return;
-
-        capturedEmail = email;
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-        var contact = { name: name, email: email, company: company };
-        var payload = buildWebhookPayload(contact);
-
+    function submitAssessment() {
         $loadingOverlay.classList.add('active');
 
-        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-market-attractiveness', {
+        setTimeout(function() {
+            var result = calculateScores();
+            var band = getBand(result.score);
+
+            var resultObj = {
+                score: result.score,
+                band: band.label,
+                sections: result.sectionScores,
+                dimensions: result.dimensions,
+                rawTotal: result.rawTotal,
+                maxScore: result.maxScore
+            };
+
+            /* Save results */
+            resultObj.completed_at = new Date().toISOString().split('T')[0];
+            localStorage.setItem(
+                storageKey('result', SC_NUMBER, userEmail, ventureSlug),
+                JSON.stringify(resultObj)
+            );
+            saveScore(userEmail, ventureSlug, SC_NUMBER, result.score);
+
+            /* Also save in old format for backward compat with dashboard */
+            try {
+                var downstream = {};
+                allQuestions.forEach(function(q) {
+                    if (q.type === Q_FREETEXT) downstream[q.id] = answers[q.id] || '';
+                    else if (q.type === Q_MC) downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
+                });
+                downstream.section_scores = result.sectionScores;
+                downstream.total = result.score;
+                downstream.band = band.label;
+                downstream.version = '3.0';
+                localStorage.setItem('eo-market-attractiveness', JSON.stringify(downstream));
+            } catch(e) {}
+
+            /* Send webhook */
+            sendToWebhook(result, resultObj);
+
+            $loadingOverlay.classList.remove('active');
+            renderResults(resultObj);
+        }, 800);
+    }
+
+    function sendToWebhook(result, resultObj) {
+        var upstream = {};
+        for (var i = 1; i < SC_NUMBER; i++) {
+            upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null;
+            upstream['sc' + i + '_answers'] = getUpstreamAnswers(i, userEmail, ventureSlug);
+        }
+
+        var payload = {
+            email: userEmail,
+            venture_name: ventureName,
+            venture_slug: ventureSlug,
+            scorecard: 'SC' + SC_NUMBER,
+            answers: answers,
+            scores: {
+                total: result.score,
+                sections: result.sectionScores,
+                dimensions: result.dimensions
+            },
+            upstream_data: upstream,
+            timestamp: new Date().toISOString()
+        };
+
+        fetch('https://smorchestra.app.n8n.cloud/webhook/eo-assessment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
-        })
-        .then(function(resp) { return resp.json(); })
-        .then(function(data) {
-            aiData = data;
-            $loadingOverlay.classList.remove('active');
-            showResults();
-        })
-        .catch(function() {
-            $loadingOverlay.classList.remove('active');
-            showResults();
-        });
-    }
-
-    function skipContact() {
-        aiData = null;
-        showResults();
+        }).catch(function(err) { console.warn('Webhook failed:', err); });
     }
 
     /* ===================================
-       RESULTS DISPLAY
+       RENDER RESULTS (TYPE 2: SCORING TOOL)
        =================================== */
-    function saveCompletionStatus(scoreId, score) {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
-            localStorage.setItem('eo_completion_status', JSON.stringify(status));
-        } catch (e) {}
-    }
-
-    function showResults() {
-        var result = calculateScores();
-        var sectionScores = result.sectionScores;
-        var mcTotal = result.mcTotal;
-        var band = getBand(mcTotal);
-
-        /* Save for dashboard */
-        saveCompletionStatus('mas', mcTotal);
-
-        /* Store answers for downstream scorecards */
-        try {
-            var downstream = {};
-            allQuestions.forEach(function(q) {
-                if (q.type === Q_FREETEXT) {
-                    downstream[q.id] = answers[q.id] || '';
-                } else if (q.type === Q_MC) {
-                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
-                }
-            });
-            downstream.pain_evidence = answers['b1'] || '';
-            downstream.purchasing_evidence = answers['b2'] || '';
-            downstream.evidence_type = allQuestions[2].id in answers ? allQuestions[2].options[answers['b3']].label : '';
-            downstream.tam_sam_som = answers['c1'] || '';
-            downstream.growth_signals = answers['c2'] || '';
-            downstream.defensibility = allQuestions[5].id in answers ? allQuestions[5].options[answers['c3']].label : '';
-            downstream.section_scores = sectionScores;
-            downstream.total = mcTotal;
-            downstream.band = band.label;
-            downstream.version = '3.0';
-            localStorage.setItem('eo-market-attractiveness', JSON.stringify(downstream));
-        } catch (e) {}
+    function renderResults(resultObj) {
+        var score = resultObj.score || 0;
+        var band = getBand(score);
+        var dims = resultObj.dimensions || calculateDimensions();
+        var sectionScores = resultObj.sections || resultObj.sectionScores || {};
 
         var html = '';
 
-        /* Score Hero */
-        html += '<div class="score-hero ' + band.className + '">';
-        html += '<div class="score-circle"><div class="score-circle-inner">';
-        html += '<span class="score-number">' + mcTotal + '</span>';
-        html += '<span class="score-total">/ ' + result.mcMax + '</span>';
-        html += '</div></div>';
-        html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">Market Attractiveness MC Score (v3.0)</div>';
-        if (result.ftCount > 0) {
-            html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers (' + result.ftMaxTotal + ' pts) pending AI review</div>';
-        }
-        html += '<div class="pending-ai-badge" style="margin-top:4px;">Section D: AI Synthesis (20 pts) pending</div>';
+        /* === GAUGE RING === */
+        var circumference = 2 * Math.PI * 72;
+        var offset = circumference - (score / 100) * circumference;
+
+        html += '<div class="gauge-container">';
+        html += '<svg class="gauge-svg" viewBox="0 0 160 160">';
+        html += '<circle class="gauge-bg" cx="80" cy="80" r="72" />';
+        html += '<circle class="gauge-fill" cx="80" cy="80" r="72" stroke="' + band.color + '" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + offset + '" transform="rotate(-90 80 80)" />';
+        html += '<text class="gauge-score" x="80" y="74">' + score + '</text>';
+        html += '<text class="gauge-label" x="80" y="98">/ 100</text>';
+        html += '</svg>';
+        html += '<div class="band-label" style="color:' + band.color + '">' + band.label + '</div>';
+        html += '<div class="band-subtitle">Market Attractiveness Score — ' + ventureName + '</div>';
         html += '</div>';
 
-        /* Section Breakdown */
+        /* === 4-DIMENSION VISUAL === */
+        html += '<div class="results-card"><h3>4-Dimension Breakdown</h3>';
+        var dimOrder = ['pain', 'purchasing', 'sizing', 'growth'];
+        dimOrder.forEach(function(key) {
+            var d = dims[key];
+            if (!d) return;
+            var pct = d.max > 0 ? Math.round((d.score / d.max) * 100) : 0;
+            var color = getDimColor(d.score, d.max);
+            html += '<div class="dim-bar-row">';
+            html += '<div class="dim-bar-label">' + d.label + '</div>';
+            html += '<div class="dim-bar-track"><div class="dim-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
+            html += '<div class="dim-bar-score" style="color:' + color + '">' + pct + '%</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* === VIABILITY VERDICT CARD === */
+        html += '<div class="verdict-card">';
+        html += '<h3>Viability Verdict</h3>';
+        html += '<div class="verdict-text">' + getVerdict(score, dims) + '</div>';
+        html += '</div>';
+
+        /* === HOW TO RAISE YOUR SCORE === */
+        html += '<div class="results-card"><h3>How to Raise Your Score</h3>';
+        var weakDims = getWeakDimensions(dims);
+        if (weakDims.length === 0) {
+            html += '<p style="color:#D1D5DB;font-size:14px;">All dimensions are strong. Focus on maintaining evidence quality as you progress to Strategy (SC4).</p>';
+        }
+        weakDims.forEach(function(wd) {
+            var pct = wd.max > 0 ? Math.round((wd.score / wd.max) * 100) : 0;
+            var scoreClass = pct < 40 ? 'low' : pct < 70 ? 'mid' : 'ok';
+            html += '<div class="raise-card">';
+            html += '<span class="current-score ' + scoreClass + '">' + pct + '% — ' + wd.label + '</span>';
+            html += '<h4>' + getRaiseTitle(wd.key) + '</h4>';
+            html += '<p>' + getRaiseAdvice(wd.key) + '</p>';
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* === SECTION BREAKDOWN === */
         html += '<div class="results-card"><h3>Section Breakdown</h3>';
         var displaySections = [
             { id: 'B', name: 'Evidence Validation', max: 40 },
-            { id: 'C', name: 'Market Sizing & Growth', max: 40 },
-            { id: 'D', name: 'AI Synthesis (pending)', max: 20 }
+            { id: 'C', name: 'Market Sizing & Growth', max: 40 }
         ];
         displaySections.forEach(function(sec) {
-            var score = sectionScores[sec.id] || 0;
-            var max = sec.max;
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var color = sec.id === 'D' ? '#6B7280' : getBarColor(score, max);
+            var secScore = sectionScores[sec.id] || 0;
+            var pct = sec.max > 0 ? Math.round((secScore / sec.max) * 100) : 0;
+            var color = getDimColor(secScore, sec.max);
             html += '<div class="section-bar-row">';
             html += '<div class="section-bar-label">' + sec.name + '</div>';
             html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
-            html += '<div class="section-bar-score">' + score + ' / ' + max + '</div>';
+            html += '<div class="section-bar-score">' + secScore + ' / ' + sec.max + '</div>';
             html += '</div>';
         });
         html += '</div>';
 
-        /* Answers Summary */
-        html += '<div class="results-card"><h3>Your Answers</h3>';
-        var sectionOrder = ['B', 'C'];
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            html += '<h4 style="font-size:14px;color:var(--eo-orange);margin:16px 0 8px;">Section ' + sid + ': ' + sec.fullName + '</h4>';
-            allQuestions.forEach(function(q) {
-                if (q.sectionId !== sid) return;
-                html += '<div class="answer-block">';
-                html += '<div class="q-label">' + q.id.toUpperCase() + ' (' + q.maxScore + ' pts)</div>';
-                html += '<div class="q-text">' + escapeHtml(q.text) + '</div>';
-                if (q.type === Q_FREETEXT) {
-                    html += '<div class="a-text">' + escapeHtml(answers[q.id] || '(No answer)') + '</div>';
-                } else {
-                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
-                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
-                }
-                html += '</div>';
-            });
-        });
-        html += '</div>';
-
-        /* Recommendations */
-        html += '<div class="results-card"><h3>Recommendations</h3>';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var icon = pct >= 80 ? '\u2705' : pct >= 60 ? '\uD83D\uDFE1' : '\u26A0\uFE0F';
-            html += '<div class="reco-section">';
-            html += '<div class="reco-header"><span class="reco-icon">' + icon + '</span>';
-            html += '<span class="reco-title">' + sec.fullName + ' (' + score + '/' + max + ')</span></div>';
-            if (RECOMMENDATIONS[sid]) {
-                html += '<ul class="reco-list">';
-                RECOMMENDATIONS[sid].forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; });
-                html += '</ul>';
-            }
-            html += '</div>';
-        });
-        html += '</div>';
-
-        /* AI Section */
-        if (aiData) {
-            html += '<div class="ai-section">';
-            html += '<span class="ai-badge">AI Synthesis — Section D (20 pts)</span>';
-            if (aiData.key_insight || aiData.keyInsight) {
-                html += '<h3>Key Insight</h3><p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
-            }
-            if (aiData.d_score !== undefined) {
-                html += '<h3>AI Synthesis Score</h3><p class="ai-insight">Section D Score: ' + aiData.d_score + '/20</p>';
-            }
-            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
-                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                html += '<div class="ai-plan"><h4>30-Day Validation Plan</h4>';
-                if (typeof plan === 'string') { html += '<p>' + escapeHtml(plan) + '</p>'; }
-                else if (Array.isArray(plan)) { html += '<ul>'; plan.forEach(function(item) { html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>'; }); html += '</ul>'; }
-                html += '</div>';
-            }
-            if (aiData.recommendations || aiData.ai_recommendations) {
-                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
-                html += '<h3>AI Recommendations</h3><ul class="ai-reco-list">';
-                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>'; }); }
-                html += '</ul>';
-            }
-            html += '</div>';
-        }
-
-        /* Final Engagement: Investment Signal */
+        /* === ENGAGEMENT: ASSESSMENT COMPLETE === */
         html += '<div class="pattern-break-card" style="margin:0 0 20px;">';
         html += '<div class="pb-label">ASSESSMENT COMPLETE</div>';
         html += '<div class="pb-text">' + ENGAGEMENT.investmentFinal + '</div>';
         html += '</div>';
 
-        /* Gate Warning if score low */
-        if (mcTotal < 10) {
+        /* === GATE WARNING === */
+        if (score < 40) {
             html += '<div class="gate-warning">';
             html += '<h3>Market Validation Needed</h3>';
-            html += '<p>Your MC score suggests core assumptions may need revisiting. Consider 10+ buyer interviews and revisiting SC1/SC2 before moving to Strategy (SC4). Submit your contact info above for AI-scored results.</p>';
+            html += '<p>Your score suggests core market assumptions need revisiting. Consider 10+ buyer interviews and revisiting SC1/SC2 before moving to Strategy (SC4).</p>';
             html += '</div>';
         }
 
-        /* CTAs */
+        /* === CTAs === */
         html += '<div class="results-cta">';
-        html += '<a href="EO-Assessment-Dashboard.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Go to Dashboard</a>';
+        html += '<a href="EO-Strategy-Selector.html" class="btn-primary" style="display:inline-block;text-decoration:none;">Continue to Strategy Selector →</a>';
         html += '<button class="btn-download-md" id="btnDownloadMd">Download Results (MD)</button>';
-        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
+        html += '<a href="EO-Assessment-Dashboard.html" style="display:inline-block;text-decoration:none;background:transparent;border:2px solid rgba(255,255,255,0.3);color:#fff;padding:12px 28px;border-radius:var(--eo-radius-sm);font-size:15px;font-weight:600;min-width:280px;text-align:center;">Back to Dashboard</a>';
         html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
         html += '</div>';
 
@@ -1952,13 +1971,70 @@ body.rtl .option-card { text-align: right; }
 
         document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
         document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
-        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
     }
 
-    function escapeHtml(text) {
-        var div = document.createElement('div');
-        div.appendChild(document.createTextNode(text));
-        return div.innerHTML;
+    /* ===================================
+       VERDICT GENERATOR
+       =================================== */
+    function getVerdict(score, dims) {
+        var painPct = dims.pain && dims.pain.max > 0 ? (dims.pain.score / dims.pain.max) * 100 : 0;
+        var purchPct = dims.purchasing && dims.purchasing.max > 0 ? (dims.purchasing.score / dims.purchasing.max) * 100 : 0;
+        var sizePct = dims.sizing && dims.sizing.max > 0 ? (dims.sizing.score / dims.sizing.max) * 100 : 0;
+        var growthPct = dims.growth && dims.growth.max > 0 ? (dims.growth.score / dims.growth.max) * 100 : 0;
+
+        if (score >= 85) {
+            return 'Strong market signal across all four dimensions. Your evidence base supports real pain, confirmed purchasing power, quantified market size, and clear growth tailwinds. You\'re building in the right space — proceed to strategy with confidence.';
+        }
+        if (score >= 70) {
+            var weakArea = '';
+            if (painPct < 70) weakArea = 'pain evidence';
+            else if (purchPct < 70) weakArea = 'purchasing power data';
+            else if (sizePct < 70) weakArea = 'market sizing math';
+            else weakArea = 'growth signal documentation';
+            return 'Good market fundamentals with room to sharpen. Your ' + weakArea + ' needs the most attention. Strengthen this before committing significant resources — the market is there, but your evidence needs to match your conviction.';
+        }
+        if (score >= 55) {
+            return 'Mixed market signal. Some dimensions show promise while others lack sufficient evidence. Before investing heavily, prioritize: (1) validate pain with real buyer conversations, (2) confirm willingness to pay, (3) tighten your market sizing. This is fixable, but don\'t skip the work.';
+        }
+        if (score >= 40) {
+            return 'Weak market signal. Your evidence base has significant gaps across multiple dimensions. This doesn\'t mean the market is bad — it means you haven\'t proven it yet. Run 10+ structured buyer interviews, research competitor traction, and revisit your SC1/SC2 work before proceeding.';
+        }
+        return 'Insufficient market evidence. Your scoring suggests you\'re operating largely on assumptions rather than data. Before building anything, invest 2-3 weeks in pure market discovery: buyer interviews, competitor analysis, and market sizing research. Return to SC1/SC2 to strengthen your foundation.';
+    }
+
+    function getWeakDimensions(dims) {
+        var weak = [];
+        var dimOrder = ['pain', 'purchasing', 'sizing', 'growth'];
+        dimOrder.forEach(function(key) {
+            var d = dims[key];
+            if (!d || d.max === 0) return;
+            var pct = (d.score / d.max) * 100;
+            if (pct < 75) {
+                weak.push({ key: key, label: d.label, score: d.score, max: d.max });
+            }
+        });
+        weak.sort(function(a, b) { return (a.score / a.max) - (b.score / b.max); });
+        return weak.slice(0, 3);
+    }
+
+    function getRaiseTitle(dimKey) {
+        var titles = {
+            pain: 'Strengthen Pain Evidence',
+            purchasing: 'Prove Purchasing Power',
+            sizing: 'Sharpen Market Sizing',
+            growth: 'Document Growth Signals'
+        };
+        return titles[dimKey] || 'Improve This Dimension';
+    }
+
+    function getRaiseAdvice(dimKey) {
+        var advice = {
+            pain: 'Run 5+ "Mom Test" buyer interviews. Record exact quotes about the pain. Collect competitor review data showing users paying for similar solutions. Build a pain-evidence matrix with sources and strength ratings.',
+            purchasing: 'Research exact competitor pricing and user counts (G2, Capterra, Crunchbase). Document industry budget allocations for your category. Find salary data, contract values, or LOIs that prove your ICP spends money on solutions like yours.',
+            sizing: 'Build a bottom-up TAM calculation: count actual companies in your niche × realistic ACV. Show TAM → SAM → SOM narrowing with clear logic. Use MENA-specific data sources (Statista MENA, Bain GCC reports, government databases).',
+            growth: 'Identify 3+ macro tailwinds specific to your MENA market. Cite regulatory changes (Vision 2030, ZATCA), technology adoption trends, recent funding rounds in your category, and cultural/demographic shifts that create demand.'
+        };
+        return advice[dimKey] || 'Add more specific evidence and data to this dimension.';
     }
 
     /* ===================================
@@ -1966,181 +2042,114 @@ body.rtl .option-card { text-align: right; }
        =================================== */
     function generateMarkdownExport() {
         var result = calculateScores();
-        var sectionScores = result.sectionScores;
+        var band = getBand(result.score);
+        var dims = result.dimensions;
         var today = new Date();
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-        var band = getBand(result.mcTotal);
-        var ventureName = '';
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            ventureName = status.ventureName || '';
-        } catch (e) {}
 
         var md = '';
         md += '# Market Attractiveness Scorecard Results (v3.0)\n\n';
-        if (ventureName) md += '**Venture:** ' + ventureName + '\n';
-        md += '**Student:** ' + capturedEmail + '\n';
+        md += '**Venture:** ' + ventureName + '\n';
+        md += '**Founder:** ' + userEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
-        md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
-        md += '**Free-text questions:** ' + result.ftCount + ' (' + result.ftMaxTotal + ' pts pending AI review)\n';
-        md += '**Section D (AI Synthesis):** 20 pts pending\n\n';
+        md += '**Overall Score:** ' + result.score + '/100 — ' + band.label + '\n\n';
+        md += '---\n\n';
+
+        /* 4-Dimension Summary */
+        md += '## 4-Dimension Breakdown\n\n';
+        md += '| Dimension | Score | Max | Percentage |\n';
+        md += '|-----------|-------|-----|------------|\n';
+        var dimOrder = ['pain', 'purchasing', 'sizing', 'growth'];
+        dimOrder.forEach(function(key) {
+            var d = dims[key];
+            if (!d) return;
+            var pct = d.max > 0 ? Math.round((d.score / d.max) * 100) : 0;
+            md += '| ' + d.label + ' | ' + d.score + ' | ' + d.max + ' | ' + pct + '% |\n';
+        });
+        md += '\n';
+
+        /* Viability Verdict */
+        md += '## Viability Verdict\n\n';
+        md += getVerdict(result.score, dims) + '\n\n';
         md += '---\n\n';
 
         /* Section Breakdown */
         md += '## Section Breakdown\n\n';
-        md += '| Section | Score | Max | Status |\n';
-        md += '|---------|-------|-----|--------|\n';
-        var displaySections = [
-            { id: 'B', name: 'Evidence Validation', max: 40 },
-            { id: 'C', name: 'Market Sizing & Growth', max: 40 },
-            { id: 'D', name: 'AI Synthesis', max: 20 }
-        ];
-        displaySections.forEach(function(sec) {
-            var score = sectionScores[sec.id] || 0;
-            var status2 = sec.id === 'D' ? 'Pending AI' : (score / sec.max >= 0.8 ? '\u2705 Strong' : score / sec.max >= 0.6 ? '\uD83D\uDFE1 Needs Work' : '\u26A0\uFE0F Weak');
-            md += '| ' + sec.name + ' | ' + score + ' | ' + sec.max + ' | ' + status2 + ' |\n';
-        });
+        md += '| Section | Score | Max |\n';
+        md += '|---------|-------|-----|\n';
+        md += '| Evidence Validation (B) | ' + (result.sectionScores['B'] || 0) + ' | 40 |\n';
+        md += '| Market Sizing & Growth (C) | ' + (result.sectionScores['C'] || 0) + ' | 40 |\n';
         md += '\n---\n\n';
 
         /* Upstream Data */
         md += '## Upstream Data (From SC1 + SC2)\n\n';
-        if (upstreamPD) {
+        if (upstreamPD && Object.keys(upstreamPD).length > 0) {
             md += '### SC1: Project Definition\n';
-            if (upstreamPD.niche || upstreamPD.b3) md += '- **Niche:** ' + (upstreamPD.niche || upstreamPD.b3) + '\n';
-            if (upstreamPD.positioning || upstreamPD.c1) md += '- **Positioning:** ' + (upstreamPD.positioning || upstreamPD.c1) + '\n';
-            if (upstreamPD.geography) md += '- **Geography:** ' + upstreamPD.geography + '\n';
+            ['niche', 'positioning', 'mena_context', 'product_vision'].forEach(function(key) {
+                var val = upstreamPD[key] || '';
+                if (val) md += '- **' + key.replace(/_/g, ' ') + ':** ' + val.substring(0, 200) + '\n';
+            });
             md += '\n';
         }
-        if (upstreamICP) {
+        if (upstreamICP && Object.keys(upstreamICP).length > 0) {
             md += '### SC2: ICP Clarity\n';
-            if (upstreamICP.a1) md += '- **Customer Identity:** ' + upstreamICP.a1.substring(0, 200) + '\n';
-            for (var pi = 1; pi <= 3; pi++) {
-                if (upstreamICP['b' + pi]) md += '- **Pain #' + pi + ':** ' + upstreamICP['b' + pi].substring(0, 150) + '\n';
-            }
-            if (upstreamICP.a5) md += '- **Budget Range:** ' + upstreamICP.a5 + '\n';
+            ['who', 'pain', 'dream', 'access'].forEach(function(key) {
+                var val = upstreamICP[key] || '';
+                if (val) md += '- **' + key + ':** ' + val.substring(0, 200) + '\n';
+            });
             md += '\n';
         }
         md += '---\n\n';
 
         /* Full Answers */
-        md += '## Answers\n\n';
+        md += '## Full Answers\n\n';
         var sectionOrder = ['B', 'C'];
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            md += '### Section ' + sid + ': ' + sec.fullName + ' (' + SECTION_MAXES[sid] + ' pts)\n\n';
+            md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';
             allQuestions.forEach(function(q) {
                 if (q.sectionId !== sid) return;
                 md += '**' + q.id.toUpperCase() + '.** (' + q.maxScore + ' pts) ' + q.text + '\n\n';
                 if (q.type === Q_FREETEXT) {
                     md += '> ' + (answers[q.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
-                    md += '_Rubric: ' + q.rubric + '_\n\n';
                 } else {
                     var opt = q.id in answers ? q.options[answers[q.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
+                    md += '→ **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
                 }
             });
         });
 
-        /* Recommendations */
-        md += '---\n\n## Recommendations\n\n';
+        /* How to Improve */
+        md += '---\n\n## How to Raise Your Score\n\n';
+        var weakDims = getWeakDimensions(dims);
+        if (weakDims.length === 0) {
+            md += 'All dimensions are strong. Maintain evidence quality as you proceed.\n\n';
+        }
+        weakDims.forEach(function(wd) {
+            var pct = wd.max > 0 ? Math.round((wd.score / wd.max) * 100) : 0;
+            md += '### ' + wd.label + ' (' + pct + '%)\n\n';
+            md += getRaiseAdvice(wd.key) + '\n\n';
+        });
+
+        /* General Recommendations */
+        md += '---\n\n## General Recommendations\n\n';
         sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            md += '### ' + sec.fullName + ' (' + score + '/' + SECTION_MAXES[sid] + ')\n\n';
             if (RECOMMENDATIONS[sid]) {
                 RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
             }
-            md += '\n';
         });
-
-        /* AI Analysis */
-        if (aiData) {
-            md += '---\n\n## AI Synthesis (Section D)\n\n';
-            if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
-            if (aiData.d_score !== undefined) md += '**Section D Score:** ' + aiData.d_score + '/20\n\n';
-            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
-                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                md += '### 30-Day Validation Plan\n\n';
-                if (typeof plan === 'string') md += plan + '\n\n';
-                else if (Array.isArray(plan)) { plan.forEach(function(item) { md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n'; }); md += '\n'; }
-            }
-            if (aiData.recommendations || aiData.ai_recommendations) {
-                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
-                md += '### AI Recommendations\n\n';
-                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n'; }); md += '\n'; }
-            }
-        }
-
-        /* AI Scoring Instructions */
-        md += '---\n\n## AI Scoring Instructions\n\n';
-        md += 'To score the free-text answers + Section D synthesis, copy this file into Claude.ai along with:\n';
-        md += '- `market-attractiveness-scoring/SKILL.md` (v3.0)\n\n';
-        md += 'Ask: "Score these Market Attractiveness v3.0 answers. Score B1, B2 (free-text rubrics), then synthesize Section D using the Hormozi Grand Slam framework. Return total /100."\n\n';
+        md += '\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = (ventureName || 'market-attractiveness') + '-results-' + dateStr + '.md';
+        a.download = (slugify(ventureName) || 'market-attractiveness') + '-results-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-    }
-
-    /* ===================================
-       PDF EXPORT
-       =================================== */
-    function generatePdfExport() {
-        var printDiv = document.createElement('div');
-        printDiv.id = 'pdfPrintContainer';
-        printDiv.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;background:#FFFFFF;color:#1A1A2E;padding:40px;font-family:Inter,sans-serif;';
-
-        var source = document.getElementById('resultsContent');
-        if (!source) return;
-        var clone = source.cloneNode(true);
-
-        var tas = clone.querySelectorAll('textarea');
-        for (var i = 0; i < tas.length; i++) {
-            var div = document.createElement('div');
-            div.style.cssText = 'border:1px solid #E5E7EB;border-radius:8px;padding:12px;min-height:40px;white-space:pre-wrap;font-size:14px;color:#1A1A2E;background:#F9FAFB;margin-bottom:8px;';
-            div.textContent = tas[i].value || '(No response)';
-            tas[i].parentNode.replaceChild(div, tas[i]);
-        }
-
-        clone.style.color = '#1A1A2E';
-        var allEls = clone.querySelectorAll('*');
-        for (var j = 0; j < allEls.length; j++) {
-            var el = allEls[j];
-            var cs = el.currentStyle || window.getComputedStyle(el);
-            if (cs.color === 'rgb(255, 255, 255)' || cs.color === '#ffffff' || cs.color === '#FFFFFF') {
-                el.style.color = '#1A1A2E';
-            }
-            if (cs.backgroundColor && cs.backgroundColor.indexOf('26, 26, 46') !== -1) {
-                el.style.backgroundColor = '#FFFFFF';
-            }
-        }
-
-        printDiv.appendChild(clone);
-        document.body.appendChild(printDiv);
-
-        var dateStr = new Date().toISOString().split('T')[0];
-        var opt = {
-            margin: [10, 10, 10, 10],
-            filename: 'market-attractiveness-results-' + dateStr + '.pdf',
-            image: { type: 'jpeg', quality: 0.95 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        html2pdf().set(opt).from(printDiv).save().then(function() {
-            document.body.removeChild(printDiv);
-        }).catch(function() {
-            try { document.body.removeChild(printDiv); } catch (e) {}
-        });
     }
 
     /* ===================================
@@ -2149,13 +2158,20 @@ body.rtl .option-card { text-align: right; }
     function retakeAssessment() {
         answers = {};
         currentIndex = 0;
-        aiData = null;
         upstreamConfirmed = false;
         engagementShown = { afterB: false, afterC: false };
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        $emailInput.value = '';
-        showScreen('screenEmail');
+        try {
+            localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+            localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
+        } catch(e) {}
+        showScreen('screenAuth');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text));
+        return div.innerHTML;
     }
 
     /* ===================================
@@ -2178,6 +2194,5 @@ function toggleRTL() {
     try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
 }
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
