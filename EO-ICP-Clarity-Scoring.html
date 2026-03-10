@@ -4,2195 +4,423 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrepreneurs Oasis MENA — ICP Clarity Scoring</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
-    --eo-dark: #1A1A2E;
-    --eo-orange: #E94D1B;
-    --eo-beige: #FAF5EF;
-    --eo-card-bg: #FFFFFF;
-    --eo-gray-text: #6B7280;
-    --eo-gray-border: #E5E7EB;
-    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    --eo-radius: 12px;
+    --eo-dark: #050A12;
+    --eo-orange: #FF6600;
+    --eo-beige: #0C1220;
+    --eo-card-bg: #111827;
+    --eo-gray-text: #94A3B8;
+    --eo-gray-border: rgba(255,255,255,0.06);
+    --eo-radius: 14px;
     --eo-radius-sm: 8px;
     --eo-transition: 300ms ease;
+    --green: #22C55E;
+    --gold: #D97706;
+    --red: #EF4444;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-dark);
-    color: #FFFFFF;
-    min-height: 100vh;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* RTL Support */
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--eo-dark); color: #FFFFFF; min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 body.rtl { direction: rtl; text-align: right; }
 body.rtl .nav-buttons { flex-direction: row-reverse; }
 body.rtl .section-bar-row { flex-direction: row-reverse; }
-body.rtl .reco-list li { padding: 6px 24px 6px 0; }
 body.rtl .progress-meta { flex-direction: row-reverse; }
-body.rtl .option-card { text-align: right; }
-
-/* RTL Toggle */
-.rtl-toggle {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    z-index: 999;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 6px 14px;
-    border-radius: var(--eo-radius-sm);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    transition: all var(--eo-transition);
-}
+.rtl-toggle { position: fixed; top: 12px; right: 12px; z-index: 999; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: var(--eo-radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; transition: all var(--eo-transition); }
 .rtl-toggle:hover { background: rgba(255,255,255,0.2); }
-
-/* Header */
-.eo-header {
-    text-align: center;
-    padding: 28px 20px 12px;
-}
-.eo-header h1 {
-    font-size: 22px;
-    font-weight: 800;
-    color: #FFFFFF;
-}
+.eo-header { text-align: center; padding: 28px 20px 12px; }
+.eo-header h1 { font-size: 22px; font-weight: 800; color: #FFFFFF; }
 .eo-header h1 span { color: var(--eo-orange); }
-
-/* Section Label */
-.section-label {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #9CA3AF;
-    text-align: center;
-    margin-bottom: 4px;
-}
-
-/* Progress Bar */
-.progress-wrapper {
-    max-width: 640px;
-    margin: 0 auto 24px;
-    padding: 0 20px;
-}
-.progress-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-}
-.progress-counter {
-    font-size: 13px;
-    color: #9CA3AF;
-}
-.progress-track {
-    height: 6px;
-    background: #2D2D44;
-    border-radius: 3px;
-    overflow: hidden;
-}
-.progress-fill {
-    height: 100%;
-    background: var(--eo-orange);
-    border-radius: 3px;
-    transition: width 0.3s ease;
-}
-
-/* Screen Management */
+.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; text-align: center; margin-bottom: 4px; }
+.progress-wrapper { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.progress-meta .section-label { margin-bottom: 0; text-align: left; }
+.progress-counter { font-size: 13px; color: #9CA3AF; font-weight: 500; }
+.progress-track { width: 100%; height: 8px; background: #2D2D44; border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--eo-orange); border-radius: 4px; transition: width var(--eo-transition); width: 0%; }
 .screen { display: none; }
 .screen.active { display: block; }
-
-/* Email Capture */
-.email-capture {
-    max-width: 480px;
-    margin: 60px auto;
-    padding: 0 20px;
-    text-align: center;
-}
-.email-capture h2 {
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 8px;
-}
-.email-capture p {
-    color: #9CA3AF;
-    font-size: 14px;
-    margin-bottom: 24px;
-    line-height: 1.5;
-}
-.email-capture input {
-    width: 100%;
-    padding: 14px 16px;
-    border: 2px solid #2D2D44;
-    border-radius: var(--eo-radius-sm);
-    background: rgba(255,255,255,0.05);
-    color: #fff;
-    font-size: 16px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color var(--eo-transition);
-    margin-bottom: 16px;
-}
-.email-capture input:focus { border-color: var(--eo-orange); }
-.email-capture input::placeholder { color: #6B7280; }
-
-/* Question Card */
-.question-card {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 28px 24px;
-    background: var(--eo-beige);
-    border-radius: var(--eo-radius);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-}
-.question-text {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--eo-dark);
-    margin-bottom: 8px;
-    line-height: 1.4;
-}
-.question-help {
-    font-size: 13px;
-    color: var(--eo-gray-text);
-    margin-bottom: 20px;
-    line-height: 1.5;
-    font-style: italic;
-}
-.options-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.option-card {
-    background: var(--eo-card-bg);
-    border: 2px solid var(--eo-gray-border);
-    border-radius: var(--eo-radius-sm);
-    padding: 16px 20px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--eo-dark);
-    transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
-    user-select: none;
-    line-height: 1.4;
-}
-.option-card:hover {
-    border-color: var(--eo-orange);
-}
-.option-card.selected {
-    background: var(--eo-orange);
-    border-color: var(--eo-orange);
-    color: #FFFFFF;
-}
-.option-card.focused {
-    outline: 2px solid var(--eo-orange);
-    outline-offset: 2px;
-}
-
-/* Free-text Input */
-.freetext-input {
-    width: 100%;
-    padding: 16px;
-    border: 2px solid var(--eo-gray-border);
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 120px;
-    outline: none;
-    transition: border-color var(--eo-transition);
-    color: var(--eo-dark);
-    line-height: 1.5;
-    background: #FFFFFF;
-}
+.auth-capture { max-width: 480px; margin: 60px auto; padding: 40px; text-align: center; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+.auth-capture h2 { font-size: 26px; font-weight: 800; color: #1A1A2E; margin-bottom: 8px; }
+.auth-capture .intro-badge { display: inline-block; background: var(--eo-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 4px; letter-spacing: 0.5px; margin-bottom: 12px; }
+.auth-capture p { color: var(--eo-gray-text); margin-bottom: 24px; font-size: 15px; }
+.auth-capture label { display: block; text-align: left; font-size: 12px; font-weight: 700; color: #1A1A2E; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; margin-top: 16px; }
+.auth-capture input, .auth-capture select { width: 100%; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); color: #1A1A2E; background: var(--eo-card-bg); }
+.auth-capture input:focus, .auth-capture select:focus { border-color: var(--eo-orange); }
+.auth-capture .btn-primary { width: 100%; margin-top: 20px; }
+.question-card { background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); padding: 32px; max-width: 640px; margin: 0 auto; }
+.question-text { font-size: 20px; font-weight: 700; color: var(--eo-orange); text-align: center; margin-bottom: 12px; line-height: 1.35; }
+.question-help { font-size: 13px; color: var(--eo-gray-text); text-align: center; margin-bottom: 20px; line-height: 1.5; font-style: italic; }
+.freetext-input { width: 100%; padding: 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; resize: vertical; min-height: 160px; outline: none; transition: border-color var(--eo-transition); color: #1A1A2E; line-height: 1.5; background: var(--eo-card-bg); }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; font-size: 14px; }
-
-.char-count {
-    text-align: right;
-    font-size: 12px;
-    color: #9CA3AF;
-    margin-top: 6px;
-}
-.char-count.over { color: #EF4444; }
-
-/* Evidence Label */
-.evidence-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--eo-dark);
-    margin-top: 20px;
-    margin-bottom: 8px;
-}
-.evidence-input { min-height: 80px; }
-
-/* Upstream Reference Panel */
-.upstream-ref {
-    background: rgba(233,77,27,0.06);
-    border: 1px solid rgba(233,77,27,0.15);
-    border-radius: var(--eo-radius-sm);
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-.upstream-ref-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: none;
-    border: none;
-    color: var(--eo-orange);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    width: 100%;
-    text-align: left;
-}
-.upstream-ref-toggle .arrow { transition: transform 0.2s; }
-.upstream-ref-toggle.open .arrow { transform: rotate(90deg); }
-.upstream-ref-content {
-    display: none;
-    padding: 0 16px 16px;
-}
-.upstream-ref-content.open { display: block; }
-.upstream-ref-item {
-    margin-bottom: 10px;
-}
-.upstream-ref-item .label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #9CA3AF;
-    margin-bottom: 2px;
-}
-.upstream-ref-item .value {
-    font-size: 13px;
-    color: var(--eo-dark);
-    line-height: 1.4;
-}
-
-/* Nav Buttons */
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 640px;
-    margin: 24px auto 0;
-    padding: 0 20px;
-    gap: 12px;
-}
-.btn {
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    cursor: pointer;
-    transition: all var(--eo-transition);
-    border: none;
-    outline: none;
-}
-.btn-prev {
-    background: transparent;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
-}
+.char-count { text-align: right; font-size: 12px; color: #9CA3AF; margin-top: 6px; }
+.nav-buttons { display: flex; justify-content: space-between; align-items: center; max-width: 640px; margin: 24px auto 0; padding: 0 20px; gap: 12px; }
+.btn { font-family: inherit; font-size: 15px; font-weight: 600; padding: 12px 28px; border-radius: var(--eo-radius-sm); cursor: pointer; transition: all var(--eo-transition); border: none; outline: none; }
+.btn-prev { background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF; }
 .btn-prev:hover { background: rgba(255,255,255,0.15); }
 .btn-prev.hidden { visibility: hidden; pointer-events: none; }
-.btn-next {
-    background: var(--eo-orange);
-    color: #FFFFFF;
-}
+.btn-next { background: var(--eo-orange); color: #FFFFFF; }
 .btn-next:hover { background: #d4441a; }
-.btn-next:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-.btn-primary {
-    background: var(--eo-orange);
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 14px 32px;
-    border: none;
-    border-radius: var(--eo-radius-sm);
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
-}
+.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-primary { background: var(--eo-orange); color: #FFFFFF; font-size: 16px; font-weight: 700; padding: 14px 32px; border: none; border-radius: var(--eo-radius-sm); cursor: pointer; font-family: inherit; transition: all var(--eo-transition); }
 .btn-primary:hover { background: #d4441a; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* Toast */
-.toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: var(--eo-dark);
-    color: #fff;
-    padding: 12px 24px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 14px;
-    font-weight: 500;
-    z-index: 1000;
-    transition: transform 0.4s ease;
-    white-space: nowrap;
-}
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-}
-
-/* Contact Form */
-.contact-screen {
-    max-width: 480px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-.contact-card {
-    background: var(--eo-beige);
-    border-radius: var(--eo-radius);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    padding: 32px;
-}
-.contact-card h2 {
-    font-size: 22px;
-    font-weight: 800;
-    color: var(--eo-dark);
-    text-align: center;
-    margin-bottom: 6px;
-}
-.contact-card .subtitle {
-    font-size: 14px;
-    color: var(--eo-gray-text);
-    text-align: center;
-    margin-bottom: 24px;
-}
-.form-group {
-    margin-bottom: 16px;
-}
-.form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--eo-dark);
-    margin-bottom: 6px;
-}
-.form-group input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 2px solid var(--eo-gray-border);
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-family: inherit;
-    outline: none;
-    transition: border-color var(--eo-transition);
-    color: var(--eo-dark, #1A1A2E);
-    background: #FFFFFF;
-}
-.form-group input:focus { border-color: var(--eo-orange); }
-.contact-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 24px;
-}
-.btn-skip {
-    background: transparent;
-    color: var(--eo-gray-text);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    font-family: inherit;
-    text-decoration: underline;
-}
-
-/* Loading */
-.loading-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(26,26,46,0.9);
-    z-index: 2000;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-}
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--eo-dark); color: #fff; padding: 12px 24px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 500; z-index: 1000; transition: transform 0.4s ease; white-space: nowrap; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.loading-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.9); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
 .loading-overlay.active { display: flex; }
-.spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid #2D2D44;
-    border-top-color: var(--eo-orange);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
+.spinner { width: 48px; height: 48px; border: 4px solid #2D2D44; border-top-color: var(--eo-orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-overlay p { font-size: 16px; font-weight: 500; }
-
-/* Results */
-.results-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 20px 60px;
-}
-.score-hero {
-    text-align: center;
-    padding: 40px 20px 32px;
-}
-.score-circle {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.08);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-}
-.score-circle-inner { text-align: center; }
-.score-number { font-size: 48px; font-weight: 800; display: block; }
-.score-total { font-size: 16px; color: #9CA3AF; }
-.band-label {
-    font-size: 18px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 4px;
-}
-.band-subtitle {
-    font-size: 14px;
-    color: #9CA3AF;
-}
-.band-ready .score-number, .band-ready .band-label { color: #22C55E; }
-.band-partial .score-number, .band-partial .band-label { color: #3B82F6; }
-.band-gaps .score-number, .band-gaps .band-label { color: #F59E0B; }
-.band-startover .score-number, .band-startover .band-label { color: #EF4444; }
-
-/* Pending AI badge */
-.pending-ai-badge {
-    display: inline-block;
-    background: rgba(233,77,27,0.15);
-    color: var(--eo-orange);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-top: 8px;
-}
-
-.results-card {
-    background: rgba(255,255,255,0.06);
-    border-radius: var(--eo-radius);
-    padding: 24px;
-    margin-bottom: 20px;
-}
-.results-card h3 {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: #FFFFFF;
-}
-
-/* Section bars */
-.section-bar-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 14px;
-    gap: 12px;
-}
-.section-bar-label {
-    width: 100px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #D1D5DB;
-    flex-shrink: 0;
-}
-.section-bar-track {
-    flex: 1;
-    height: 12px;
-    background: #2D2D44;
-    border-radius: 6px;
-    overflow: hidden;
-}
-.section-bar-fill {
-    height: 100%;
-    border-radius: 6px;
-    transition: width 0.5s ease;
-}
-.section-bar-score {
-    width: 60px;
-    text-align: right;
-    font-size: 13px;
-    font-weight: 600;
-    color: #D1D5DB;
-    flex-shrink: 0;
-}
-
-/* Recommendations */
-.reco-section { margin-bottom: 16px; }
-.reco-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-.reco-icon { font-size: 16px; }
-.reco-title { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-.reco-list {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 0 24px;
-}
-.reco-list li {
-    position: relative;
-    padding: 4px 0 4px 16px;
-    font-size: 13px;
-    color: #D1D5DB;
-    line-height: 1.5;
-}
-.reco-list li::before {
-    content: '\2022';
-    position: absolute;
-    left: 0;
-    color: var(--eo-orange);
-}
-
-/* AI Section */
-.ai-section {
-    background: rgba(233,77,27,0.08);
-    border: 1px solid rgba(233,77,27,0.2);
-    border-radius: var(--eo-radius);
-    padding: 24px;
-    margin-bottom: 20px;
-}
-.ai-badge {
-    display: inline-block;
-    background: var(--eo-orange);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 16px;
-}
-.ai-section h3 { font-size: 15px; margin-bottom: 8px; }
-.ai-insight { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.6; }
-.ai-plan { margin-bottom: 16px; }
-.ai-plan h4 { font-size: 14px; margin-bottom: 8px; color: var(--eo-orange); }
-.ai-plan ul { margin: 0; padding: 0 0 0 20px; }
-.ai-plan li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-.ai-reco-list { margin: 0; padding: 0 0 0 20px; }
-.ai-reco-list li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
-
-/* Answer Display in Results */
-.answer-block {
-    background: rgba(255,255,255,0.04);
-    border-radius: var(--eo-radius-sm);
-    padding: 16px;
-    margin-bottom: 12px;
-}
-.answer-block .q-label {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--eo-orange);
-    margin-bottom: 4px;
-}
-.answer-block .q-text {
-    font-size: 13px;
-    color: #9CA3AF;
-    margin-bottom: 8px;
-}
-.answer-block .a-text {
-    font-size: 14px;
-    color: #D1D5DB;
-    white-space: pre-wrap;
-    line-height: 1.5;
-}
-.answer-block .a-mc {
-    font-size: 14px;
-    color: #22C55E;
-    font-weight: 600;
-}
-
-/* Prerequisite Gate */
-.prereq-gate {
-    max-width: 480px;
-    margin: 80px auto;
-    padding: 0 20px;
-    text-align: center;
-}
-.prereq-card {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3);
-    border-radius: var(--eo-radius);
-    padding: 40px 32px;
-}
-.prereq-card h2 {
-    color: #EF4444;
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-.prereq-card p {
-    color: #D1D5DB;
-    font-size: 15px;
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-.prereq-card .btn-primary {
-    display: inline-block;
-    text-decoration: none;
-}
-
-/* Gate Warning */
-.gate-warning {
-    background: rgba(239,68,68,0.1);
-    border: 1px solid rgba(239,68,68,0.3);
-    border-radius: var(--eo-radius);
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-.gate-warning h3 { color: #EF4444; font-size: 16px; margin-bottom: 8px; }
-.gate-warning p { color: #D1D5DB; font-size: 14px; }
-
-/* CTA */
-.results-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-top: 32px;
-}
-.results-cta .btn-primary { min-width: 280px; }
-.results-cta .btn-retake {
-    background: transparent;
-    border: 2px solid #FFFFFF;
-    color: #FFFFFF;
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
-    min-width: 280px;
-}
-.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
-.results-cta .btn-download-md {
-    background: transparent;
-    border: 2px solid var(--eo-orange);
-    color: var(--eo-orange);
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
-    min-width: 280px;
-}
-.results-cta .btn-download-md:hover {
-    background: var(--eo-orange);
-    color: #FFFFFF;
-}
-.results-cta .btn-download-pdf {
-    background: transparent;
-    border: 2px solid #6B7280;
-    color: #6B7280;
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
-    min-width: 280px;
-}
-.results-cta .btn-download-pdf:hover {
-    background: #6B7280;
-    color: #FFFFFF;
-}
-
-/* Shake animation */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-6px); }
-    40%, 80% { transform: translateX(6px); }
-}
-.shake { animation: shake 0.4s ease; }
-
-/* Mobile */
+.results-container { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
+.score-hero { text-align: center; padding: 40px 20px 32px; }
+.score-gauge { width: 160px; height: 160px; margin: 0 auto 16px; position: relative; }
+.score-gauge svg { width: 100%; height: 100%; }
+.score-gauge-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
+.score-gauge-number { font-size: 42px; font-weight: 800; display: block; }
+.score-gauge-label { font-size: 12px; color: #9CA3AF; }
+.band-label { font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
+.band-subtitle { font-size: 14px; color: #9CA3AF; }
+.results-card { background: rgba(255,255,255,0.06); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; }
+.results-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #FFFFFF; }
+.polished-card { background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,102,0,0.02)); border: 1px solid rgba(255,102,0,0.2); border-radius: var(--eo-radius); padding: 28px; margin-bottom: 20px; }
+.polished-card h3 { font-size: 15px; font-weight: 700; color: var(--eo-orange); margin-bottom: 12px; }
+.polished-section { margin-bottom: 16px; }
+.polished-section h4 { font-size: 12px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.polished-section p { font-size: 14px; color: #D1D5DB; line-height: 1.6; }
+.sharpen-card { background: rgba(255,255,255,0.04); border-left: 4px solid var(--gold); border-radius: 0 var(--eo-radius-sm) var(--eo-radius-sm) 0; padding: 16px 20px; margin-bottom: 12px; }
+.sharpen-card h4 { font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; }
+.sharpen-card p { font-size: 13px; color: #D1D5DB; line-height: 1.5; }
+.section-bar-row { display: flex; align-items: center; margin-bottom: 14px; gap: 12px; }
+.section-bar-label { width: 120px; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
+.section-bar-track { flex: 1; height: 12px; background: #2D2D44; border-radius: 6px; overflow: hidden; }
+.section-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+.section-bar-score { width: 50px; text-align: right; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
+.results-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
+.btn-download-md { background: transparent; border: 2px solid var(--eo-orange); color: var(--eo-orange); padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
+.btn-download-md:hover { background: var(--eo-orange); color: #FFFFFF; }
+.btn-retake { background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
+.btn-retake:hover { background: rgba(255,255,255,0.15); }
+.engagement-break { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
+.engagement-break-card { background: linear-gradient(135deg, #1a1a1a, #0f0f0f); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 16px 20px; }
+.engagement-break-card p { font-size: 14px; color: #D1D5DB; line-height: 1.6; font-style: italic; }
+.retrieval-banner { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--green); border-radius: var(--eo-radius-sm); padding: 16px 20px; margin-top: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.retrieval-score { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,102,0,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: var(--eo-orange); flex-shrink: 0; }
+.retrieval-info { flex: 1; min-width: 120px; }
+.retrieval-info strong { display: block; font-size: 14px; color: #fff; }
+.retrieval-info span { font-size: 12px; color: #9CA3AF; }
+.retrieval-actions { display: flex; gap: 8px; }
+.retrieval-actions button { padding: 8px 16px; border-radius: var(--eo-radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all var(--eo-transition); }
+.btn-view-results { background: transparent; border: 1px solid var(--eo-orange); color: var(--eo-orange); }
+.btn-view-results:hover { background: var(--eo-orange); color: #fff; }
+.btn-start-fresh { background: var(--eo-orange); color: #fff; }
+.btn-start-fresh:hover { background: #d4441a; }
 @media (max-width: 680px) {
     .question-card { margin: 0 16px; padding: 24px 20px; }
     .nav-buttons { padding: 0 16px; }
     .question-text { font-size: 18px; }
     .progress-wrapper { padding: 0 16px; }
-    .freetext-input { min-height: 100px; }
-}
-@media (max-width: 400px) {
-    .nav-buttons { flex-direction: column; }
-    .btn-prev.hidden { display: none; }
-    .option-card { padding: 14px 16px; font-size: 14px; }
-    .question-text { font-size: 17px; }
+    .auth-capture { margin: 40px 16px; padding: 28px 20px; }
 }
 </style>
 </head>
 <body>
 
-<!-- RTL Toggle -->
 <button class="rtl-toggle" onclick="toggleRTL()">EN / عربي</button>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><p>Generating your ICP analysis...</p></div>
 
-<!-- Loading Overlay -->
-<div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-    <p>Generating your advanced analysis...</p>
-</div>
+<div class="eo-header"><h1>Entrepreneurs <span>Oasis MENA</span></h1></div>
 
-<!-- Header -->
-<div class="eo-header">
-    <h1>Entrepreneurs <span>Oasis MENA</span></h1>
-</div>
-
-<!-- Screen 0: Prerequisite Gate -->
-<div class="screen" id="screenPrereq">
-    <div class="prereq-gate">
-        <div class="prereq-card">
-            <h2>Prerequisite Required</h2>
-            <p>You must complete <strong>Scorecard 1: Project Definition</strong> before starting ICP Clarity.<br><br>The ICP assessment references your niche, positioning, and geography from SC1.</p>
-            <a href="EO-Project-Definition-Scoring.html" class="btn-primary">Go to Project Definition →</a>
-        </div>
+<!-- AUTH SCREEN (Venture Selector) -->
+<div class="screen active" id="screenAuth">
+    <div class="auth-capture">
+        <div class="intro-badge">STEP 2 OF 5</div>
+        <h2>ICP Clarity</h2>
+        <p>6 questions. ~12 minutes. Define your ideal customer.</p>
+        <label>Your Email</label>
+        <input type="email" id="auth-email" placeholder="founder@company.com" autocomplete="email">
+        <button class="btn-primary" onclick="handleEmailEntry()" style="margin-bottom:0">Continue →</button>
+        <div id="venture-selector" style="display:none;margin-top:16px"></div>
+        <div id="auth-error" style="color:var(--red);font-size:13px;margin-top:12px;display:none"></div>
+        <div id="retrieval-banner" style="display:none"></div>
     </div>
 </div>
 
-<!-- Screen 1: Email Capture -->
-<div class="screen" id="screenEmail">
-    <div class="email-capture">
-        <h2>ICP Clarity Scorecard</h2>
-        <p>Build your Ideal Customer Profile through 27 guided questions. Free-text + multiple choice. ~20 minutes.</p>
-        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
-        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
-    </div>
-</div>
-
-<!-- Screen 2: Stepper Questions -->
+<!-- QUESTION SCREEN -->
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: WHO</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 27</div>
+            <div class="section-label" id="sectionLabel">ICP Profile</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 6</div>
         </div>
-        <div class="progress-track">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    <!-- Upstream Reference Panel -->
-    <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
-        <div class="question-help" id="questionHelp" style="display:none;"></div>
-        <div class="options-list" id="optionsList"></div>
+        <div class="question-help" id="questionHelp" style="display:none"></div>
+        <div id="answerArea"></div>
     </div>
     <div class="nav-buttons">
-        <button class="btn btn-prev hidden" id="btnPrev">Previous</button>
-        <button class="btn btn-next" id="btnNext" disabled>Next</button>
+        <button class="btn btn-prev hidden" id="btnPrev" onclick="prevQuestion()">← Previous</button>
+        <button class="btn btn-next" id="btnNext" onclick="nextQuestion()" disabled>Next →</button>
     </div>
 </div>
 
-<!-- Screen 3: Contact Form -->
-<div class="screen" id="screenContact">
-    <div class="contact-screen">
-        <div class="contact-card">
-            <h2>Almost Done!</h2>
-            <p class="subtitle">Get your personalized AI-powered ICP analysis.</p>
-            <div class="form-group">
-                <label>Full Name *</label>
-                <input type="text" id="contactName" placeholder="Your full name" autocomplete="name">
-            </div>
-            <div class="form-group">
-                <label>Email *</label>
-                <input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email">
-            </div>
-            <div class="form-group">
-                <label>Company / Project *</label>
-                <input type="text" id="contactCompany" placeholder="Your company or project name">
-            </div>
-            <div class="contact-actions">
-                <button class="btn-primary" id="btnSubmitContact">Get My Analysis</button>
-                <button class="btn-skip" id="btnSkipContact">Skip and see results</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Screen 4: Results -->
+<!-- RESULTS SCREEN -->
 <div class="screen" id="screenResults">
     <div class="results-container" id="resultsContent"></div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   EO ICP CLARITY SCORING — SCORECARD 2
-   32 Questions | 5 Sections (A-E) | 100 Points
-   Question Types: MC, Free-Text, MC+Evidence
-   Prerequisites: SC1 (Project Definition) completed
-   ═══════════════════════════════════════════════════ */
-(function() {
-    'use strict';
-
-    /* ===================================
-       QUESTION TYPE CONSTANTS
-       =================================== */
-    var Q_MC = 1;
-    var Q_FREETEXT = 2;
-    var Q_MC_EVIDENCE = 3;
-
-    /* ===================================
-       ASSESSMENT CONFIG
-       =================================== */
-    var ASSESSMENT_ID = 'icp-clarity';
-    var ASSESSMENT_TITLE = 'ICP Clarity';
-
-    var SECTIONS = [
-        { id: 'A', name: 'WHO', fullName: 'Dream Customer Profile' },
-        { id: 'B', name: 'PAIN', fullName: 'Pain Statements (Away-From Drivers)' },
-        { id: 'C', name: 'PLEASURE', fullName: 'Pleasure Statements (Toward Drivers)' },
-        { id: 'D', name: 'WHY', fullName: 'Hero Journey' },
-        { id: 'E', name: 'WHERE', fullName: 'Access & Congregation' }
-    ];
-
-    var SECTION_MAXES = { 'A': 25, 'B': 20, 'C': 20, 'D': 20, 'E': 15 };
-
-    var SECTION_NAME_MAP = {
-        'A': 'Dream Customer (WHO)',
-        'B': 'Pain Statements',
-        'C': 'Pleasure Statements',
-        'D': 'Hero Journey (WHY)',
-        'E': 'Access & Congregation (WHERE)'
-    };
-
-    /* ===================================
-       QUESTION DEFINITIONS (32 Questions)
-       =================================== */
-    var allQuestions = [
-        /* ── SECTION A: WHO — Dream Customer Profile (25 pts) ── */
-        {
-            id: 'a1', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'Describe your ideal customer as a specific person. Include: their role/title, company size, industry, geography, and one defining characteristic that makes them YOUR buyer (not just anyone in that role).',
-            help: 'Sharp enough to search on LinkedIn. "Business owners" fails. "Marketing managers at white-label creative agencies in UAE who are drowning in freelancer chaos" works.',
-            placeholder: 'e.g., "Sarah: Head of Operations at a 15-person digital marketing agency in Dubai. She manages 8-12 freelancers. Defining characteristic: technologically savvy but impatient..."',
-            rubric: '5=Sharp LinkedIn-searchable specificity with defining characteristic; 3-4=Specific role+company+industry but missing defining characteristic; 1-2=Generic role without defining characteristic; 0=Blank'
-        },
-        {
-            id: 'a2', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
-            text: 'Walk through a typical workday for your ideal customer. Where do they spend their time? What tools do they use? What frustrates them between 9am and 6pm?',
-            help: 'Include specific tools, time blocks, and clear frustration moments. Vivid enough that you could write a VSL opening scene from it.',
-            placeholder: 'e.g., "Her day starts at 8:30am with 30 minutes of Slack/WhatsApp chaos. 9am-12pm she\'s in design reviews. 1-2pm is catch-up hell..."',
-            rubric: '5=Vivid VSL-ready with tools, time blocks, frustration moments; 3-4=Some behavioral detail with tool mentions; 1-2=Generic day description; 0=Blank'
-        },
-        {
-            id: 'a3', sectionId: 'A', sectionIndex: 0,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'How does this person typically buy solutions like yours? Do they search Google, ask peers, attend events, respond to LinkedIn, use WhatsApp groups? What triggers them to look for a solution?',
-            help: 'Include the trigger (crisis, time-based, event-based), the channels they use, and the timeline from trigger to buying decision.',
-            placeholder: 'e.g., "Peer recommendations via 3 WhatsApp groups. Googles after crisis (missed deadline). Timeline: trigger to decision = 2-3 weeks if pain is acute..."',
-            rubric: '5=Clear buying journey with named triggers, channels, timeline; 3-4=Some channel knowledge but missing trigger or timeline; 1-2=Guessing without specificity; 0=Blank'
-        },
-        {
-            id: 'a4', sectionId: 'A', sectionIndex: 0,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'Who makes the buying decision?',
-            help: 'In MENA B2B, decision authority often involves more stakeholders than expected. Be honest about the approval chain.',
-            options: [
-                { label: 'They decide alone', score: 2 },
-                { label: 'They decide with 1 other person', score: 2 },
-                { label: 'Committee of 3+', score: 2 },
-                { label: 'They influence but don\'t decide', score: 2 }
-            ],
-            evidencePrompt: 'Describe the approval process. Who else is involved, what\'s the timeline, what are the blockers? (75 words)',
-            evidenceRubric: '2.5=Specific approvers named, timeline, blockers; 1=Generic approval process; 0=Vague or missing'
-        },
-        {
-            id: 'a5', sectionId: 'A', sectionIndex: 0,
-            type: Q_MC_EVIDENCE, maxScore: 5,
-            text: 'What\'s their realistic budget for a solution like yours (per month)?',
-            help: 'Budget should be based on evidence: existing spend, conversations, or competitor pricing. Not your assumption.',
-            options: [
-                { label: 'Less than $50/mo', score: 2 },
-                { label: '$50-200/mo', score: 2 },
-                { label: '$200-500/mo', score: 2 },
-                { label: '$500-2000/mo', score: 2 },
-                { label: '$2000+/mo', score: 2 }
-            ],
-            evidencePrompt: 'How do you know this? Existing spend, conversations, competitor pricing, ROI math? (75 words)',
-            evidenceRubric: '2.5=Strong evidence (actual spend data, conversations, competitor pricing); 1=Vague evidence; 0=No evidence'
-        },
-
-        /* ── SECTION B: PAIN STATEMENTS (20 pts, 2 pts each) ── */
-        {
-            id: 'b1', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #1 (HIGHEST urgency): Write a specific pain your ideal customer would say out loud. Something they\'re RUNNING AWAY FROM.',
-            help: 'Write it as a direct quote. Include cost, frequency, or emotion. Not "managing is hard" but "I lose $200/week to scope creep because my contracts don\'t clarify deliverables."',
-            placeholder: 'e.g., "Every Friday I spend 4 hours manually updating our project status spreadsheet because no tool integrates with our chaos..."',
-            rubric: '2=Specific, quotable, includes cost/frequency/emotion; 1=Generic pain with some context; 0=Blank or completely generic'
-        },
-        {
-            id: 'b2', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #2 (HIGH urgency): Another specific pain — different from #1. Should be a different pain axis.',
-            help: 'Avoid repeating the same pain in different words. Cover different areas: time, cost, quality, reputation, control, compliance.',
-            placeholder: 'e.g., "I told a freelancer the deadline was Monday. He delivered Wednesday. Client found out about the delay before I did..."',
-            rubric: '2=Specific, quotable, different axis from #1; 1=Generic with some context; 0=Blank or repeats #1'
-        },
-        {
-            id: 'b3', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #3 (HIGH urgency): A third distinct pain that would trigger buying within 30 days.',
-            help: 'Top 3 pains should be urgent enough that your customer would pay to solve them THIS MONTH.',
-            placeholder: 'e.g., "I have three freelancers ready to work but I can\'t track their quality, so I bottleneck on myself..."',
-            rubric: '2=Specific, quotable, buying-trigger urgency; 1=Generic with some context; 0=Blank or generic'
-        },
-        {
-            id: 'b4', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #4 (MEDIUM urgency): A pain that bothers them weekly but wouldn\'t trigger immediate buying.',
-            help: 'Medium pains create dissatisfaction but not urgency. They reinforce the top pains in your messaging.',
-            placeholder: 'e.g., "My agency processes invoices manually. When a freelancer double-bills me, it takes 2 days to find the original contract..."',
-            rubric: '2=Specific, quotable, clear medium urgency; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b5', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #5 (MEDIUM urgency): Another medium-urgency pain on a different axis.',
-            help: 'Keep diversifying. If your top pains are about communication, try cost, quality, or team dynamics.',
-            placeholder: '',
-            rubric: '2=Specific, different axis; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b6', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #6 (MEDIUM urgency): A pain related to growth, scaling, or quality control.',
-            help: 'Think about what happens when their business grows: what breaks? What costs more?',
-            placeholder: '',
-            rubric: '2=Specific growth/scale pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b7', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #7 (MEDIUM urgency): A pain about visibility, tracking, or decision-making.',
-            help: 'Do they lack data to make decisions? Can they see what\'s happening in real-time?',
-            placeholder: '',
-            rubric: '2=Specific visibility/data pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b8', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #8 (LOWER urgency): A pain they\'d love to solve but wouldn\'t pay extra for alone.',
-            help: 'These become feature-level priorities for your product roadmap, not top-line messaging.',
-            placeholder: '',
-            rubric: '2=Specific lower-urgency pain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b9', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #9 (LOWER urgency): Another lower-priority pain, ideally a different domain.',
-            help: 'Think beyond your core solution. What else keeps them up at night?',
-            placeholder: '',
-            rubric: '2=Specific, different domain; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'b10', sectionId: 'B', sectionIndex: 1,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pain Statement #10 (LOWER urgency): Final pain statement. Review: do your 10 pains cover at least 4 different pain axes?',
-            help: 'Diversity matters. Clustering penalty applies if 8+ are variations of the same theme. Cover: time, cost, quality, reputation, control, compliance.',
-            placeholder: '',
-            rubric: '2=Specific, completes diverse set; 1=Generic; 0=Blank or repeats existing'
-        },
-
-        /* ── SECTION C: PLEASURE STATEMENTS (20 pts, 2 pts each) ── */
-        {
-            id: 'c1', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #1 (STRATEGIC): Write a specific outcome your ideal customer DREAMS about. Something they\'re RUNNING TOWARD.',
-            help: 'Not "more money." Think vivid, aspirational: "I want to know exactly which leads are hot so I call them first and close before my competitor."',
-            placeholder: 'e.g., "Every month I review one report and see exactly which freelancers are delivering on time, on budget, and on quality..."',
-            rubric: '2=Specific, vivid, emotionally resonant; 1=Generic desire with context; 0=Blank or completely generic'
-        },
-        {
-            id: 'c2', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #2 (STRATEGIC): A business-level outcome that impacts revenue, efficiency, or strategy.',
-            help: 'Think about what changes at the business level when their problem is solved.',
-            placeholder: 'e.g., "A freelancer submits work. I give feedback. They iterate once. Done. No back-and-forth hell..."',
-            rubric: '2=Specific, business-level impact; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c3', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #3 (STRATEGIC): An outcome that would make them recommend your product to peers.',
-            help: 'What\'s the "wow moment" they\'d tell a colleague about at a conference?',
-            placeholder: '',
-            rubric: '2=Specific referral-worthy outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c4', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #4 (OPERATIONAL): A day-to-day transformation that reduces friction.',
-            help: 'Think about their daily workflow. What would be different? What would they stop doing?',
-            placeholder: 'e.g., "Friday afternoon I\'m not updating spreadsheets. I\'m thinking about next month\'s strategy..."',
-            rubric: '2=Specific operational transformation; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c5', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #5 (OPERATIONAL): Another operational outcome about increased predictability or control.',
-            help: 'What can they predict or control that they currently can\'t?',
-            placeholder: '',
-            rubric: '2=Specific predictability/control outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c6', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #6 (OPERATIONAL): An outcome about team or collaboration improvement.',
-            help: 'How does the team dynamic change when the problem is solved?',
-            placeholder: '',
-            rubric: '2=Specific team/collaboration outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c7', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #7 (OPERATIONAL): An outcome that directly resolves one of your pain statements.',
-            help: 'Map this to a specific pain from Section B. Each pleasure should resolve a pain.',
-            placeholder: '',
-            rubric: '2=Specific, maps to a pain statement; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c8', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #8 (PERSONAL): How does the founder/user FEEL when the problem is solved? Confidence, relief, pride?',
-            help: 'Not business metrics. Emotional: "I feel like a real CEO, not a firefighter." "I\'m proud to show my team how organized we are."',
-            placeholder: '',
-            rubric: '2=Specific emotional outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c9', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #9 (PERSONAL): Another personal/emotional outcome about identity or reputation.',
-            help: 'Think about how others see them: "known as the founder who built an agency that runs without grinding."',
-            placeholder: '',
-            rubric: '2=Specific identity/reputation outcome; 1=Generic; 0=Blank'
-        },
-        {
-            id: 'c10', sectionId: 'C', sectionIndex: 2,
-            type: Q_FREETEXT, maxScore: 2, wordLimit: 50,
-            text: 'Pleasure Statement #10 (PERSONAL): Final pleasure. Review: do your 10 pleasures cover strategic, operational, AND personal outcomes?',
-            help: 'Like pains, diversity matters. Not all about efficiency — include ambition, pride, and freedom.',
-            placeholder: '',
-            rubric: '2=Specific, completes diverse set; 1=Generic; 0=Blank'
-        },
-
-        /* ── SECTION D: HERO JOURNEY (20 pts) ── */
-        {
-            id: 'd1', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Where is your ideal client RIGHT NOW in their journey? What\'s their situation, frustration level, and what have they already tried?',
-            help: 'Include: current situation (company size, team), frustration temperature (quiet discontent vs. crisis), and specific failed attempts (named tools/approaches).',
-            placeholder: 'e.g., "Sarah is drowning. She\'s manually coordinating 10-12 freelancers via WhatsApp, Slack, and email. She tried Asana (too bulky), Toggl Track (data nightmare)..."',
-            rubric: '5=Vivid VSL opening scene with situation, frustration, failed attempts; 3-4=Some detail but missing elements; 1-2=Vague; 0=Blank'
-        },
-        {
-            id: 'd2', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'What does "success" look like for them after using your solution? Describe their life/business 90 days after adoption.',
-            help: 'Measurable, time-bound, vivid. Could be a testimonial. Include metrics, emotional state, and specific changes.',
-            placeholder: 'e.g., "90 days in: 100% on-time delivery. She sees per-freelancer quality scores at a glance. 10 hours back per month. Thinking about hiring 5 more..."',
-            rubric: '5=Measurable, time-bound, case-study ready; 3-4=Somewhat specific but missing time-bound or metric; 1-2=Vague; 0=Blank'
-        },
-        {
-            id: 'd3', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'What are the 3 biggest obstacles preventing your client from reaching that future state WITHOUT your product? Real blockers, not features you offer.',
-            help: 'Obstacle: "Freelancers work across 4 time zones; can\'t monitor all channels." Feature: "Needs consolidated communication tool." Don\'t conflate them.',
-            placeholder: 'e.g., "1. Context loss across channels (Slack+WhatsApp+email). 2. No performance visibility (gut decisions). 3. Process lives in Sarah\'s head only..."',
-            rubric: '5=3 specific validated obstacles, non-overlapping, not feature-language; 3-4=Real obstacles but generic or overlapping; 1-2=Feature-restating; 0=Blank'
-        },
-        {
-            id: 'd4', sectionId: 'D', sectionIndex: 3,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'How does your product bridge the gap between current state and desired state? Map each obstacle to your specific solution approach.',
-            help: 'Not "we help teams communicate." Map 1:1: Obstacle 1 → your feature X does Y. Obstacle 2 → your feature Z does W.',
-            placeholder: 'e.g., "Obstacle 1 (context loss): All work in one project space + Slack integration. Obstacle 2 (no visibility): Dashboard with per-freelancer metrics..."',
-            rubric: '5=Clear 1:1 obstacle-to-solution mapping with specificity; 3-4=Some mapping but incomplete; 1-2=Generic claims; 0=Blank'
-        },
-
-        /* ── SECTION E: ACCESS & CONGREGATION (15 pts) ── */
-        {
-            id: 'e1', sectionId: 'E', sectionIndex: 4,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'Where does your ideal customer spend time online? List specific platforms, groups, communities, forums, hashtags. Not "LinkedIn" but "LinkedIn group for Dubai real estate brokers (2,400 members)."',
-            help: 'Name at least 3-4 congregation points. For each, estimate membership/activity. MENA founders: WhatsApp groups often have higher trust than LinkedIn.',
-            placeholder: 'e.g., "1. LinkedIn \'MENA Digital Agencies\' group (4K members). 2. WhatsApp groups: \'UAE Marketing Leaders\' (80 people). 3. Slack: \'Freelance Managers\' (350)..."',
-            rubric: '5=Specific groups/communities with membership and relevance; 3-4=Named platforms with some specificity; 1-2=Generic platforms; 0=Blank'
-        },
-        {
-            id: 'e2', sectionId: 'E', sectionIndex: 4,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
-            text: 'Where does your ideal customer gather offline? Events, conferences, associations, meetups, co-working spaces. Be MENA-specific.',
-            help: 'Major MENA events: GITEX, STEP Conf, Flex Events, Arab Startups Conference. Co-working: WeSpace, Hub71, The Bureau. Include frequency and attendee estimates.',
-            placeholder: 'e.g., "1. GITEX (Dubai, October, 170K attendees). 2. STEP Conf (Dubai, April). 3. WeSpace co-working morning sessions..."',
-            rubric: '5=Named events with MENA relevance and frequency; 3-4=Named events but generic; 1-2=Generic; 0=Blank'
-        },
-        {
-            id: 'e3', sectionId: 'E', sectionIndex: 4,
-            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
-            text: 'How will you get in front of 100 potential buyers in the next 30 days? Describe your specific plan with channels, numbers, and timeline.',
-            help: 'Be specific: "LinkedIn outbound to 40 people (2/day), WhatsApp warm intros (15 people), STEP event (25 conversations), referrals (10 intros)." Numbers + channels + timeline.',
-            placeholder: 'e.g., "LinkedIn outbound: 40 people (2/day). WhatsApp network: 15 responses. STEP event: 25 conversations. Referrals: 3 customers × 3 intros = 9..."',
-            rubric: '5=Specific plan with named channels, numbers, timeline, realistic; 3-4=Some channels named but vague on execution; 1-2=Vague; 0=Blank'
-        }
-    ];
-
-    /* ===================================
-       RECOMMENDATIONS BY SECTION
-       =================================== */
-    var RECOMMENDATIONS = {
-        'A': [
-            'Sharpen your customer identity (A1): make it LinkedIn-searchable. Specific role + company size + industry + defining characteristic.',
-            'Write your customer\'s day-in-the-life (A2) with named tools, specific frustration moments, and emotional temperature.',
-            'Document 3 actual buying journeys from conversations: trigger, channels, timeline. Don\'t guess — verify.',
-            'Get on a call with 1-2 prospects and ask: "If you loved this, what would need to happen to sign a contract? Who else?"',
-            'Validate budget with evidence: current spend on alternatives, direct conversations, competitor pricing.'
-        ],
-        'B': [
-            'Each pain should be quotable — something a customer would say in a rant to a friend.',
-            'Ensure diversity: cover at least 4 different pain axes (time, cost, quality, reputation, control, compliance).',
-            'Escalate from surface pains to deep pains: "organizing files is slow" → "clients fired us because we delivered late."',
-            'Top 3 should trigger buying within 30 days. Bottom 3 should be real but lower priority.',
-            'If all 10 pains cluster around one theme, brainstorm 3-5 OTHER problems your customer has.'
-        ],
-        'C': [
-            'Each pleasure should be vivid and aspirational — not absence of pain ("no problems") but positive outcome.',
-            'Ensure diversity: cover strategic outcomes, operational improvements, AND personal/emotional wins.',
-            'Map pleasures to pains: if pain is "miscommunication," pleasure could be "every request is crystal clear, no one asks twice."',
-            'Include at least 2-3 personal/emotional pleasures: confidence, pride, freedom, identity.',
-            'Test: could you use these as benefit statements in your marketing copy?'
-        ],
-        'D': [
-            'Current state (D1) should be vivid enough for a VSL opening scene. Include failed attempts with named tools.',
-            'Future state (D2) should be testimonial-ready: measurable, time-bound, emotionally resonant.',
-            'Obstacles (D3) must be REAL BLOCKERS, not feature requests. Check: are they non-overlapping? Market-validated?',
-            'Solution bridge (D4) should map 1:1 to obstacles. If you can\'t explain how you solve each obstacle, you don\'t yet.'
-        ],
-        'E': [
-            'Go deeper on online congregation: specific groups with membership counts and activity levels.',
-            'Attend at least one offline event you listed and verify: Is your customer there? How many?',
-            'Build a 30-day access plan with specific numbers per channel. Total should reach 100 potential buyers.',
-            'MENA-specific: WhatsApp groups often have higher trust than LinkedIn. Leverage relationship-based channels.'
-        ]
-    };
-
-    /* ===================================
-       STATE
-       =================================== */
-    var STORAGE_KEY = 'eo-icp-clarity';
-    var answers = {};
-    var currentIndex = 0;
-    var autoAdvanceTimer = null;
-    var focusedOptionIndex = -1;
-    var capturedEmail = '';
-    var aiData = null;
-    var upstreamData = null;
-
-    /* ===================================
-       DOM REFS
-       =================================== */
-    var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
-    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
-    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
-    var $loadingOverlay, $resultsContent, $upstreamPanel;
-
-    /* ===================================
-       INIT
-       =================================== */
-    function init() {
-        $sectionLabel = document.getElementById('sectionLabel');
-        $progressCounter = document.getElementById('progressCounter');
-        $progressFill = document.getElementById('progressFill');
-        $questionText = document.getElementById('questionText');
-        $questionHelp = document.getElementById('questionHelp');
-        $optionsList = document.getElementById('optionsList');
-        $questionCard = document.getElementById('questionCard');
-        $btnPrev = document.getElementById('btnPrev');
-        $btnNext = document.getElementById('btnNext');
-        $toast = document.getElementById('toast');
-        $emailInput = document.getElementById('emailInput');
-        $btnStart = document.getElementById('btnStartAssessment');
-        $btnSubmitContact = document.getElementById('btnSubmitContact');
-        $btnSkipContact = document.getElementById('btnSkipContact');
-        $loadingOverlay = document.getElementById('loadingOverlay');
-        $resultsContent = document.getElementById('resultsContent');
-        $upstreamPanel = document.getElementById('upstreamPanel');
-
-        loadAnswers();
-        loadUpstreamData();
-        bindEvents();
-        restoreRTL();
-
-        /* Prerequisite Check */
-        if (!checkPrerequisites()) {
-            showScreen('screenPrereq');
-            return;
-        }
-
-        /* Auto-skip email if already captured */
-        try {
-            var storedEmail = localStorage.getItem('eo_user_email');
-            if (storedEmail) {
-                capturedEmail = storedEmail;
-                if ($emailInput) $emailInput.value = storedEmail;
-                currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
-                showScreen('screenStepper');
-                renderQuestion();
-            }
-        } catch (e) { /* show email screen by default */ }
-    }
-
-    function checkPrerequisites() {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            return status.pd && status.pd.score !== undefined;
-        } catch (e) { return false; }
-    }
-
-    function loadAnswers() {
-        try {
-            var saved = localStorage.getItem(STORAGE_KEY);
-            if (saved) answers = JSON.parse(saved);
-        } catch (e) { answers = {}; }
-    }
-
-    function saveAnswers() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {}
-    }
-
-    function loadUpstreamData() {
-        try {
-            var pdData = localStorage.getItem('eo-project-definition');
-            if (pdData) upstreamData = JSON.parse(pdData);
-        } catch (e) { upstreamData = null; }
-    }
-
-    function findFirstUnanswered() {
-        for (var i = 0; i < allQuestions.length; i++) {
-            var q = allQuestions[i];
-            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
-                if (!(q.id in answers)) return i;
-            } else if (q.type === Q_FREETEXT) {
-                if (!(q.id in answers) || !answers[q.id].trim()) return i;
-            }
-        }
-        return allQuestions.length - 1;
-    }
-
-    /* ===================================
-       EVENT BINDING
-       =================================== */
-    function bindEvents() {
-        $btnStart.addEventListener('click', startAssessment);
-        $btnPrev.addEventListener('click', prevQuestion);
-        $btnNext.addEventListener('click', nextQuestion);
-        $btnSubmitContact.addEventListener('click', submitContact);
-        $btnSkipContact.addEventListener('click', skipContact);
-        $emailInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
-        });
-        document.addEventListener('keydown', handleKeyboard);
-    }
-
-    /* ===================================
-       RTL TOGGLE
-       =================================== */
-    function restoreRTL() {
-        try {
-            if (localStorage.getItem('eo-rtl') === '1') {
-                document.body.classList.add('rtl');
-                document.documentElement.lang = 'ar';
-                document.documentElement.dir = 'rtl';
-            }
-        } catch (e) {}
-    }
-
-    /* ===================================
-       SCREEN NAVIGATION
-       =================================== */
-    function showScreen(id) {
-        var screens = document.querySelectorAll('.screen');
-        for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
-        document.getElementById(id).classList.add('active');
-    }
-
-    function showToast(msg) {
-        $toast.textContent = msg;
-        $toast.classList.add('show');
-        setTimeout(function() { $toast.classList.remove('show'); }, 3000);
-    }
-
-    /* ===================================
-       UPSTREAM REFERENCE PANEL
-       =================================== */
-    function renderUpstreamPanel() {
-        if (!upstreamData) { $upstreamPanel.innerHTML = ''; return; }
-        var niche = upstreamData.niche || upstreamData.b3 || '';
-        var positioning = upstreamData.positioning || upstreamData.c1 || '';
-        var geography = upstreamData.geography || '';
-        var language = upstreamData.language || '';
-
-        if (!niche && !positioning && !geography) { $upstreamPanel.innerHTML = ''; return; }
-
-        var html = '<div class="upstream-ref">';
-        html += '<button class="upstream-ref-toggle" id="upstreamToggle">';
-        html += '<span class="arrow">▶</span> SC1 Reference: Your Project Definition';
-        html += '</button>';
-        html += '<div class="upstream-ref-content" id="upstreamContent">';
-        if (niche) {
-            html += '<div class="upstream-ref-item"><div class="label">Niche</div><div class="value">' + escapeHtml(niche) + '</div></div>';
-        }
-        if (positioning) {
-            html += '<div class="upstream-ref-item"><div class="label">Positioning</div><div class="value">' + escapeHtml(positioning) + '</div></div>';
-        }
-        if (geography) {
-            html += '<div class="upstream-ref-item"><div class="label">Geography</div><div class="value">' + escapeHtml(geography) + '</div></div>';
-        }
-        if (language) {
-            html += '<div class="upstream-ref-item"><div class="label">Language Strategy</div><div class="value">' + escapeHtml(language) + '</div></div>';
-        }
-        html += '</div></div>';
-
-        $upstreamPanel.innerHTML = html;
-
-        document.getElementById('upstreamToggle').addEventListener('click', function() {
-            var content = document.getElementById('upstreamContent');
-            this.classList.toggle('open');
-            content.classList.toggle('open');
-        });
-    }
-
-    /* ===================================
-       EMAIL CAPTURE
-       =================================== */
-    function startAssessment() {
-        var email = $emailInput.value.trim().toLowerCase();
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            $emailInput.style.borderColor = '#EF4444';
-            $emailInput.focus();
-            return;
-        }
-        capturedEmail = email;
-        $emailInput.style.borderColor = '';
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-
-        if (Object.keys(answers).length > 0) {
-            currentIndex = findFirstUnanswered();
-            showToast('Welcome back! Resuming where you left off.');
-        } else {
-            currentIndex = 0;
-        }
-        showScreen('screenStepper');
-        renderQuestion();
-    }
-
-    /* ===================================
-       RENDER QUESTION (supports all 3 types)
-       =================================== */
-    function renderQuestion() {
-        var q = allQuestions[currentIndex];
-        var section = SECTIONS[q.sectionIndex];
-        focusedOptionIndex = -1;
-
-        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' \u2014 ' + section.fullName;
-        $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
-        $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
-        $questionText.textContent = q.text;
-
-        /* Help text */
-        if (q.help) {
-            $questionHelp.textContent = q.help;
-            $questionHelp.style.display = 'block';
-        } else {
-            $questionHelp.style.display = 'none';
-        }
-
-        $optionsList.innerHTML = '';
-
-        /* Show upstream panel in stepper */
-        renderUpstreamPanel();
-
-        if (q.type === Q_FREETEXT) {
-            renderFreetextQuestion(q);
-        } else if (q.type === Q_MC_EVIDENCE) {
-            renderMcEvidenceQuestion(q);
-        } else {
-            renderMcQuestion(q);
-        }
-
-        /* Prev button visibility */
-        if (currentIndex === 0) {
-            $btnPrev.classList.add('hidden');
-        } else {
-            $btnPrev.classList.remove('hidden');
-        }
-
-        /* Next button label */
-        var isLast = currentIndex === allQuestions.length - 1;
-        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
-    }
-
-    function renderMcQuestion(q) {
-        q.options.forEach(function(opt, idx) {
-            var div = document.createElement('div');
-            div.className = 'option-card';
-            div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
-            if (answers[q.id] === idx) div.classList.add('selected');
-            div.addEventListener('click', function() { selectOption(idx); });
-            $optionsList.appendChild(div);
-        });
-        $btnNext.disabled = !(q.id in answers);
-    }
-
-    function renderFreetextQuestion(q) {
-        var ta = document.createElement('textarea');
-        ta.className = 'freetext-input';
-        ta.placeholder = q.placeholder || 'Type your answer here...';
-        ta.rows = q.wordLimit <= 50 ? 3 : 5;
-        ta.value = answers[q.id] || '';
-
-        var charDiv = document.createElement('div');
-        charDiv.className = 'char-count';
-        var wordCount = countWords(ta.value);
-        charDiv.textContent = wordCount + ' / ' + (q.wordLimit || 200) + ' words';
-
-        ta.addEventListener('input', function() {
-            var wc = countWords(ta.value);
-            charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
-            if (wc > (q.wordLimit || 200)) {
-                charDiv.classList.add('over');
-            } else {
-                charDiv.classList.remove('over');
-            }
-            answers[q.id] = ta.value;
-            saveAnswers();
-            $btnNext.disabled = !ta.value.trim();
-        });
-
-        $optionsList.appendChild(ta);
-        $optionsList.appendChild(charDiv);
-        $btnNext.disabled = !(q.id in answers && answers[q.id] && answers[q.id].trim());
-    }
-
-    function renderMcEvidenceQuestion(q) {
-        /* MC part */
-        q.options.forEach(function(opt, idx) {
-            var div = document.createElement('div');
-            div.className = 'option-card';
-            div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
-            if (answers[q.id] === idx) div.classList.add('selected');
-            div.addEventListener('click', function() { selectMcEvidence(idx); });
-            $optionsList.appendChild(div);
-        });
-
-        /* Evidence part */
-        var label = document.createElement('div');
-        label.className = 'evidence-label';
-        label.textContent = q.evidencePrompt || 'Provide supporting evidence:';
-        $optionsList.appendChild(label);
-
-        var ta = document.createElement('textarea');
-        ta.className = 'freetext-input evidence-input';
-        ta.placeholder = 'Share specific examples or evidence...';
-        ta.rows = 3;
-        ta.value = answers[q.id + '_evidence'] || '';
-        ta.addEventListener('input', function() {
-            answers[q.id + '_evidence'] = ta.value;
-            saveAnswers();
-        });
-        $optionsList.appendChild(ta);
-
-        $btnNext.disabled = !(q.id in answers);
-    }
-
-    function selectMcEvidence(idx) {
-        var q = allQuestions[currentIndex];
-        answers[q.id] = idx;
-        saveAnswers();
-        var cards = $optionsList.querySelectorAll('.option-card');
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
-        cards[idx].classList.add('selected');
-        $btnNext.disabled = false;
-        /* No auto-advance for MC+Evidence */
-    }
-
-    function countWords(text) {
-        if (!text || !text.trim()) return 0;
-        return text.trim().split(/\s+/).length;
-    }
-
-    /* ===================================
-       SELECT OPTION (MC only)
-       =================================== */
-    function selectOption(idx) {
-        var q = allQuestions[currentIndex];
-        answers[q.id] = idx;
-        saveAnswers();
-        var cards = $optionsList.querySelectorAll('.option-card');
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
-        cards[idx].classList.add('selected');
-        focusedOptionIndex = idx;
-        $btnNext.disabled = false;
-
-        /* Auto-advance for pure MC only */
-        var isLast = currentIndex === allQuestions.length - 1;
-        if (!isLast) {
-            clearAutoAdvance();
-            autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300);
-        }
-    }
-
-    function clearAutoAdvance() {
-        if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
-    }
-
-    /* ===================================
-       NAVIGATION
-       =================================== */
-    function nextQuestion() {
-        var q = allQuestions[currentIndex];
-        var answered = false;
-        if (q.type === Q_FREETEXT) {
-            answered = q.id in answers && answers[q.id] && answers[q.id].trim();
-        } else {
-            answered = q.id in answers;
-        }
-        if (!answered) {
-            $questionCard.classList.add('shake');
-            setTimeout(function() { $questionCard.classList.remove('shake'); }, 400);
-            return;
-        }
-        if (currentIndex === allQuestions.length - 1) {
-            showScreen('screenContact');
-            if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail;
-            return;
-        }
-        currentIndex++;
-        renderQuestion();
-    }
-
-    function prevQuestion() {
-        clearAutoAdvance();
-        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
-    }
-
-    /* ===================================
-       KEYBOARD
-       =================================== */
-    function handleKeyboard(e) {
-        if (!document.getElementById('screenStepper').classList.contains('active')) return;
-        var q = allQuestions[currentIndex];
-        /* Skip keyboard shortcuts for free-text (user is typing) */
-        if (q.type === Q_FREETEXT || q.type === Q_MC_EVIDENCE) {
-            if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); }
-            return;
-        }
-        var cards = $optionsList.querySelectorAll('.option-card');
-        var numOpts = cards.length;
-        if (numOpts === 0) return;
-        switch (e.key) {
-            case 'ArrowDown': e.preventDefault(); focusedOptionIndex = (focusedOptionIndex + 1) % numOpts; updateFocus(cards); break;
-            case 'ArrowUp': e.preventDefault(); focusedOptionIndex = focusedOptionIndex <= 0 ? numOpts - 1 : focusedOptionIndex - 1; updateFocus(cards); break;
-            case 'Enter': e.preventDefault(); if (focusedOptionIndex >= 0) selectOption(focusedOptionIndex); break;
-            case 'ArrowRight': e.preventDefault(); nextQuestion(); break;
-            case 'ArrowLeft': e.preventDefault(); prevQuestion(); break;
-        }
-    }
-
-    function updateFocus(cards) {
-        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('focused');
-        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) {
-            cards[focusedOptionIndex].classList.add('focused');
-            cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' });
-        }
-    }
-
-    /* ===================================
-       SCORING
-       =================================== */
-    function calculateScores() {
-        var sectionScores = {};
-        var total = 0;
-        var mcTotal = 0;
-        var mcMax = 0;
-        var ftCount = 0;
-        Object.keys(SECTION_MAXES).forEach(function(s) { sectionScores[s] = 0; });
-
-        allQuestions.forEach(function(q) {
-            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
-                if (q.id in answers && q.options) {
-                    var score = q.options[answers[q.id]].score;
-                    sectionScores[q.sectionId] += score;
-                    total += score;
-                    mcTotal += score;
-                }
-                mcMax += q.maxScore;
-            } else if (q.type === Q_FREETEXT) {
-                ftCount++;
-                /* Free-text scored 0 locally — AI scores at export */
-            }
-        });
-        return { sectionScores: sectionScores, total: total, mcTotal: mcTotal, mcMax: mcMax, ftCount: ftCount };
-    }
-
-    function getBand(score) {
-        if (score >= 85) return { label: 'Elite', className: 'band-ready' };
-        if (score >= 70) return { label: 'Strong', className: 'band-partial' };
-        if (score >= 55) return { label: 'Adequate', className: 'band-gaps' };
-        if (score >= 40) return { label: 'Weak', className: 'band-gaps' };
-        return { label: 'Foundational', className: 'band-startover' };
-    }
-
-    function getWebhookBand(score) {
-        if (score >= 85) return 'ELITE';
-        if (score >= 70) return 'STRONG';
-        if (score >= 55) return 'ADEQUATE';
-        if (score >= 40) return 'WEAK';
-        return 'FOUNDATIONAL';
-    }
-
-    function getBarColor(score, max) {
-        var pct = max > 0 ? (score / max) * 100 : 0;
-        if (pct >= 80) return '#22C55E';
-        if (pct >= 60) return '#3B82F6';
-        if (pct >= 40) return '#F59E0B';
-        return '#EF4444';
-    }
-
-    /* ===================================
-       WEBHOOK PAYLOAD
-       =================================== */
-    function buildWebhookPayload(contact) {
-        var result = calculateScores();
-        var answersMap = {};
-        allQuestions.forEach(function(q) {
-            if (q.type === Q_FREETEXT) {
-                answersMap[q.id] = answers[q.id] || '';
-            } else if (q.type === Q_MC_EVIDENCE) {
-                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
-                answersMap[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
-            } else {
-                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
-            }
-        });
-
-        var sectionScoresNamed = {};
-        Object.keys(SECTION_NAME_MAP).forEach(function(key) {
-            sectionScoresNamed[SECTION_NAME_MAP[key]] = result.sectionScores[key] || 0;
-        });
-
-        return {
-            assessment: ASSESSMENT_ID,
-            answers: answersMap,
-            section_scores: sectionScoresNamed,
-            total_score: result.total,
-            mc_score: result.mcTotal,
-            band: getWebhookBand(result.total),
-            upstream: upstreamData ? { niche: upstreamData.niche || '', positioning: upstreamData.positioning || '', geography: upstreamData.geography || '' } : null,
-            contact: contact
-        };
-    }
-
-    /* ===================================
-       CONTACT FORM
-       =================================== */
-    function submitContact() {
-        var nameEl = document.getElementById('contactName');
-        var emailEl = document.getElementById('contactEmail');
-        var companyEl = document.getElementById('contactCompany');
-        var name = nameEl.value.trim();
-        var email = emailEl.value.trim().toLowerCase();
-        var company = companyEl.value.trim();
-
-        var valid = true;
-        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
-        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
-        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
-        if (!valid) return;
-
-        capturedEmail = email;
-        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
-        var contact = { name: name, email: email, company: company };
-        var payload = buildWebhookPayload(contact);
-
-        $loadingOverlay.classList.add('active');
-
-        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-clarity', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        })
-        .then(function(resp) { return resp.json(); })
-        .then(function(data) {
-            aiData = data;
-            $loadingOverlay.classList.remove('active');
-            showResults();
-        })
-        .catch(function() {
-            $loadingOverlay.classList.remove('active');
-            showResults();
-        });
-    }
-
-    function skipContact() {
-        aiData = null;
-        showResults();
-    }
-
-    /* ===================================
-       RESULTS DISPLAY
-       =================================== */
-    function saveCompletionStatus(scoreId, score) {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
-            localStorage.setItem('eo_completion_status', JSON.stringify(status));
-        } catch (e) {}
-    }
-
-    function showResults() {
-        var result = calculateScores();
-        var sectionScores = result.sectionScores;
-        var total = result.mcTotal;
-        var band = getBand(total);
-
-        /* Save for dashboard */
-        saveCompletionStatus('icp', total);
-
-        /* Store all answers for downstream scorecards */
-        try {
-            var downstream = {};
-            allQuestions.forEach(function(q) {
-                if (q.type === Q_FREETEXT) {
-                    downstream[q.id] = answers[q.id] || '';
-                } else if (q.type === Q_MC_EVIDENCE) {
-                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
-                    downstream[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
-                } else if (q.type === Q_MC) {
-                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
-                }
-            });
-            /* Named fields for easy downstream access */
-            downstream.customer_identity = answers['a1'] || '';
-            downstream.day_in_life = answers['a2'] || '';
-            downstream.buying_behavior = answers['a3'] || '';
-            downstream.decision_authority = answers['a4'] !== undefined ? allQuestions.find(function(q) { return q.id === 'a4'; }).options[answers['a4']].label : '';
-            downstream.budget = answers['a5'] !== undefined ? allQuestions.find(function(q) { return q.id === 'a5'; }).options[answers['a5']].label : '';
-            downstream.pain_statements = [];
-            for (var pi = 1; pi <= 10; pi++) {
-                downstream.pain_statements.push(answers['b' + pi] || '');
-            }
-            downstream.pleasure_statements = [];
-            for (var pli = 1; pli <= 10; pli++) {
-                downstream.pleasure_statements.push(answers['c' + pli] || '');
-            }
-            downstream.current_state = answers['d1'] || '';
-            downstream.future_state = answers['d2'] || '';
-            downstream.obstacles = answers['d3'] || '';
-            downstream.solution_bridge = answers['d4'] || '';
-            downstream.online_congregation = answers['e1'] || '';
-            downstream.offline_congregation = answers['e2'] || '';
-            downstream.access_strategy = answers['e3'] || '';
-            localStorage.setItem('eo-icp-clarity', JSON.stringify(downstream));
-        } catch (e) {}
-
-        var html = '';
-
-        /* Score Hero */
-        html += '<div class="score-hero ' + band.className + '">';
-        html += '<div class="score-circle"><div class="score-circle-inner">';
-        html += '<span class="score-number">' + total + '</span>';
-        html += '<span class="score-total">/ ' + result.mcMax + '</span>';
-        html += '</div></div>';
-        html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">ICP Clarity MC Score</div>';
-        if (result.ftCount > 0) {
-            html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>';
-        }
-        html += '</div>';
-
-        /* Section Breakdown */
-        html += '<div class="results-card"><h3>Section Breakdown</h3>';
-        var sectionOrder = ['A', 'B', 'C', 'D', 'E'];
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var color = getBarColor(score, max);
-            html += '<div class="section-bar-row">';
-            html += '<div class="section-bar-label">' + sec.name + '</div>';
-            html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
-            html += '<div class="section-bar-score">' + score + ' / ' + max + '</div>';
-            html += '</div>';
-        });
-        html += '</div>';
-
-        /* Answers Summary */
-        html += '<div class="results-card"><h3>Your Answers</h3>';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            html += '<h4 style="font-size:14px;color:var(--eo-orange);margin:16px 0 8px;">Section ' + sid + ': ' + sec.fullName + '</h4>';
-            allQuestions.forEach(function(q) {
-                if (q.sectionId !== sid) return;
-                html += '<div class="answer-block">';
-                html += '<div class="q-label">' + q.id.toUpperCase() + '</div>';
-                html += '<div class="q-text">' + escapeHtml(q.text) + '</div>';
-                if (q.type === Q_FREETEXT) {
-                    html += '<div class="a-text">' + escapeHtml(answers[q.id] || '(No answer)') + '</div>';
-                } else if (q.type === Q_MC_EVIDENCE) {
-                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
-                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
-                    if (answers[q.id + '_evidence']) {
-                        html += '<div class="a-text" style="margin-top:8px;font-size:13px;"><strong>Evidence:</strong> ' + escapeHtml(answers[q.id + '_evidence']) + '</div>';
-                    }
-                } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    html += '<div class="a-mc">' + (opt2 ? escapeHtml(opt2.label) + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
-                }
-                html += '</div>';
-            });
-        });
-        html += '</div>';
-
-        /* Recommendations */
-        html += '<div class="results-card"><h3>Recommendations by Section</h3>';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var icon = pct >= 80 ? '\u2705' : pct >= 60 ? '\uD83D\uDFE1' : '\u26A0\uFE0F';
-            html += '<div class="reco-section">';
-            html += '<div class="reco-header"><span class="reco-icon">' + icon + '</span>';
-            html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')</span></div>';
-            if (RECOMMENDATIONS[sid]) {
-                html += '<ul class="reco-list">';
-                RECOMMENDATIONS[sid].forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; });
-                html += '</ul>';
-            }
-            html += '</div>';
-        });
-        html += '</div>';
-
-        /* AI Section */
-        if (aiData) {
-            html += '<div class="ai-section">';
-            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
-            if (aiData.key_insight || aiData.keyInsight) {
-                html += '<h3>Key Insight</h3><p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
-            }
-            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
-                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                html += '<div class="ai-plan"><h4>30-Day Action Plan</h4>';
-                if (typeof plan === 'string') { html += '<p>' + escapeHtml(plan) + '</p>'; }
-                else if (Array.isArray(plan)) { html += '<ul>'; plan.forEach(function(item) { html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>'; }); html += '</ul>'; }
-                html += '</div>';
-            }
-            if (aiData.consistency_flags || aiData.consistencyFlags) {
-                var flags = aiData.consistency_flags || aiData.consistencyFlags;
-                html += '<h3>Consistency Flags (SC1 vs SC2)</h3><ul class="ai-reco-list">';
-                if (Array.isArray(flags)) { flags.forEach(function(f) { html += '<li>' + escapeHtml(typeof f === 'string' ? f : (f.text || f.flag || JSON.stringify(f))) + '</li>'; }); }
-                html += '</ul>';
-            }
-            if (aiData.recommendations || aiData.ai_recommendations) {
-                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
-                html += '<h3>AI Recommendations</h3><ul class="ai-reco-list">';
-                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>'; }); }
-                html += '</ul>';
-            }
-            html += '</div>';
-        }
-
-        /* Next Steps — Claude Integration */
-        html += '<div class="results-card" style="border-left:4px solid var(--eo-orange);padding-left:20px;margin-top:24px;">';
-        html += '<h3 style="color:var(--eo-orange);margin-bottom:12px;">🚀 Next Step: Feed This Into Claude</h3>';
-        html += '<p style="color:var(--eo-dark);font-size:14px;line-height:1.7;margin-bottom:8px;">Download the MD file below and upload it to your <strong>Claude Project</strong>. The file contains everything Claude needs to help you:</p>';
-        html += '<ul style="color:var(--eo-dark);font-size:14px;line-height:1.9;list-style:disc;padding-left:20px;margin-bottom:12px;">';
-        html += '<li>Deepen your ICP understanding with sharper persona details</li>';
-        html += '<li>Refine pain statements and buying triggers</li>';
-        html += '<li>Generate ICP-based outbound messaging angles</li>';
-        html += '<li>Build your Hero Journey narrative for content</li>';
-        html += '</ul>';
-        html += '<p style="color:var(--eo-gray-text);font-size:13px;">This MD file feeds into your Claude Project alongside your Project Definition results.</p>';
-        html += '</div>';
-
-        /* CTAs */
-        html += '<div class="results-cta">';
-        html += '<button class="btn-download-md" id="btnDownloadMd" style="font-size:16px;padding:14px 28px;">⬇️ Download Results (MD) — Feed Into Claude</button>';
-        html += '<a href="EO-Market-Attractiveness-Scoring.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Next: Market Attractiveness →</a>';
-        html += '<a href="EO-Assessment-Dashboard.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;background:transparent;border:2px solid var(--eo-orange);color:var(--eo-orange);">Go to Dashboard</a>';
-        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
-        html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
-        html += '</div>';
-
-        $resultsContent.innerHTML = html;
-        showScreen('screenResults');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
-        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
-        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
-    }
-
-    function escapeHtml(text) {
-        var div = document.createElement('div');
-        div.appendChild(document.createTextNode(text));
-        return div.innerHTML;
-    }
-
-    /* ===================================
-       MARKDOWN EXPORT
-       =================================== */
-    function generateMarkdownExport() {
-        var result = calculateScores();
-        var sectionScores = result.sectionScores;
-        var today = new Date();
-        var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-        var band = getBand(result.mcTotal);
-
-        var md = '';
-        md += '# ICP Clarity Scorecard Results\n\n';
-        md += '**Student:** ' + capturedEmail + '\n';
-        md += '**Date:** ' + dateStr + '\n';
-        md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
-        md += '**Free-text questions:** ' + result.ftCount + ' (pending AI review)\n\n';
-
-        /* Upstream Reference */
-        if (upstreamData) {
-            md += '**SC1 Reference:** Niche: ' + (upstreamData.niche || 'N/A') + ' | Positioning: ' + (upstreamData.positioning || 'N/A') + ' | Geography: ' + (upstreamData.geography || 'N/A') + '\n\n';
-        }
-        md += '---\n\n';
-
-        /* Section Breakdown */
-        md += '## Section Breakdown\n\n';
-        var sectionOrder = ['A', 'B', 'C', 'D', 'E'];
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
-            var strength = pct >= 80 ? '\u2705 Strong' : pct >= 60 ? '\uD83D\uDFE1 Needs Work' : '\u26A0\uFE0F Weak';
-            md += '- **' + sec.name + ': ' + sec.fullName + '** \u2014 ' + score + '/' + max + ' (' + pct + '%) ' + strength + '\n';
-        });
-        md += '\n---\n\n';
-
-        /* Full Answers by Section */
-        md += '## Answers\n\n';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';
-            allQuestions.forEach(function(q) {
-                if (q.sectionId !== sid) return;
-                md += '**' + q.id.toUpperCase() + '.** ' + q.text + '\n\n';
-                if (q.type === Q_FREETEXT) {
-                    md += '> ' + (answers[q.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
-                    if (q.rubric) md += '_Rubric: ' + q.rubric + '_\n\n';
-                } else if (q.type === Q_MC_EVIDENCE) {
-                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
-                    if (answers[q.id + '_evidence']) {
-                        md += '**Evidence:** ' + answers[q.id + '_evidence'] + '\n\n';
-                    }
-                    if (q.evidenceRubric) md += '_Evidence Rubric: ' + q.evidenceRubric + '_\n\n';
-                } else {
-                    var opt2 = q.id in answers ? q.options[answers[q.id]] : null;
-                    md += '\u2192 **Selected:** ' + (opt2 ? opt2.label + ' (Score: ' + opt2.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
-                }
-            });
-        });
-
-        /* Recommendations */
-        md += '---\n\n## Recommendations\n\n';
-        sectionOrder.forEach(function(sid) {
-            var sec = null;
-            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
-            var score = sectionScores[sid] || 0;
-            var max = SECTION_MAXES[sid];
-            md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')\n\n';
-            if (RECOMMENDATIONS[sid]) {
-                RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
-            }
-            md += '\n';
-        });
-
-        /* AI Analysis */
-        if (aiData) {
-            md += '---\n\n## Advanced Analysis\n\n';
-            if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
-            if (aiData.consistency_flags || aiData.consistencyFlags) {
-                var flags = aiData.consistency_flags || aiData.consistencyFlags;
-                md += '### Consistency Flags\n\n';
-                if (Array.isArray(flags)) { flags.forEach(function(f) { md += '- ' + (typeof f === 'string' ? f : (f.text || f.flag || JSON.stringify(f))) + '\n'; }); md += '\n'; }
-            }
-            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
-                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
-                md += '### 30-Day Action Plan\n\n';
-                if (typeof plan === 'string') md += plan + '\n\n';
-                else if (Array.isArray(plan)) { plan.forEach(function(item) { md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n'; }); md += '\n'; }
-            }
-            if (aiData.recommendations || aiData.ai_recommendations) {
-                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
-                md += '### AI Recommendations\n\n';
-                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n'; }); md += '\n'; }
-            }
-        }
-
-        /* AI Scoring Instructions */
-        md += '---\n\n## AI Scoring Instructions\n\n';
-        md += 'To score the free-text answers, copy this file into Claude.ai along with:\n';
-        md += '- `icp-clarity-scoring/SKILL.md`\n\n';
-        md += 'Ask: "Score these ICP Clarity answers using the rubric provided. Include set-level evaluation for Sections B and C (Pain/Pleasure). Return section scores and total."\n\n';
-        md += '### Special Scoring Notes\n\n';
-        md += '- **Section B (Pain):** Score each statement 0-2, then evaluate set-level: diversity, escalation, ICP consistency. Bonuses/penalties per SKILL.md.\n';
-        md += '- **Section C (Pleasure):** Score each statement 0-2, then evaluate set-level: specificity escalation, pain-pleasure mapping, ICP consistency.\n';
-        md += '- **Consistency Engine:** Check for contradictions between SC1 outputs and ICP answers.\n\n';
-
-        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'icp-clarity-results-' + dateStr + '.md';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
-
-    /* ===================================
-       PDF EXPORT (Print-Friendly Div)
-       =================================== */
-    function generatePdfExport() {
-        var printDiv = document.createElement('div');
-        printDiv.id = 'pdfPrintContainer';
-        printDiv.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;background:#FFFFFF;color:#1A1A2E;padding:40px;font-family:Inter,sans-serif;';
-
-        var source = document.getElementById('resultsContent');
-        if (!source) return;
-        var clone = source.cloneNode(true);
-
-        /* Convert textareas to styled divs */
-        var tas = clone.querySelectorAll('textarea');
-        for (var i = 0; i < tas.length; i++) {
-            var div = document.createElement('div');
-            div.style.cssText = 'border:1px solid #E5E7EB;border-radius:8px;padding:12px;min-height:40px;white-space:pre-wrap;font-size:14px;color:#1A1A2E;background:#F9FAFB;margin-bottom:8px;';
-            div.textContent = tas[i].value || '(No response)';
-            tas[i].parentNode.replaceChild(div, tas[i]);
-        }
-
-        /* Fix colors for PDF readability */
-        clone.style.color = '#1A1A2E';
-        var allEls = clone.querySelectorAll('*');
-        for (var j = 0; j < allEls.length; j++) {
-            var el = allEls[j];
-            var cs = el.currentStyle || window.getComputedStyle(el);
-            if (cs.color === 'rgb(255, 255, 255)' || cs.color === '#ffffff' || cs.color === '#FFFFFF') {
-                el.style.color = '#1A1A2E';
-            }
-            if (cs.backgroundColor && cs.backgroundColor.indexOf('26, 26, 46') !== -1) {
-                el.style.backgroundColor = '#FFFFFF';
-            }
-        }
-
-        printDiv.appendChild(clone);
-        document.body.appendChild(printDiv);
-
-        var dateStr = new Date().toISOString().split('T')[0];
-        var opt = {
-            margin: [10, 10, 10, 10],
-            filename: 'icp-clarity-results-' + dateStr + '.pdf',
-            image: { type: 'jpeg', quality: 0.95 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-        };
-
-        html2pdf().set(opt).from(printDiv).save().then(function() {
-            document.body.removeChild(printDiv);
-        }).catch(function() {
-            try { document.body.removeChild(printDiv); } catch (e) {}
-        });
-    }
-
-    /* ===================================
-       RETAKE
-       =================================== */
-    function retakeAssessment() {
-        answers = {};
-        currentIndex = 0;
-        aiData = null;
-        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-        $emailInput.value = '';
-        showScreen('screenEmail');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    /* ===================================
-       BOOT
-       =================================== */
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-
-})();
-
-/* RTL Toggle (global scope) */
-function toggleRTL() {
-    document.body.classList.toggle('rtl');
-    var isRTL = document.body.classList.contains('rtl');
-    document.documentElement.lang = isRTL ? 'ar' : 'en';
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-    try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
+// === SHARED PATTERNS ===
+function slugify(text) { return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, ''); }
+function getVentures(email) { try { return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]'); } catch(e) { return []; } }
+function saveVenture(email, vn) { var slug = slugify(vn); if (slug.length < 2) slug = 'venture-' + Date.now().toString(36); var v = getVentures(email); var ex = v.find(function(x){return x.venture_slug===slug;}); if (ex) { ex.last_active = new Date().toISOString().split('T')[0]; localStorage.setItem('eo_ventures_'+email, JSON.stringify(v)); return {venture_name:ex.venture_name,venture_slug:slug,isNew:false}; } var nv = {venture_name:vn.trim(),venture_slug:slug,created_at:new Date().toISOString().split('T')[0],last_active:new Date().toISOString().split('T')[0]}; v.push(nv); localStorage.setItem('eo_ventures_'+email,JSON.stringify(v)); return {venture_name:nv.venture_name,venture_slug:slug,isNew:true}; }
+function updateVentureActivity(email, slug) { var v = getVentures(email); var f = v.find(function(x){return x.venture_slug===slug;}); if(f){f.last_active=new Date().toISOString().split('T')[0];localStorage.setItem('eo_ventures_'+email,JSON.stringify(v));} }
+function storageKey(type, sc, email, slug) { return 'eo_sc'+sc+'_'+type+'_'+email+'_'+slug; }
+function getScores(email, slug) { try { return JSON.parse(localStorage.getItem('eo_scores_'+email+'_'+slug)||'{}'); } catch(e){return {};} }
+function saveScore(email, slug, sc, score) { var s=getScores(email,slug);s['sc'+sc]=score;localStorage.setItem('eo_scores_'+email+'_'+slug,JSON.stringify(s)); }
+function getUpstreamAnswers(sc, email, slug) { try{return JSON.parse(localStorage.getItem(storageKey('answers',sc,email,slug))||'{}');}catch(e){return {};} }
+function getUpstreamResult(sc, email, slug) { try{return JSON.parse(localStorage.getItem(storageKey('result',sc,email,slug))||'null');}catch(e){return null;} }
+function showError(msg) { var el=document.getElementById('auth-error');el.innerHTML=msg;el.style.display='block';setTimeout(function(){el.style.display='none';},8000); }
+
+// Migration
+(function(){for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k){var m=k.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/);if(m){var p={};try{p=JSON.parse(localStorage.getItem('eo_migration_pending')||'{}');}catch(e){}if(!p[m[2]])p[m[2]]=[];if(p[m[2]].indexOf(parseInt(m[1]))===-1)p[m[2]].push(parseInt(m[1]));localStorage.setItem('eo_migration_pending',JSON.stringify(p));}}}})();
+
+// === STATE ===
+var SC_NUMBER = 2;
+var userEmail = '', ventureSlug = '', ventureName = '';
+var currentQ = 0, answers = {};
+
+var questions = [
+  { id: 'who', section: 'Who They Are', text: "Describe your ideal customer as a real person — their role, company size, industry, daily frustrations, and how they currently solve the problem you're targeting.", help: "Be as specific as possible. Think of one actual person you've talked to or researched.", placeholder: "Head of sales at a mid-size real estate brokerage in Dubai, managing 8-15 agents, spending 3 hours/day manually assigning leads from Property Finder and Bayut..." },
+  { id: 'pain', section: 'Pain Points', text: "What are the top 3 pains your ICP feels? For each: how urgent is it, how often does it happen, and what does it cost them (time, money, reputation)?", help: "Quantify the pain. Use numbers, frequency, and consequences.", placeholder: "1. Lead leakage — 30% of inbound leads go unassigned. Costs ~AED 50K/month in lost commissions. Happens daily.\n2. No visibility — owners can't see agent performance. Costs trust + retention. Weekly frustration.\n3. WhatsApp chaos — leads scattered across 5+ agent phones. No centralized view. Daily pain.", engagement: "Good — you know your buyer. Let's go deeper on their motivations." },
+  { id: 'dream', section: 'Dream Outcome', text: "What does 'success' look like for your ICP after using your product? Describe their dream outcome — both the business result and how it makes them feel.", help: "Think beyond the feature. What transformation does your product enable?", placeholder: "Every lead is auto-assigned in 30 seconds. Owner sees a real-time leaderboard. Close rate goes from 8% to 15%. The owner feels in control for the first time — no more chasing agents for updates..." },
+  { id: 'journey', section: 'Current Journey', text: "Where is your ICP right now in their journey? What's their current state, what obstacles block them, and how does your product bridge the gap to their dream outcome?", help: "Map the transformation: Current State → Obstacles → Your Solution → Dream Outcome.", placeholder: "Current: Using WhatsApp + Excel. Obstacles: No budget for enterprise CRM, don't trust generic tools, need Arabic UI. Our product bridges this: simple, Arabic-first, WhatsApp-integrated, priced for mid-market (AED 500/mo)...", engagement: "Clear transformation path. Now let's figure out where to find them." },
+  { id: 'access', section: 'Access Channels', text: "Where do you find these people? List their online congregation points (LinkedIn groups, forums, communities) and offline gathering spots (events, associations, coworking).", help: "Name specific groups, events, or platforms. The more concrete, the better.", placeholder: "LinkedIn: Dubai Real Estate Professionals (12K members), UAE Property Managers group. Events: Cityscape Dubai, RERA workshops. Offline: Dubai Land Department seminars, brokerage owner meetups at in5..." },
+  { id: 'validation', section: 'Validation Plan', text: "How will you reach 100 potential buyers in the next 30 days? Be specific: which channels, what message, what offer.", help: "This is your 30-day action plan for ICP validation. Be concrete about numbers and timeline.", placeholder: "Week 1-2: DM 50 brokerage owners on LinkedIn with a free audit offer. Week 3: Host a 'Lead Management for Brokerages' webinar (target 30 registrations). Week 4: Visit 20 brokerages in Business Bay with a live demo on iPad..." }
+];
+
+// === AUTH (Venture Selector) ===
+function handleEmailEntry() {
+  var email = document.getElementById('auth-email').value.trim().toLowerCase();
+  if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
+  userEmail = email;
+  localStorage.setItem('eo_user_email', email);
+  var ventures = getVentures(email);
+  if (ventures.length === 0) {
+    showError('No assessment found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Complete Step 1 first →</a>');
+    return;
+  }
+  if (ventures.length === 1) { selectVenture(ventures[0]); }
+  else { showVentureSelector(ventures); }
 }
+
+function showVentureSelector(ventures) {
+  var sel = document.getElementById('venture-selector');
+  sel.innerHTML = '<label style="margin-top:0">Select Venture</label><select id="venture-select" style="width:100%;padding:14px 16px;border:2px solid var(--eo-gray-border);border-radius:var(--eo-radius-sm);font-size:15px;font-family:inherit;color:#1A1A2E;background:var(--eo-card-bg)" onchange="handleVentureSelect()"><option value="">— Choose your venture —</option>' +
+    ventures.map(function(v){return '<option value="'+v.venture_slug+'">'+v.venture_name+'</option>';}).join('') + '</select>';
+  sel.style.display = 'block';
+}
+
+function handleVentureSelect() {
+  var slug = document.getElementById('venture-select').value;
+  if (!slug) return;
+  var v = getVentures(userEmail).find(function(x){return x.venture_slug===slug;});
+  if (v) selectVenture(v);
+}
+
+function selectVenture(venture) {
+  ventureSlug = venture.venture_slug;
+  ventureName = venture.venture_name;
+  updateVentureActivity(userEmail, ventureSlug);
+  var existingResult = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+  if (existingResult) { showRetrievalBanner(existingResult); }
+  else { checkPrerequisites(); }
+}
+
+function checkPrerequisites() {
+  var scores = getScores(userEmail, ventureSlug);
+  if (!scores.sc1 && scores.sc1 !== 0) {
+    showError('Please complete <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Project Definition</a> first.');
+    return;
+  }
+  startQuestions();
+}
+
+function showRetrievalBanner(result) {
+  var banner = document.getElementById('retrieval-banner');
+  banner.innerHTML = '<div class="retrieval-banner"><div class="retrieval-score">'+(result.score||'?')+'</div><div class="retrieval-info"><strong>Previously Completed</strong><span>'+(result.band||'')+' — '+(result.completed_at||'')+'</span></div><div class="retrieval-actions"><button class="btn-view-results" onclick="viewPreviousResults()">View Results</button><button class="btn-start-fresh" onclick="startFresh()">Start Fresh</button></div></div>';
+  banner.style.display = 'block';
+}
+function viewPreviousResults() { var r=getUpstreamResult(SC_NUMBER,userEmail,ventureSlug); if(r) renderResults(r); }
+function startFresh() { localStorage.removeItem(storageKey('answers',SC_NUMBER,userEmail,ventureSlug)); localStorage.removeItem(storageKey('result',SC_NUMBER,userEmail,ventureSlug)); document.getElementById('retrieval-banner').style.display='none'; startQuestions(); }
+
+// === QUESTIONS ===
+function startQuestions() {
+  try { var saved=JSON.parse(localStorage.getItem(storageKey('answers',SC_NUMBER,userEmail,ventureSlug))||'{}'); if(saved&&Object.keys(saved).length>0) answers=saved; } catch(e){}
+  showScreen('screenStepper'); currentQ=0; renderQuestion();
+}
+
+function renderQuestion() {
+  var q = questions[currentQ];
+  document.getElementById('sectionLabel').textContent = q.section;
+  document.getElementById('progressCounter').textContent = 'Question '+(currentQ+1)+' of '+questions.length;
+  document.getElementById('progressFill').style.width = ((currentQ+1)/questions.length*100)+'%';
+  document.getElementById('questionText').textContent = q.text;
+  if (q.help) { document.getElementById('questionHelp').textContent=q.help; document.getElementById('questionHelp').style.display='block'; } else { document.getElementById('questionHelp').style.display='none'; }
+  var engSlot = document.getElementById('engagementSlot');
+  engSlot.innerHTML = q.engagement ? '<div class="engagement-break"><div class="engagement-break-card"><p>'+q.engagement+'</p></div></div>' : '';
+  var area = document.getElementById('answerArea');
+  var savedVal = answers[q.id]||'';
+  area.innerHTML = '<textarea class="freetext-input" id="currentAnswer" placeholder="'+(q.placeholder||'')+'" oninput="handleInput()">'+escapeHtml(savedVal)+'</textarea><div class="char-count" id="charCount">'+countWords(savedVal)+' words</div>';
+  setTimeout(function(){document.getElementById('currentAnswer').focus();},100);
+  document.getElementById('btnPrev').className = currentQ===0?'btn btn-prev hidden':'btn btn-prev';
+  updateNextBtn();
+}
+
+function handleInput() { var v=document.getElementById('currentAnswer').value; document.getElementById('charCount').textContent=countWords(v)+' words'; updateNextBtn(); }
+function updateNextBtn() { var v=document.getElementById('currentAnswer').value.trim(); document.getElementById('btnNext').disabled=v.length<10; document.getElementById('btnNext').textContent=currentQ===questions.length-1?'See Results →':'Next →'; }
+
+function nextQuestion() {
+  var val=document.getElementById('currentAnswer').value.trim();
+  if(val.length<10)return;
+  answers[questions[currentQ].id]=val;
+  saveAnswersToStorage();
+  if(currentQ<questions.length-1){currentQ++;renderQuestion();window.scrollTo({top:0,behavior:'smooth'});}
+  else{finishAssessment();}
+}
+function prevQuestion() { if(currentQ>0){var v=document.getElementById('currentAnswer').value.trim();if(v)answers[questions[currentQ].id]=v;saveAnswersToStorage();currentQ--;renderQuestion();window.scrollTo({top:0,behavior:'smooth'});} }
+function saveAnswersToStorage() { localStorage.setItem(storageKey('answers',SC_NUMBER,userEmail,ventureSlug),JSON.stringify(answers)); }
+
+// === SCORING ===
+function scoreAnswer(text) {
+  var score=30,words=countWords(text);
+  if(words>=20)score+=5;if(words>=50)score+=5;if(words>=100)score+=10;if(words>=150)score+=5;
+  var sp=0;
+  if(/\d+/.test(text))sp+=8;if(/\$|\bUSD|\bAED|\bSAR/.test(text))sp+=5;
+  if(/\b(dubai|abu dhabi|riyadh|jeddah|cairo|bahrain|kuwait|oman|qatar|saudi|uae|emirates|mena|gulf|gcc)\b/i.test(text))sp+=8;
+  if(/\b(whatsapp|arabic|ramadan)\b/i.test(text))sp+=5;
+  if(/\b(interview|survey|pilot|tested|validated|customers? told|feedback)\b/i.test(text))sp+=8;
+  if(/\b(linkedin|twitter|facebook|community|forum|event|meetup|conference)\b/i.test(text))sp+=5;
+  if(/\b(pain|frustrat|problem|struggle|challenge|cost|waste|lose|lost)\b/i.test(text))sp+=3;
+  score+=Math.min(sp,45);
+  return Math.min(score,100);
+}
+
+function calculateScores() {
+  var secs={},total=0;
+  questions.forEach(function(q){var s=scoreAnswer(answers[q.id]||'');secs[q.id]=s;total+=s;});
+  return {total:Math.round(total/questions.length),sections:secs};
+}
+
+function getBand(score) {
+  if(score>=85)return{band:'Launch Ready',color:'var(--green)',cls:'band-ready'};
+  if(score>=70)return{band:'Almost There',color:'var(--eo-orange)',cls:'band-partial'};
+  if(score>=55)return{band:'Needs Work',color:'var(--gold)',cls:'band-gaps'};
+  if(score>=40)return{band:'Early Stage',color:'var(--red)',cls:'band-startover'};
+  return{band:'Reset',color:'var(--red)',cls:'band-startover'};
+}
+
+// === POLISHED OUTPUT ===
+function generatePolishedOutput() {
+  return {
+    who: (answers.who||'').substring(0,300),
+    pain: (answers.pain||'').substring(0,300),
+    dream_outcome: (answers.dream||'').substring(0,200),
+    where_to_find: (answers.access||'').substring(0,200)
+  };
+}
+
+function findWeakestAreas(secs) {
+  var sorted=Object.keys(secs).map(function(k){return{id:k,score:secs[k]};}).sort(function(a,b){return a.score-b.score;});
+  var labels={who:{name:'Customer Definition',advice:'Get more specific about your ideal buyer. Name a real person, their exact role, company size, and daily workflow.'},pain:{name:'Pain Clarity',advice:'Quantify each pain point: frequency, cost, urgency. Use specific numbers and examples from real conversations.'},dream:{name:'Dream Outcome',advice:'Go beyond features. Describe the emotional and business transformation your buyer experiences.'},journey:{name:'Buyer Journey',advice:'Map the full transformation: current state → obstacles → your solution → dream outcome. Be concrete.'},access:{name:'Access Channels',advice:'Name specific communities, LinkedIn groups, events, and platforms. Generic channels like "social media" are too vague.'},validation:{name:'Validation Plan',advice:'Be more specific about numbers, timeline, and message. How many DMs? What exact offer? What conversion rate do you expect?'}};
+  return sorted.slice(0,3).map(function(w){var info=labels[w.id]||{name:w.id,advice:'Add more specificity.'};return{name:info.name,score:w.score,advice:info.advice};});
+}
+
+// === FINISH ===
+function finishAssessment() {
+  document.getElementById('loadingOverlay').classList.add('active');
+  setTimeout(function(){
+    var scores=calculateScores();var bandInfo=getBand(scores.total);
+    var polished=generatePolishedOutput();var weakAreas=findWeakestAreas(scores.sections);
+    var resultObj={score:scores.total,band:bandInfo.band,sections:scores.sections,polished_output:polished,weak_areas:weakAreas,completed_at:new Date().toISOString().split('T')[0]};
+    localStorage.setItem(storageKey('result',SC_NUMBER,userEmail,ventureSlug),JSON.stringify(resultObj));
+    saveScore(userEmail,ventureSlug,SC_NUMBER,scores.total);
+    saveAnswersToStorage();
+    sendToWebhook(scores,resultObj);
+    document.getElementById('loadingOverlay').classList.remove('active');
+    renderResults(resultObj);
+  },1500);
+}
+
+function renderResults(result) {
+  showScreen('screenResults');
+  var bandInfo=getBand(result.score);var polished=result.polished_output||{};var weakAreas=result.weak_areas||[];var sections=result.sections||{};
+  var circ=2*Math.PI*70,dashOff=circ-(result.score/100*circ);
+  var html='<div class="score-hero"><div class="score-gauge"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="#2D2D44" stroke-width="8"/><circle cx="80" cy="80" r="70" fill="none" stroke="'+bandInfo.color+'" stroke-width="8" stroke-dasharray="'+circ+'" stroke-dashoffset="'+dashOff+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:80px 80px;transition:stroke-dashoffset 1s ease"/></svg><div class="score-gauge-text"><span class="score-gauge-number" style="color:'+bandInfo.color+'">'+result.score+'</span><span class="score-gauge-label">/100</span></div></div><div class="band-label" style="color:'+bandInfo.color+'">'+result.band+'</div><div class="band-subtitle">ICP Clarity Score for "'+escapeHtml(ventureName)+'"</div></div>';
+
+  // ICP Profile Card
+  html+='<div class="polished-card"><h3>Your ICP Profile</h3>';
+  if(polished.who) html+='<div class="polished-section"><h4>Who They Are</h4><p>'+escapeHtml(polished.who)+'</p></div>';
+  if(polished.pain) html+='<div class="polished-section"><h4>Key Pains</h4><p>'+escapeHtml(polished.pain)+'</p></div>';
+  if(polished.dream_outcome) html+='<div class="polished-section"><h4>Dream Outcome</h4><p>'+escapeHtml(polished.dream_outcome)+'</p></div>';
+  if(polished.where_to_find) html+='<div class="polished-section"><h4>Where to Find Them</h4><p>'+escapeHtml(polished.where_to_find)+'</p></div>';
+  html+='</div>';
+
+  // Dimension Scores
+  html+='<div class="results-card"><h3>Dimension Scores</h3>';
+  var dimLabels={who:'Customer Definition',pain:'Pain Clarity',dream:'Dream Outcome',journey:'Buyer Journey',access:'Access Channels',validation:'Validation Plan'};
+  questions.forEach(function(q){var s=sections[q.id]||0;var c=s>=70?'var(--green)':s>=55?'var(--eo-orange)':s>=40?'var(--gold)':'var(--red)';html+='<div class="section-bar-row"><div class="section-bar-label">'+(dimLabels[q.id]||q.id)+'</div><div class="section-bar-track"><div class="section-bar-fill" style="width:'+s+'%;background:'+c+'"></div></div><div class="section-bar-score">'+s+'/100</div></div>';});
+  html+='</div>';
+
+  // Sharpen These
+  if(weakAreas.length>0){html+='<div class="results-card"><h3>Sharpen These</h3>';weakAreas.forEach(function(w){html+='<div class="sharpen-card"><h4>'+escapeHtml(w.name)+' ('+w.score+'/100)</h4><p>'+escapeHtml(w.advice)+'</p></div>';});html+='</div>';}
+
+  // CTA
+  html+='<div class="results-cta"><button class="btn-primary" onclick="window.location.href=\'EO-Market-Attractiveness-Scoring.html\'">Continue to Market Attractiveness →</button><button class="btn-download-md" onclick="downloadMd()">Download Full Analysis (MD)</button><button class="btn-retake" onclick="retakeAssessment()">Retake Assessment</button></div>';
+
+  document.getElementById('resultsContent').innerHTML=html;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// === MD DOWNLOAD ===
+function downloadMd() {
+  var result=getUpstreamResult(SC_NUMBER,userEmail,ventureSlug);if(!result)return;
+  var dateStr=new Date().toISOString().split('T')[0];
+  var md='# ICP Clarity — Full Analysis\n\n**Venture:** '+ventureName+'\n**Date:** '+dateStr+'\n**Clarity Score:** '+result.score+'/100 — '+result.band+'\n\n---\n\n';
+  var p=result.polished_output||{};
+  md+='## ICP Profile\n\n### Who They Are\n'+(p.who||'N/A')+'\n\n### Key Pains\n'+(p.pain||'N/A')+'\n\n### Dream Outcome\n'+(p.dream_outcome||'N/A')+'\n\n### Where to Find Them\n'+(p.where_to_find||'N/A')+'\n\n';
+  md+='## Dimension Scores\n\n| Dimension | Score |\n|-----------|-------|\n';
+  var labels={who:'Customer Definition',pain:'Pain Clarity',dream:'Dream Outcome',journey:'Buyer Journey',access:'Access Channels',validation:'Validation Plan'};
+  var secs=result.sections||{};
+  Object.keys(labels).forEach(function(k){md+='| '+labels[k]+' | '+(secs[k]||0)+'/100 |\n';});
+  md+='\n## Areas to Sharpen\n\n';(result.weak_areas||[]).forEach(function(w){md+='### '+w.name+' ('+w.score+'/100)\n'+w.advice+'\n\n';});
+  md+='---\n\n## Raw Answers\n\n';questions.forEach(function(q){md+='### '+q.text+'\n'+(answers[q.id]||'No answer')+'\n\n';});
+  md+='---\n*Generated by Entrepreneurs Oasis MENA — ICP Clarity Scoring*\n';
+  var blob=new Blob([md],{type:'text/markdown;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='SC2-ICP-Clarity-'+ventureSlug+'-'+dateStr+'.md';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+function retakeAssessment() { answers={};localStorage.removeItem(storageKey('answers',SC_NUMBER,userEmail,ventureSlug));localStorage.removeItem(storageKey('result',SC_NUMBER,userEmail,ventureSlug));currentQ=0;showScreen('screenStepper');renderQuestion(); }
+
+// === WEBHOOK ===
+function sendToWebhook(scores, resultObj) {
+  var upstream={};
+  for(var i=1;i<SC_NUMBER;i++){upstream['sc'+i+'_score']=getScores(userEmail,ventureSlug)['sc'+i]||null;upstream['sc'+i+'_answers']=getUpstreamAnswers(i,userEmail,ventureSlug);}
+  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userEmail,venture_name:ventureName,venture_slug:ventureSlug,scorecard:'SC2',answers:answers,scores:scores,upstream_data:upstream,timestamp:new Date().toISOString()})}).catch(function(err){console.warn('Webhook failed:',err);});
+}
+
+// === UTILITIES ===
+function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
+function countWords(t){if(!t||!t.trim())return 0;return t.trim().split(/\s+/).length;}
+function escapeHtml(t){if(!t)return '';return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function toggleRTL(){document.body.classList.toggle('rtl');var r=document.body.classList.contains('rtl');document.documentElement.lang=r?'ar':'en';document.documentElement.dir=r?'rtl':'ltr';try{localStorage.setItem('eo-rtl',r?'1':'0');}catch(e){}}
+
+document.addEventListener('keydown',function(e){if(document.getElementById('screenStepper').classList.contains('active')&&e.key==='Enter'&&e.ctrlKey)nextQuestion();});
+(function(){try{if(localStorage.getItem('eo-rtl')==='1'){document.body.classList.add('rtl');document.documentElement.lang='ar';document.documentElement.dir='rtl';}}catch(e){}})();
+(function(){try{var e=localStorage.getItem('eo_user_email');if(e){var el=document.getElementById('auth-email');if(el&&!el.value)el.value=e;}}catch(e){}})();
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>

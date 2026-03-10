@@ -3,1406 +3,1349 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entrepreneurs Oasis MENA — GTM Fitness Scoring</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Entrepreneurs Oasis MENA — GTM Fitness</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root {
-    --eo-dark: #1A1A2E;
-    --eo-orange: #E94D1B;
-    --eo-beige: #FAF5EF;
-    --eo-card-bg: #FFFFFF;
-    --eo-gray-text: #6B7280;
-    --eo-gray-border: #E5E7EB;
-    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    --eo-radius: 12px;
+    --eo-dark: #050A12;
+    --eo-orange: #FF6600;
+    --eo-beige: #0C1220;
+    --eo-card-bg: #111827;
+    --eo-gray-text: #94A3B8;
+    --eo-gray-border: rgba(255,255,255,0.06);
+    --eo-radius: 14px;
     --eo-radius-sm: 8px;
     --eo-transition: 300ms ease;
+    --green: #22C55E;
+    --red: #EF4444;
+    --gold: #D97706;
+    --teal: #0D9488;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--eo-dark);
-    color: #FFFFFF;
-    min-height: 100vh;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
+body { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--eo-dark); color: #FFFFFF; min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 body.rtl { direction: rtl; text-align: right; }
 body.rtl .nav-buttons { flex-direction: row-reverse; }
-body.rtl .section-bar-row { flex-direction: row-reverse; }
-body.rtl .reco-list li { padding: 6px 24px 6px 0; }
-body.rtl .progress-meta { flex-direction: row-reverse; }
 body.rtl .option-card { text-align: right; }
+body.rtl .pattern-break-card { border-left: none; border-right: 4px solid var(--eo-orange); }
+body.rtl .acknowledgment-card { border-left: none; border-right: 3px solid var(--eo-orange); }
+body.rtl .motion-card { border-left: none; border-right: 4px solid var(--eo-orange); }
 .rtl-toggle { position: fixed; top: 12px; right: 12px; z-index: 999; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 6px 14px; border-radius: var(--eo-radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; transition: all var(--eo-transition); }
 .rtl-toggle:hover { background: rgba(255,255,255,0.2); }
 .eo-header { text-align: center; padding: 28px 20px 12px; }
-.eo-header h1 { font-size: 22px; font-weight: 800; color: #FFFFFF; }
+.eo-header h1 { font-size: 22px; font-weight: 800; }
 .eo-header h1 span { color: var(--eo-orange); }
-.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; text-align: center; margin-bottom: 4px; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* Auth */
+.auth-screen { max-width: 480px; margin: 60px auto; padding: 0 20px; text-align: center; }
+.auth-screen h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.auth-screen p { color: #9CA3AF; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
+.intro-badge { display: inline-block; background: rgba(255,102,0,0.15); color: var(--eo-orange); font-size: 12px; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 1px; }
+.email-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--eo-radius); padding: 28px 24px; text-align: left; }
+.email-box label { display: block; font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.email-input { width: 100%; padding: 14px 16px; border: 2px solid #2D2D44; border-radius: var(--eo-radius-sm); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); margin-bottom: 16px; }
+.email-input:focus { border-color: var(--eo-orange); }
+.email-input::placeholder { color: #6B7280; }
+select.email-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%239CA3AF' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; }
+select.email-input option { background: #050A12; color: #fff; }
+.btn-full { width: 100%; padding: 14px 32px; background: var(--eo-orange); color: #fff; border: none; border-radius: var(--eo-radius-sm); font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background var(--eo-transition); }
+.btn-full:hover { background: #E65C00; }
+.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+/* Progress */
 .progress-wrapper { max-width: 640px; margin: 0 auto 24px; padding: 0 20px; }
 .progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; text-align: center; margin-bottom: 4px; }
 .progress-counter { font-size: 13px; color: #9CA3AF; }
 .progress-track { height: 6px; background: #2D2D44; border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--eo-orange); border-radius: 3px; transition: width 0.3s ease; }
-.screen { display: none; }
-.screen.active { display: block; }
-.email-capture { max-width: 480px; margin: 60px auto; padding: 0 20px; text-align: center; }
-.email-capture h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
-.email-capture p { color: #9CA3AF; font-size: 14px; margin-bottom: 24px; line-height: 1.5; }
-.email-capture input { width: 100%; padding: 14px 16px; border: 2px solid #2D2D44; border-radius: var(--eo-radius-sm); background: rgba(255,255,255,0.05); color: #fff; font-size: 16px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); margin-bottom: 16px; }
-.email-capture input:focus { border-color: var(--eo-orange); }
-.email-capture input::placeholder { color: #6B7280; }
+
+/* Question */
 .question-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.question-text { font-size: 20px; font-weight: 700; color: var(--eo-dark); margin-bottom: 8px; line-height: 1.4; }
+.question-text { font-size: 20px; font-weight: 700; color: #FFFFFF; margin-bottom: 8px; line-height: 1.4; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); margin-bottom: 20px; line-height: 1.5; font-style: italic; }
 .options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: var(--eo-dark); transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
+.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #FFFFFF; transition: border-color var(--eo-transition), background var(--eo-transition); user-select: none; line-height: 1.4; }
 .option-card:hover { border-color: var(--eo-orange); }
 .option-card.selected { background: var(--eo-orange); border-color: var(--eo-orange); color: #FFFFFF; }
 .option-card.focused { outline: 2px solid var(--eo-orange); outline-offset: 2px; }
+
+/* Nav */
 .nav-buttons { max-width: 640px; margin: 20px auto 60px; padding: 0 20px; display: flex; justify-content: space-between; gap: 12px; }
 .btn { padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all var(--eo-transition); }
 .btn-prev { background: rgba(255,255,255,0.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); }
 .btn-prev:hover { background: rgba(255,255,255,0.2); }
 .btn-prev.hidden { visibility: hidden; }
 .btn-next { background: var(--eo-orange); color: #FFFFFF; margin-left: auto; }
-.btn-next:hover { background: #D4411A; }
+.btn-next:hover { background: #E65C00; }
 .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-primary { background: var(--eo-orange); color: #FFFFFF; border: none; padding: 14px 32px; border-radius: var(--eo-radius-sm); font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background var(--eo-transition); }
-.btn-primary:hover { background: #D4411A; }
+.btn-primary:hover { background: #E65C00; }
 .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1E293B; color: #FFFFFF; padding: 14px 28px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.3s ease; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.contact-screen { max-width: 480px; margin: 60px auto; padding: 0 20px; }
-.contact-card { background: var(--eo-beige); border-radius: var(--eo-radius); padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.contact-card h2 { font-size: 24px; font-weight: 800; color: var(--eo-dark); margin-bottom: 4px; }
-.contact-card .subtitle { color: var(--eo-gray-text); font-size: 14px; margin-bottom: 24px; }
-.form-group { margin-bottom: 16px; }
-.form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--eo-dark); margin-bottom: 6px; }
-.form-group input { width: 100%; padding: 12px 14px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; color: var(--eo-dark); font-family: inherit; outline: none; transition: border-color var(--eo-transition); background: #FFFFFF; }
-.form-group input:focus { border-color: var(--eo-orange); }
-.contact-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
-.btn-skip { background: transparent; color: var(--eo-gray-text); font-size: 14px; font-weight: 500; cursor: pointer; border: none; font-family: inherit; text-decoration: underline; }
-.loading-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.9); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
+.loading-overlay { display: none; position: fixed; inset: 0; background: rgba(5,10,18,0.92); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
 .loading-overlay.active { display: flex; }
 .spinner { width: 48px; height: 48px; border: 4px solid #2D2D44; border-top-color: var(--eo-orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-overlay p { font-size: 16px; font-weight: 500; }
+
+/* Engagement breaks */
+.engagement-slot { max-width: 640px; margin: 0 auto 16px; padding: 0 20px; }
+.pattern-break-card { background: rgba(255,102,0,0.08); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 16px 20px; margin-bottom: 12px; }
+.pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.5; }
+
+/* Results */
 .results-container { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
-.score-hero { text-align: center; padding: 40px 20px 32px; }
-.score-circle { width: 140px; height: 140px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-.score-circle-inner { text-align: center; }
-.score-number { font-size: 48px; font-weight: 800; display: block; }
-.score-total { font-size: 16px; color: #9CA3AF; }
-.band-label { font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; }
-.band-subtitle { font-size: 14px; color: #9CA3AF; }
-.band-ready .score-number, .band-ready .band-label { color: #22C55E; }
-.band-partial .score-number, .band-partial .band-label { color: #3B82F6; }
-.band-gaps .score-number, .band-gaps .band-label { color: #F59E0B; }
-.band-startover .score-number, .band-startover .band-label { color: #EF4444; }
-.pending-ai-badge { display: inline-block; background: rgba(233,77,27,0.15); color: var(--eo-orange); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-top: 8px; }
 .results-card { background: rgba(255,255,255,0.06); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; }
 .results-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: #FFFFFF; }
-.section-bar-row { display: flex; align-items: center; margin-bottom: 14px; gap: 12px; }
-.section-bar-label { width: 100px; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
-.section-bar-track { flex: 1; height: 12px; background: #2D2D44; border-radius: 6px; overflow: hidden; }
-.section-bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
-.section-bar-score { width: 60px; text-align: right; font-size: 13px; font-weight: 600; color: #D1D5DB; flex-shrink: 0; }
-.reco-section { margin-bottom: 16px; }
-.reco-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.reco-icon { font-size: 16px; }
-.reco-title { font-size: 14px; font-weight: 600; color: #FFFFFF; }
-.reco-list { list-style: none; padding: 0; margin: 0 0 0 24px; }
-.reco-list li { position: relative; padding: 4px 0 4px 16px; font-size: 13px; color: #D1D5DB; line-height: 1.5; }
-.reco-list li::before { content: '\2022'; position: absolute; left: 0; color: var(--eo-orange); }
-.ai-section { background: rgba(233,77,27,0.08); border: 1px solid rgba(233,77,27,0.2); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; }
-.ai-badge { display: inline-block; background: var(--eo-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px; }
-.ai-section h3 { font-size: 15px; margin-bottom: 8px; }
-.ai-insight { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.6; }
-.answer-block { background: rgba(255,255,255,0.04); border-radius: var(--eo-radius-sm); padding: 16px; margin-bottom: 12px; }
-.answer-block .q-label { font-size: 13px; font-weight: 700; color: var(--eo-orange); margin-bottom: 4px; }
-.answer-block .q-text { font-size: 13px; color: #9CA3AF; margin-bottom: 8px; }
-.answer-block .a-mc { font-size: 14px; color: #22C55E; font-weight: 600; }
-.prereq-gate { max-width: 480px; margin: 80px auto; padding: 0 20px; text-align: center; }
-.prereq-card { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--eo-radius); padding: 40px 32px; }
-.prereq-card h2 { color: #EF4444; font-size: 22px; font-weight: 800; margin-bottom: 12px; }
-.prereq-card p { color: #D1D5DB; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
-.prereq-card .btn-primary { display: inline-block; text-decoration: none; }
-.upstream-ref { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--eo-radius-sm); overflow: hidden; margin-bottom: 12px; }
-.upstream-ref-toggle { width: 100%; background: transparent; border: none; color: #9CA3AF; padding: 12px 16px; font-size: 13px; font-weight: 600; cursor: pointer; text-align: left; font-family: inherit; display: flex; align-items: center; gap: 8px; transition: color var(--eo-transition); }
-.upstream-ref-toggle:hover { color: #D1D5DB; }
-.upstream-ref-toggle .arrow { font-size: 10px; transition: transform 0.2s ease; }
-.upstream-ref-toggle.open .arrow { transform: rotate(90deg); }
-.upstream-ref-content { display: none; padding: 0 16px 12px; }
-.upstream-ref-content.open { display: block; }
-.upstream-ref-item { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.upstream-ref-item:last-child { border-bottom: none; }
-.upstream-ref-item .label { font-size: 11px; font-weight: 600; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-.upstream-ref-item .value { font-size: 13px; color: #D1D5DB; line-height: 1.4; }
-.motion-table { width: 100%; border-collapse: collapse; margin-bottom: 8px; font-size: 13px; }
-.motion-table th { padding: 8px 6px; color: #9CA3AF; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.12); }
-.motion-table td { padding: 8px 6px; color: #D1D5DB; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.tier-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-.tier-primary { background: rgba(34,197,94,0.15); color: #22C55E; }
-.tier-secondary { background: rgba(59,130,246,0.15); color: #3B82F6; }
-.tier-conditional { background: rgba(245,158,11,0.15); color: #F59E0B; }
-.tier-skip { background: rgba(239,68,68,0.15); color: #EF4444; }
-.gate-warning { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: var(--eo-radius); padding: 20px; margin-bottom: 20px; text-align: center; }
-.gate-warning h3 { color: #EF4444; font-size: 16px; margin-bottom: 8px; }
-.gate-warning p { color: #D1D5DB; font-size: 14px; }
-.results-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
-.results-cta .btn-primary { min-width: 280px; }
-.results-cta .btn-retake { background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
-.results-cta .btn-download-md { background: transparent; border: 2px solid var(--eo-orange); color: var(--eo-orange); padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-download-md:hover { background: var(--eo-orange); color: #FFFFFF; }
-.results-cta .btn-download-pdf { background: transparent; border: 2px solid #6B7280; color: #6B7280; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); min-width: 280px; }
-.results-cta .btn-download-pdf:hover { background: #6B7280; color: #FFFFFF; }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.shake { animation: shake 0.4s ease; }
-@media (max-width: 680px) { .question-card { margin: 0 16px; padding: 24px 20px; } .nav-buttons { padding: 0 16px; } .question-text { font-size: 18px; } .progress-wrapper { padding: 0 16px; } .motion-table { font-size: 11px; } .motion-table th, .motion-table td { padding: 6px 4px; } }
-@media (max-width: 400px) { .nav-buttons { flex-direction: column; } .btn-prev.hidden { display: none; } .option-card { padding: 14px 16px; font-size: 14px; } .question-text { font-size: 17px; } }
+
+/* Score Hero / Gauge */
+.score-hero { text-align: center; padding: 40px 20px 24px; }
+.gauge-container { width: 180px; height: 180px; margin: 0 auto 16px; position: relative; }
+.gauge-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.gauge-bg { fill: none; stroke: #2D2D44; stroke-width: 10; }
+.gauge-fill { fill: none; stroke-width: 10; stroke-linecap: round; transition: stroke-dashoffset 1.2s ease; }
+.gauge-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.gauge-score { font-size: 42px; font-weight: 800; color: var(--eo-orange); }
+.gauge-label { font-size: 13px; color: #9CA3AF; }
+.band-label { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+.band-label.launch-ready { color: var(--green); }
+.band-label.almost-there { color: var(--eo-orange); }
+.band-label.needs-work { color: var(--gold); }
+.band-label.early-stage { color: var(--red); }
+.band-label.reset { color: var(--red); }
+
+/* Motion Cards */
+.motion-card { background: linear-gradient(135deg, rgba(255,102,0,0.12), rgba(255,102,0,0.04)); border: 1px solid rgba(255,102,0,0.25); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 16px; }
+.motion-card.secondary { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); border-left-color: var(--teal); }
+.motion-card.conditional { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); border-left-color: var(--gold); }
+.motion-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.motion-card-name { font-size: 18px; font-weight: 800; color: #FFFFFF; }
+.tier-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.tier-primary { background: rgba(255,102,0,0.2); color: var(--eo-orange); }
+.tier-secondary { background: rgba(13,148,136,0.2); color: var(--teal); }
+.tier-conditional { background: rgba(217,119,6,0.2); color: var(--gold); }
+.tier-skip { background: rgba(239,68,68,0.15); color: var(--red); }
+.motion-card-score { font-size: 13px; color: #9CA3AF; margin-left: auto; }
+.motion-breakdown { display: flex; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
+.breakdown-item { font-size: 12px; color: #9CA3AF; }
+.breakdown-item strong { color: #D1D5DB; }
+.how-to-start { margin-bottom: 12px; }
+.how-to-start .label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.how-to-start .step { font-size: 13px; color: #D1D5DB; padding: 4px 0 4px 16px; position: relative; line-height: 1.5; }
+.how-to-start .step::before { content: '\2192'; position: absolute; left: 0; color: var(--eo-orange); }
+.best-fit { font-size: 12px; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+.mena-note { font-size: 12px; color: var(--gold); font-style: italic; }
+
+/* 72-Hour Card */
+.commitment-card { background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05)); border: 1px solid rgba(34,197,94,0.3); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; text-align: center; }
+.commitment-card h3 { color: var(--green); font-size: 18px; margin-bottom: 12px; }
+.commitment-card .timer { font-size: 36px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
+.commitment-card .commitment-text { font-size: 15px; color: #D1D5DB; line-height: 1.6; }
+
+/* Motion Ranking Table */
+.motion-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.motion-table th { text-align: left; font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.motion-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #D1D5DB; }
+.motion-table tr.top-5 { font-weight: 600; }
+.motion-table tr:not(.top-5) { opacity: 0.6; }
+
+/* Strengthen cards */
+.strengthen-card { background: rgba(255,255,255,0.04); border-left: 4px solid var(--gold); border-radius: var(--eo-radius-sm); padding: 16px 20px; margin-bottom: 12px; }
+.strengthen-card .label { font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.strengthen-card .advice { font-size: 14px; color: #D1D5DB; line-height: 1.5; }
+
+/* CTAs */
+.results-cta { max-width: 640px; margin: 32px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.btn-download-md { background: rgba(255,255,255,0.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2); padding: 14px 32px; border-radius: var(--eo-radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; width: 100%; max-width: 400px; transition: all var(--eo-transition); }
+.btn-download-md:hover { background: rgba(255,255,255,0.2); }
+.btn-retake { background: transparent; color: #9CA3AF; border: 1px solid rgba(255,255,255,0.1); padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all var(--eo-transition); }
+.btn-retake:hover { color: #fff; border-color: rgba(255,255,255,0.3); }
+
+@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.shake { animation: shake 0.3s ease; }
+
+@media (max-width: 768px) {
+    .motion-breakdown { flex-direction: column; gap: 6px; }
+    .motion-card-header { flex-direction: column; align-items: flex-start; }
+    .motion-card-score { margin-left: 0; }
+}
+@media (max-width: 375px) {
+    .question-text { font-size: 17px; }
+    .gauge-container { width: 140px; height: 140px; }
+    .gauge-score { font-size: 34px; }
+}
 </style>
 </head>
 <body>
-<button class="rtl-toggle" onclick="toggleRTL()">EN / عربي</button>
-<div class="toast" id="toast"></div>
-<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><p>Generating your GTM fitness analysis...</p></div>
-<div class="eo-header"><h1>Entrepreneurs <span>Oasis MENA</span></h1></div>
+<button class="rtl-toggle" onclick="toggleRTL()">عربي / EN</button>
 
-<div class="screen" id="screenPrereq">
-    <div class="prereq-gate"><div class="prereq-card">
-        <h2>Prerequisites Required</h2>
-        <p>You must complete <strong>SC1: Project Definition</strong>, <strong>SC2: ICP Clarity</strong>, <strong>SC3: Market Attractiveness</strong>, and <strong>SC4: Strategy Selector</strong> before starting GTM Fitness.<br><br>This is the final assessment that synthesizes all upstream data to recommend your optimal GTM motions.</p>
-        <a href="EO-Assessment-Dashboard.html" class="btn-primary">Go to Dashboard &rarr;</a>
-    </div></div>
+<div class="eo-header">
+    <h1>GTM <span>Fitness</span></h1>
 </div>
 
-<div class="screen" id="screenEmail">
-    <div class="email-capture">
-        <h2>GTM Fitness Scoring</h2>
-        <p>Evaluate your readiness across 13 GTM motions. 13 quick questions about your business and capabilities — no strategy knowledge needed. ~5 minutes.</p>
-        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
-        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="screen active">
+    <div class="auth-screen">
+        <div class="intro-badge">STEP 5 OF 5</div>
+        <h2>GTM <span style="color:var(--eo-orange)">Fitness</span></h2>
+        <p>13 questions. ~5 minutes. Discover which growth strategies fit your business right now.</p>
+        <div class="email-box">
+            <label>YOUR EMAIL</label>
+            <input type="email" id="auth-email" class="email-input" placeholder="founder@company.com" required>
+            <button class="btn-full" onclick="handleEmailEntry()" style="margin-bottom:0">Continue →</button>
+            <div id="venture-selector" style="display:none;margin-top:16px"></div>
+            <div id="auth-error" style="color:var(--red);font-size:13px;margin-top:12px;display:none"></div>
+        </div>
+        <div id="retrieval-banner" style="display:none"></div>
     </div>
 </div>
 
-<div class="screen" id="screenStepper">
+<!-- STEPPER SCREEN -->
+<div id="screen-stepper" class="screen">
     <div class="progress-wrapper">
+        <div class="section-label" id="sectionLabel"></div>
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Section A: YOUR BUSINESS</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 20</div>
+            <span class="progress-counter" id="progressCounter"></span>
         </div>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    <div id="upstreamPanel" style="max-width:640px;margin:0 auto 16px;padding:0 20px;"></div>
+    <div id="engagementSlot" class="engagement-slot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
-        <div class="question-help" id="questionHelp" style="display:none;"></div>
+        <div class="question-help" id="questionHelp" style="display:none"></div>
         <div class="options-list" id="optionsList"></div>
     </div>
     <div class="nav-buttons">
-        <button class="btn btn-prev hidden" id="btnPrev">Previous</button>
+        <button class="btn btn-prev hidden" id="btnPrev">← Back</button>
         <button class="btn btn-next" id="btnNext" disabled>Next</button>
     </div>
 </div>
 
-<div class="screen" id="screenContact">
-    <div class="contact-screen"><div class="contact-card">
-        <h2>Almost Done!</h2>
-        <p class="subtitle">Get your personalized GTM motion recommendations.</p>
-        <div class="form-group"><label>Full Name *</label><input type="text" id="contactName" placeholder="Your full name" autocomplete="name"></div>
-        <div class="form-group"><label>Email *</label><input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email"></div>
-        <div class="form-group"><label>Company / Project *</label><input type="text" id="contactCompany" placeholder="Your company or project name"></div>
-        <div class="contact-actions">
-            <button class="btn-primary" id="btnSubmitContact">Get My GTM Plan</button>
-            <button class="btn-skip" id="btnSkipContact">Skip and see results</button>
-        </div>
-    </div></div>
-</div>
-
-<div class="screen" id="screenResults">
+<!-- RESULTS SCREEN -->
+<div id="screen-results" class="screen">
     <div class="results-container" id="resultsContent"></div>
 </div>
 
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <p>Analyzing your GTM fitness...</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <script>
-/* ═══════════════════════════════════════════════════
-   EO GTM FITNESS SCORING — SCORECARD 5 (REVAMPED)
-   20 MC Questions | 3 Sections (A-C) | 100 Points
-   ALL multiple choice — no free text, no dynamic questions
-   13 GTM Motions scored automatically from answers
-   Prerequisites: SC1 + SC2 + SC3 + SC4
-   ═══════════════════════════════════════════════════ */
 (function() {
     'use strict';
 
-    /* ── Constants ── */
-    var Q_MC = 'MC';
-    var WEBHOOK_URL = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-gtm-fitness';
-    var WEBHOOK_TIMEOUT = 15000; /* 15 seconds */
-    var STORAGE_KEY = 'eo-gtm-fitness';
+    var SC_NUMBER = 5;
+    var TOTAL_QUESTIONS = 13;
 
-    var SECTION_NAMES = {
-        'A': 'YOUR BUSINESS',
-        'B': 'YOUR CAPABILITIES',
-        'C': 'YOUR READINESS'
-    };
+    /* ===================================
+       SHARED PATTERNS
+       =================================== */
+    function slugify(text) {
+        return text.toString().toLowerCase().trim()
+            .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+    }
 
-    var SECTION_MAXES = { 'A': 20, 'B': 50, 'C': 30 };
+    function getVentures(email) {
+        try { return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]'); } catch(e) { return []; }
+    }
 
-    /* ── 13 GTM Motions ──
-       Each motion has:
-       - defaultFit: base fit score 0-10
-       - mena: MENA viability score 0-10
-       - capWeights: how each of the 10 B-section questions maps to this motion's readiness
-       - readyWeights: how each of the 6 C-section questions maps to this motion
-       - contextBonus: adjustments based on A-section answers (business type, ACV, etc.)
-    */
+    function saveVenture(email, vName) {
+        var slug = slugify(vName);
+        var ventures = getVentures(email);
+        var existing = ventures.find(function(v) { return v.venture_slug === slug; });
+        if (existing) {
+            existing.last_active = new Date().toISOString().split('T')[0];
+            localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
+            return { venture_name: existing.venture_name, venture_slug: slug, isNew: false };
+        }
+        var venture = { venture_name: vName.trim(), venture_slug: slug, created_at: new Date().toISOString().split('T')[0], last_active: new Date().toISOString().split('T')[0] };
+        ventures.push(venture);
+        localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
+        return { venture_name: venture.venture_name, venture_slug: slug, isNew: true };
+    }
+
+    function updateVentureActivity(email, slug) {
+        var ventures = getVentures(email);
+        var venture = ventures.find(function(v) { return v.venture_slug === slug; });
+        if (venture) { venture.last_active = new Date().toISOString().split('T')[0]; localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures)); }
+    }
+
+    function storageKey(type, scNum, email, slug) {
+        return 'eo_sc' + scNum + '_' + type + '_' + email + '_' + slug;
+    }
+
+    function getScores(email, slug) {
+        try { return JSON.parse(localStorage.getItem('eo_scores_' + email + '_' + slug) || '{}'); } catch(e) { return {}; }
+    }
+
+    function saveScore(email, slug, scNum, score) {
+        var scores = getScores(email, slug);
+        scores['sc' + scNum] = score;
+        localStorage.setItem('eo_scores_' + email + '_' + slug, JSON.stringify(scores));
+    }
+
+    function getUpstreamResult(scNum, email, slug) {
+        try { return JSON.parse(localStorage.getItem(storageKey('result', scNum, email, slug)) || 'null'); } catch(e) { return null; }
+    }
+
+    function showError(msg) {
+        var el = document.getElementById('auth-error');
+        el.innerHTML = msg;
+        el.style.display = 'block';
+        setTimeout(function() { el.style.display = 'none'; }, 8000);
+    }
+
+    function showToast(msg) {
+        var t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 3000);
+    }
+
+    function escapeHtml(text) {
+        if (!text) return '';
+        var d = document.createElement('div');
+        d.appendChild(document.createTextNode(text));
+        return d.innerHTML;
+    }
+
+    /* ===================================
+       13 SMOrchestra GTM MOTIONS
+       =================================== */
     var MOTIONS = [
-        { id: 0, name: 'Waitlist Heat-to-Webinar', defaultFit: 5, mena: 3,
-          capWeights: [0.05, 0.05, 0.25, 0.15, 0.1, 0.05, 0.05, 0.1, 0.1, 0.1],
-          readyWeights: [0.3, 0.1, 0.15, 0.1, 0.25, 0.1],
-          contextBonus: { acv: {low:1,mid:0,high:-1,enterprise:-2}, cycle: {short:1,mid:0,long:-1,complex:-2}, type: {saas:1,service:0,market:1,product:0} }
+        {
+            name: 'Waitlist Heat-to-Webinar Close',
+            shortName: 'Waitlist + Webinar',
+            defaultFit: 5, baseMena: 8,
+            bestFit: 'When the offer needs explanation and trust, and you want a controlled launch cycle.',
+            menaNote: 'One of the strongest motions for MENA because it matches how trust is built here.',
+            howToStart: ['Build a landing page with waitlist form', 'Announce 3 webinar topics to your list', 'Run first webinar within 2 weeks'],
+            weeklyHours: 6
         },
-        { id: 1, name: 'Build-in-Public Trust', defaultFit: 6, mena: 4,
-          capWeights: [0.25, 0.15, 0.2, 0.05, 0.1, 0.05, 0.05, 0.05, 0.05, 0.05],
-          readyWeights: [0.15, 0.1, 0.3, 0.1, 0.25, 0.1],
-          contextBonus: { acv: {low:1,mid:1,high:-1,enterprise:-2}, cycle: {short:1,mid:0,long:-1,complex:-2}, type: {saas:2,service:0,market:1,product:1} }
+        {
+            name: 'Build-in-Public Trust Flywheel',
+            shortName: 'Build in Public',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'When the founder can be the brand, and the product needs trust more than features.',
+            menaNote: 'Trust is relationship-first in MENA. Negative feedback is often indirect — adapt your transparency style.',
+            howToStart: ['Pick your primary channel (Twitter/LinkedIn)', 'Share your first build update today', 'Commit to 3 posts/week for 30 days'],
+            weeklyHours: 4
         },
-        { id: 2, name: 'Authority Education Engine', defaultFit: 7, mena: 6,
-          capWeights: [0.2, 0.1, 0.15, 0.05, 0.1, 0.1, 0.15, 0.05, 0.05, 0.05],
-          readyWeights: [0.25, 0.1, 0.15, 0.1, 0.3, 0.1],
-          contextBonus: { acv: {low:0,mid:1,high:1,enterprise:0}, cycle: {short:0,mid:1,long:1,complex:0}, type: {saas:1,service:2,market:0,product:0} }
+        {
+            name: 'Authority Education Engine',
+            shortName: 'Authority Content',
+            defaultFit: 7, baseMena: 8,
+            bestFit: 'For founders selling into markets where the buyer needs to believe you understand the problem better than anyone.',
+            menaNote: 'MENA is higher context and more hierarchical. Authority content builds trust faster than feature lists.',
+            howToStart: ['Write your first educational thread on your niche', 'Create a simple lead magnet PDF', 'Set up a weekly content cadence'],
+            weeklyHours: 8
         },
-        { id: 3, name: 'Wave Riding Distribution', defaultFit: 4, mena: 5,
-          capWeights: [0.1, 0.1, 0.15, 0.1, 0.1, 0.1, 0.05, 0.15, 0.1, 0.05],
-          readyWeights: [0.1, 0.1, 0.1, 0.2, 0.2, 0.3],
-          contextBonus: { acv: {low:1,mid:0,high:-1,enterprise:-2}, cycle: {short:2,mid:0,long:-1,complex:-2}, type: {saas:1,service:0,market:2,product:1} }
+        {
+            name: 'Wave Riding Distribution',
+            shortName: 'Wave Riding',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'For teams that can ship fast and attach to real waves with buyer intent.',
+            menaNote: 'Trends in MENA are often driven by events, seasons, and business cycles. Ramadan, GITEX, and COP are key waves.',
+            howToStart: ['Set Google Alerts for your niche keywords', 'Draft 3 template responses for trending topics', 'Build a rapid-response content workflow'],
+            weeklyHours: 3
         },
-        { id: 4, name: 'LTD Cash-to-MRR Bridge', defaultFit: 5, mena: 3,
-          capWeights: [0.05, 0.05, 0.15, 0.15, 0.05, 0.1, 0.1, 0.2, 0.1, 0.05],
-          readyWeights: [0.1, 0.05, 0.1, 0.15, 0.25, 0.35],
-          contextBonus: { acv: {low:2,mid:0,high:-2,enterprise:-3}, cycle: {short:1,mid:0,long:-1,complex:-2}, type: {saas:2,service:-1,market:1,product:1} }
+        {
+            name: 'LTD Cash-to-MRR Ladder',
+            shortName: 'Lifetime Deal Launch',
+            defaultFit: 3, baseMena: 4,
+            bestFit: 'Works for simple tools that deliver obvious value and have low support burden.',
+            menaNote: 'Price sensitivity exists, but trust still matters. LTD alone does not build trust in MENA.',
+            howToStart: ['Define your LTD tier structure and pricing', 'Create an AppSumo or Dealify listing', 'Plan the LTD-to-MRR conversion funnel'],
+            weeklyHours: 5
         },
-        { id: 5, name: 'Signal Sniper Outbound', defaultFit: 6, mena: 7,
-          capWeights: [0.05, 0.25, 0.1, 0.1, 0.15, 0.05, 0.1, 0.05, 0.05, 0.1],
-          readyWeights: [0.1, 0.1, 0.1, 0.3, 0.15, 0.25],
-          contextBonus: { acv: {low:-1,mid:1,high:2,enterprise:1}, cycle: {short:-1,mid:1,long:1,complex:0}, type: {saas:1,service:1,market:0,product:0} }
+        {
+            name: 'Signal Sniper Outbound',
+            shortName: 'Signal-Based Outbound',
+            defaultFit: 6, baseMena: 6,
+            bestFit: 'B2B SaaS with observable triggers and clear ICP. Works from 0 to billions.',
+            menaNote: 'Signals are less visible in MENA than the US. Funding and hiring are not always publicly announced.',
+            howToStart: ['Define 10 triggers per vertical', 'Create 3 message patterns per trigger', 'Route replies to calendar booking'],
+            weeklyHours: 8
         },
-        { id: 6, name: 'Outcome Demo First', defaultFit: 5, mena: 6,
-          capWeights: [0.05, 0.1, 0.1, 0.1, 0.1, 0.1, 0.15, 0.2, 0.05, 0.05],
-          readyWeights: [0.2, 0.1, 0.1, 0.15, 0.3, 0.15],
-          contextBonus: { acv: {low:0,mid:1,high:1,enterprise:0}, cycle: {short:0,mid:1,long:0,complex:-1}, type: {saas:2,service:1,market:0,product:1} }
+        {
+            name: 'Outcome Demo First',
+            shortName: 'Demo-First Selling',
+            defaultFit: 7, baseMena: 8,
+            bestFit: 'Tools where the output is visible — leads, audits, heatmaps, reports, drafts.',
+            menaNote: 'Strong in MENA. Trust is built by proof, not promises. Outcome demos reduce the trust gap.',
+            howToStart: ['Build a 3-minute demo showing the outcome', 'Create a before vs after comparison', 'Share the demo in 3 relevant communities'],
+            weeklyHours: 5
         },
-        { id: 7, name: 'Hammering-Feature-First', defaultFit: 4, mena: 5,
-          capWeights: [0.05, 0.1, 0.1, 0.1, 0.05, 0.1, 0.1, 0.25, 0.1, 0.05],
-          readyWeights: [0.1, 0.05, 0.1, 0.2, 0.35, 0.2],
-          contextBonus: { acv: {low:1,mid:0,high:-1,enterprise:-2}, cycle: {short:1,mid:0,long:-1,complex:-2}, type: {saas:2,service:-1,market:1,product:2} }
+        {
+            name: 'Hammering-Feature-First Launches',
+            shortName: 'Feature-First Launch',
+            defaultFit: 5, baseMena: 5,
+            bestFit: 'Best when you have MicroSaaS or a narrow ICP and buyers search for solutions directly.',
+            menaNote: 'MENA is high context and trust based, so BOFU pages must do more than rank — add local proof.',
+            howToStart: ['Identify your ONE differentiated feature', 'Create a comparison page vs alternatives', 'Write 5 use-case stories around that feature'],
+            weeklyHours: 6
         },
-        { id: 8, name: 'MicroSaaS BOFU SEO', defaultFit: 5, mena: 4,
-          capWeights: [0.2, 0.05, 0.1, 0.1, 0.05, 0.15, 0.15, 0.1, 0.05, 0.05],
-          readyWeights: [0.15, 0.05, 0.1, 0.1, 0.3, 0.3],
-          contextBonus: { acv: {low:1,mid:1,high:-1,enterprise:-2}, cycle: {short:1,mid:0,long:0,complex:-1}, type: {saas:2,service:0,market:1,product:1} }
+        {
+            name: 'MicroSaaS BOFU SEO Strike',
+            shortName: 'SEO + BOFU Content',
+            defaultFit: 6, baseMena: 5,
+            bestFit: 'MicroSaaS or narrow ICP where buyers search for solutions directly.',
+            menaNote: 'BOFU SEO must do more than rank in MENA — add Arabic content, local case studies, and WhatsApp CTAs.',
+            howToStart: ['Research 20 bottom-of-funnel keywords', 'Write your first comparison/alternative page', 'Set up basic on-page SEO and tracking'],
+            weeklyHours: 6
         },
-        { id: 9, name: 'Dream 100 Strategy', defaultFit: 5, mena: 8,
-          capWeights: [0.1, 0.15, 0.15, 0.05, 0.2, 0.05, 0.1, 0.05, 0.05, 0.1],
-          readyWeights: [0.15, 0.1, 0.25, 0.2, 0.15, 0.15],
-          contextBonus: { acv: {low:-1,mid:1,high:2,enterprise:1}, cycle: {short:-1,mid:0,long:1,complex:1}, type: {saas:0,service:2,market:0,product:0} }
+        {
+            name: 'Dream 100 Strategy',
+            shortName: 'Dream 100 Networking',
+            defaultFit: 7, baseMena: 9,
+            bestFit: 'Founders who want leverage through distribution, not grind. Any stage.',
+            menaNote: 'Extremely strong in MENA because networks and introductions compound here.',
+            howToStart: ['List your Dream 100 influencers and partners', 'Engage with their content for 2 weeks', 'Propose a specific collaboration or value exchange'],
+            weeklyHours: 5
         },
-        { id: 10, name: '7x4x11 Strategy', defaultFit: 4, mena: 7,
-          capWeights: [0.15, 0.1, 0.15, 0.05, 0.15, 0.1, 0.1, 0.05, 0.1, 0.05],
-          readyWeights: [0.2, 0.1, 0.2, 0.15, 0.2, 0.15],
-          contextBonus: { acv: {low:0,mid:1,high:1,enterprise:0}, cycle: {short:0,mid:1,long:1,complex:0}, type: {saas:1,service:1,market:0,product:0} }
+        {
+            name: '7x4x11 Strategy',
+            shortName: 'Multi-Touch Cadence',
+            defaultFit: 5, baseMena: 7,
+            bestFit: 'High ticket offers and service-to-SaaS bridges that need repeated conversion events.',
+            menaNote: 'Events, webinars, and roundtables work very well in the Gulf because they simulate in-person trust.',
+            howToStart: ['Identify your target list of 100 accounts', 'Create 7 different touch types', 'Build a 4-week cadence with 11 touches'],
+            weeklyHours: 10
         },
-        { id: 11, name: 'Value Trust Engine', defaultFit: 6, mena: 8,
-          capWeights: [0.15, 0.1, 0.15, 0.05, 0.15, 0.1, 0.1, 0.05, 0.05, 0.1],
-          readyWeights: [0.2, 0.1, 0.2, 0.15, 0.2, 0.15],
-          contextBonus: { acv: {low:0,mid:1,high:1,enterprise:0}, cycle: {short:0,mid:1,long:1,complex:0}, type: {saas:1,service:2,market:0,product:0} }
+        {
+            name: 'Value Trust Engine',
+            shortName: 'Low-Ticket Trust Builder',
+            defaultFit: 6, baseMena: 8,
+            bestFit: 'SaaS founders coming from consulting, training, or agency backgrounds.',
+            menaNote: 'Works very well in MENA. Almost no one does this in the SaaS arena here.',
+            howToStart: ['Create a low-ticket training that solves one painful step', 'Build an email nurture sequence', 'Add social proof to every touchpoint'],
+            weeklyHours: 7
         },
-        { id: 12, name: 'Paid VSL Value Ladder', defaultFit: 4, mena: 3,
-          capWeights: [0.1, 0.05, 0.2, 0.2, 0.1, 0.1, 0.1, 0.05, 0.05, 0.05],
-          readyWeights: [0.3, 0.05, 0.1, 0.1, 0.3, 0.15],
-          contextBonus: { acv: {low:1,mid:0,high:-1,enterprise:-2}, cycle: {short:1,mid:0,long:-1,complex:-2}, type: {saas:1,service:0,market:1,product:1} }
+        {
+            name: 'Paid VSL Value Ladder',
+            shortName: 'Paid Ads + VSL',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'For offers with strong economics and proven conversion — ideally after message-market fit.',
+            menaNote: 'Paid traffic does not solve trust. It only buys attention. In high-trust markets, pair with trust assets.',
+            howToStart: ['Script a 10-minute VSL (Video Sales Letter)', 'Set up a landing page with video embed', 'Test with $50/day ad spend on Meta or YouTube'],
+            weeklyHours: 8
         }
     ];
 
-    /* ── All 20 Questions — ALL MC, LINEAR, NO DYNAMIC ──
-       Section A: Business Context (4 Qs, 5pts each = 20)
-       Section B: Capabilities (10 Qs, 5pts each = 50)
-       Section C: Readiness (6 Qs, 5pts each = 30)
-       Total: 100 points
-    */
-    var allQuestions = [
-        /* ── SECTION A: YOUR BUSINESS (4 questions, 5 pts each) ── */
-        { id: 'A1', sectionId: 'A', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'What type of product or service are you building?',
-          help: 'This helps us understand which go-to-market motions fit your business model.',
-          tag: 'type',
-          options: [
-              { label: 'SaaS / Software product', score: 5, key: 'saas' },
-              { label: 'Professional services / Consulting / Agency', score: 4, key: 'service' },
-              { label: 'Marketplace or platform connecting buyers and sellers', score: 4, key: 'market' },
-              { label: 'Physical product or hardware', score: 3, key: 'product' },
-              { label: 'I\'m not sure yet — still exploring', score: 1, key: 'saas' }
-          ]
+    /* ===================================
+       13 QUESTIONS — Business Reality Only
+       =================================== */
+    var QUESTIONS = [
+        {
+            id: 'q_email_list',
+            section: 'YOUR ASSETS',
+            text: 'How big is your email list or subscriber base?',
+            help: 'This includes newsletter subscribers, waitlist signups, or any opt-in list you control.',
+            options: [
+                { label: 'No list yet', value: 1 },
+                { label: 'Under 500 subscribers', value: 2 },
+                { label: '500 to 2,000 subscribers', value: 3 },
+                { label: 'Over 2,000 subscribers', value: 4 }
+            ]
         },
-        { id: 'A2', sectionId: 'A', sectionIndex: 1, type: Q_MC, maxScore: 5,
-          text: 'What is the typical price of your product or service per customer?',
-          help: 'Your average deal size determines which GTM motions make economic sense.',
-          tag: 'acv',
-          options: [
-              { label: 'Under $500 / year (or one-time)', score: 3, key: 'low' },
-              { label: '$500 – $5,000 / year', score: 5, key: 'mid' },
-              { label: '$5,000 – $25,000 / year', score: 4, key: 'high' },
-              { label: 'Over $25,000 / year (enterprise deals)', score: 3, key: 'enterprise' }
-          ]
+        {
+            id: 'q_content_frequency',
+            section: 'YOUR ASSETS',
+            text: 'How often do you publish content — articles, videos, or podcasts?',
+            help: 'Think about anything you create and share publicly — blog posts, LinkedIn posts, YouTube videos, podcast episodes.',
+            options: [
+                { label: 'Rarely or never', value: 1 },
+                { label: 'Once a month or less', value: 2 },
+                { label: 'Weekly', value: 3 },
+                { label: 'Multiple times per week', value: 4 }
+            ]
         },
-        { id: 'A3', sectionId: 'A', sectionIndex: 2, type: Q_MC, maxScore: 5,
-          text: 'How long does it typically take from first contact to closing a deal?',
-          help: 'Shorter cycles favor different motions than longer enterprise sales.',
-          tag: 'cycle',
-          options: [
-              { label: 'Same day or within a week', score: 5, key: 'short' },
-              { label: '2–4 weeks', score: 4, key: 'mid' },
-              { label: '1–3 months', score: 3, key: 'long' },
-              { label: 'Over 3 months with multiple stakeholders', score: 2, key: 'complex' }
-          ]
+        {
+            id: 'q_founder_visibility',
+            section: 'YOUR ASSETS',
+            text: 'Are you comfortable being the public face of your business?',
+            help: 'Showing up on camera, writing under your own name, sharing your journey openly.',
+            options: [
+                { label: 'Not at all — I prefer to stay behind the scenes', value: 1 },
+                { label: 'Somewhat — I will do it if needed but it is not natural', value: 2 },
+                { label: 'Yes — I regularly show up on social media', value: 3 },
+                { label: 'Absolutely — I am already building a personal brand', value: 4 }
+            ]
         },
-        { id: 'A4', sectionId: 'A', sectionIndex: 3, type: Q_MC, maxScore: 5,
-          text: 'What is your primary target market?',
-          help: 'Market geography affects which motions work and which need adaptation.',
-          tag: 'geo',
-          options: [
-              { label: 'MENA region primarily (Gulf, Levant, North Africa)', score: 5, key: 'mena' },
-              { label: 'Global market with some MENA presence', score: 4, key: 'global' },
-              { label: 'North America / Europe primarily', score: 3, key: 'west' },
-              { label: 'Specific local market only', score: 3, key: 'local' }
-          ]
+        {
+            id: 'q_demo_ability',
+            section: 'YOUR PRODUCT',
+            text: 'Can you show a clear result or transformation from your product in under 5 minutes?',
+            help: 'Think before vs after. Can someone SEE the value quickly — a report, a lead list, a dashboard, a fix?',
+            options: [
+                { label: 'No — value takes time to show', value: 1 },
+                { label: 'Partially — some features show quick wins', value: 2 },
+                { label: 'Yes — I have a solid demo or walkthrough', value: 3 },
+                { label: 'Absolutely — the result is instantly visible and impressive', value: 4 }
+            ]
         },
-
-        /* ── SECTION B: YOUR CAPABILITIES (10 questions, 5 pts each) ── */
-        { id: 'B1', sectionId: 'B', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'How often do you create and share content (posts, articles, videos)?',
-          help: 'Content creation frequency indicates your ability to run content-driven GTM motions.',
-          options: [
-              { label: 'I post daily or several times a week', score: 5 },
-              { label: 'I post a few times a month', score: 4 },
-              { label: 'I post occasionally (once a month or less)', score: 2 },
-              { label: 'I almost never create content', score: 1 }
-          ]
+        {
+            id: 'q_outbound_tools',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'What outreach tools do you have set up today?',
+            help: 'CRM, cold email sender, LinkedIn automation, lead databases — anything for reaching out to prospects.',
+            options: [
+                { label: 'Nothing set up yet', value: 1 },
+                { label: 'Basic — just a CRM or basic email', value: 2 },
+                { label: 'Decent stack — email sender + LinkedIn + CRM', value: 3 },
+                { label: 'Full stack — multi-channel outbound already running', value: 4 }
+            ]
         },
-        { id: 'B2', sectionId: 'B', sectionIndex: 1, type: Q_MC, maxScore: 5,
-          text: 'Do you have cold outreach tools set up (email automation, LinkedIn tools, etc.)?',
-          help: 'Existing outreach infrastructure means you can run outbound motions faster.',
-          options: [
-              { label: 'Yes — I have tools running and an active outbound system', score: 5 },
-              { label: 'I have some tools but haven\'t used them consistently', score: 3 },
-              { label: 'I\'ve tried basic cold outreach manually', score: 2 },
-              { label: 'No — I\'ve never done cold outreach', score: 1 }
-          ]
+        {
+            id: 'q_budget',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'What is your monthly marketing and growth budget?',
+            help: 'Include ad spend, tools, freelancers — anything you invest in growing the business each month.',
+            options: [
+                { label: 'Under $500 per month', value: 1 },
+                { label: '$500 to $2,000 per month', value: 2 },
+                { label: '$2,000 to $5,000 per month', value: 3 },
+                { label: 'Over $5,000 per month', value: 4 }
+            ]
         },
-        { id: 'B3', sectionId: 'B', sectionIndex: 2, type: Q_MC, maxScore: 5,
-          text: 'How large is your existing audience (email list + social followers combined)?',
-          help: 'An existing audience enables launch motions like webinars and LTDs.',
-          options: [
-              { label: 'Over 5,000 people', score: 5 },
-              { label: '1,000 – 5,000 people', score: 4 },
-              { label: '200 – 1,000 people', score: 3 },
-              { label: 'Under 200 or just starting', score: 1 }
-          ]
+        {
+            id: 'q_network',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'How strong is your network with influencers, partners, or industry leaders?',
+            help: 'People who could introduce you to buyers, promote your work, or collaborate with you.',
+            options: [
+                { label: 'Very weak — I do not know many people in the space', value: 1 },
+                { label: 'Some contacts — but not close relationships', value: 2 },
+                { label: 'Good network — I know key players personally', value: 3 },
+                { label: 'Strong — I have active relationships with 20+ relevant people', value: 4 }
+            ]
         },
-        { id: 'B4', sectionId: 'B', sectionIndex: 3, type: Q_MC, maxScore: 5,
-          text: 'What is your monthly marketing budget?',
-          help: 'Budget determines whether paid motions (ads, VSL funnels) are viable.',
-          options: [
-              { label: 'Over $3,000/month', score: 5 },
-              { label: '$1,000 – $3,000/month', score: 4 },
-              { label: '$200 – $1,000/month', score: 3 },
-              { label: 'Under $200 or zero budget', score: 1 }
-          ]
+        {
+            id: 'q_deal_size',
+            section: 'YOUR MARKET',
+            text: 'What is your average deal size or price point per year?',
+            help: 'Annual contract value or annual revenue per customer. Pick the closest range.',
+            options: [
+                { label: 'Under $500 per year', value: 1 },
+                { label: '$500 to $2,000 per year', value: 2 },
+                { label: '$2,000 to $10,000 per year', value: 3 },
+                { label: 'Over $10,000 per year', value: 4 }
+            ]
         },
-        { id: 'B5', sectionId: 'B', sectionIndex: 4, type: Q_MC, maxScore: 5,
-          text: 'How strong is your professional network in your target market?',
-          help: 'A strong network enables relationship-based motions like Dream 100.',
-          options: [
-              { label: 'I have 50+ warm relationships with potential buyers or partners', score: 5 },
-              { label: 'I have 10–50 relevant connections', score: 4 },
-              { label: 'I have a few connections but most are cold', score: 2 },
-              { label: 'I\'m starting from zero in this market', score: 1 }
-          ]
+        {
+            id: 'q_speed_to_ship',
+            section: 'YOUR MARKET',
+            text: 'When a relevant trend or opportunity appears, how fast can you ship something?',
+            help: 'A new feature, a landing page, a piece of content, a campaign — how quickly can you react?',
+            options: [
+                { label: 'Weeks to months', value: 1 },
+                { label: 'About a week', value: 2 },
+                { label: 'A few days', value: 3 },
+                { label: 'Same day or next day', value: 4 }
+            ]
         },
-        { id: 'B6', sectionId: 'B', sectionIndex: 5, type: Q_MC, maxScore: 5,
-          text: 'Do you have proof of results (case studies, testimonials, demos)?',
-          help: 'Social proof enables trust-based and outcome-first motions.',
-          options: [
-              { label: 'Yes — multiple case studies with measurable results', score: 5 },
-              { label: 'A few testimonials or early wins', score: 4 },
-              { label: 'I have a working product/demo but no customer results yet', score: 2 },
-              { label: 'Nothing yet — still pre-product', score: 1 }
-          ]
+        {
+            id: 'q_search_demand',
+            section: 'YOUR MARKET',
+            text: 'Do your target buyers actively search Google for solutions like yours?',
+            help: 'Do people type things like "best [your category]" or "[competitor] alternative" into Google?',
+            options: [
+                { label: 'No — they do not know they need it yet', value: 1 },
+                { label: 'Some search — but low volume', value: 2 },
+                { label: 'Yes — clear search demand exists', value: 3 },
+                { label: 'High volume with strong buying intent', value: 4 }
+            ]
         },
-        { id: 'B7', sectionId: 'B', sectionIndex: 6, type: Q_MC, maxScore: 5,
-          text: 'How mature is your existing content library (blog posts, videos, guides)?',
-          help: 'A content library powers SEO, education, and authority-building motions.',
-          options: [
-              { label: 'I have 20+ pieces of quality content', score: 5 },
-              { label: 'I have 5–20 pieces across different formats', score: 4 },
-              { label: 'I have a few pieces (under 5)', score: 2 },
-              { label: 'No content library — starting fresh', score: 1 }
-          ]
+        {
+            id: 'q_sales_capacity',
+            section: 'YOUR CAPACITY',
+            text: 'Do you have capacity for one-on-one sales conversations?',
+            help: 'You personally, or a sales team. How many discovery or demo calls can you handle per week?',
+            options: [
+                { label: 'No — everything needs to be self-serve', value: 1 },
+                { label: 'Limited — a few calls per week at most', value: 2 },
+                { label: 'Moderate — 10 to 20 calls per week', value: 3 },
+                { label: 'Strong — dedicated sales team or high personal capacity', value: 4 }
+            ]
         },
-        { id: 'B8', sectionId: 'B', sectionIndex: 7, type: Q_MC, maxScore: 5,
-          text: 'How ready is your product for customers to use right now?',
-          help: 'Product readiness determines if you can run demo-led or feature-first motions.',
-          options: [
-              { label: 'Live product with paying customers', score: 5 },
-              { label: 'Working MVP or beta with early users', score: 4 },
-              { label: 'Prototype or mockup exists', score: 2 },
-              { label: 'Idea stage only — no product yet', score: 1 }
-          ]
+        {
+            id: 'q_event_experience',
+            section: 'YOUR CAPACITY',
+            text: 'Have you run webinars, workshops, or live events before?',
+            help: 'Online or in-person. Any experience presenting, teaching, or selling live to a group.',
+            options: [
+                { label: 'Never', value: 1 },
+                { label: 'Once or twice', value: 2 },
+                { label: 'Several times — I know the format well', value: 3 },
+                { label: 'Regularly — it is part of how I sell', value: 4 }
+            ]
         },
-        { id: 'B9', sectionId: 'B', sectionIndex: 8, type: Q_MC, maxScore: 5,
-          text: 'Can you create content and sales materials in Arabic?',
-          help: 'Arabic capability is critical for MENA-specific GTM motions.',
-          options: [
-              { label: 'Yes — I can create professional Arabic content natively', score: 5 },
-              { label: 'I can manage basic Arabic but prefer English', score: 3 },
-              { label: 'I use translation tools for Arabic', score: 2 },
-              { label: 'English only — no Arabic capability', score: 1 }
-          ]
-        },
-        { id: 'B10', sectionId: 'B', sectionIndex: 9, type: Q_MC, maxScore: 5,
-          text: 'How many hours per week can you dedicate to go-to-market activities?',
-          help: 'Time commitment determines if you can run high-touch vs automated motions.',
-          options: [
-              { label: 'Full-time (30+ hours/week on GTM)', score: 5 },
-              { label: '15–30 hours/week', score: 4 },
-              { label: '5–15 hours/week', score: 3 },
-              { label: 'Under 5 hours/week (side project)', score: 1 }
-          ]
-        },
-
-        /* ── SECTION C: YOUR READINESS (6 questions, 5 pts each) ── */
-        { id: 'C1', sectionId: 'C', sectionIndex: 0, type: Q_MC, maxScore: 5,
-          text: 'How comfortable are you presenting or selling live (webinars, demos, calls)?',
-          help: 'Live selling ability enables webinar, demo-first, and relationship motions.',
-          options: [
-              { label: 'Very comfortable — I regularly present and close live', score: 5 },
-              { label: 'Comfortable with some experience', score: 4 },
-              { label: 'Nervous but willing to try', score: 2 },
-              { label: 'I avoid live selling entirely', score: 1 }
-          ]
-        },
-        { id: 'C2', sectionId: 'C', sectionIndex: 1, type: Q_MC, maxScore: 5,
-          text: 'How many customer conversations have you had in the last 30 days?',
-          help: 'Active customer conversations show market engagement and learning velocity.',
-          options: [
-              { label: '10 or more conversations', score: 5 },
-              { label: '5–10 conversations', score: 4 },
-              { label: '1–4 conversations', score: 2 },
-              { label: 'None in the last 30 days', score: 1 }
-          ]
-        },
-        { id: 'C3', sectionId: 'C', sectionIndex: 2, type: Q_MC, maxScore: 5,
-          text: 'Do you participate in communities relevant to your target customers?',
-          help: 'Community presence enables word-of-mouth and trust-building motions.',
-          options: [
-              { label: 'Yes — I\'m an active contributor in 3+ communities', score: 5 },
-              { label: 'I\'m active in 1–2 communities', score: 4 },
-              { label: 'I lurk in some but rarely contribute', score: 2 },
-              { label: 'No community involvement', score: 1 }
-          ]
-        },
-        { id: 'C4', sectionId: 'C', sectionIndex: 3, type: Q_MC, maxScore: 5,
-          text: 'Are you willing to do cold outreach (email, LinkedIn, calls) consistently?',
-          help: 'Outbound willingness is critical for signal-based and direct sales motions.',
-          options: [
-              { label: 'Yes — I already do it or I\'m ready to commit daily', score: 5 },
-              { label: 'Willing but need help setting up the system', score: 4 },
-              { label: 'I\'d rather focus on inbound only', score: 2 },
-              { label: 'Not willing to do cold outreach', score: 1 }
-          ]
-        },
-        { id: 'C5', sectionId: 'C', sectionIndex: 4, type: Q_MC, maxScore: 5,
-          text: 'Can you clearly explain the transformation your product delivers in one sentence?',
-          help: 'Message clarity is the foundation of every GTM motion.',
-          options: [
-              { label: 'Yes — tested it and customers immediately understand', score: 5 },
-              { label: 'I have a good pitch but haven\'t tested it much', score: 4 },
-              { label: 'I can explain it but it takes a few paragraphs', score: 2 },
-              { label: 'I struggle to articulate it clearly', score: 1 }
-          ]
-        },
-        { id: 'C6', sectionId: 'C', sectionIndex: 5, type: Q_MC, maxScore: 5,
-          text: 'How well do you understand your top 3 competitors\' strengths and weaknesses?',
-          help: 'Competitive awareness shapes positioning and differentiation across all motions.',
-          options: [
-              { label: 'I track them weekly and know their moves inside out', score: 5 },
-              { label: 'I know who they are and roughly what they offer', score: 4 },
-              { label: 'I\'m aware of competitors but haven\'t analyzed them', score: 2 },
-              { label: 'I haven\'t identified competitors yet', score: 1 }
-          ]
+        {
+            id: 'q_mena_focus',
+            section: 'YOUR MARKET',
+            text: 'How much of your business targets the MENA region specifically?',
+            help: 'Middle East and North Africa — UAE, Saudi Arabia, Egypt, Jordan, etc.',
+            options: [
+                { label: 'MENA is not my focus at all', value: 1 },
+                { label: 'Some MENA but mostly global or US market', value: 2 },
+                { label: 'MENA is a primary market', value: 3 },
+                { label: 'MENA-only or MENA-first', value: 4 }
+            ]
         }
     ];
 
-    /* ── Recommendations by motion ── */
-    var MOTION_RECOMMENDATIONS = {
-        0: ['Build an email waitlist landing page', 'Prepare a 45-minute webinar script', 'Create urgency with a founding member offer', 'Set up email sequences for waitlist nurture'],
-        1: ['Document your building process weekly', 'Share wins and failures transparently', 'Engage with other builders in public communities', 'Use Twitter/X or LinkedIn as your primary channel'],
-        2: ['Create a free course or guide in your domain', 'Start a YouTube channel or podcast', 'Build an email newsletter with educational content', 'Position yourself as the go-to expert'],
-        3: ['Monitor trending topics in your industry', 'Create rapid-response content templates', 'Build relationships with journalists and influencers', 'Set up Google Alerts and social listening'],
-        4: ['List on AppSumo or similar LTD platforms', 'Create a compelling one-time offer', 'Plan your MRR conversion strategy from day 1', 'Build an in-app upgrade path'],
-        5: ['Set up signal detection (job changes, funding, tech stack)', 'Build outbound sequences for each signal type', 'Use Clay + Instantly + HeyReach stack', 'Personalize at scale using AI'],
-        6: ['Create a killer product demo video', 'Build an interactive demo or free trial', 'Lead with outcomes not features in all messaging', 'Set up demo booking automation'],
-        7: ['Ship new features weekly', 'Build a public changelog and roadmap', 'Create comparison pages against competitors', 'Focus on product-led growth loops'],
-        8: ['Research bottom-of-funnel search terms', 'Create comparison and alternative pages', 'Build programmatic SEO if applicable', 'Focus on high-intent keywords'],
-        9: ['Identify your Dream 100 accounts and contacts', 'Engage with their content for 2-4 weeks before outreach', 'Offer genuine value before asking', 'Build multi-touch sequences across channels'],
-        10: ['Create 7 types of content across 4 platforms', 'Commit to 11 weeks of consistent publishing', 'Batch create content to maintain cadence', 'Repurpose each piece across all platforms'],
-        11: ['Give away valuable tools/templates/resources', 'Build trust through consistent value delivery', 'Create a free community or group', 'Use reciprocity as your growth engine'],
-        12: ['Create a high-converting video sales letter', 'Build a paid ad funnel (FB/Google/YouTube)', 'Design a value ladder from free to premium', 'Optimize landing page conversion rates']
-    };
+    /* ===================================
+       WEIGHT MATRIX: question → motion influence
+       Each motion has weights (0-3) per question index.
+       Higher weight = that question matters more for that motion.
+       =================================== */
+    var WEIGHT_MATRIX = [
+        /* Motion 0: Waitlist Heat-to-Webinar */
+        /*  q0  q1  q2  q3  q4  q5  q6  q7  q8  q9  q10 q11 q12 */
+        [   3,  1,  2,  1,  0,  1,  2,  0,  1,  0,  1,  3,  0 ],
+        /* Motion 1: Build-in-Public Trust */
+        [   1,  3,  3,  1,  0,  0,  1,  0,  2,  0,  0,  0,  0 ],
+        /* Motion 2: Authority Education Engine */
+        [   2,  3,  3,  0,  0,  0,  1,  0,  0,  1,  0,  2,  0 ],
+        /* Motion 3: Wave Riding Distribution */
+        [   0,  2,  1,  1,  0,  1,  1,  0,  3,  1,  0,  0,  0 ],
+        /* Motion 4: LTD Cash-to-MRR */
+        [   1,  0,  0,  3,  0,  0,  0,  0,  3,  1,  0,  0,  0 ],
+        /* Motion 5: Signal Sniper Outbound */
+        [   0,  0,  0,  0,  3,  1,  0,  2,  0,  1,  3,  0,  0 ],
+        /* Motion 6: Outcome Demo First */
+        [   0,  0,  1,  3,  1,  0,  0,  1,  0,  0,  2,  0,  0 ],
+        /* Motion 7: Hammering-Feature-First */
+        [   0,  0,  0,  2,  1,  0,  0,  0,  3,  3,  0,  0,  0 ],
+        /* Motion 8: MicroSaaS BOFU SEO */
+        [   0,  2,  0,  1,  0,  1,  0,  0,  2,  3,  0,  0,  0 ],
+        /* Motion 9: Dream 100 Strategy */
+        [   0,  1,  2,  0,  1,  0,  3,  1,  0,  0,  2,  1,  0 ],
+        /* Motion 10: 7x4x11 Strategy */
+        [   0,  0,  0,  0,  2,  2,  2,  3,  0,  0,  3,  2,  0 ],
+        /* Motion 11: Value Trust Engine */
+        [   2,  1,  2,  1,  0,  1,  0,  0,  0,  0,  1,  3,  0 ],
+        /* Motion 12: Paid VSL Value Ladder */
+        [   1,  0,  0,  2,  0,  3,  0,  1,  0,  2,  0,  0,  0 ]
+    ];
 
-    /* ── State ── */
-    var currentQuestion = 0;
-    var answers = {};
+    /* ===================================
+       STATE
+       =================================== */
     var userEmail = '';
-    var aiData = null;
+    var ventureSlug = '';
+    var ventureName = '';
+    var answers = {};
+    var currentIndex = 0;
+    var motionScores = [];
+    var focusedOptionIndex = -1;
 
-    /* ── DOM References ── */
-    var $screenPrereq, $screenEmail, $screenStepper, $screenContact, $screenResults;
-    var $emailInput, $btnStart;
-    var $sectionLabel, $progressCounter, $progressFill;
-    var $questionText, $questionHelp, $optionsList, $questionCard;
-    var $btnPrev, $btnNext;
-    var $contactName, $contactEmail, $contactCompany, $btnSubmitContact, $btnSkipContact;
-    var $resultsContent;
-    var $loadingOverlay, $toast;
-    var $upstreamPanel;
-
-    /* ── Init ── */
-    function init() {
-        $screenPrereq = document.getElementById('screenPrereq');
-        $screenEmail = document.getElementById('screenEmail');
-        $screenStepper = document.getElementById('screenStepper');
-        $screenContact = document.getElementById('screenContact');
-        $screenResults = document.getElementById('screenResults');
-        $emailInput = document.getElementById('emailInput');
-        $btnStart = document.getElementById('btnStartAssessment');
-        $sectionLabel = document.getElementById('sectionLabel');
-        $progressCounter = document.getElementById('progressCounter');
-        $progressFill = document.getElementById('progressFill');
-        $questionText = document.getElementById('questionText');
-        $questionHelp = document.getElementById('questionHelp');
-        $optionsList = document.getElementById('optionsList');
-        $questionCard = document.getElementById('questionCard');
-        $btnPrev = document.getElementById('btnPrev');
-        $btnNext = document.getElementById('btnNext');
-        $contactName = document.getElementById('contactName');
-        $contactEmail = document.getElementById('contactEmail');
-        $contactCompany = document.getElementById('contactCompany');
-        $btnSubmitContact = document.getElementById('btnSubmitContact');
-        $btnSkipContact = document.getElementById('btnSkipContact');
-        $resultsContent = document.getElementById('resultsContent');
-        $loadingOverlay = document.getElementById('loadingOverlay');
-        $toast = document.getElementById('toast');
-        $upstreamPanel = document.getElementById('upstreamPanel');
-
-        if (!checkPrerequisites()) {
-            showScreen('screenPrereq');
+    /* ===================================
+       AUTH FLOW
+       =================================== */
+    window.handleEmailEntry = function() {
+        var email = document.getElementById('auth-email').value.trim().toLowerCase();
+        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
+        userEmail = email;
+        localStorage.setItem('eo_user_email', email);
+        var ventures = getVentures(email);
+        if (ventures.length === 0) {
+            showError('No assessment found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Complete Step 1 first →</a>');
             return;
         }
+        if (ventures.length === 1) { selectVenture(ventures[0]); }
+        else { showVentureSelector(ventures); }
+    };
 
-        loadAnswers();
-        bindEvents();
+    function showVentureSelector(ventures) {
+        var sel = document.getElementById('venture-selector');
+        sel.innerHTML = '<label>SELECT VENTURE</label>' +
+            '<select id="venture-select" class="email-input" onchange="handleVentureSelect()">' +
+            '<option value="">— Choose your venture —</option>' +
+            ventures.map(function(v) { return '<option value="' + v.venture_slug + '">' + escapeHtml(v.venture_name) + '</option>'; }).join('') +
+            '</select>';
+        sel.style.display = 'block';
+    }
 
-        /* If already completed, jump to results */
-        var saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            try {
-                var data = JSON.parse(saved);
-                if (data.completed) {
-                    userEmail = data.email || '';
-                    answers = data.answers || {};
-                    aiData = data.aiData || null;
-                    showScreen('screenResults');
-                    showResults();
-                    return;
-                }
-            } catch(e) {}
+    window.handleVentureSelect = function() {
+        var slug = document.getElementById('venture-select').value;
+        if (!slug) return;
+        var ventures = getVentures(userEmail);
+        var venture = ventures.find(function(v) { return v.venture_slug === slug; });
+        if (venture) selectVenture(venture);
+    };
+
+    function selectVenture(venture) {
+        ventureSlug = venture.venture_slug;
+        ventureName = venture.venture_name;
+        updateVentureActivity(userEmail, ventureSlug);
+
+        var existingResult = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+        if (existingResult) {
+            showRetrievalBanner(existingResult);
+        } else {
+            doPrereqCheck();
+        }
+    }
+
+    function showRetrievalBanner(result) {
+        var banner = document.getElementById('retrieval-banner');
+        banner.innerHTML =
+            '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:4px solid var(--green);border-radius:var(--eo-radius);padding:20px;max-width:440px;margin:24px auto 0">' +
+            '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
+            '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || '?') + '</div>' +
+            '<div><div style="font-weight:700;color:#FFFFFF;font-size:15px">Previously Completed</div>' +
+            '<div style="font-size:12px;color:#9CA3AF">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
+            '<div style="display:flex;gap:10px">' +
+            '<button class="btn-secondary" onclick="viewPreviousResults()" style="flex:1;padding:10px">View Results</button>' +
+            '<button class="btn-full" onclick="startFresh()" style="flex:1;padding:10px">Start Fresh</button>' +
+            '</div></div>';
+        banner.style.display = 'block';
+    }
+
+    window.viewPreviousResults = function() {
+        var result = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+        if (result) renderResults(result);
+    };
+
+    window.startFresh = function() {
+        localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+        localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
+        document.getElementById('retrieval-banner').style.display = 'none';
+        doPrereqCheck();
+    };
+
+    function doPrereqCheck() {
+        var scores = getScores(userEmail, ventureSlug);
+        var prerequisites = [1, 2, 3, 4];
+        var names = { 1: 'Project Definition', 2: 'ICP Clarity', 3: 'Market Attractiveness', 4: 'Strategy Selector' };
+        var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html', 3: 'EO-Market-Attractiveness-Scoring.html', 4: 'EO-Strategy-Selector.html' };
+        for (var i = 0; i < prerequisites.length; i++) {
+            var n = prerequisites[i];
+            if (!scores['sc' + n] && scores['sc' + n] !== 0) {
+                showError('Please complete <a href="' + files[n] + '" style="color:var(--eo-orange)">' + names[n] + '</a> first.');
+                return;
+            }
+        }
+        loadSavedAnswers();
+        startQuestions();
+    }
+
+    /* ===================================
+       SCORING ENGINE
+       =================================== */
+    function computeMotionScores() {
+        var scores = getScores(userEmail, ventureSlug);
+        var menaMultiplier = 1.0;
+        if (answers.q_mena_focus !== undefined) {
+            var menaVal = QUESTIONS[12].options[answers.q_mena_focus].value;
+            menaMultiplier = [0.3, 0.6, 1.0, 1.2][menaVal - 1];
         }
 
-        showScreen('screenEmail');
-        renderUpstreamPanel();
+        /* Upstream bonuses from SC1-SC4 */
+        var upstreamFitBonus = 0;
+        if (scores.sc1 && scores.sc1 > 70) upstreamFitBonus += 0.5;
+        if (scores.sc2 && scores.sc2 > 70) upstreamFitBonus += 0.5;
+        if (scores.sc3 && scores.sc3 > 70) upstreamFitBonus += 0.3;
+        if (scores.sc4 && scores.sc4 > 70) upstreamFitBonus += 0.3;
+
+        /* Strategy path bonus from SC4 */
+        var sc4Result = getUpstreamResult(4, userEmail, ventureSlug);
+        var strategyPath = '';
+        if (sc4Result && sc4Result.primary_path) strategyPath = sc4Result.primary_path;
+
+        var pathBonuses = {
+            replicate: [1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+            consulting: [0, 0, 2, 0, 0, 1, 1, 0, 0, 2, 1, 1, 0],
+            'micro-saas': [1, 2, 0, 1, 2, 0, 1, 1, 2, 0, 0, 1, 0],
+            hammering: [0, 1, 0, 0, 0, 2, 1, 3, 1, 0, 1, 0, 0]
+        };
+
+        motionScores = [];
+        for (var m = 0; m < MOTIONS.length; m++) {
+            var motion = MOTIONS[m];
+            var weights = WEIGHT_MATRIX[m];
+
+            /* Calculate readiness from answers */
+            var readinessRaw = 0;
+            var readinessMax = 0;
+            for (var q = 0; q < 12; q++) { /* Q0-Q11, skip Q12 (MENA is separate) */
+                var w = weights[q];
+                if (w > 0) {
+                    readinessMax += 4 * w;
+                    if (answers[QUESTIONS[q].id] !== undefined) {
+                        readinessRaw += QUESTIONS[q].options[answers[QUESTIONS[q].id]].value * w;
+                    }
+                }
+            }
+            var readiness = readinessMax > 0 ? (readinessRaw / readinessMax) * 10 : 5;
+
+            /* Calculate fit */
+            var fit = motion.defaultFit + upstreamFitBonus;
+            if (strategyPath && pathBonuses[strategyPath]) {
+                fit += pathBonuses[strategyPath][m];
+            }
+            fit = Math.min(10, fit);
+
+            /* Calculate MENA score */
+            var mena = Math.min(10, motion.baseMena * menaMultiplier);
+
+            /* Composite score */
+            var composite = (fit * 0.4) + (readiness * 0.3) + (mena * 0.3);
+
+            motionScores.push({
+                idx: m,
+                score: composite,
+                fit: Math.round(fit * 10) / 10,
+                readiness: Math.round(readiness * 10) / 10,
+                mena: Math.round(mena * 10) / 10
+            });
+        }
+        motionScores.sort(function(a, b) { return b.score - a.score; });
     }
 
-    /* ── Prerequisites Check ── */
-    function checkPrerequisites() {
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            return status.pd && status.icp && status.mas && status.strategy;
-        } catch(e) { return false; }
+    function calculateOverallScore() {
+        /* Sum all 13 answers (each 1-4, max 52, min 13) → scale to 0-100 */
+        var sum = 0;
+        var answered = 0;
+        for (var i = 0; i < TOTAL_QUESTIONS; i++) {
+            var q = QUESTIONS[i];
+            if (answers[q.id] !== undefined) {
+                sum += q.options[answers[q.id]].value;
+                answered++;
+            }
+        }
+        if (answered === 0) return 0;
+
+        var raw = ((sum - answered) / (answered * 3)) * 85; /* Scale: 0 base → 85 max from answers */
+
+        /* Upstream bonus: SC1-SC4 scores above 70 add points */
+        var scores = getScores(userEmail, ventureSlug);
+        var bonus = 0;
+        if (scores.sc1 && scores.sc1 > 70) bonus += 3;
+        if (scores.sc2 && scores.sc2 > 70) bonus += 3;
+        if (scores.sc3 && scores.sc3 > 70) bonus += 2;
+        if (scores.sc4 && scores.sc4 > 70) bonus += 2;
+        /* Bonus for MENA specificity (Q13 answer 3 or 4) */
+        if (answers.q_mena_focus !== undefined) {
+            var menaVal = QUESTIONS[12].options[answers.q_mena_focus].value;
+            if (menaVal >= 3) bonus += 3;
+            else if (menaVal >= 2) bonus += 1;
+        }
+
+        return Math.round(Math.min(100, Math.max(0, raw + bonus)));
     }
 
-    /* ── Load upstream data for reference ── */
-    function loadUpstreamData() {
-        var upstream = {};
-        try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            upstream.pd = status.pd || null;
-            upstream.icp = status.icp || null;
-            upstream.mas = status.mas || null;
-            upstream.strategy = status.strategy || null;
-        } catch(e) {}
-        try {
-            var strat = JSON.parse(localStorage.getItem('eo-strategy-selector') || '{}');
-            upstream.strategyPath = strat.strategyPath || null;
-        } catch(e) {}
-        return upstream;
+    function getBand(score) {
+        if (score >= 85) return { label: 'Launch Ready', css: 'launch-ready', color: '#22C55E' };
+        if (score >= 70) return { label: 'Almost There', css: 'almost-there', color: '#FF6600' };
+        if (score >= 55) return { label: 'Needs Work', css: 'needs-work', color: '#D97706' };
+        if (score >= 40) return { label: 'Early Stage', css: 'early-stage', color: '#EF4444' };
+        return { label: 'Reset', css: 'reset', color: '#EF4444' };
     }
 
-    /* ── Render upstream reference panel ── */
-    function renderUpstreamPanel() {
-        var data = loadUpstreamData();
-        var items = [];
-        if (data.pd) items.push({ label: 'Project Definition', value: 'Score: ' + data.pd + '/100' });
-        if (data.icp) items.push({ label: 'ICP Clarity', value: 'Score: ' + data.icp + '/100' });
-        if (data.mas) items.push({ label: 'Market Attractiveness', value: 'Score: ' + data.mas + '/100' });
-        if (data.strategy) items.push({ label: 'Strategy Selector', value: 'Score: ' + data.strategy + '/100' });
-        if (data.strategyPath) items.push({ label: 'Strategy Path', value: data.strategyPath });
-        if (items.length === 0) { $upstreamPanel.innerHTML = ''; return; }
-        var html = '<div class="upstream-ref">';
-        html += '<button class="upstream-ref-toggle" onclick="toggleUpstream(this)"><span class="arrow">&#9654;</span> Your Upstream Scores</button>';
-        html += '<div class="upstream-ref-content">';
-        items.forEach(function(item) {
-            html += '<div class="upstream-ref-item"><div class="label">' + item.label + '</div><div class="value">' + item.value + '</div></div>';
+    function getMotionTier(score) {
+        if (score >= 6.5) return { label: 'PRIMARY', css: 'tier-primary' };
+        if (score >= 5.0) return { label: 'SECONDARY', css: 'tier-secondary' };
+        if (score >= 3.5) return { label: 'CONDITIONAL', css: 'tier-conditional' };
+        return { label: 'SKIP', css: 'tier-skip' };
+    }
+
+    /* ===================================
+       QUESTION STEPPER
+       =================================== */
+    function loadSavedAnswers() {
+        try {
+            var saved = localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+            if (saved) answers = JSON.parse(saved);
+        } catch(e) { answers = {}; }
+    }
+
+    function saveCurrentAnswers() {
+        try { localStorage.setItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(answers)); } catch(e) {}
+    }
+
+    function startQuestions() {
+        if (Object.keys(answers).length > 0) {
+            currentIndex = findFirstUnanswered();
+            if (currentIndex > 0) showToast('Welcome back! Resuming where you left off.');
+        } else {
+            currentIndex = 0;
+        }
+        showScreen('screen-stepper');
+        renderQuestion();
+    }
+
+    function findFirstUnanswered() {
+        for (var i = 0; i < TOTAL_QUESTIONS; i++) {
+            if (!(QUESTIONS[i].id in answers)) return i;
+        }
+        return TOTAL_QUESTIONS - 1;
+    }
+
+    function renderQuestion() {
+        var q = QUESTIONS[currentIndex];
+        focusedOptionIndex = -1;
+
+        document.getElementById('sectionLabel').textContent = q.section;
+        document.getElementById('progressCounter').textContent = 'Question ' + (currentIndex + 1) + ' of ' + TOTAL_QUESTIONS;
+        document.getElementById('progressFill').style.width = ((currentIndex + 1) / TOTAL_QUESTIONS * 100) + '%';
+        document.getElementById('questionText').textContent = q.text;
+
+        var helpEl = document.getElementById('questionHelp');
+        if (q.help) { helpEl.textContent = q.help; helpEl.style.display = 'block'; }
+        else { helpEl.style.display = 'none'; }
+
+        var optionsList = document.getElementById('optionsList');
+        optionsList.innerHTML = '';
+
+        renderEngagement();
+
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) div.classList.add('selected');
+            div.addEventListener('click', function() { selectMcOption(q.id, idx); });
+            optionsList.appendChild(div);
         });
-        html += '</div></div>';
-        $upstreamPanel.innerHTML = html;
+
+        document.getElementById('btnNext').disabled = !(q.id in answers);
+        var btnPrev = document.getElementById('btnPrev');
+        if (currentIndex === 0) { btnPrev.classList.add('hidden'); } else { btnPrev.classList.remove('hidden'); }
+        document.getElementById('btnNext').textContent = currentIndex === TOTAL_QUESTIONS - 1 ? 'Submit Assessment' : 'Next';
     }
 
-    /* ── Save/Load Answers ── */
-    function saveAnswers() {
-        var data = { email: userEmail, answers: answers, currentQuestion: currentQuestion, completed: false };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    function selectMcOption(qId, idx) {
+        answers[qId] = idx;
+        saveCurrentAnswers();
+        var cards = document.querySelectorAll('#optionsList .option-card');
+        cards.forEach(function(c) { c.classList.remove('selected'); });
+        cards[idx].classList.add('selected');
+        focusedOptionIndex = idx;
+        document.getElementById('btnNext').disabled = false;
+        if (currentIndex < TOTAL_QUESTIONS - 1) {
+            setTimeout(function() { nextQuestion(); }, 300);
+        }
     }
 
-    function loadAnswers() {
+    function renderEngagement() {
+        var slot = document.getElementById('engagementSlot');
+        slot.innerHTML = '';
+
+        if (currentIndex === 3) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Assets Mapped</div>' +
+                '<div class="pb-text">Good. Your audience, content, and visibility shape which strategies can work right now. Next: your product and infrastructure.</div></div>';
+        } else if (currentIndex === 7) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Infrastructure Checked</div>' +
+                '<div class="pb-text">Tools, budget, and network are the execution backbone. Now let\'s look at your market dynamics.</div></div>';
+        } else if (currentIndex === 10) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Market Reality Captured</div>' +
+                '<div class="pb-text">Deal size, speed, and search demand shape which motions generate revenue fastest. Almost done — 3 more questions.</div></div>';
+        }
+    }
+
+    window.nextQuestion = function() {
+        var q = QUESTIONS[currentIndex];
+        if (!(q.id in answers)) {
+            document.getElementById('questionCard').classList.add('shake');
+            setTimeout(function() { document.getElementById('questionCard').classList.remove('shake'); }, 400);
+            return;
+        }
+        if (currentIndex === TOTAL_QUESTIONS - 1) {
+            submitAssessment();
+            return;
+        }
+        currentIndex++;
+        renderQuestion();
+    };
+
+    window.prevQuestion = function() {
+        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+    };
+
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'btnNext' || e.target.closest('#btnNext')) { nextQuestion(); }
+        if (e.target.id === 'btnPrev' || e.target.closest('#btnPrev')) { prevQuestion(); }
+    });
+
+    /* ===================================
+       SUBMIT + RESULTS
+       =================================== */
+    function submitAssessment() {
+        showScreen('screen-results');
+        document.getElementById('loadingOverlay').classList.add('active');
+
+        setTimeout(function() {
+            computeMotionScores();
+            var score = calculateOverallScore();
+            var band = getBand(score);
+
+            var resultObj = {
+                score: score,
+                band: band.label,
+                motionScores: motionScores.slice(0, 13),
+                completed_at: new Date().toISOString().split('T')[0]
+            };
+
+            localStorage.setItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(resultObj));
+            saveScore(userEmail, ventureSlug, SC_NUMBER, score);
+            saveCurrentAnswers();
+
+            sendToWebhook(score, band);
+
+            document.getElementById('loadingOverlay').classList.remove('active');
+            renderResults(resultObj);
+        }, 600);
+    }
+
+    function sendToWebhook(score, band) {
+        var upstream = {};
+        for (var i = 1; i < SC_NUMBER; i++) {
+            upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null;
+        }
+
+        var answerLabels = {};
+        for (var key in answers) {
+            if (answers.hasOwnProperty(key)) {
+                var q = QUESTIONS.find(function(qq) { return qq.id === key; });
+                if (q && q.options[answers[key]]) {
+                    answerLabels[key] = q.options[answers[key]].label;
+                }
+            }
+        }
+
+        var payload = {
+            email: userEmail,
+            venture_name: ventureName,
+            venture_slug: ventureSlug,
+            scorecard: 'SC5',
+            answers: answers,
+            answer_labels: answerLabels,
+            scores: { total: score, band: band.label },
+            motion_ranking: motionScores.map(function(ms) {
+                return { name: MOTIONS[ms.idx].name, score: Math.round(ms.score * 100) / 100, fit: ms.fit, readiness: ms.readiness, mena: ms.mena, tier: getMotionTier(ms.score).label };
+            }),
+            top_3_motions: motionScores.slice(0, 3).map(function(ms) { return MOTIONS[ms.idx].name; }),
+            upstream_data: upstream,
+            timestamp: new Date().toISOString()
+        };
+
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-gtm-score', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+            signal: controller.signal
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { console.log('Webhook OK:', data); })
+        .catch(function(err) {
+            if (err.name === 'AbortError') { console.warn('Webhook timeout — proceeding with local scores'); }
+            else { console.warn('Webhook failed:', err); }
+        })
+        .finally(function() { clearTimeout(timeoutId); });
+    }
+
+    function renderResults(resultObj) {
+        showScreen('screen-results');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (!motionScores.length) computeMotionScores();
+
+        var score = resultObj.score;
+        var band = getBand(score);
+        var html = '';
+
+        /* === SCORE GAUGE === */
+        var circumference = 2 * Math.PI * 70;
+        var offset = circumference - (score / 100) * circumference;
+        html += '<div class="score-hero">';
+        html += '<div class="gauge-container">';
+        html += '<svg class="gauge-svg" viewBox="0 0 160 160"><circle class="gauge-bg" cx="80" cy="80" r="70"/>';
+        html += '<circle class="gauge-fill" cx="80" cy="80" r="70" stroke="' + band.color + '" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + offset + '"/></svg>';
+        html += '<div class="gauge-text"><span class="gauge-score">' + score + '</span><span class="gauge-label">/ 100</span></div>';
+        html += '</div>';
+        html += '<div class="band-label ' + band.css + '">' + escapeHtml(band.label) + '</div>';
+        html += '<p style="font-size:14px;color:#9CA3AF;margin-top:4px;">GTM Fitness Score</p>';
+        html += '</div>';
+
+        /* === TOP 3 GTM MOTION CARDS === */
+        html += '<div style="max-width:640px;margin:0 auto;">';
+        var top3 = motionScores.slice(0, 3);
+        for (var i = 0; i < top3.length; i++) {
+            var ms = top3[i];
+            var m = MOTIONS[ms.idx];
+            var tier = getMotionTier(ms.score);
+            var cardClass = i === 0 ? 'motion-card' : i === 1 ? 'motion-card secondary' : 'motion-card conditional';
+
+            html += '<div class="' + cardClass + '">';
+            html += '<div class="motion-card-header">';
+            html += '<span class="motion-card-name">#' + (i + 1) + ' ' + escapeHtml(m.name) + '</span>';
+            html += '<span class="tier-badge ' + tier.css + '">' + tier.label + '</span>';
+            html += '<span class="motion-card-score">' + (Math.round(ms.score * 100) / 100).toFixed(1) + ' / 10</span>';
+            html += '</div>';
+
+            html += '<div class="motion-breakdown">';
+            html += '<span class="breakdown-item">Fit: <strong>' + ms.fit + '</strong></span>';
+            html += '<span class="breakdown-item">Readiness: <strong>' + ms.readiness + '</strong></span>';
+            html += '<span class="breakdown-item">MENA: <strong>' + ms.mena + '</strong></span>';
+            html += '</div>';
+
+            html += '<div class="best-fit">' + escapeHtml(m.bestFit) + '</div>';
+
+            html += '<div class="how-to-start"><div class="label">How to Start</div>';
+            m.howToStart.forEach(function(step) {
+                html += '<div class="step">' + escapeHtml(step) + '</div>';
+            });
+            html += '</div>';
+
+            html += '<div class="mena-note">' + escapeHtml(m.menaNote) + '</div>';
+            html += '</div>';
+        }
+        html += '</div>';
+
+        /* === 72-HOUR LAUNCH COMMITMENT === */
+        var primaryMotion = MOTIONS[motionScores[0].idx];
+        html += '<div class="commitment-card">';
+        html += '<h3>72-Hour Launch Commitment</h3>';
+        html += '<div class="timer">72h</div>';
+        html += '<div class="commitment-text">';
+        html += 'Your primary motion is <strong>' + escapeHtml(primaryMotion.name) + '</strong>.<br>';
+        html += 'In the next 72 hours, complete this: <strong>' + escapeHtml(primaryMotion.howToStart[0]) + '</strong>';
+        html += '</div>';
+        html += '</div>';
+
+        /* === ALL 13 MOTIONS RANKING TABLE === */
+        html += '<div class="results-card"><h3>All 13 GTM Motions Ranked</h3>';
+        html += '<div style="overflow-x:auto;"><table class="motion-table"><thead><tr>';
+        html += '<th>#</th><th>Motion</th><th>Fit</th><th>Ready</th><th>MENA</th><th>Score</th><th>Tier</th>';
+        html += '</tr></thead><tbody>';
+        for (var j = 0; j < motionScores.length; j++) {
+            var msr = motionScores[j];
+            var mo = MOTIONS[msr.idx];
+            var tr = getMotionTier(msr.score);
+            var isTop5 = j < 5;
+            html += '<tr class="' + (isTop5 ? 'top-5' : '') + '">';
+            html += '<td>' + (j + 1) + '</td>';
+            html += '<td>' + escapeHtml(mo.shortName) + '</td>';
+            html += '<td>' + msr.fit + '</td>';
+            html += '<td>' + msr.readiness + '</td>';
+            html += '<td>' + msr.mena + '</td>';
+            html += '<td>' + (Math.round(msr.score * 100) / 100).toFixed(1) + '</td>';
+            html += '<td><span class="tier-badge ' + tr.css + '">' + tr.label + '</span></td>';
+            html += '</tr>';
+        }
+        html += '</tbody></table></div>';
+        html += '<p style="font-size:12px;color:#9CA3AF;margin-top:8px;">Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10</p>';
+        html += '</div>';
+
+        /* === STRENGTHEN CARDS === */
+        html += generateStrengthenCards(score);
+
+        /* === CTAs === */
+        html += '<div class="results-cta">';
+        html += '<a href="EO-Assessment-Dashboard.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;width:100%;max-width:400px;">Go to Dashboard →</a>';
+        html += '<button class="btn-download-md" id="btnDownloadMd">Download Full Analysis (MD)</button>';
+        html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
+        html += '</div>';
+
+        document.getElementById('resultsContent').innerHTML = html;
+
+        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+        document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+    }
+
+    function generateStrengthenCards(score) {
+        var html = '';
+        var cards = [];
+
+        /* Check capability gaps based on answer values */
+        var emailAns = answers.q_email_list !== undefined ? QUESTIONS[0].options[answers.q_email_list].value : 0;
+        var contentAns = answers.q_content_frequency !== undefined ? QUESTIONS[1].options[answers.q_content_frequency].value : 0;
+        var outboundAns = answers.q_outbound_tools !== undefined ? QUESTIONS[4].options[answers.q_outbound_tools].value : 0;
+        var budgetAns = answers.q_budget !== undefined ? QUESTIONS[5].options[answers.q_budget].value : 0;
+        var networkAns = answers.q_network !== undefined ? QUESTIONS[6].options[answers.q_network].value : 0;
+        var demoAns = answers.q_demo_ability !== undefined ? QUESTIONS[3].options[answers.q_demo_ability].value : 0;
+
+        if (emailAns <= 1) cards.push({ label: 'Audience Gap', advice: 'No email list detected. Build a 500-person list in 30 days using a lead magnet tied to your ICP\'s biggest pain. This unlocks Waitlist, Value Trust, and Authority Education motions.' });
+        if (contentAns <= 1) cards.push({ label: 'Content Gap', advice: 'You are not publishing regularly. Start with 2 posts per week on LinkedIn or 1 article per week. Consistency unlocks Authority, Build-in-Public, and SEO motions.' });
+        if (outboundAns <= 1) cards.push({ label: 'Outbound Infrastructure', advice: 'No outreach tools in place. Set up a basic CRM + cold email sender this week. Signal Sniper and 7x4x11 require this foundation.' });
+        if (networkAns <= 1) cards.push({ label: 'Network Gap', advice: 'Weak network limits Dream 100 and 7x4x11 motions. Spend 30 minutes daily engaging with 10 relevant people on LinkedIn for the next 30 days.' });
+        if (demoAns <= 1) cards.push({ label: 'Demo Gap', advice: 'Your product does not show quick results. Build a 3-minute outcome demo — before vs after. This unlocks Outcome Demo First and Paid VSL motions.' });
+        if (budgetAns <= 1 && cards.length < 4) cards.push({ label: 'Budget Constraint', advice: 'Low budget means you need organic-first motions. Focus on Build-in-Public, Authority Education, or Dream 100 — all zero-cost to start.' });
+
+        if (score < 55 && cards.length < 2) {
+            cards.push({ label: 'Foundation First', advice: 'Focus on a single motion for Month 1 before expanding. Multi-motion execution at low readiness leads to scattered results.' });
+        }
+
+        if (cards.length === 0) {
+            cards.push({ label: 'Solid Foundation', advice: 'Strong GTM fitness. Execute your top 3 motions in sequence, track weekly metrics, and adjust at the 30-day mark.' });
+        }
+
+        html += '<div class="results-card"><h3>Strengthen Your GTM</h3>';
+        cards.forEach(function(c) {
+            html += '<div class="strengthen-card"><div class="label">' + escapeHtml(c.label) + '</div><div class="advice">' + escapeHtml(c.advice) + '</div></div>';
+        });
+        html += '</div>';
+        return html;
+    }
+
+    /* ===================================
+       MARKDOWN EXPORT
+       =================================== */
+    function generateMarkdownExport() {
+        if (!motionScores.length) computeMotionScores();
+        var score = calculateOverallScore();
+        var band = getBand(score);
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+
+        var md = '# GTM Fitness Assessment Results\n\n';
+        md += '**Email:** ' + userEmail + '\n';
+        md += '**Venture:** ' + ventureName + '\n';
+        md += '**Date:** ' + dateStr + '\n';
+        md += '**Score:** ' + score + '/100 — ' + band.label + '\n\n---\n\n';
+
+        /* Motion Ranking Table */
+        md += '## All 13 GTM Motions Ranked\n\n';
+        md += '| # | Motion | Fit | Readiness | MENA | Score | Tier |\n';
+        md += '|---|--------|-----|-----------|------|-------|------|\n';
+        for (var i = 0; i < motionScores.length; i++) {
+            var ms = motionScores[i];
+            var m = MOTIONS[ms.idx];
+            var tier = getMotionTier(ms.score);
+            md += '| ' + (i + 1) + ' | ' + m.name + ' | ' + ms.fit + ' | ' + ms.readiness + ' | ' + ms.mena + ' | ' + (Math.round(ms.score * 100) / 100).toFixed(1) + ' | ' + tier.label + ' |\n';
+        }
+        md += '\n_Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10_\n\n---\n\n';
+
+        /* Top 5 motions detail */
+        md += '## Top 5 Motions (Detailed)\n\n';
+        for (var j = 0; j < Math.min(5, motionScores.length); j++) {
+            var ms2 = motionScores[j];
+            var m2 = MOTIONS[ms2.idx];
+            var t2 = getMotionTier(ms2.score);
+            md += '### #' + (j + 1) + ' ' + m2.name + ' (' + t2.label + ')\n\n';
+            md += '- **Fit:** ' + ms2.fit + ' | **Readiness:** ' + ms2.readiness + ' | **MENA:** ' + ms2.mena + '\n';
+            md += '- **Best For:** ' + m2.bestFit + '\n';
+            md += '- **MENA Note:** ' + m2.menaNote + '\n';
+            md += '- **How to Start:**\n';
+            m2.howToStart.forEach(function(s) { md += '  1. ' + s + '\n'; });
+            md += '- **Weekly Hours:** ~' + m2.weeklyHours + 'h\n\n';
+        }
+        md += '---\n\n';
+
+        /* 72-Hour Commitment */
+        var primaryMotion = MOTIONS[motionScores[0].idx];
+        md += '## 72-Hour Launch Commitment\n\n';
+        md += '**Primary Motion:** ' + primaryMotion.name + '\n';
+        md += '**Commitment:** ' + primaryMotion.howToStart[0] + '\n\n---\n\n';
+
+        /* All Answers */
+        md += '## Your Answers\n\n';
+        QUESTIONS.forEach(function(q, idx) {
+            var opt = answers[q.id] !== undefined ? q.options[answers[q.id]] : null;
+            md += '**Q' + (idx + 1) + ': ' + q.text + '**\n';
+            md += '→ ' + (opt ? opt.label : '(No answer)') + '\n\n';
+        });
+
+        md += '---\n\n_Generated by Entrepreneurs Oasis MENA GTM Fitness Assessment_\n';
+
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'gtm-fitness-results-' + ventureName.replace(/\s+/g, '-').toLowerCase() + '-' + dateStr + '.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    /* ===================================
+       RETAKE
+       =================================== */
+    function retakeAssessment() {
+        answers = {};
+        currentIndex = 0;
+        motionScores = [];
         try {
-            var data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-            if (data.email) userEmail = data.email;
-            if (data.answers) answers = data.answers;
-            if (typeof data.currentQuestion === 'number') currentQuestion = data.currentQuestion;
+            localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+            localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
         } catch(e) {}
+        showScreen('auth-screen');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    /* ── Screen Management ── */
+    /* ===================================
+       KEYBOARD NAVIGATION
+       =================================== */
+    document.addEventListener('keydown', function(e) {
+        if (!document.getElementById('screen-stepper').classList.contains('active')) return;
+        var q = QUESTIONS[currentIndex];
+        var cards = document.querySelectorAll('#optionsList .option-card');
+        if (cards.length === 0) return;
+        switch(e.key) {
+            case 'ArrowDown': e.preventDefault(); focusedOptionIndex = (focusedOptionIndex + 1) % cards.length; updateFocus(cards); break;
+            case 'ArrowUp': e.preventDefault(); focusedOptionIndex = focusedOptionIndex <= 0 ? cards.length - 1 : focusedOptionIndex - 1; updateFocus(cards); break;
+            case 'Enter': e.preventDefault(); if (focusedOptionIndex >= 0) selectMcOption(q.id, focusedOptionIndex); break;
+            case 'ArrowRight': e.preventDefault(); nextQuestion(); break;
+            case 'ArrowLeft': e.preventDefault(); prevQuestion(); break;
+        }
+    });
+
+    function updateFocus(cards) {
+        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('focused');
+        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) {
+            cards[focusedOptionIndex].classList.add('focused');
+            cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    /* ===================================
+       UTILITIES
+       =================================== */
     function showScreen(id) {
         var screens = document.querySelectorAll('.screen');
         for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
         document.getElementById(id).classList.add('active');
     }
 
-    /* ── Event Binding ── */
-    function bindEvents() {
-        $btnStart.addEventListener('click', function() {
-            var email = $emailInput.value.trim();
-            if (!email || email.indexOf('@') < 1) {
-                showToast('Please enter a valid email');
-                $emailInput.classList.add('shake');
-                setTimeout(function() { $emailInput.classList.remove('shake'); }, 400);
-                return;
-            }
-            userEmail = email;
-            saveAnswers();
-            showScreen('screenStepper');
-            renderQuestion();
-        });
-
-        $emailInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') $btnStart.click();
-        });
-
-        $btnPrev.addEventListener('click', prevQuestion);
-        $btnNext.addEventListener('click', nextQuestion);
-
-        $btnSubmitContact.addEventListener('click', submitContact);
-        $btnSkipContact.addEventListener('click', skipContact);
-
-        /* Keyboard navigation */
-        document.addEventListener('keydown', function(e) {
-            if (!$screenStepper.classList.contains('active')) return;
-            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                e.preventDefault();
-                var cards = $optionsList.querySelectorAll('.option-card');
-                if (cards.length === 0) return;
-                var focusedIdx = -1;
-                for (var i = 0; i < cards.length; i++) {
-                    if (cards[i].classList.contains('focused')) { focusedIdx = i; break; }
-                }
-                if (e.key === 'ArrowDown') focusedIdx = Math.min(focusedIdx + 1, cards.length - 1);
-                else focusedIdx = Math.max(focusedIdx - 1, 0);
-                for (var j = 0; j < cards.length; j++) cards[j].classList.remove('focused');
-                cards[focusedIdx].classList.add('focused');
-                cards[focusedIdx].scrollIntoView({ block: 'nearest' });
-            }
-            if (e.key === 'Enter') {
-                var focused = $optionsList.querySelector('.option-card.focused');
-                if (focused) focused.click();
-                else if (!$btnNext.disabled) $btnNext.click();
-            }
-        });
-    }
-
-    /* ── Render Question ── */
-    function renderQuestion() {
-        var q = allQuestions[currentQuestion];
-        var total = allQuestions.length;
-
-        $sectionLabel.textContent = 'Section ' + q.sectionId + ': ' + SECTION_NAMES[q.sectionId];
-        $progressCounter.textContent = 'Question ' + (currentQuestion + 1) + ' of ' + total;
-        $progressFill.style.width = ((currentQuestion + 1) / total * 100) + '%';
-
-        $questionText.textContent = q.text;
-        if (q.help) { $questionHelp.textContent = q.help; $questionHelp.style.display = 'block'; }
-        else { $questionHelp.style.display = 'none'; }
-
-        /* Render MC options */
-        var html = '';
-        var savedAnswer = answers[q.id];
-        q.options.forEach(function(opt, idx) {
-            var sel = (savedAnswer !== undefined && savedAnswer === idx) ? ' selected' : '';
-            html += '<div class="option-card' + sel + '" data-idx="' + idx + '">' + escapeHtml(opt.label) + '</div>';
-        });
-        $optionsList.innerHTML = html;
-
-        /* Bind option clicks */
-        var cards = $optionsList.querySelectorAll('.option-card');
-        cards.forEach(function(card) {
-            card.addEventListener('click', function() { selectOption(parseInt(card.dataset.idx)); });
-        });
-
-        /* Nav buttons */
-        $btnPrev.classList.toggle('hidden', currentQuestion === 0);
-        updateNextButton();
-    }
-
-    /* ── Select Option ── */
-    function selectOption(idx) {
-        var q = allQuestions[currentQuestion];
-        answers[q.id] = idx;
-        saveAnswers();
-
-        var cards = $optionsList.querySelectorAll('.option-card');
-        for (var i = 0; i < cards.length; i++) {
-            cards[i].classList.toggle('selected', i === idx);
-        }
-
-        updateNextButton();
-
-        /* Auto-advance after brief pause */
-        setTimeout(function() {
-            if (currentQuestion < allQuestions.length - 1) {
-                nextQuestion();
-            } else {
-                updateNextButton();
-            }
-        }, 300);
-    }
-
-    /* ── Update Next Button ── */
-    function updateNextButton() {
-        var q = allQuestions[currentQuestion];
-        var hasAnswer = answers[q.id] !== undefined;
-        $btnNext.disabled = !hasAnswer;
-
-        if (currentQuestion === allQuestions.length - 1 && hasAnswer) {
-            $btnNext.textContent = 'See Results';
-        } else {
-            $btnNext.textContent = 'Next';
-        }
-    }
-
-    /* ── Navigation ── */
-    function nextQuestion() {
-        var q = allQuestions[currentQuestion];
-        if (answers[q.id] === undefined) {
-            showToast('Please select an answer');
-            return;
-        }
-        if (currentQuestion < allQuestions.length - 1) {
-            currentQuestion++;
-            saveAnswers();
-            renderQuestion();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            /* All done — go to contact screen */
-            showScreen('screenContact');
-            $contactEmail.value = userEmail;
-        }
-    }
-
-    function prevQuestion() {
-        if (currentQuestion > 0) {
-            currentQuestion--;
-            saveAnswers();
-            renderQuestion();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }
-
-    /* ── Score Calculation ── */
-    function calculateScores() {
-        var sectionScores = { A: 0, B: 0, C: 0 };
-        var total = 0;
-
-        allQuestions.forEach(function(q) {
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined && q.options[ansIdx]) {
-                var score = q.options[ansIdx].score;
-                sectionScores[q.sectionId] += score;
-                total += score;
-            }
-        });
-
-        return { sections: sectionScores, total: total };
-    }
-
-    /* ── Motion Scoring ──
-       For each of the 13 motions, compute:
-       - Fit: defaultFit + context bonuses from A-section
-       - Readiness: weighted sum from B-section answers (capWeights) + C-section (readyWeights)
-       - MENA: base mena score adjusted by geography + Arabic capability
-       - Composite: (Fit × 0.4 + Readiness × 0.3 + MENA × 0.3) / 2 → 0-5 scale
-    */
-    function computeMotionScores() {
-        /* Extract context tags from A-section */
-        var context = {};
-        allQuestions.forEach(function(q) {
-            if (q.tag && answers[q.id] !== undefined) {
-                context[q.tag] = q.options[answers[q.id]].key;
-            }
-        });
-
-        /* Get B-section scores (normalized 0-1) */
-        var bScores = [];
-        for (var bi = 0; bi < 10; bi++) {
-            var q = allQuestions[4 + bi]; /* B questions start at index 4 */
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined) {
-                bScores.push(q.options[ansIdx].score / q.maxScore);
-            } else {
-                bScores.push(0);
-            }
-        }
-
-        /* Get C-section scores (normalized 0-1) */
-        var cScores = [];
-        for (var ci = 0; ci < 6; ci++) {
-            var q2 = allQuestions[14 + ci]; /* C questions start at index 14 */
-            var ansIdx2 = answers[q2.id];
-            if (ansIdx2 !== undefined) {
-                cScores.push(q2.options[ansIdx2].score / q2.maxScore);
-            } else {
-                cScores.push(0);
-            }
-        }
-
-        /* Arabic score from B9 (normalized 0-1) */
-        var arabicScore = bScores[8] || 0;
-
-        /* Geography context */
-        var geoKey = context.geo || 'global';
-        var menaGeoBonus = (geoKey === 'mena') ? 1 : (geoKey === 'global') ? 0 : -1;
-
-        var motionResults = MOTIONS.map(function(motion) {
-            /* 1. Fit score (0-10 scale) */
-            var fit = motion.defaultFit;
-            var cb = motion.contextBonus;
-            if (cb.acv && context.acv && cb.acv[context.acv] !== undefined) fit += cb.acv[context.acv];
-            if (cb.cycle && context.cycle && cb.cycle[context.cycle] !== undefined) fit += cb.cycle[context.cycle];
-            if (cb.type && context.type && cb.type[context.type] !== undefined) fit += cb.type[context.type];
-            fit = Math.max(0, Math.min(10, fit));
-
-            /* 2. Readiness score (0-10 scale) */
-            var readinessRaw = 0;
-            for (var i = 0; i < 10; i++) {
-                readinessRaw += bScores[i] * (motion.capWeights[i] || 0);
-            }
-            for (var j = 0; j < 6; j++) {
-                readinessRaw += cScores[j] * (motion.readyWeights[j] || 0);
-            }
-            /* capWeights sum ~1.0, readyWeights sum ~1.0, so readinessRaw is 0-2 range */
-            var readiness = Math.min(10, readinessRaw * 5);
-
-            /* 3. MENA score (0-10 scale) */
-            var menaScore = motion.mena + menaGeoBonus + (arabicScore * 2 - 1);
-            menaScore = Math.max(0, Math.min(10, menaScore));
-
-            /* 4. Composite: (Fit × 0.4 + Readiness × 0.3 + MENA × 0.3) / 2 → 0-5 */
-            var composite = (fit * 0.4 + readiness * 0.3 + menaScore * 0.3) / 2;
-
-            /* 5. Tier */
-            var tier;
-            if (composite >= 4.0) tier = 'PRIMARY';
-            else if (composite >= 3.0) tier = 'SECONDARY';
-            else if (composite >= 2.0) tier = 'CONDITIONAL';
-            else tier = 'SKIP';
-
-            return {
-                id: motion.id,
-                name: motion.name,
-                fit: Math.round(fit * 10) / 10,
-                readiness: Math.round(readiness * 10) / 10,
-                mena: Math.round(menaScore * 10) / 10,
-                composite: Math.round(composite * 100) / 100,
-                tier: tier
-            };
-        });
-
-        /* Sort by composite descending */
-        motionResults.sort(function(a, b) { return b.composite - a.composite; });
-        return motionResults;
-    }
-
-    /* ── Score Band ── */
-    function getBand(total) {
-        if (total >= 80) return { cls: 'band-ready', label: 'GTM Ready', subtitle: 'Multiple strong motions available' };
-        if (total >= 60) return { cls: 'band-partial', label: 'Partially Ready', subtitle: 'Good foundation with gaps to fill' };
-        if (total >= 40) return { cls: 'band-gaps', label: 'Significant Gaps', subtitle: 'Need to build capabilities first' };
-        return { cls: 'band-startover', label: 'Foundation Needed', subtitle: 'Focus on basics before GTM execution' };
-    }
-
-    /* ── Build Webhook Payload ── */
-    function buildWebhookPayload(contact) {
-        var scores = calculateScores();
-        var motions = computeMotionScores();
-        var upstream = loadUpstreamData();
-
-        var answerMap = {};
-        allQuestions.forEach(function(q) {
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined) {
-                answerMap[q.id] = {
-                    question: q.text,
-                    answer: q.options[ansIdx].label,
-                    score: q.options[ansIdx].score,
-                    maxScore: q.maxScore
-                };
-            }
-        });
-
-        return {
-            email: userEmail,
-            contact: contact || null,
-            venture_name: userEmail,
-            assessment: 'gtm_fitness',
-            version: 'v2_mc_only',
-            scores: {
-                total: scores.total,
-                max: 100,
-                sections: scores.sections,
-                sectionMaxes: SECTION_MAXES
-            },
-            motions: motions.map(function(m) {
-                return { name: m.name, composite: m.composite, tier: m.tier, fit: m.fit, readiness: m.readiness, mena: m.mena };
-            }),
-            topMotions: motions.filter(function(m) { return m.tier === 'PRIMARY' || m.tier === 'SECONDARY'; }).map(function(m) { return m.name; }),
-            answers: answerMap,
-            upstream: upstream,
-            timestamp: new Date().toISOString()
-        };
-    }
-
-    /* ── Submit Contact ── */
-    function submitContact() {
-        var name = $contactName.value.trim();
-        var email = $contactEmail.value.trim();
-        var company = $contactCompany.value.trim();
-
-        if (!name || !email || !company) {
-            showToast('Please fill in all fields');
-            return;
-        }
-
-        $loadingOverlay.classList.add('active');
-        var payload = buildWebhookPayload({ name: name, email: email, company: company });
-
-        /* Fetch with timeout */
-        var controller = new AbortController();
-        var timeoutId = setTimeout(function() { controller.abort(); }, WEBHOOK_TIMEOUT);
-
-        fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-        })
-        .then(function(resp) { clearTimeout(timeoutId); return resp.json(); })
-        .then(function(data) { aiData = data; })
-        .catch(function(err) { clearTimeout(timeoutId); console.log('Webhook error or timeout:', err); })
-        .finally(function() {
-            $loadingOverlay.classList.remove('active');
-            saveCompletion();
-            showScreen('screenResults');
-            showResults();
-        });
-    }
-
-    /* ── Skip Contact ── */
-    function skipContact() {
-        $loadingOverlay.classList.add('active');
-        var payload = buildWebhookPayload(null);
-
-        var controller = new AbortController();
-        var timeoutId = setTimeout(function() { controller.abort(); }, WEBHOOK_TIMEOUT);
-
-        fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-        })
-        .then(function(resp) { clearTimeout(timeoutId); return resp.json(); })
-        .then(function(data) { aiData = data; })
-        .catch(function(err) { clearTimeout(timeoutId); })
-        .finally(function() {
-            $loadingOverlay.classList.remove('active');
-            saveCompletion();
-            showScreen('screenResults');
-            showResults();
-        });
-    }
-
-    /* ── Save Completion Status ── */
-    function saveCompletion() {
-        var scores = calculateScores();
-        var total = scores.total;
-
-        /* Save to storage key */
-        var data = { email: userEmail, answers: answers, completed: true, total: total, aiData: aiData, timestamp: new Date().toISOString() };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
-        /* Save to completion status for dashboard */
+    /* ===================================
+       BOOT
+       =================================== */
+    function init() {
+        try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
         try {
-            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
-            status.gtm = total;
-            localStorage.setItem('eo_completion_status', JSON.stringify(status));
+            var storedEmail = localStorage.getItem('eo_user_email');
+            if (storedEmail) document.getElementById('auth-email').value = storedEmail;
         } catch(e) {}
-
-        /* Save to score history */
-        try {
-            var history = JSON.parse(localStorage.getItem('eo-history') || '[]');
-            var existing = null;
-            for (var i = 0; i < history.length; i++) {
-                if (history[i].email === userEmail) { existing = i; break; }
-            }
-            var entry = {
-                email: userEmail,
-                date: new Date().toISOString(),
-                scores: { gtm: total }
-            };
-            if (existing !== null) {
-                history[existing].scores.gtm = total;
-                history[existing].date = entry.date;
-            } else {
-                history.push(entry);
-            }
-            localStorage.setItem('eo-history', JSON.stringify(history));
-        } catch(e) {}
+        document.getElementById('auth-email').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); handleEmailEntry(); }
+        });
     }
 
-    /* ── Show Results ── */
-    function showResults() {
-        var scores = calculateScores();
-        var motions = computeMotionScores();
-        var band = getBand(scores.total);
-        var html = '';
-
-        /* Score Hero */
-        html += '<div class="score-hero ' + band.cls + '">';
-        html += '<div class="score-circle"><div class="score-circle-inner"><span class="score-number">' + scores.total + '</span><span class="score-total">/ 100</span></div></div>';
-        html += '<div class="band-label">' + band.label + '</div>';
-        html += '<div class="band-subtitle">' + band.subtitle + '</div>';
-        if (aiData) html += '<div class="pending-ai-badge">AI Analysis Available</div>';
-        html += '</div>';
-
-        /* Section Breakdown */
-        html += '<div class="results-card"><h3>Section Breakdown</h3>';
-        var secOrder = ['A', 'B', 'C'];
-        var secColors = { A: '#3B82F6', B: '#22C55E', C: '#F59E0B' };
-        secOrder.forEach(function(sid) {
-            var pct = Math.round(scores.sections[sid] / SECTION_MAXES[sid] * 100);
-            html += '<div class="section-bar-row">';
-            html += '<div class="section-bar-label">' + SECTION_NAMES[sid] + '</div>';
-            html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + secColors[sid] + '"></div></div>';
-            html += '<div class="section-bar-score">' + scores.sections[sid] + '/' + SECTION_MAXES[sid] + '</div>';
-            html += '</div>';
-        });
-        html += '</div>';
-
-        /* Motion Rankings Table */
-        html += '<div class="results-card"><h3>Your GTM Motion Rankings</h3>';
-        html += '<table class="motion-table"><thead><tr><th>#</th><th>Motion</th><th>Score</th><th>Tier</th></tr></thead><tbody>';
-        motions.forEach(function(m, idx) {
-            var tierClass = 'tier-' + m.tier.toLowerCase();
-            html += '<tr>';
-            html += '<td>' + (idx + 1) + '</td>';
-            html += '<td>' + escapeHtml(m.name) + '</td>';
-            html += '<td>' + m.composite.toFixed(1) + '/5</td>';
-            html += '<td><span class="tier-badge ' + tierClass + '">' + m.tier + '</span></td>';
-            html += '</tr>';
-        });
-        html += '</tbody></table></div>';
-
-        /* Top Motions Detail */
-        var topMotions = motions.filter(function(m) { return m.tier === 'PRIMARY' || m.tier === 'SECONDARY'; });
-        if (topMotions.length > 0) {
-            html += '<div class="results-card"><h3>Your Top Motions — Recommended Actions</h3>';
-            topMotions.forEach(function(m) {
-                html += '<div class="reco-section">';
-                html += '<div class="reco-header"><span class="reco-icon">' + (m.tier === 'PRIMARY' ? '🟢' : '🔵') + '</span><span class="reco-title">' + escapeHtml(m.name) + ' (' + m.composite.toFixed(1) + '/5)</span></div>';
-                html += '<div style="font-size:12px;color:#9CA3AF;margin-bottom:6px;">Fit: ' + m.fit + ' | Readiness: ' + m.readiness + ' | MENA: ' + m.mena + '</div>';
-                var recos = MOTION_RECOMMENDATIONS[m.id] || [];
-                if (recos.length > 0) {
-                    html += '<ul class="reco-list">';
-                    recos.forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; });
-                    html += '</ul>';
-                }
-                html += '</div>';
-            });
-            html += '</div>';
-        }
-
-        /* Capability Gaps */
-        var gaps = [];
-        allQuestions.forEach(function(q) {
-            if (q.sectionId === 'B' || q.sectionId === 'C') {
-                var ansIdx = answers[q.id];
-                if (ansIdx !== undefined && q.options[ansIdx].score <= 2) {
-                    gaps.push({ question: q.text, answer: q.options[ansIdx].label, section: q.sectionId });
-                }
-            }
-        });
-        if (gaps.length > 0) {
-            html += '<div class="results-card"><h3>Capability Gaps to Address</h3>';
-            html += '<ul class="reco-list">';
-            gaps.forEach(function(g) {
-                html += '<li><strong>' + escapeHtml(g.question) + '</strong><br><span style="color:#F59E0B;">Current: ' + escapeHtml(g.answer) + '</span></li>';
-            });
-            html += '</ul></div>';
-        }
-
-        /* AI Insights (if webhook returned data) */
-        if (aiData && aiData.ai_insight) {
-            html += '<div class="ai-section">';
-            html += '<span class="ai-badge">AI Analysis</span>';
-            html += '<h3>Personalized GTM Strategy</h3>';
-            html += '<div class="ai-insight">' + escapeHtml(aiData.ai_insight) + '</div>';
-            if (aiData.action_plan && aiData.action_plan.length > 0) {
-                html += '<div style="margin-top:12px;"><h4 style="font-size:14px;color:var(--eo-orange);margin-bottom:8px;">90-Day Action Plan</h4><ul class="reco-list">';
-                aiData.action_plan.forEach(function(item) { html += '<li>' + escapeHtml(item) + '</li>'; });
-                html += '</ul></div>';
-            }
-            html += '</div>';
-        }
-
-        /* Answers Review */
-        html += '<div class="results-card"><h3>Your Answers</h3>';
-        allQuestions.forEach(function(q) {
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined) {
-                html += '<div class="answer-block">';
-                html += '<div class="q-label">' + q.id + ' — ' + SECTION_NAMES[q.sectionId] + '</div>';
-                html += '<div class="q-text">' + escapeHtml(q.text) + '</div>';
-                html += '<div class="a-mc">' + escapeHtml(q.options[ansIdx].label) + ' (' + q.options[ansIdx].score + '/' + q.maxScore + ')</div>';
-                html += '</div>';
-            }
-        });
-        html += '</div>';
-
-        /* CTAs */
-        html += '<div class="results-cta">';
-        html += '<button class="btn-download-md" onclick="generateMarkdownExport()">📥 Download MD File → Feed Into Claude</button>';
-        html += '<button class="btn-download-pdf" onclick="generatePdfExport()">📄 Download PDF Report</button>';
-        html += '<button class="btn-primary" onclick="window.location.href=\'EO-Assessment-Dashboard.html\'">Back to Dashboard</button>';
-        html += '<button class="btn-retake" onclick="retakeAssessment()">Retake Assessment</button>';
-        html += '</div>';
-
-        $resultsContent.innerHTML = html;
-    }
-
-    /* ── Markdown Export ── */
-    window.generateMarkdownExport = function() {
-        var scores = calculateScores();
-        var motions = computeMotionScores();
-        var band = getBand(scores.total);
-        var upstream = loadUpstreamData();
-        var md = '';
-
-        md += '# GTM Fitness Scoring — Results\n\n';
-        md += '**Email:** ' + userEmail + '\n';
-        md += '**Date:** ' + new Date().toLocaleDateString() + '\n';
-        md += '**Overall Score:** ' + scores.total + '/100 — ' + band.label + '\n\n';
-
-        md += '## Upstream Scores\n';
-        if (upstream.pd) md += '- Project Definition: ' + upstream.pd + '/100\n';
-        if (upstream.icp) md += '- ICP Clarity: ' + upstream.icp + '/100\n';
-        if (upstream.mas) md += '- Market Attractiveness: ' + upstream.mas + '/100\n';
-        if (upstream.strategy) md += '- Strategy Selector: ' + upstream.strategy + '/100\n';
-        if (upstream.strategyPath) md += '- Strategy Path: ' + upstream.strategyPath + '\n';
-        md += '\n';
-
-        md += '## Section Scores\n';
-        md += '- Your Business (A): ' + scores.sections.A + '/' + SECTION_MAXES.A + '\n';
-        md += '- Your Capabilities (B): ' + scores.sections.B + '/' + SECTION_MAXES.B + '\n';
-        md += '- Your Readiness (C): ' + scores.sections.C + '/' + SECTION_MAXES.C + '\n\n';
-
-        md += '## GTM Motion Rankings\n\n';
-        md += '| # | Motion | Score | Tier |\n';
-        md += '|---|--------|-------|------|\n';
-        motions.forEach(function(m, idx) {
-            md += '| ' + (idx + 1) + ' | ' + m.name + ' | ' + m.composite.toFixed(1) + '/5 | ' + m.tier + ' |\n';
-        });
-        md += '\n';
-
-        var topMotions = motions.filter(function(m) { return m.tier === 'PRIMARY' || m.tier === 'SECONDARY'; });
-        if (topMotions.length > 0) {
-            md += '## Top Motions — Recommended Actions\n\n';
-            topMotions.forEach(function(m) {
-                md += '### ' + m.name + ' (' + m.tier + ' — ' + m.composite.toFixed(1) + '/5)\n';
-                md += 'Fit: ' + m.fit + ' | Readiness: ' + m.readiness + ' | MENA: ' + m.mena + '\n\n';
-                var recos = MOTION_RECOMMENDATIONS[m.id] || [];
-                recos.forEach(function(r) { md += '- ' + r + '\n'; });
-                md += '\n';
-            });
-        }
-
-        md += '## Capability Gaps\n\n';
-        allQuestions.forEach(function(q) {
-            if (q.sectionId === 'B' || q.sectionId === 'C') {
-                var ansIdx = answers[q.id];
-                if (ansIdx !== undefined && q.options[ansIdx].score <= 2) {
-                    md += '- **' + q.text + '**: ' + q.options[ansIdx].label + '\n';
-                }
-            }
-        });
-        md += '\n';
-
-        md += '## All Answers\n\n';
-        allQuestions.forEach(function(q) {
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined) {
-                md += '**' + q.id + ': ' + q.text + '**\n';
-                md += '→ ' + q.options[ansIdx].label + ' (' + q.options[ansIdx].score + '/' + q.maxScore + ')\n\n';
-            }
-        });
-
-        if (aiData && aiData.ai_insight) {
-            md += '## AI Analysis\n\n';
-            md += aiData.ai_insight + '\n\n';
-            if (aiData.action_plan) {
-                md += '### 90-Day Action Plan\n';
-                aiData.action_plan.forEach(function(item) { md += '- ' + item + '\n'; });
-            }
-        }
-
-        md += '\n---\n\n';
-        md += '## 🚀 Next Step: Feed This Into Claude\n\n';
-        md += 'Open Claude → Create a new Project → Upload this file along with your other scorecard outputs.\n';
-        md += 'Then ask Claude: "Based on my GTM Fitness assessment, help me build a 90-day activation plan for my top-ranked motions."\n';
-
-        var blob = new Blob([md], { type: 'text/markdown' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'EO-GTM-Fitness-Results.md';
-        a.click();
-        URL.revokeObjectURL(url);
-        showToast('MD file downloaded! Feed it into Claude.');
-    };
-
-    /* ── PDF Export ── */
-    window.generatePdfExport = function() {
-        var scores = calculateScores();
-        var motions = computeMotionScores();
-        var band = getBand(scores.total);
-
-        var printWin = window.open('', '_blank');
-        var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>GTM Fitness Results</title>';
-        html += '<style>body{font-family:Arial,sans-serif;max-width:800px;margin:0 auto;padding:40px 20px;color:#333;}';
-        html += 'h1{color:#E94D1B;}h2{color:#1A1A2E;border-bottom:2px solid #E94D1B;padding-bottom:8px;margin-top:28px;}';
-        html += 'table{width:100%;border-collapse:collapse;margin:12px 0;}th,td{padding:8px;border:1px solid #ddd;text-align:left;font-size:13px;}';
-        html += 'th{background:#f5f5f5;}.score-big{font-size:48px;font-weight:800;color:#E94D1B;text-align:center;}.primary{color:#22C55E;font-weight:700;}.secondary{color:#3B82F6;font-weight:700;}.conditional{color:#F59E0B;}.skip{color:#EF4444;}';
-        html += '.gap{background:#FFF3E0;padding:8px 12px;border-radius:4px;margin:4px 0;font-size:13px;}</style></head><body>';
-        html += '<h1>GTM Fitness Scoring — Results</h1>';
-        html += '<p><strong>Score:</strong></p><div class="score-big">' + scores.total + ' / 100</div>';
-        html += '<p style="text-align:center;font-size:18px;font-weight:700;">' + band.label + '</p>';
-
-        html += '<h2>Motion Rankings</h2><table><tr><th>#</th><th>Motion</th><th>Score</th><th>Tier</th></tr>';
-        motions.forEach(function(m, idx) {
-            html += '<tr><td>' + (idx + 1) + '</td><td>' + m.name + '</td><td>' + m.composite.toFixed(1) + '/5</td>';
-            html += '<td class="' + m.tier.toLowerCase() + '">' + m.tier + '</td></tr>';
-        });
-        html += '</table>';
-
-        html += '<h2>Section Scores</h2><table><tr><th>Section</th><th>Score</th><th>Max</th></tr>';
-        ['A', 'B', 'C'].forEach(function(s) {
-            html += '<tr><td>' + SECTION_NAMES[s] + '</td><td>' + scores.sections[s] + '</td><td>' + SECTION_MAXES[s] + '</td></tr>';
-        });
-        html += '</table>';
-
-        html += '<h2>Answers</h2>';
-        allQuestions.forEach(function(q) {
-            var ansIdx = answers[q.id];
-            if (ansIdx !== undefined) {
-                html += '<p><strong>' + q.id + ': ' + q.text + '</strong><br>→ ' + q.options[ansIdx].label + ' (' + q.options[ansIdx].score + '/' + q.maxScore + ')</p>';
-            }
-        });
-
-        html += '<p style="margin-top:32px;font-size:12px;color:#999;">Generated by Entrepreneurs Oasis MENA Assessment System</p>';
-        html += '</body></html>';
-
-        printWin.document.write(html);
-        printWin.document.close();
-        setTimeout(function() { printWin.print(); }, 500);
-    };
-
-    /* ── Retake ── */
-    window.retakeAssessment = function() {
-        answers = {};
-        currentQuestion = 0;
-        aiData = null;
-        localStorage.removeItem(STORAGE_KEY);
-        showScreen('screenEmail');
-        $emailInput.value = userEmail;
-    };
-
-    /* ── RTL Toggle ── */
-    window.toggleRTL = function() {
-        document.body.classList.toggle('rtl');
-    };
-
-    /* ── Upstream Toggle ── */
-    window.toggleUpstream = function(btn) {
-        btn.classList.toggle('open');
-        var content = btn.nextElementSibling;
-        content.classList.toggle('open');
-    };
-
-    /* ── Utilities ── */
-    function escapeHtml(str) {
-        if (!str) return '';
-        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-    }
-
-    function showToast(msg) {
-        $toast.textContent = msg;
-        $toast.classList.add('show');
-        setTimeout(function() { $toast.classList.remove('show'); }, 2500);
-    }
-
-    /* ── Boot ── */
-    document.addEventListener('DOMContentLoaded', init);
+    if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
 })();
+
+function toggleRTL() {
+    document.body.classList.toggle('rtl');
+    var isRTL = document.body.classList.contains('rtl');
+    document.documentElement.lang = isRTL ? 'ar' : 'en';
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
+}
 </script>
 </body>
 </html>
