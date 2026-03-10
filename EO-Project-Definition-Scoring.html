@@ -132,7 +132,7 @@ body.rtl .option-card { text-align: right; }
 .auth-capture h2 {
     font-size: 26px;
     font-weight: 800;
-    color: #F1F5F9;
+    color: #1A1A2E;
     margin-bottom: 8px;
 }
 .auth-capture .intro-badge {
@@ -156,7 +156,7 @@ body.rtl .option-card { text-align: right; }
     text-align: left;
     font-size: 12px;
     font-weight: 700;
-    color: #F1F5F9;
+    color: #1A1A2E;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 6px;
@@ -171,7 +171,7 @@ body.rtl .option-card { text-align: right; }
     font-family: inherit;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #F1F5F9;
+    color: #1A1A2E;
 }
 .auth-capture input:focus { border-color: var(--eo-orange); }
 .auth-capture .q-hint {
@@ -222,7 +222,7 @@ body.rtl .option-card { text-align: right; }
     min-height: 160px;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #F1F5F9;
+    color: #1A1A2E;
     line-height: 1.5;
     background: var(--eo-card-bg);
 }
@@ -1013,7 +1013,7 @@ function scoreAnswer(text, id) {
   // Framework
   if (/\b(positioning|niche|mvp|pmf|product.market.fit|value prop|unfair advantage)\b/i.test(text)) specificity += 3;
 
-  score += Math.min(specificity, 30);
+  score += Math.min(specificity, 45);
   return Math.min(score, 100);
 }
 

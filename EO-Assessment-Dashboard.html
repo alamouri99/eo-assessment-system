@@ -2034,7 +2034,8 @@
                     var resumeEl = document.getElementById('resume-email');
                     if (lookupEl && !lookupEl.value) lookupEl.value = storedEmail;
                     if (resumeEl && !resumeEl.value) resumeEl.value = storedEmail;
-                }
+                    // Auto-trigger resume so flow steps show green checks + scores on load
+                    setTimeout(function() { handleResume(); }, 100);                }
             } catch (e) {}
         })();
 

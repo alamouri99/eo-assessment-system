@@ -61,14 +61,14 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
 
 /* Question */
 .question-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.question-text { font-size: 20px; font-weight: 700; color: #F1F5F9; margin-bottom: 8px; line-height: 1.4; }
+.question-text { font-size: 20px; font-weight: 700; color: #1A1A2E; margin-bottom: 8px; line-height: 1.4; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); margin-bottom: 20px; line-height: 1.5; font-style: italic; }
 .options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #F1F5F9; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
+.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #1A1A2E; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
 .option-card:hover { border-color: var(--eo-orange); }
 .option-card.selected { background: var(--eo-orange); border-color: var(--eo-orange); color: #FFFFFF; }
 .option-card.focused { outline: 2px solid var(--eo-orange); outline-offset: 2px; }
-.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #F1F5F9; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
+.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #1A1A2E; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; }
 .char-count { font-size: 12px; color: var(--eo-gray-text); text-align: right; margin-top: 6px; }
@@ -470,7 +470,7 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
         var b = document.getElementById('retrieval-banner');
         b.innerHTML = '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:4px solid var(--green);border-radius:var(--eo-radius);padding:20px;max-width:440px;margin:24px auto 0">' +
             '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || 0) + '</div>' +
-            '<div><div style="font-weight:700;color:#F1F5F9;font-size:15px">Previously Completed</div><div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
+            '<div><div style="font-weight:700;color:#1A1A2E;font-size:15px">Previously Completed</div><div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
             '<div style="display:flex;gap:10px"><button class="btn-secondary" onclick="viewPreviousResults()" style="flex:1;padding:10px">View Results</button><button class="btn-full" onclick="startFresh()" style="flex:1;padding:10px;font-size:14px">Start Fresh</button></div></div>';
         b.style.display = 'block';
     }
