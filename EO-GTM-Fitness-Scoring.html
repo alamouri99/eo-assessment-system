@@ -63,18 +63,13 @@ select.email-input option { background: #050A12; color: #fff; }
 
 /* Question */
 .question-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.question-text { font-size: 20px; font-weight: 700; color: #1A1A2E; margin-bottom: 8px; line-height: 1.4; }
+.question-text { font-size: 20px; font-weight: 700; color: #FFFFFF; margin-bottom: 8px; line-height: 1.4; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); margin-bottom: 20px; line-height: 1.5; font-style: italic; }
 .options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #1A1A2E; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
+.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #FFFFFF; transition: border-color var(--eo-transition), background var(--eo-transition); user-select: none; line-height: 1.4; }
 .option-card:hover { border-color: var(--eo-orange); }
 .option-card.selected { background: var(--eo-orange); border-color: var(--eo-orange); color: #FFFFFF; }
 .option-card.focused { outline: 2px solid var(--eo-orange); outline-offset: 2px; }
-.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #1A1A2E; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
-.freetext-input:focus { border-color: var(--eo-orange); }
-.freetext-input::placeholder { color: #9CA3AF; }
-.char-count { font-size: 12px; color: var(--eo-gray-text); text-align: right; margin-top: 6px; }
-.char-count.over { color: #EF4444; font-weight: 600; }
 
 /* Nav */
 .nav-buttons { max-width: 640px; margin: 20px auto 60px; padding: 0 20px; display: flex; justify-content: space-between; gap: 12px; }
@@ -89,7 +84,7 @@ select.email-input option { background: #050A12; color: #fff; }
 .btn-primary:hover { background: #E65C00; }
 .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #1E293B; color: #FFFFFF; padding: 14px 28px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.3s ease; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-.loading-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.9); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
+.loading-overlay { display: none; position: fixed; inset: 0; background: rgba(5,10,18,0.92); z-index: 2000; justify-content: center; align-items: center; flex-direction: column; gap: 20px; }
 .loading-overlay.active { display: flex; }
 .spinner { width: 48px; height: 48px; border: 4px solid #2D2D44; border-top-color: var(--eo-orange); border-radius: 50%; animation: spin 0.8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -100,17 +95,6 @@ select.email-input option { background: #050A12; color: #fff; }
 .pattern-break-card { background: rgba(255,102,0,0.08); border-left: 4px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 16px 20px; margin-bottom: 12px; }
 .pb-label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
 .pb-text { font-size: 14px; color: #D1D5DB; line-height: 1.5; }
-.acknowledgment-card { background: rgba(255,255,255,0.03); border-left: 3px solid var(--eo-orange); border-radius: var(--eo-radius-sm); padding: 12px 16px; font-size: 13px; color: #9CA3AF; line-height: 1.5; }
-
-/* Fallback motion selector */
-.motion-checkbox-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.motion-checkbox { display: flex; align-items: center; gap: 10px; background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 12px 16px; cursor: pointer; transition: all var(--eo-transition); }
-.motion-checkbox.selected { border-color: var(--eo-orange); background: rgba(255,102,0,0.08); }
-.motion-checkbox input { display: none; }
-.motion-checkbox .check { width: 20px; height: 20px; border-radius: 4px; border: 2px solid var(--eo-gray-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all var(--eo-transition); }
-.motion-checkbox.selected .check { background: var(--eo-orange); border-color: var(--eo-orange); }
-.motion-checkbox.selected .check::after { content: '✓'; color: #fff; font-size: 12px; font-weight: 700; }
-.motion-checkbox .motion-label { font-size: 14px; font-weight: 500; color: #1A1A2E; }
 
 /* Results */
 .results-container { max-width: 720px; margin: 0 auto; padding: 0 20px 60px; }
@@ -151,15 +135,15 @@ select.email-input option { background: #050A12; color: #fff; }
 .how-to-start { margin-bottom: 12px; }
 .how-to-start .label { font-size: 11px; font-weight: 700; color: var(--eo-orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
 .how-to-start .step { font-size: 13px; color: #D1D5DB; padding: 4px 0 4px 16px; position: relative; line-height: 1.5; }
-.how-to-start .step::before { content: '→'; position: absolute; left: 0; color: var(--eo-orange); }
-.weekly-hours { font-size: 12px; color: var(--gold); font-weight: 600; }
+.how-to-start .step::before { content: '\2192'; position: absolute; left: 0; color: var(--eo-orange); }
+.best-fit { font-size: 12px; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+.mena-note { font-size: 12px; color: var(--gold); font-style: italic; }
 
 /* 72-Hour Card */
 .commitment-card { background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05)); border: 1px solid rgba(34,197,94,0.3); border-radius: var(--eo-radius); padding: 24px; margin-bottom: 20px; text-align: center; }
 .commitment-card h3 { color: var(--green); font-size: 18px; margin-bottom: 12px; }
 .commitment-card .timer { font-size: 36px; font-weight: 800; color: var(--green); margin-bottom: 8px; }
 .commitment-card .commitment-text { font-size: 15px; color: #D1D5DB; line-height: 1.6; }
-.commitment-card .commitment-action { background: var(--green); color: #FFFFFF; border: none; padding: 12px 28px; border-radius: var(--eo-radius-sm); font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 16px; font-family: inherit; }
 
 /* Motion Ranking Table */
 .motion-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -207,7 +191,7 @@ select.email-input option { background: #050A12; color: #fff; }
     <div class="auth-screen">
         <div class="intro-badge">STEP 5 OF 5</div>
         <h2>GTM <span style="color:var(--eo-orange)">Fitness</span></h2>
-        <p>10 questions. ~20 minutes. Build your go-to-market motion stack.</p>
+        <p>13 questions. ~5 minutes. Discover which growth strategies fit your business right now.</p>
         <div class="email-box">
             <label>YOUR EMAIL</label>
             <input type="email" id="auth-email" class="email-input" placeholder="founder@company.com" required>
@@ -216,17 +200,6 @@ select.email-input option { background: #050A12; color: #fff; }
             <div id="auth-error" style="color:var(--red);font-size:13px;margin-top:12px;display:none"></div>
         </div>
         <div id="retrieval-banner" style="display:none"></div>
-    </div>
-</div>
-
-<!-- FALLBACK MOTION SELECTOR SCREEN -->
-<div id="screen-motion-select" class="screen">
-    <div style="max-width:640px;margin:40px auto;padding:0 20px;">
-        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px;">Select Your Top 5 GTM Motions</h2>
-        <p style="font-size:14px;color:#9CA3AF;margin-bottom:20px;">We couldn't pre-rank motions from your previous assessments. Select the 5 motions most relevant to your business.</p>
-        <div id="motion-checklist" class="motion-checkbox-list"></div>
-        <p id="motion-select-count" style="font-size:13px;color:var(--eo-orange);margin-top:12px;font-weight:600;">0 of 5 selected</p>
-        <button class="btn-full" id="btnConfirmMotions" onclick="confirmMotionSelection()" style="margin-top:16px;opacity:0.4;cursor:not-allowed;" disabled>Continue with Selected Motions →</button>
     </div>
 </div>
 
@@ -269,21 +242,15 @@ select.email-input option { background: #050A12; color: #fff; }
     'use strict';
 
     var SC_NUMBER = 5;
-    var TOTAL_QUESTIONS = 10;
+    var TOTAL_QUESTIONS = 13;
 
     /* ===================================
-       SHARED PATTERNS (exact copy)
+       SHARED PATTERNS
        =================================== */
     function slugify(text) {
-        return text
-            .toString()
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w\-]+/g, '')
-            .replace(/\-\-+/g, '-')
-            .replace(/^-+/, '')
-            .replace(/-+$/, '');
+        return text.toString().toLowerCase().trim()
+            .replace(/\s+/g, '-').replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
     }
 
     function getVentures(email) {
@@ -325,28 +292,8 @@ select.email-input option { background: #050A12; color: #fff; }
         localStorage.setItem('eo_scores_' + email + '_' + slug, JSON.stringify(scores));
     }
 
-    function getUpstreamAnswers(scNum, email, slug) {
-        try { return JSON.parse(localStorage.getItem(storageKey('answers', scNum, email, slug)) || '{}'); } catch(e) { return {}; }
-    }
-
     function getUpstreamResult(scNum, email, slug) {
         try { return JSON.parse(localStorage.getItem(storageKey('result', scNum, email, slug)) || 'null'); } catch(e) { return null; }
-    }
-
-    function migrateOldData() {
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            if (!key) continue;
-            var match = key.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/);
-            if (match) {
-                var email = match[2]; var scNum = match[1];
-                var pending = {};
-                try { pending = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
-                if (!pending[email]) pending[email] = [];
-                if (pending[email].indexOf(parseInt(scNum)) === -1) pending[email].push(parseInt(scNum));
-                localStorage.setItem('eo_migration_pending', JSON.stringify(pending));
-            }
-        }
     }
 
     function showError(msg) {
@@ -371,104 +318,323 @@ select.email-input option { background: #050A12; color: #fff; }
     }
 
     /* ===================================
-       13 GTM MOTIONS
+       13 SMOrchestra GTM MOTIONS
        =================================== */
     var MOTIONS = [
-        { name: 'Waitlist Heat-to-Webinar', defaultFit: 5, mena: 3, pathBonus: { replicate: 1, consulting: 0, 'micro-saas': 1, hammering: 0 }, howToStart: ['Build a landing page with waitlist form', 'Announce 3 webinar topics to your list', 'Run first webinar within 2 weeks'], weeklyHours: 6 },
-        { name: 'Build-in-Public Trust', defaultFit: 4, mena: 2, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 2, hammering: 1 }, howToStart: ['Pick your primary channel (Twitter/LinkedIn)', 'Share your first build update today', 'Commit to 3 posts/week for 30 days'], weeklyHours: 4 },
-        { name: 'Authority Education Engine', defaultFit: 7, mena: 5, pathBonus: { replicate: 1, consulting: 2, 'micro-saas': 0, hammering: 0 }, howToStart: ['Write your first educational thread on your niche', 'Create a simple lead magnet PDF', 'Set up a weekly content cadence'], weeklyHours: 8 },
-        { name: 'Wave Riding Distribution', defaultFit: 4, mena: 2, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 1, hammering: 0 }, howToStart: ['Set Google Alerts for your niche keywords', 'Draft 3 template responses for trending topics', 'Build a rapid-response content workflow'], weeklyHours: 3 },
-        { name: 'LTD Cash-to-MRR', defaultFit: 3, mena: 2, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 2, hammering: 0 }, howToStart: ['Define your LTD tier structure and pricing', 'Create an AppSumo or Dealify listing', 'Plan the LTD-to-MRR conversion funnel'], weeklyHours: 5 },
-        { name: 'Signal Sniper Outbound', defaultFit: 6, mena: 4, pathBonus: { replicate: 0, consulting: 1, 'micro-saas': 0, hammering: 2 }, howToStart: ['Define your signal triggers (job posts, funding, tech changes)', 'Build a list of 50 target accounts', 'Send first 10 personalized outreach messages'], weeklyHours: 8 },
-        { name: 'Outcome Demo First', defaultFit: 7, mena: 5, pathBonus: { replicate: 1, consulting: 1, 'micro-saas': 1, hammering: 1 }, howToStart: ['Build a 3-minute demo video showing the outcome', 'Create a "before vs after" comparison', 'Share the demo in 3 relevant communities'], weeklyHours: 5 },
-        { name: 'Hammering-Feature-First', defaultFit: 5, mena: 3, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 1, hammering: 3 }, howToStart: ['Identify your ONE differentiated feature', 'Create a comparison page vs alternatives', 'Write 5 use-case stories around that feature'], weeklyHours: 6 },
-        { name: 'MicroSaaS BOFU SEO', defaultFit: 6, mena: 5, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 2, hammering: 1 }, howToStart: ['Research 20 bottom-of-funnel keywords', 'Write your first comparison/alternative page', 'Set up basic on-page SEO and tracking'], weeklyHours: 6 },
-        { name: 'Dream 100 Strategy', defaultFit: 7, mena: 5, pathBonus: { replicate: 1, consulting: 2, 'micro-saas': 0, hammering: 0 }, howToStart: ['List your Dream 100 influencers and partners', 'Engage with their content for 2 weeks', 'Propose a specific collaboration or value exchange'], weeklyHours: 5 },
-        { name: '7x4x11 Strategy (Chet Holmes)', defaultFit: 5, mena: 4, pathBonus: { replicate: 0, consulting: 1, 'micro-saas': 0, hammering: 1 }, howToStart: ['Identify your target list of 100 accounts', 'Create 7 different touch types (email, call, social, etc.)', 'Build a 4-week cadence with 11 touches'], weeklyHours: 10 },
-        { name: 'Value Trust Engine', defaultFit: 6, mena: 5, pathBonus: { replicate: 1, consulting: 1, 'micro-saas': 1, hammering: 0 }, howToStart: ['Create a free tool or calculator for your niche', 'Build an email nurture sequence (5 emails)', 'Add social proof to every touchpoint'], weeklyHours: 7 },
-        { name: 'Paid VSL Value Ladder', defaultFit: 4, mena: 4, pathBonus: { replicate: 0, consulting: 0, 'micro-saas': 0, hammering: 0 }, howToStart: ['Script a 10-minute VSL (Video Sales Letter)', 'Set up a landing page with video embed', 'Test with $50/day ad spend on Meta or YouTube'], weeklyHours: 8 }
+        {
+            name: 'Waitlist Heat-to-Webinar Close',
+            shortName: 'Waitlist + Webinar',
+            defaultFit: 5, baseMena: 8,
+            bestFit: 'When the offer needs explanation and trust, and you want a controlled launch cycle.',
+            menaNote: 'One of the strongest motions for MENA because it matches how trust is built here.',
+            howToStart: ['Build a landing page with waitlist form', 'Announce 3 webinar topics to your list', 'Run first webinar within 2 weeks'],
+            weeklyHours: 6
+        },
+        {
+            name: 'Build-in-Public Trust Flywheel',
+            shortName: 'Build in Public',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'When the founder can be the brand, and the product needs trust more than features.',
+            menaNote: 'Trust is relationship-first in MENA. Negative feedback is often indirect — adapt your transparency style.',
+            howToStart: ['Pick your primary channel (Twitter/LinkedIn)', 'Share your first build update today', 'Commit to 3 posts/week for 30 days'],
+            weeklyHours: 4
+        },
+        {
+            name: 'Authority Education Engine',
+            shortName: 'Authority Content',
+            defaultFit: 7, baseMena: 8,
+            bestFit: 'For founders selling into markets where the buyer needs to believe you understand the problem better than anyone.',
+            menaNote: 'MENA is higher context and more hierarchical. Authority content builds trust faster than feature lists.',
+            howToStart: ['Write your first educational thread on your niche', 'Create a simple lead magnet PDF', 'Set up a weekly content cadence'],
+            weeklyHours: 8
+        },
+        {
+            name: 'Wave Riding Distribution',
+            shortName: 'Wave Riding',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'For teams that can ship fast and attach to real waves with buyer intent.',
+            menaNote: 'Trends in MENA are often driven by events, seasons, and business cycles. Ramadan, GITEX, and COP are key waves.',
+            howToStart: ['Set Google Alerts for your niche keywords', 'Draft 3 template responses for trending topics', 'Build a rapid-response content workflow'],
+            weeklyHours: 3
+        },
+        {
+            name: 'LTD Cash-to-MRR Ladder',
+            shortName: 'Lifetime Deal Launch',
+            defaultFit: 3, baseMena: 4,
+            bestFit: 'Works for simple tools that deliver obvious value and have low support burden.',
+            menaNote: 'Price sensitivity exists, but trust still matters. LTD alone does not build trust in MENA.',
+            howToStart: ['Define your LTD tier structure and pricing', 'Create an AppSumo or Dealify listing', 'Plan the LTD-to-MRR conversion funnel'],
+            weeklyHours: 5
+        },
+        {
+            name: 'Signal Sniper Outbound',
+            shortName: 'Signal-Based Outbound',
+            defaultFit: 6, baseMena: 6,
+            bestFit: 'B2B SaaS with observable triggers and clear ICP. Works from 0 to billions.',
+            menaNote: 'Signals are less visible in MENA than the US. Funding and hiring are not always publicly announced.',
+            howToStart: ['Define 10 triggers per vertical', 'Create 3 message patterns per trigger', 'Route replies to calendar booking'],
+            weeklyHours: 8
+        },
+        {
+            name: 'Outcome Demo First',
+            shortName: 'Demo-First Selling',
+            defaultFit: 7, baseMena: 8,
+            bestFit: 'Tools where the output is visible — leads, audits, heatmaps, reports, drafts.',
+            menaNote: 'Strong in MENA. Trust is built by proof, not promises. Outcome demos reduce the trust gap.',
+            howToStart: ['Build a 3-minute demo showing the outcome', 'Create a before vs after comparison', 'Share the demo in 3 relevant communities'],
+            weeklyHours: 5
+        },
+        {
+            name: 'Hammering-Feature-First Launches',
+            shortName: 'Feature-First Launch',
+            defaultFit: 5, baseMena: 5,
+            bestFit: 'Best when you have MicroSaaS or a narrow ICP and buyers search for solutions directly.',
+            menaNote: 'MENA is high context and trust based, so BOFU pages must do more than rank — add local proof.',
+            howToStart: ['Identify your ONE differentiated feature', 'Create a comparison page vs alternatives', 'Write 5 use-case stories around that feature'],
+            weeklyHours: 6
+        },
+        {
+            name: 'MicroSaaS BOFU SEO Strike',
+            shortName: 'SEO + BOFU Content',
+            defaultFit: 6, baseMena: 5,
+            bestFit: 'MicroSaaS or narrow ICP where buyers search for solutions directly.',
+            menaNote: 'BOFU SEO must do more than rank in MENA — add Arabic content, local case studies, and WhatsApp CTAs.',
+            howToStart: ['Research 20 bottom-of-funnel keywords', 'Write your first comparison/alternative page', 'Set up basic on-page SEO and tracking'],
+            weeklyHours: 6
+        },
+        {
+            name: 'Dream 100 Strategy',
+            shortName: 'Dream 100 Networking',
+            defaultFit: 7, baseMena: 9,
+            bestFit: 'Founders who want leverage through distribution, not grind. Any stage.',
+            menaNote: 'Extremely strong in MENA because networks and introductions compound here.',
+            howToStart: ['List your Dream 100 influencers and partners', 'Engage with their content for 2 weeks', 'Propose a specific collaboration or value exchange'],
+            weeklyHours: 5
+        },
+        {
+            name: '7x4x11 Strategy',
+            shortName: 'Multi-Touch Cadence',
+            defaultFit: 5, baseMena: 7,
+            bestFit: 'High ticket offers and service-to-SaaS bridges that need repeated conversion events.',
+            menaNote: 'Events, webinars, and roundtables work very well in the Gulf because they simulate in-person trust.',
+            howToStart: ['Identify your target list of 100 accounts', 'Create 7 different touch types', 'Build a 4-week cadence with 11 touches'],
+            weeklyHours: 10
+        },
+        {
+            name: 'Value Trust Engine',
+            shortName: 'Low-Ticket Trust Builder',
+            defaultFit: 6, baseMena: 8,
+            bestFit: 'SaaS founders coming from consulting, training, or agency backgrounds.',
+            menaNote: 'Works very well in MENA. Almost no one does this in the SaaS arena here.',
+            howToStart: ['Create a low-ticket training that solves one painful step', 'Build an email nurture sequence', 'Add social proof to every touchpoint'],
+            weeklyHours: 7
+        },
+        {
+            name: 'Paid VSL Value Ladder',
+            shortName: 'Paid Ads + VSL',
+            defaultFit: 4, baseMena: 5,
+            bestFit: 'For offers with strong economics and proven conversion — ideally after message-market fit.',
+            menaNote: 'Paid traffic does not solve trust. It only buys attention. In high-trust markets, pair with trust assets.',
+            howToStart: ['Script a 10-minute VSL (Video Sales Letter)', 'Set up a landing page with video embed', 'Test with $50/day ad spend on Meta or YouTube'],
+            weeklyHours: 8
+        }
     ];
 
     /* ===================================
-       10 QUESTIONS
+       13 QUESTIONS — Business Reality Only
        =================================== */
     var QUESTIONS = [
         {
-            id: 'business_context',
-            type: 'mc',
-            text: 'Confirm your pricing model and sales cycle:',
-            help: 'This determines which GTM motions are viable for your price point and selling complexity.',
+            id: 'q_email_list',
+            section: 'YOUR ASSETS',
+            text: 'How big is your email list or subscriber base?',
+            help: 'This includes newsletter subscribers, waitlist signups, or any opt-in list you control.',
             options: [
-                { label: 'Low ACV (<$500/yr), self-serve, instant signup', score: 2 },
-                { label: 'Medium ACV ($500-$2K/yr), light-touch sales, 1-2 week cycle', score: 4 },
-                { label: 'High ACV ($2K-$10K/yr), demo-required, 1-3 month cycle', score: 5 },
-                { label: 'Enterprise ACV (>$10K/yr), committee buy, 3-6 month cycle', score: 3 }
-            ],
-            maxScore: 5
+                { label: 'No list yet', value: 1 },
+                { label: 'Under 500 subscribers', value: 2 },
+                { label: '500 to 2,000 subscribers', value: 3 },
+                { label: 'Over 2,000 subscribers', value: 4 }
+            ]
         },
         {
-            id: 'capability_overview',
-            type: 'freetext',
-            text: 'Describe your current GTM capability across these dimensions: content library, outbound tools/infrastructure, audience size, marketing budget (next 90 days), network strength, and proof assets (case studies, testimonials, wins).',
-            help: 'Be specific. "Some content" tells us nothing. "12 blog posts, 3K email list, $500/mo budget" lets us score accurately.',
-            placeholder: 'Content library: [what you have]\nOutbound tools: [what you use]\nAudience: [size, where]\nBudget: [next 90 days]\nNetwork: [strength, who]\nProof assets: [what exists]'
+            id: 'q_content_frequency',
+            section: 'YOUR ASSETS',
+            text: 'How often do you publish content — articles, videos, or podcasts?',
+            help: 'Think about anything you create and share publicly — blog posts, LinkedIn posts, YouTube videos, podcast episodes.',
+            options: [
+                { label: 'Rarely or never', value: 1 },
+                { label: 'Once a month or less', value: 2 },
+                { label: 'Weekly', value: 3 },
+                { label: 'Multiple times per week', value: 4 }
+            ]
         },
         {
-            id: 'motion_1_readiness',
-            type: 'freetext',
-            text: '', /* Dynamic — filled at render time */
-            help: 'Describe what you already have and what gaps need filling.',
-            placeholder: 'What I have in place: ...\nWhat\'s missing: ...'
+            id: 'q_founder_visibility',
+            section: 'YOUR ASSETS',
+            text: 'Are you comfortable being the public face of your business?',
+            help: 'Showing up on camera, writing under your own name, sharing your journey openly.',
+            options: [
+                { label: 'Not at all — I prefer to stay behind the scenes', value: 1 },
+                { label: 'Somewhat — I will do it if needed but it is not natural', value: 2 },
+                { label: 'Yes — I regularly show up on social media', value: 3 },
+                { label: 'Absolutely — I am already building a personal brand', value: 4 }
+            ]
         },
         {
-            id: 'motion_2_readiness',
-            type: 'freetext',
-            text: '',
-            help: 'Describe what you already have and what gaps need filling.',
-            placeholder: 'What I have in place: ...\nWhat\'s missing: ...'
+            id: 'q_demo_ability',
+            section: 'YOUR PRODUCT',
+            text: 'Can you show a clear result or transformation from your product in under 5 minutes?',
+            help: 'Think before vs after. Can someone SEE the value quickly — a report, a lead list, a dashboard, a fix?',
+            options: [
+                { label: 'No — value takes time to show', value: 1 },
+                { label: 'Partially — some features show quick wins', value: 2 },
+                { label: 'Yes — I have a solid demo or walkthrough', value: 3 },
+                { label: 'Absolutely — the result is instantly visible and impressive', value: 4 }
+            ]
         },
         {
-            id: 'motion_3_readiness',
-            type: 'freetext',
-            text: '',
-            help: 'Describe what you already have and what gaps need filling.',
-            placeholder: 'What I have in place: ...\nWhat\'s missing: ...'
+            id: 'q_outbound_tools',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'What outreach tools do you have set up today?',
+            help: 'CRM, cold email sender, LinkedIn automation, lead databases — anything for reaching out to prospects.',
+            options: [
+                { label: 'Nothing set up yet', value: 1 },
+                { label: 'Basic — just a CRM or basic email', value: 2 },
+                { label: 'Decent stack — email sender + LinkedIn + CRM', value: 3 },
+                { label: 'Full stack — multi-channel outbound already running', value: 4 }
+            ]
         },
         {
-            id: 'motion_4_readiness',
-            type: 'freetext',
-            text: '',
-            help: 'Describe what you already have and what gaps need filling.',
-            placeholder: 'What I have in place: ...\nWhat\'s missing: ...'
+            id: 'q_budget',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'What is your monthly marketing and growth budget?',
+            help: 'Include ad spend, tools, freelancers — anything you invest in growing the business each month.',
+            options: [
+                { label: 'Under $500 per month', value: 1 },
+                { label: '$500 to $2,000 per month', value: 2 },
+                { label: '$2,000 to $5,000 per month', value: 3 },
+                { label: 'Over $5,000 per month', value: 4 }
+            ]
         },
         {
-            id: 'motion_5_readiness',
-            type: 'freetext',
-            text: '',
-            help: 'Describe what you already have and what gaps need filling.',
-            placeholder: 'What I have in place: ...\nWhat\'s missing: ...'
+            id: 'q_network',
+            section: 'YOUR INFRASTRUCTURE',
+            text: 'How strong is your network with influencers, partners, or industry leaders?',
+            help: 'People who could introduce you to buyers, promote your work, or collaborate with you.',
+            options: [
+                { label: 'Very weak — I do not know many people in the space', value: 1 },
+                { label: 'Some contacts — but not close relationships', value: 2 },
+                { label: 'Good network — I know key players personally', value: 3 },
+                { label: 'Strong — I have active relationships with 20+ relevant people', value: 4 }
+            ]
         },
         {
-            id: 'mena_adaptations',
-            type: 'freetext',
-            text: 'For your top 3 motions, what specific MENA adaptations will you make? (language, timing, channels, messaging, cultural considerations)',
-            help: 'Think about language mix (Arabic/English), business culture, Ramadan timing, WhatsApp vs email, trust dynamics.',
-            placeholder: 'Motion 1 adaptations: ...\nMotion 2 adaptations: ...\nMotion 3 adaptations: ...'
+            id: 'q_deal_size',
+            section: 'YOUR MARKET',
+            text: 'What is your average deal size or price point per year?',
+            help: 'Annual contract value or annual revenue per customer. Pick the closest range.',
+            options: [
+                { label: 'Under $500 per year', value: 1 },
+                { label: '$500 to $2,000 per year', value: 2 },
+                { label: '$2,000 to $10,000 per year', value: 3 },
+                { label: 'Over $10,000 per year', value: 4 }
+            ]
         },
         {
-            id: 'activation_sequence',
-            type: 'freetext',
-            text: 'In what order will you activate your top 3 motions over the next 90 days? Why this sequence?',
-            help: 'Dependencies matter. Some motions build on others. Explain your logic.',
-            placeholder: 'Month 1: [Motion] because...\nMonth 2: [Motion] because...\nMonth 3: [Motion] because...'
+            id: 'q_speed_to_ship',
+            section: 'YOUR MARKET',
+            text: 'When a relevant trend or opportunity appears, how fast can you ship something?',
+            help: 'A new feature, a landing page, a piece of content, a campaign — how quickly can you react?',
+            options: [
+                { label: 'Weeks to months', value: 1 },
+                { label: 'About a week', value: 2 },
+                { label: 'A few days', value: 3 },
+                { label: 'Same day or next day', value: 4 }
+            ]
         },
         {
-            id: 'ninety_day_plan',
-            type: 'freetext',
-            text: 'Summarize your 90-day GTM execution plan: Weeks 1-4, 5-8, 9-12. Key milestones and targets for each phase.',
-            help: 'Be specific on targets: "Send 200 outreach emails" not "Do outreach."',
-            placeholder: 'Weeks 1-4: ...\nWeeks 5-8: ...\nWeeks 9-12: ...\nKey targets: ...'
+            id: 'q_search_demand',
+            section: 'YOUR MARKET',
+            text: 'Do your target buyers actively search Google for solutions like yours?',
+            help: 'Do people type things like "best [your category]" or "[competitor] alternative" into Google?',
+            options: [
+                { label: 'No — they do not know they need it yet', value: 1 },
+                { label: 'Some search — but low volume', value: 2 },
+                { label: 'Yes — clear search demand exists', value: 3 },
+                { label: 'High volume with strong buying intent', value: 4 }
+            ]
+        },
+        {
+            id: 'q_sales_capacity',
+            section: 'YOUR CAPACITY',
+            text: 'Do you have capacity for one-on-one sales conversations?',
+            help: 'You personally, or a sales team. How many discovery or demo calls can you handle per week?',
+            options: [
+                { label: 'No — everything needs to be self-serve', value: 1 },
+                { label: 'Limited — a few calls per week at most', value: 2 },
+                { label: 'Moderate — 10 to 20 calls per week', value: 3 },
+                { label: 'Strong — dedicated sales team or high personal capacity', value: 4 }
+            ]
+        },
+        {
+            id: 'q_event_experience',
+            section: 'YOUR CAPACITY',
+            text: 'Have you run webinars, workshops, or live events before?',
+            help: 'Online or in-person. Any experience presenting, teaching, or selling live to a group.',
+            options: [
+                { label: 'Never', value: 1 },
+                { label: 'Once or twice', value: 2 },
+                { label: 'Several times — I know the format well', value: 3 },
+                { label: 'Regularly — it is part of how I sell', value: 4 }
+            ]
+        },
+        {
+            id: 'q_mena_focus',
+            section: 'YOUR MARKET',
+            text: 'How much of your business targets the MENA region specifically?',
+            help: 'Middle East and North Africa — UAE, Saudi Arabia, Egypt, Jordan, etc.',
+            options: [
+                { label: 'MENA is not my focus at all', value: 1 },
+                { label: 'Some MENA but mostly global or US market', value: 2 },
+                { label: 'MENA is a primary market', value: 3 },
+                { label: 'MENA-only or MENA-first', value: 4 }
+            ]
         }
+    ];
+
+    /* ===================================
+       WEIGHT MATRIX: question → motion influence
+       Each motion has weights (0-3) per question index.
+       Higher weight = that question matters more for that motion.
+       =================================== */
+    var WEIGHT_MATRIX = [
+        /* Motion 0: Waitlist Heat-to-Webinar */
+        /*  q0  q1  q2  q3  q4  q5  q6  q7  q8  q9  q10 q11 q12 */
+        [   3,  1,  2,  1,  0,  1,  2,  0,  1,  0,  1,  3,  0 ],
+        /* Motion 1: Build-in-Public Trust */
+        [   1,  3,  3,  1,  0,  0,  1,  0,  2,  0,  0,  0,  0 ],
+        /* Motion 2: Authority Education Engine */
+        [   2,  3,  3,  0,  0,  0,  1,  0,  0,  1,  0,  2,  0 ],
+        /* Motion 3: Wave Riding Distribution */
+        [   0,  2,  1,  1,  0,  1,  1,  0,  3,  1,  0,  0,  0 ],
+        /* Motion 4: LTD Cash-to-MRR */
+        [   1,  0,  0,  3,  0,  0,  0,  0,  3,  1,  0,  0,  0 ],
+        /* Motion 5: Signal Sniper Outbound */
+        [   0,  0,  0,  0,  3,  1,  0,  2,  0,  1,  3,  0,  0 ],
+        /* Motion 6: Outcome Demo First */
+        [   0,  0,  1,  3,  1,  0,  0,  1,  0,  0,  2,  0,  0 ],
+        /* Motion 7: Hammering-Feature-First */
+        [   0,  0,  0,  2,  1,  0,  0,  0,  3,  3,  0,  0,  0 ],
+        /* Motion 8: MicroSaaS BOFU SEO */
+        [   0,  2,  0,  1,  0,  1,  0,  0,  2,  3,  0,  0,  0 ],
+        /* Motion 9: Dream 100 Strategy */
+        [   0,  1,  2,  0,  1,  0,  3,  1,  0,  0,  2,  1,  0 ],
+        /* Motion 10: 7x4x11 Strategy */
+        [   0,  0,  0,  0,  2,  2,  2,  3,  0,  0,  3,  2,  0 ],
+        /* Motion 11: Value Trust Engine */
+        [   2,  1,  2,  1,  0,  1,  0,  0,  0,  0,  1,  3,  0 ],
+        /* Motion 12: Paid VSL Value Ladder */
+        [   1,  0,  0,  2,  0,  3,  0,  1,  0,  2,  0,  0,  0 ]
     ];
 
     /* ===================================
@@ -479,18 +645,17 @@ select.email-input option { background: #050A12; color: #fff; }
     var ventureName = '';
     var answers = {};
     var currentIndex = 0;
-    var topMotions = []; /* indices into MOTIONS[] */
-    var motionScores = []; /* sorted array of {idx, score} */
-    var useFallback = false;
+    var motionScores = [];
     var focusedOptionIndex = -1;
 
     /* ===================================
-       AUTH FLOW (Selector pattern)
+       AUTH FLOW
        =================================== */
     window.handleEmailEntry = function() {
         var email = document.getElementById('auth-email').value.trim().toLowerCase();
         if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
         userEmail = email;
+        localStorage.setItem('eo_user_email', email);
         var ventures = getVentures(email);
         if (ventures.length === 0) {
             showError('No assessment found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Complete Step 1 first →</a>');
@@ -571,410 +736,112 @@ select.email-input option { background: #050A12; color: #fff; }
             }
         }
         loadSavedAnswers();
-        preRankMotions();
-    }
-
-    /* ===================================
-       MOTION PRE-RANKING
-       Formula: (Fit × 0.4) + (Readiness × 0.3) + (MENA × 0.3)
-       =================================== */
-    function preRankMotions() {
-        var sc4Answers = getUpstreamAnswers(4, userEmail, ventureSlug);
-        var sc4Result = getUpstreamResult(4, userEmail, ventureSlug);
-
-        /* Determine strategy path from SC4 */
-        var strategyPath = '';
-        if (sc4Result && sc4Result.primary_path) {
-            strategyPath = sc4Result.primary_path;
-        } else if (sc4Answers.strategy_hypothesis) {
-            strategyPath = detectPath(sc4Answers.strategy_hypothesis);
-        }
-
-        /* Estimate readiness from capability keywords (basic heuristic until Q2 is answered) */
-        var baseReadiness = 5; /* default mid-range */
-
-        motionScores = [];
-        for (var i = 0; i < MOTIONS.length; i++) {
-            var m = MOTIONS[i];
-            var fit = m.defaultFit;
-            if (strategyPath && m.pathBonus[strategyPath]) {
-                fit = Math.min(10, fit + m.pathBonus[strategyPath]);
-            }
-            var mena = m.mena;
-            var score = (fit * 0.4) + (baseReadiness * 0.3) + (mena * 0.3);
-            motionScores.push({ idx: i, score: score, fit: fit, readiness: baseReadiness, mena: mena });
-        }
-        motionScores.sort(function(a, b) { return b.score - a.score; });
-
-        /* Check if we have enough upstream data for auto-ranking */
-        var hasUpstream = sc4Result || (sc4Answers && Object.keys(sc4Answers).length > 0);
-
-        if (hasUpstream) {
-            useFallback = false;
-            topMotions = [];
-            for (var j = 0; j < 5 && j < motionScores.length; j++) {
-                topMotions.push(motionScores[j].idx);
-            }
-            updateDynamicQuestionTexts();
-            startQuestions();
-        } else {
-            /* Fallback: let user select 5 motions */
-            useFallback = true;
-            showMotionSelector();
-        }
-    }
-
-    function detectPath(text) {
-        if (!text) return '';
-        var t = text.toLowerCase();
-        if (t.indexOf('replicate') !== -1 || t.indexOf('localize') !== -1 || t.indexOf('clone') !== -1) return 'replicate';
-        if (t.indexOf('consult') !== -1 || t.indexOf('service') !== -1 || t.indexOf('agency') !== -1) return 'consulting';
-        if (t.indexOf('micro-saas') !== -1 || t.indexOf('microsaas') !== -1 || t.indexOf('boring') !== -1 || t.indexOf('saas') !== -1) return 'micro-saas';
-        if (t.indexOf('hammer') !== -1 || t.indexOf('deep') !== -1 || t.indexOf('niche') !== -1) return 'hammering';
-        return '';
-    }
-
-    function updateDynamicQuestionTexts() {
-        for (var i = 0; i < 5; i++) {
-            var qIdx = i + 2; /* Q3-Q7 are indices 2-6 */
-            var motionIdx = topMotions[i];
-            var motionName = MOTIONS[motionIdx].name;
-            QUESTIONS[qIdx].text = 'For ' + motionName + ': what do you already have in place to execute this, and what\'s missing?';
-        }
-    }
-
-    /* Fallback: motion selector */
-    function showMotionSelector() {
-        showScreen('screen-motion-select');
-        var container = document.getElementById('motion-checklist');
-        container.innerHTML = '';
-        for (var i = 0; i < MOTIONS.length; i++) {
-            var div = document.createElement('div');
-            div.className = 'motion-checkbox';
-            div.setAttribute('data-idx', i);
-            div.innerHTML = '<div class="check"></div><span class="motion-label">' + escapeHtml(MOTIONS[i].name) + '</span>';
-            div.addEventListener('click', (function(idx, el) {
-                return function() {
-                    el.classList.toggle('selected');
-                    updateMotionCount();
-                };
-            })(i, div));
-            container.appendChild(div);
-        }
-    }
-
-    function updateMotionCount() {
-        var selected = document.querySelectorAll('#motion-checklist .motion-checkbox.selected');
-        var count = selected.length;
-        document.getElementById('motion-select-count').textContent = count + ' of 5 selected';
-        var btn = document.getElementById('btnConfirmMotions');
-        if (count === 5) { btn.disabled = false; btn.style.opacity = '1'; btn.style.cursor = 'pointer'; }
-        else { btn.disabled = true; btn.style.opacity = '0.4'; btn.style.cursor = 'not-allowed'; }
-    }
-
-    window.confirmMotionSelection = function() {
-        var selected = document.querySelectorAll('#motion-checklist .motion-checkbox.selected');
-        if (selected.length !== 5) return;
-        topMotions = [];
-        selected.forEach(function(el) { topMotions.push(parseInt(el.getAttribute('data-idx'))); });
-        updateDynamicQuestionTexts();
         startQuestions();
-    };
-
-    /* ===================================
-       QUESTION STEPPER
-       =================================== */
-    function loadSavedAnswers() {
-        try {
-            var saved = localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
-            if (saved) answers = JSON.parse(saved);
-        } catch(e) { answers = {}; }
-    }
-
-    function saveCurrentAnswers() {
-        try { localStorage.setItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(answers)); } catch(e) {}
-    }
-
-    function startQuestions() {
-        if (Object.keys(answers).length > 0) {
-            currentIndex = findFirstUnanswered();
-            showToast('Welcome back! Resuming where you left off.');
-        } else {
-            currentIndex = 0;
-        }
-        showScreen('screen-stepper');
-        renderQuestion();
-    }
-
-    function findFirstUnanswered() {
-        for (var i = 0; i < TOTAL_QUESTIONS; i++) {
-            var q = QUESTIONS[i];
-            if (q.type === 'mc') { if (!(q.id in answers)) return i; }
-            else { if (!(q.id in answers) || !answers[q.id].trim()) return i; }
-        }
-        return TOTAL_QUESTIONS - 1;
-    }
-
-    function renderQuestion() {
-        var q = QUESTIONS[currentIndex];
-        focusedOptionIndex = -1;
-
-        /* Section label */
-        var sectionText = '';
-        if (currentIndex === 0) sectionText = 'BUSINESS CONTEXT';
-        else if (currentIndex === 1) sectionText = 'CAPABILITY PROFILE';
-        else if (currentIndex >= 2 && currentIndex <= 6) sectionText = 'MOTION DEEP DIVE — ' + MOTIONS[topMotions[currentIndex - 2]].name;
-        else if (currentIndex === 7) sectionText = 'MENA EXECUTION';
-        else sectionText = 'ACTIVATION PLAN';
-
-        document.getElementById('sectionLabel').textContent = sectionText;
-        document.getElementById('progressCounter').textContent = 'Question ' + (currentIndex + 1) + ' of ' + TOTAL_QUESTIONS;
-        document.getElementById('progressFill').style.width = ((currentIndex + 1) / TOTAL_QUESTIONS * 100) + '%';
-        document.getElementById('questionText').textContent = q.text;
-
-        var helpEl = document.getElementById('questionHelp');
-        if (q.help) { helpEl.textContent = q.help; helpEl.style.display = 'block'; }
-        else { helpEl.style.display = 'none'; }
-
-        var optionsList = document.getElementById('optionsList');
-        optionsList.innerHTML = '';
-
-        renderEngagement();
-
-        if (q.type === 'freetext') { renderFreetextQuestion(q, optionsList); }
-        else { renderMcQuestion(q, optionsList); }
-
-        var btnPrev = document.getElementById('btnPrev');
-        if (currentIndex === 0) { btnPrev.classList.add('hidden'); } else { btnPrev.classList.remove('hidden'); }
-        document.getElementById('btnNext').textContent = currentIndex === TOTAL_QUESTIONS - 1 ? 'Submit Assessment' : 'Next';
-    }
-
-    function renderMcQuestion(q, container) {
-        q.options.forEach(function(opt, idx) {
-            var div = document.createElement('div');
-            div.className = 'option-card';
-            div.textContent = opt.label;
-            div.setAttribute('data-index', idx);
-            if (answers[q.id] === idx) div.classList.add('selected');
-            div.addEventListener('click', function() { selectMcOption(q.id, idx); });
-            container.appendChild(div);
-        });
-        document.getElementById('btnNext').disabled = !(q.id in answers);
-    }
-
-    function renderFreetextQuestion(q, container) {
-        var ta = document.createElement('textarea');
-        ta.className = 'freetext-input';
-        ta.placeholder = q.placeholder || 'Type your answer here...';
-        ta.rows = 6;
-        ta.value = answers[q.id] || '';
-        var charDiv = document.createElement('div');
-        charDiv.className = 'char-count';
-        var wc = countWords(ta.value);
-        charDiv.textContent = wc + ' words';
-        ta.addEventListener('input', function() {
-            var w = countWords(ta.value);
-            charDiv.textContent = w + ' words';
-            answers[q.id] = ta.value;
-            saveCurrentAnswers();
-            document.getElementById('btnNext').disabled = !ta.value.trim();
-        });
-        container.appendChild(ta);
-        container.appendChild(charDiv);
-        document.getElementById('btnNext').disabled = !(q.id in answers && answers[q.id] && answers[q.id].trim());
-    }
-
-    function countWords(text) { if (!text || !text.trim()) return 0; return text.trim().split(/\s+/).length; }
-
-    function selectMcOption(qId, idx) {
-        answers[qId] = idx;
-        saveCurrentAnswers();
-        var cards = document.querySelectorAll('#optionsList .option-card');
-        cards.forEach(function(c) { c.classList.remove('selected'); });
-        cards[idx].classList.add('selected');
-        focusedOptionIndex = idx;
-        document.getElementById('btnNext').disabled = false;
-        if (currentIndex < TOTAL_QUESTIONS - 1) {
-            setTimeout(function() { nextQuestion(); }, 300);
-        }
-    }
-
-    window.nextQuestion = function() {
-        var q = QUESTIONS[currentIndex];
-        var answered = false;
-        if (q.type === 'freetext') { answered = q.id in answers && answers[q.id] && answers[q.id].trim(); }
-        else { answered = q.id in answers; }
-        if (!answered) {
-            document.getElementById('questionCard').classList.add('shake');
-            setTimeout(function() { document.getElementById('questionCard').classList.remove('shake'); }, 400);
-            return;
-        }
-        if (currentIndex === TOTAL_QUESTIONS - 1) {
-            submitAssessment();
-            return;
-        }
-        currentIndex++;
-        renderQuestion();
-    };
-
-    window.prevQuestion = function() {
-        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
-    };
-
-    /* ===================================
-       ENGAGEMENT BREAKS
-       =================================== */
-    function renderEngagement() {
-        var slot = document.getElementById('engagementSlot');
-        slot.innerHTML = '';
-        var html = '';
-
-        if (currentIndex === 1) {
-            html += '<div class="pattern-break-card"><div class="pb-label">Business Context Confirmed</div>';
-            html += '<div class="pb-text">Good. Your pricing model shapes which motions are viable. Now describe your current GTM infrastructure so we can score readiness.</div></div>';
-        }
-        else if (currentIndex === 2) {
-            html += '<div class="pattern-break-card"><div class="pb-label">Capability Profile Captured</div>';
-            html += '<div class="pb-text">Your capabilities are mapped. Now let\'s deep-dive into your top 5 pre-ranked motions. For each, tell us what you have and what\'s missing.</div></div>';
-        }
-        else if (currentIndex === 7) {
-            html += '<div class="pattern-break-card"><div class="pb-label">Motion Deep Dives Complete</div>';
-            html += '<div class="pb-text">Five motions assessed. Now contextualize for MENA — language, timing, channels, and cultural dynamics change everything.</div></div>';
-        }
-        else if (currentIndex > 0) {
-            /* Acknowledgment for previous answer */
-            var prevQ = QUESTIONS[currentIndex - 1];
-            var prevAns = answers[prevQ.id];
-            if (prevAns !== undefined && prevQ.type === 'freetext' && typeof prevAns === 'string' && prevAns.trim().length > 80) {
-                var ackTexts = [
-                    'Detailed response. That level of specificity sharpens your motion ranking.',
-                    'Noted. The gaps you identified will shape your activation timeline.',
-                    'Good breakdown. Understanding what\'s missing is as valuable as knowing what you have.'
-                ];
-                html += '<div class="acknowledgment-card">' + ackTexts[currentIndex % ackTexts.length] + '</div>';
-            }
-        }
-        slot.innerHTML = html;
     }
 
     /* ===================================
-       SCORING
+       SCORING ENGINE
        =================================== */
-    function recomputeMotionScores() {
-        /* Re-rank with actual readiness from answers */
-        var sc4Answers = getUpstreamAnswers(4, userEmail, ventureSlug);
+    function computeMotionScores() {
+        var scores = getScores(userEmail, ventureSlug);
+        var menaMultiplier = 1.0;
+        if (answers.q_mena_focus !== undefined) {
+            var menaVal = QUESTIONS[12].options[answers.q_mena_focus].value;
+            menaMultiplier = [0.3, 0.6, 1.0, 1.2][menaVal - 1];
+        }
+
+        /* Upstream bonuses from SC1-SC4 */
+        var upstreamFitBonus = 0;
+        if (scores.sc1 && scores.sc1 > 70) upstreamFitBonus += 0.5;
+        if (scores.sc2 && scores.sc2 > 70) upstreamFitBonus += 0.5;
+        if (scores.sc3 && scores.sc3 > 70) upstreamFitBonus += 0.3;
+        if (scores.sc4 && scores.sc4 > 70) upstreamFitBonus += 0.3;
+
+        /* Strategy path bonus from SC4 */
         var sc4Result = getUpstreamResult(4, userEmail, ventureSlug);
-
         var strategyPath = '';
         if (sc4Result && sc4Result.primary_path) strategyPath = sc4Result.primary_path;
-        else if (sc4Answers.strategy_hypothesis) strategyPath = detectPath(sc4Answers.strategy_hypothesis);
 
-        /* Parse capability from Q2 answer */
-        var capText = (answers.capability_overview || '').toLowerCase();
-        var capScore = 3; /* base */
-        /* Heuristic: more specific → higher readiness */
-        var specificitySignals = ['email list', 'subscribers', 'followers', 'budget', 'case stud', 'testimonial', 'blog post', 'article', 'video', 'podcast', 'tool', 'crm', 'linkedin', 'twitter'];
-        var hits = 0;
-        specificitySignals.forEach(function(s) { if (capText.indexOf(s) !== -1) hits++; });
-        capScore = Math.min(9, 3 + hits);
-
-        /* Per-motion readiness from Q3-Q7 */
-        var motionReadiness = {};
-        for (var mi = 0; mi < 5; mi++) {
-            var qId = QUESTIONS[mi + 2].id;
-            var ans = (answers[qId] || '').toLowerCase();
-            var readiness = capScore;
-            /* Boost if they describe existing assets */
-            var readySignals = ['already have', 'in place', 'running', 'active', 'built', 'created', 'launched', 'set up', 'configured'];
-            var gapSignals = ['missing', 'need', 'don\'t have', 'no ', 'lacking', 'haven\'t', 'zero'];
-            var readyHits = 0, gapHits = 0;
-            readySignals.forEach(function(s) { if (ans.indexOf(s) !== -1) readyHits++; });
-            gapSignals.forEach(function(s) { if (ans.indexOf(s) !== -1) gapHits++; });
-            readiness = Math.min(10, Math.max(1, capScore + readyHits - gapHits));
-            if (mi < topMotions.length) motionReadiness[topMotions[mi]] = readiness;
-        }
+        var pathBonuses = {
+            replicate: [1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0],
+            consulting: [0, 0, 2, 0, 0, 1, 1, 0, 0, 2, 1, 1, 0],
+            'micro-saas': [1, 2, 0, 1, 2, 0, 1, 1, 2, 0, 0, 1, 0],
+            hammering: [0, 1, 0, 0, 0, 2, 1, 3, 1, 0, 1, 0, 0]
+        };
 
         motionScores = [];
-        for (var i = 0; i < MOTIONS.length; i++) {
-            var m = MOTIONS[i];
-            var fit = m.defaultFit;
-            if (strategyPath && m.pathBonus[strategyPath]) fit = Math.min(10, fit + m.pathBonus[strategyPath]);
-            var mena = m.mena;
-            var readinessVal = motionReadiness[i] !== undefined ? motionReadiness[i] : capScore;
-            var score = (fit * 0.4) + (readinessVal * 0.3) + (mena * 0.3);
-            motionScores.push({ idx: i, score: score, fit: fit, readiness: readinessVal, mena: mena });
+        for (var m = 0; m < MOTIONS.length; m++) {
+            var motion = MOTIONS[m];
+            var weights = WEIGHT_MATRIX[m];
+
+            /* Calculate readiness from answers */
+            var readinessRaw = 0;
+            var readinessMax = 0;
+            for (var q = 0; q < 12; q++) { /* Q0-Q11, skip Q12 (MENA is separate) */
+                var w = weights[q];
+                if (w > 0) {
+                    readinessMax += 4 * w;
+                    if (answers[QUESTIONS[q].id] !== undefined) {
+                        readinessRaw += QUESTIONS[q].options[answers[QUESTIONS[q].id]].value * w;
+                    }
+                }
+            }
+            var readiness = readinessMax > 0 ? (readinessRaw / readinessMax) * 10 : 5;
+
+            /* Calculate fit */
+            var fit = motion.defaultFit + upstreamFitBonus;
+            if (strategyPath && pathBonuses[strategyPath]) {
+                fit += pathBonuses[strategyPath][m];
+            }
+            fit = Math.min(10, fit);
+
+            /* Calculate MENA score */
+            var mena = Math.min(10, motion.baseMena * menaMultiplier);
+
+            /* Composite score */
+            var composite = (fit * 0.4) + (readiness * 0.3) + (mena * 0.3);
+
+            motionScores.push({
+                idx: m,
+                score: composite,
+                fit: Math.round(fit * 10) / 10,
+                readiness: Math.round(readiness * 10) / 10,
+                mena: Math.round(mena * 10) / 10
+            });
         }
         motionScores.sort(function(a, b) { return b.score - a.score; });
     }
 
     function calculateOverallScore() {
-        recomputeMotionScores();
-
-        var totalScore = 0;
-        var maxPossible = 100;
-
-        /* MC question score (Q1): 0-5 → normalize to 0-10 */
-        var mcScore = 0;
-        if (answers.business_context !== undefined) {
-            mcScore = QUESTIONS[0].options[answers.business_context].score;
+        /* Sum all 13 answers (each 1-4, max 52, min 13) → scale to 0-100 */
+        var sum = 0;
+        var answered = 0;
+        for (var i = 0; i < TOTAL_QUESTIONS; i++) {
+            var q = QUESTIONS[i];
+            if (answers[q.id] !== undefined) {
+                sum += q.options[answers[q.id]].value;
+                answered++;
+            }
         }
-        totalScore += (mcScore / 5) * 10; /* 10% weight */
+        if (answered === 0) return 0;
 
-        /* Capability overview (Q2): score from text analysis */
-        var capText = (answers.capability_overview || '');
-        var capScore = scoreFreetextAnswer(capText, ['content', 'outbound', 'audience', 'budget', 'network', 'proof', 'case study', 'testimonial', 'email list', 'subscriber']);
-        totalScore += capScore * 0.15; /* 15% weight */
+        var raw = ((sum - answered) / (answered * 3)) * 85; /* Scale: 0 base → 85 max from answers */
 
-        /* Motion readiness Q3-Q7: average readiness */
-        var readinessTotal = 0;
-        for (var i = 2; i <= 6; i++) {
-            var ans = answers[QUESTIONS[i].id] || '';
-            readinessTotal += scoreFreetextAnswer(ans, ['have', 'built', 'running', 'active', 'ready', 'place', 'created', 'launched', 'tool', 'asset']);
+        /* Upstream bonus: SC1-SC4 scores above 70 add points */
+        var scores = getScores(userEmail, ventureSlug);
+        var bonus = 0;
+        if (scores.sc1 && scores.sc1 > 70) bonus += 3;
+        if (scores.sc2 && scores.sc2 > 70) bonus += 3;
+        if (scores.sc3 && scores.sc3 > 70) bonus += 2;
+        if (scores.sc4 && scores.sc4 > 70) bonus += 2;
+        /* Bonus for MENA specificity (Q13 answer 3 or 4) */
+        if (answers.q_mena_focus !== undefined) {
+            var menaVal = QUESTIONS[12].options[answers.q_mena_focus].value;
+            if (menaVal >= 3) bonus += 3;
+            else if (menaVal >= 2) bonus += 1;
         }
-        totalScore += (readinessTotal / 5) * 0.35; /* 35% weight */
 
-        /* MENA adaptations (Q8) */
-        var menaText = answers.mena_adaptations || '';
-        var menaScore = scoreFreetextAnswer(menaText, ['arabic', 'english', 'ramadan', 'whatsapp', 'cultural', 'timing', 'language', 'channel', 'trust', 'local', 'region', 'dubai', 'saudi', 'uae', 'egypt']);
-        totalScore += menaScore * 0.15; /* 15% weight */
-
-        /* Activation sequence (Q9) + 90-day plan (Q10) */
-        var seqText = answers.activation_sequence || '';
-        var planText = answers.ninety_day_plan || '';
-        var seqScore = scoreFreetextAnswer(seqText, ['month', 'first', 'then', 'because', 'depend', 'before', 'after', 'sequence', 'order', 'week']);
-        var planScore = scoreFreetextAnswer(planText, ['week', 'milestone', 'target', 'kpi', 'metric', 'launch', 'reach', 'convert', 'send', 'build', 'specific', 'number']);
-        totalScore += ((seqScore + planScore) / 2) * 0.25; /* 25% weight */
-
-        return Math.round(Math.min(100, Math.max(0, totalScore)));
-    }
-
-    function scoreFreetextAnswer(text, keywords) {
-        if (!text || !text.trim()) return 0;
-        var t = text.toLowerCase();
-        var wordCount = countWords(text);
-
-        var score = 0;
-        /* Length score */
-        if (wordCount >= 100) score += 30;
-        else if (wordCount >= 50) score += 20;
-        else if (wordCount >= 20) score += 10;
-        else score += 5;
-
-        /* Keyword hits */
-        var hits = 0;
-        keywords.forEach(function(kw) { if (t.indexOf(kw) !== -1) hits++; });
-        score += Math.min(40, hits * 8);
-
-        /* Specificity signals */
-        if (/\d+/.test(t)) score += 10; /* contains numbers */
-        if (t.indexOf('$') !== -1 || t.indexOf('k/') !== -1 || t.indexOf('month') !== -1) score += 5;
-        if (t.indexOf('\n') !== -1) score += 5; /* structured response */
-
-        /* MENA awareness */
-        var menaSignals = ['mena', 'arab', 'dubai', 'saudi', 'uae', 'egypt', 'jordan', 'ramadan', 'whatsapp'];
-        menaSignals.forEach(function(s) { if (t.indexOf(s) !== -1) score += 3; });
-
-        return Math.min(100, score);
+        return Math.round(Math.min(100, Math.max(0, raw + bonus)));
     }
 
     function getBand(score) {
@@ -993,6 +860,125 @@ select.email-input option { background: #050A12; color: #fff; }
     }
 
     /* ===================================
+       QUESTION STEPPER
+       =================================== */
+    function loadSavedAnswers() {
+        try {
+            var saved = localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
+            if (saved) answers = JSON.parse(saved);
+        } catch(e) { answers = {}; }
+    }
+
+    function saveCurrentAnswers() {
+        try { localStorage.setItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(answers)); } catch(e) {}
+    }
+
+    function startQuestions() {
+        if (Object.keys(answers).length > 0) {
+            currentIndex = findFirstUnanswered();
+            if (currentIndex > 0) showToast('Welcome back! Resuming where you left off.');
+        } else {
+            currentIndex = 0;
+        }
+        showScreen('screen-stepper');
+        renderQuestion();
+    }
+
+    function findFirstUnanswered() {
+        for (var i = 0; i < TOTAL_QUESTIONS; i++) {
+            if (!(QUESTIONS[i].id in answers)) return i;
+        }
+        return TOTAL_QUESTIONS - 1;
+    }
+
+    function renderQuestion() {
+        var q = QUESTIONS[currentIndex];
+        focusedOptionIndex = -1;
+
+        document.getElementById('sectionLabel').textContent = q.section;
+        document.getElementById('progressCounter').textContent = 'Question ' + (currentIndex + 1) + ' of ' + TOTAL_QUESTIONS;
+        document.getElementById('progressFill').style.width = ((currentIndex + 1) / TOTAL_QUESTIONS * 100) + '%';
+        document.getElementById('questionText').textContent = q.text;
+
+        var helpEl = document.getElementById('questionHelp');
+        if (q.help) { helpEl.textContent = q.help; helpEl.style.display = 'block'; }
+        else { helpEl.style.display = 'none'; }
+
+        var optionsList = document.getElementById('optionsList');
+        optionsList.innerHTML = '';
+
+        renderEngagement();
+
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) div.classList.add('selected');
+            div.addEventListener('click', function() { selectMcOption(q.id, idx); });
+            optionsList.appendChild(div);
+        });
+
+        document.getElementById('btnNext').disabled = !(q.id in answers);
+        var btnPrev = document.getElementById('btnPrev');
+        if (currentIndex === 0) { btnPrev.classList.add('hidden'); } else { btnPrev.classList.remove('hidden'); }
+        document.getElementById('btnNext').textContent = currentIndex === TOTAL_QUESTIONS - 1 ? 'Submit Assessment' : 'Next';
+    }
+
+    function selectMcOption(qId, idx) {
+        answers[qId] = idx;
+        saveCurrentAnswers();
+        var cards = document.querySelectorAll('#optionsList .option-card');
+        cards.forEach(function(c) { c.classList.remove('selected'); });
+        cards[idx].classList.add('selected');
+        focusedOptionIndex = idx;
+        document.getElementById('btnNext').disabled = false;
+        if (currentIndex < TOTAL_QUESTIONS - 1) {
+            setTimeout(function() { nextQuestion(); }, 300);
+        }
+    }
+
+    function renderEngagement() {
+        var slot = document.getElementById('engagementSlot');
+        slot.innerHTML = '';
+
+        if (currentIndex === 3) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Assets Mapped</div>' +
+                '<div class="pb-text">Good. Your audience, content, and visibility shape which strategies can work right now. Next: your product and infrastructure.</div></div>';
+        } else if (currentIndex === 7) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Infrastructure Checked</div>' +
+                '<div class="pb-text">Tools, budget, and network are the execution backbone. Now let\'s look at your market dynamics.</div></div>';
+        } else if (currentIndex === 10) {
+            slot.innerHTML = '<div class="pattern-break-card"><div class="pb-label">Market Reality Captured</div>' +
+                '<div class="pb-text">Deal size, speed, and search demand shape which motions generate revenue fastest. Almost done — 3 more questions.</div></div>';
+        }
+    }
+
+    window.nextQuestion = function() {
+        var q = QUESTIONS[currentIndex];
+        if (!(q.id in answers)) {
+            document.getElementById('questionCard').classList.add('shake');
+            setTimeout(function() { document.getElementById('questionCard').classList.remove('shake'); }, 400);
+            return;
+        }
+        if (currentIndex === TOTAL_QUESTIONS - 1) {
+            submitAssessment();
+            return;
+        }
+        currentIndex++;
+        renderQuestion();
+    };
+
+    window.prevQuestion = function() {
+        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+    };
+
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'btnNext' || e.target.closest('#btnNext')) { nextQuestion(); }
+        if (e.target.id === 'btnPrev' || e.target.closest('#btnPrev')) { prevQuestion(); }
+    });
+
+    /* ===================================
        SUBMIT + RESULTS
        =================================== */
     function submitAssessment() {
@@ -1000,29 +986,26 @@ select.email-input option { background: #050A12; color: #fff; }
         document.getElementById('loadingOverlay').classList.add('active');
 
         setTimeout(function() {
+            computeMotionScores();
             var score = calculateOverallScore();
             var band = getBand(score);
 
-            /* Build result object */
             var resultObj = {
                 score: score,
                 band: band.label,
                 motionScores: motionScores.slice(0, 13),
-                topMotions: topMotions,
                 completed_at: new Date().toISOString().split('T')[0]
             };
 
-            /* Save */
             localStorage.setItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(resultObj));
             saveScore(userEmail, ventureSlug, SC_NUMBER, score);
             saveCurrentAnswers();
 
-            /* Webhook */
             sendToWebhook(score, band);
 
             document.getElementById('loadingOverlay').classList.remove('active');
             renderResults(resultObj);
-        }, 800);
+        }, 600);
     }
 
     function sendToWebhook(score, band) {
@@ -1030,33 +1013,56 @@ select.email-input option { background: #050A12; color: #fff; }
         for (var i = 1; i < SC_NUMBER; i++) {
             upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null;
         }
+
+        var answerLabels = {};
+        for (var key in answers) {
+            if (answers.hasOwnProperty(key)) {
+                var q = QUESTIONS.find(function(qq) { return qq.id === key; });
+                if (q && q.options[answers[key]]) {
+                    answerLabels[key] = q.options[answers[key]].label;
+                }
+            }
+        }
+
         var payload = {
             email: userEmail,
             venture_name: ventureName,
             venture_slug: ventureSlug,
             scorecard: 'SC5',
             answers: answers,
+            answer_labels: answerLabels,
             scores: { total: score, band: band.label },
             motion_ranking: motionScores.map(function(ms) {
-                return { name: MOTIONS[ms.idx].name, score: Math.round(ms.score * 100) / 100, tier: getMotionTier(ms.score).label };
+                return { name: MOTIONS[ms.idx].name, score: Math.round(ms.score * 100) / 100, fit: ms.fit, readiness: ms.readiness, mena: ms.mena, tier: getMotionTier(ms.score).label };
             }),
-            top_5_motions: topMotions.map(function(idx) { return MOTIONS[idx].name; }),
+            top_3_motions: motionScores.slice(0, 3).map(function(ms) { return MOTIONS[ms.idx].name; }),
             upstream_data: upstream,
             timestamp: new Date().toISOString()
         };
+
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
         fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-gtm-score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).catch(function(err) { console.warn('Webhook failed:', err); });
+            body: JSON.stringify(payload),
+            signal: controller.signal
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { console.log('Webhook OK:', data); })
+        .catch(function(err) {
+            if (err.name === 'AbortError') { console.warn('Webhook timeout — proceeding with local scores'); }
+            else { console.warn('Webhook failed:', err); }
+        })
+        .finally(function() { clearTimeout(timeoutId); });
     }
 
     function renderResults(resultObj) {
         showScreen('screen-results');
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        /* Recompute if needed */
-        if (!motionScores.length) recomputeMotionScores();
+        if (!motionScores.length) computeMotionScores();
 
         var score = resultObj.score;
         var band = getBand(score);
@@ -1092,17 +1098,20 @@ select.email-input option { background: #050A12; color: #fff; }
             html += '</div>';
 
             html += '<div class="motion-breakdown">';
-            html += '<span class="breakdown-item">Fit: <strong>' + (Math.round(ms.fit * 10) / 10) + '</strong></span>';
-            html += '<span class="breakdown-item">Readiness: <strong>' + (Math.round(ms.readiness * 10) / 10) + '</strong></span>';
+            html += '<span class="breakdown-item">Fit: <strong>' + ms.fit + '</strong></span>';
+            html += '<span class="breakdown-item">Readiness: <strong>' + ms.readiness + '</strong></span>';
             html += '<span class="breakdown-item">MENA: <strong>' + ms.mena + '</strong></span>';
             html += '</div>';
+
+            html += '<div class="best-fit">' + escapeHtml(m.bestFit) + '</div>';
 
             html += '<div class="how-to-start"><div class="label">How to Start</div>';
             m.howToStart.forEach(function(step) {
                 html += '<div class="step">' + escapeHtml(step) + '</div>';
             });
             html += '</div>';
-            html += '<div class="weekly-hours">⏱ ~' + m.weeklyHours + ' hours/week</div>';
+
+            html += '<div class="mena-note">' + escapeHtml(m.menaNote) + '</div>';
             html += '</div>';
         }
         html += '</div>';
@@ -1110,7 +1119,7 @@ select.email-input option { background: #050A12; color: #fff; }
         /* === 72-HOUR LAUNCH COMMITMENT === */
         var primaryMotion = MOTIONS[motionScores[0].idx];
         html += '<div class="commitment-card">';
-        html += '<h3>⚡ 72-Hour Launch Commitment</h3>';
+        html += '<h3>72-Hour Launch Commitment</h3>';
         html += '<div class="timer">72h</div>';
         html += '<div class="commitment-text">';
         html += 'Your primary motion is <strong>' + escapeHtml(primaryMotion.name) + '</strong>.<br>';
@@ -1130,19 +1139,19 @@ select.email-input option { background: #050A12; color: #fff; }
             var isTop5 = j < 5;
             html += '<tr class="' + (isTop5 ? 'top-5' : '') + '">';
             html += '<td>' + (j + 1) + '</td>';
-            html += '<td>' + escapeHtml(mo.name) + '</td>';
-            html += '<td>' + (Math.round(msr.fit * 10) / 10) + '</td>';
-            html += '<td>' + (Math.round(msr.readiness * 10) / 10) + '</td>';
+            html += '<td>' + escapeHtml(mo.shortName) + '</td>';
+            html += '<td>' + msr.fit + '</td>';
+            html += '<td>' + msr.readiness + '</td>';
             html += '<td>' + msr.mena + '</td>';
             html += '<td>' + (Math.round(msr.score * 100) / 100).toFixed(1) + '</td>';
             html += '<td><span class="tier-badge ' + tr.css + '">' + tr.label + '</span></td>';
             html += '</tr>';
         }
         html += '</tbody></table></div>';
-        html += '<p style="font-size:12px;color:#9CA3AF;margin-top:8px;">Score = (Fit × 0.4 + Readiness × 0.3 + MENA × 0.3) | Scale: 0-10</p>';
+        html += '<p style="font-size:12px;color:#9CA3AF;margin-top:8px;">Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10</p>';
         html += '</div>';
 
-        /* === STRENGTHEN YOUR GTM CARDS === */
+        /* === STRENGTHEN CARDS === */
         html += generateStrengthenCards(score);
 
         /* === CTAs === */
@@ -1162,36 +1171,27 @@ select.email-input option { background: #050A12; color: #fff; }
         var html = '';
         var cards = [];
 
-        /* Check capability gaps */
-        var capText = (answers.capability_overview || '').toLowerCase();
-        if (capText.indexOf('content') === -1 && capText.indexOf('blog') === -1 && capText.indexOf('article') === -1) {
-            cards.push({ label: 'Content Gap', advice: 'Your content library is thin. Start with 5 targeted articles addressing your ICP\'s top pain points. This unlocks Authority Education and BOFU SEO motions.' });
-        }
-        if (capText.indexOf('audience') === -1 && capText.indexOf('list') === -1 && capText.indexOf('subscriber') === -1 && capText.indexOf('follower') === -1) {
-            cards.push({ label: 'Audience Gap', advice: 'No clear audience base detected. Priority: build a 500-person email list in 30 days using a lead magnet tied to your ICP\'s #1 pain.' });
-        }
-        if (capText.indexOf('proof') === -1 && capText.indexOf('case study') === -1 && capText.indexOf('testimonial') === -1) {
-            cards.push({ label: 'Social Proof Gap', advice: 'No proof assets mentioned. Get 3 testimonials or case studies from early users/beta testers. This accelerates every motion.' });
-        }
+        /* Check capability gaps based on answer values */
+        var emailAns = answers.q_email_list !== undefined ? QUESTIONS[0].options[answers.q_email_list].value : 0;
+        var contentAns = answers.q_content_frequency !== undefined ? QUESTIONS[1].options[answers.q_content_frequency].value : 0;
+        var outboundAns = answers.q_outbound_tools !== undefined ? QUESTIONS[4].options[answers.q_outbound_tools].value : 0;
+        var budgetAns = answers.q_budget !== undefined ? QUESTIONS[5].options[answers.q_budget].value : 0;
+        var networkAns = answers.q_network !== undefined ? QUESTIONS[6].options[answers.q_network].value : 0;
+        var demoAns = answers.q_demo_ability !== undefined ? QUESTIONS[3].options[answers.q_demo_ability].value : 0;
 
-        /* MENA gap */
-        var menaText = (answers.mena_adaptations || '').toLowerCase();
-        if (menaText.length < 50) {
-            cards.push({ label: 'MENA Strategy Weak', advice: 'Your MENA adaptations are too thin. Map language preferences, channel habits (WhatsApp vs email), and seasonal timing (Ramadan, summer) for your target geography.' });
-        }
-
-        /* Plan gap */
-        var planText = (answers.ninety_day_plan || '').toLowerCase();
-        if (!/\d/.test(planText)) {
-            cards.push({ label: 'Missing Targets', advice: 'Your 90-day plan lacks specific numbers. Add concrete targets: "50 outreach emails/week", "2 blog posts/month", "10 demo calls by week 4".' });
-        }
+        if (emailAns <= 1) cards.push({ label: 'Audience Gap', advice: 'No email list detected. Build a 500-person list in 30 days using a lead magnet tied to your ICP\'s biggest pain. This unlocks Waitlist, Value Trust, and Authority Education motions.' });
+        if (contentAns <= 1) cards.push({ label: 'Content Gap', advice: 'You are not publishing regularly. Start with 2 posts per week on LinkedIn or 1 article per week. Consistency unlocks Authority, Build-in-Public, and SEO motions.' });
+        if (outboundAns <= 1) cards.push({ label: 'Outbound Infrastructure', advice: 'No outreach tools in place. Set up a basic CRM + cold email sender this week. Signal Sniper and 7x4x11 require this foundation.' });
+        if (networkAns <= 1) cards.push({ label: 'Network Gap', advice: 'Weak network limits Dream 100 and 7x4x11 motions. Spend 30 minutes daily engaging with 10 relevant people on LinkedIn for the next 30 days.' });
+        if (demoAns <= 1) cards.push({ label: 'Demo Gap', advice: 'Your product does not show quick results. Build a 3-minute outcome demo — before vs after. This unlocks Outcome Demo First and Paid VSL motions.' });
+        if (budgetAns <= 1 && cards.length < 4) cards.push({ label: 'Budget Constraint', advice: 'Low budget means you need organic-first motions. Focus on Build-in-Public, Authority Education, or Dream 100 — all zero-cost to start.' });
 
         if (score < 55 && cards.length < 2) {
             cards.push({ label: 'Foundation First', advice: 'Focus on a single motion for Month 1 before expanding. Multi-motion execution at low readiness leads to scattered results.' });
         }
 
         if (cards.length === 0) {
-            cards.push({ label: 'Stay Focused', advice: 'Solid GTM fitness. Execute your top 3 motions in sequence, track weekly metrics, and adjust at the 30-day mark.' });
+            cards.push({ label: 'Solid Foundation', advice: 'Strong GTM fitness. Execute your top 3 motions in sequence, track weekly metrics, and adjust at the 30-day mark.' });
         }
 
         html += '<div class="results-card"><h3>Strengthen Your GTM</h3>';
@@ -1206,7 +1206,7 @@ select.email-input option { background: #050A12; color: #fff; }
        MARKDOWN EXPORT
        =================================== */
     function generateMarkdownExport() {
-        if (!motionScores.length) recomputeMotionScores();
+        if (!motionScores.length) computeMotionScores();
         var score = calculateOverallScore();
         var band = getBand(score);
         var today = new Date();
@@ -1226,9 +1226,9 @@ select.email-input option { background: #050A12; color: #fff; }
             var ms = motionScores[i];
             var m = MOTIONS[ms.idx];
             var tier = getMotionTier(ms.score);
-            md += '| ' + (i + 1) + ' | ' + m.name + ' | ' + (Math.round(ms.fit * 10) / 10) + ' | ' + (Math.round(ms.readiness * 10) / 10) + ' | ' + ms.mena + ' | ' + (Math.round(ms.score * 100) / 100).toFixed(1) + ' | ' + tier.label + ' |\n';
+            md += '| ' + (i + 1) + ' | ' + m.name + ' | ' + ms.fit + ' | ' + ms.readiness + ' | ' + ms.mena + ' | ' + (Math.round(ms.score * 100) / 100).toFixed(1) + ' | ' + tier.label + ' |\n';
         }
-        md += '\n_Score = (Fit × 0.4 + Readiness × 0.3 + MENA × 0.3) | Scale: 0-10_\n\n---\n\n';
+        md += '\n_Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10_\n\n---\n\n';
 
         /* Top 5 motions detail */
         md += '## Top 5 Motions (Detailed)\n\n';
@@ -1237,19 +1237,12 @@ select.email-input option { background: #050A12; color: #fff; }
             var m2 = MOTIONS[ms2.idx];
             var t2 = getMotionTier(ms2.score);
             md += '### #' + (j + 1) + ' ' + m2.name + ' (' + t2.label + ')\n\n';
-            md += '- **Fit:** ' + (Math.round(ms2.fit * 10) / 10) + ' | **Readiness:** ' + (Math.round(ms2.readiness * 10) / 10) + ' | **MENA:** ' + ms2.mena + '\n';
-            md += '- **Weekly Hours:** ~' + m2.weeklyHours + 'h\n';
+            md += '- **Fit:** ' + ms2.fit + ' | **Readiness:** ' + ms2.readiness + ' | **MENA:** ' + ms2.mena + '\n';
+            md += '- **Best For:** ' + m2.bestFit + '\n';
+            md += '- **MENA Note:** ' + m2.menaNote + '\n';
             md += '- **How to Start:**\n';
             m2.howToStart.forEach(function(s) { md += '  1. ' + s + '\n'; });
-            /* Include readiness answer if in top 5 */
-            var topIdx = topMotions.indexOf(ms2.idx);
-            if (topIdx !== -1) {
-                var readAns = answers[QUESTIONS[topIdx + 2].id] || '';
-                if (readAns.trim()) {
-                    md += '\n**Your Readiness Assessment:**\n\n> ' + readAns.replace(/\n/g, '\n> ') + '\n';
-                }
-            }
-            md += '\n';
+            md += '- **Weekly Hours:** ~' + m2.weeklyHours + 'h\n\n';
         }
         md += '---\n\n';
 
@@ -1260,42 +1253,12 @@ select.email-input option { background: #050A12; color: #fff; }
         md += '**Commitment:** ' + primaryMotion.howToStart[0] + '\n\n---\n\n';
 
         /* All Answers */
-        md += '## Full Answers\n\n';
+        md += '## Your Answers\n\n';
         QUESTIONS.forEach(function(q, idx) {
-            md += '### Q' + (idx + 1) + ': ' + q.text + '\n\n';
-            if (q.type === 'mc') {
-                var opt = answers[q.id] !== undefined ? q.options[answers[q.id]] : null;
-                md += '→ **' + (opt ? opt.label : '(No answer)') + '**\n\n';
-            } else {
-                md += '> ' + (answers[q.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
-            }
+            var opt = answers[q.id] !== undefined ? q.options[answers[q.id]] : null;
+            md += '**Q' + (idx + 1) + ': ' + q.text + '**\n';
+            md += '→ ' + (opt ? opt.label : '(No answer)') + '\n\n';
         });
-
-        /* Capability gap analysis */
-        md += '---\n\n## Capability Gap Analysis\n\n';
-        var capText = (answers.capability_overview || '').toLowerCase();
-        var dims = [
-            { name: 'Content Library', signals: ['content', 'blog', 'article', 'post', 'video', 'guide'] },
-            { name: 'Outbound Infrastructure', signals: ['outbound', 'email tool', 'crm', 'linkedin', 'cold email', 'tool'] },
-            { name: 'Audience Size', signals: ['audience', 'list', 'subscriber', 'follower', 'community'] },
-            { name: 'Marketing Budget', signals: ['budget', '$', 'spend', 'ad', 'paid'] },
-            { name: 'Network Strength', signals: ['network', 'connection', 'partner', 'mentor', 'community'] },
-            { name: 'Proof Assets', signals: ['proof', 'case study', 'testimonial', 'review', 'win', 'result'] }
-        ];
-        dims.forEach(function(d) {
-            var found = d.signals.some(function(s) { return capText.indexOf(s) !== -1; });
-            md += '- **' + d.name + ':** ' + (found ? '✅ Mentioned' : '⚠️ Not detected — address this gap') + '\n';
-        });
-        md += '\n---\n\n';
-
-        /* MENA adaptations */
-        md += '## MENA Execution Adaptations\n\n';
-        md += '> ' + (answers.mena_adaptations || '(No adaptations specified)').replace(/\n/g, '\n> ') + '\n\n';
-
-        /* Activation sequence */
-        md += '## 90-Day Motion Sequence\n\n';
-        md += '**Activation Order:**\n\n> ' + (answers.activation_sequence || '(No sequence specified)').replace(/\n/g, '\n> ') + '\n\n';
-        md += '**Detailed Plan:**\n\n> ' + (answers.ninety_day_plan || '(No plan specified)').replace(/\n/g, '\n> ') + '\n\n';
 
         md += '---\n\n_Generated by Entrepreneurs Oasis MENA GTM Fitness Assessment_\n';
 
@@ -1316,9 +1279,7 @@ select.email-input option { background: #050A12; color: #fff; }
     function retakeAssessment() {
         answers = {};
         currentIndex = 0;
-        topMotions = [];
         motionScores = [];
-        useFallback = false;
         try {
             localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
             localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
@@ -1328,15 +1289,11 @@ select.email-input option { background: #050A12; color: #fff; }
     }
 
     /* ===================================
-       KEYBOARD
+       KEYBOARD NAVIGATION
        =================================== */
     document.addEventListener('keydown', function(e) {
         if (!document.getElementById('screen-stepper').classList.contains('active')) return;
         var q = QUESTIONS[currentIndex];
-        if (q.type === 'freetext') {
-            if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); }
-            return;
-        }
         var cards = document.querySelectorAll('#optionsList .option-card');
         if (cards.length === 0) return;
         switch(e.key) {
@@ -1369,17 +1326,11 @@ select.email-input option { background: #050A12; color: #fff; }
        BOOT
        =================================== */
     function init() {
-        migrateOldData();
-        /* Restore RTL */
         try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
-
-        /* Auto-fill email if returning */
         try {
             var storedEmail = localStorage.getItem('eo_user_email');
             if (storedEmail) document.getElementById('auth-email').value = storedEmail;
         } catch(e) {}
-
-        /* Enter key on email */
         document.getElementById('auth-email').addEventListener('keydown', function(e) {
             if (e.key === 'Enter') { e.preventDefault(); handleEmailEntry(); }
         });
