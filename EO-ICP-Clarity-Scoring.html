@@ -409,7 +409,7 @@ function retakeAssessment() { answers={};localStorage.removeItem(storageKey('ans
 function sendToWebhook(scores, resultObj) {
   var upstream={};
   for(var i=1;i<SC_NUMBER;i++){upstream['sc'+i+'_score']=getScores(userEmail,ventureSlug)['sc'+i]||null;upstream['sc'+i+'_answers']=getUpstreamAnswers(i,userEmail,ventureSlug);}
-  fetch('https://smorchestra.app.n8n.cloud/webhook/eo-assessment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userEmail,venture_name:ventureName,venture_slug:ventureSlug,scorecard:'SC2',answers:answers,scores:scores,upstream_data:upstream,timestamp:new Date().toISOString()})}).catch(function(err){console.warn('Webhook failed:',err);});
+  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userEmail,venture_name:ventureName,venture_slug:ventureSlug,scorecard:'SC2',answers:answers,scores:scores,upstream_data:upstream,timestamp:new Date().toISOString()})}).catch(function(err){console.warn('Webhook failed:',err);});
 }
 
 // === UTILITIES ===

@@ -1293,7 +1293,7 @@ function sendToWebhook(scores, resultObj) {
     timestamp: new Date().toISOString()
   };
 
-  fetch('https://smorchestra.app.n8n.cloud/webhook/eo-assessment', {
+  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-definition', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)

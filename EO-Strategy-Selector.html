@@ -822,7 +822,7 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
     function sendToWebhook(result, resultObj) {
         var upstream = {};
         for (var i = 1; i < SC_NUMBER; i++) { upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null; }
-        fetch('https://smorchestra.app.n8n.cloud/webhook/eo-assessment', {
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-strategy', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: userEmail, venture_name: ventureName, venture_slug: ventureSlug, scorecard: 'SC4', answers: answers, scores: { total: result.normalized, raw: result.total, max: result.maxTotal }, selected_path: resultObj.selectedPath, archetype: resultObj.archetype, upstream_data: upstream, timestamp: new Date().toISOString() })
