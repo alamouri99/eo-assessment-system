@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EO Founder Assessment Suite | Entrepreneurs Oasis MENA</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+    <title>MicroSaaS Founder Operating System | Entrepreneurs Oasis MENA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,8 +13,8 @@
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background-color: #050A12;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
             color: #FFFFFF;
             line-height: 1.6;
         }
@@ -22,14 +22,14 @@
         #eo-dashboard {
             width: 100%;
             min-height: 100vh;
-            background-color: #050A12;
+            background-color: #000000;
         }
 
         /* Header */
         .eo-header {
-            background: linear-gradient(135deg, #0C1220 0%, #050A12 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid #2a2a2a;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -86,7 +86,7 @@
 
         .eo-nav-btn {
             padding: 0.75rem 1.5rem;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid #2a2a2a;
             background: transparent;
             color: #FFFFFF;
             cursor: pointer;
@@ -140,13 +140,6 @@
             font-weight: 400;
         }
 
-        .eo-subtitle-small {
-            font-size: 15px;
-            color: #666;
-            font-weight: 400;
-            margin-top: 4px;
-        }
-
         /* Tool Cards Grid */
         .eo-grid {
             display: grid;
@@ -156,8 +149,8 @@
         }
 
         .eo-card {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 2rem;
             transition: all 0.3s ease;
@@ -170,6 +163,86 @@
             background: linear-gradient(135deg, #1f1a1a 0%, #1a0f0a 100%);
             transform: translateY(-4px);
             box-shadow: 0 8px 32px rgba(255, 102, 0, 0.15);
+        }
+
+        .eo-card.completed {
+            border-color: #22C55E;
+            background: linear-gradient(135deg, #1a1f1a 0%, #0a1a0f 100%);
+        }
+
+        .eo-card.completed:hover {
+            border-color: #22C55E;
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.15);
+        }
+
+        .eo-card-score-display {
+            display: none;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .eo-card-score-display .score-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: #22C55E;
+        }
+
+        .eo-card-score-display .score-label {
+            font-size: 11px;
+            color: #A3A3A3;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Hub Progress Bar */
+        .eo-hub-progress {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .eo-hub-progress-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #A3A3A3;
+            margin-bottom: 0.75rem;
+        }
+
+        .eo-hub-progress-label span {
+            color: #FF6600;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .eo-hub-progress-track {
+            height: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .eo-hub-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF6600, #22C55E);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .eo-hub-progress-score {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .eo-hub-progress-score strong {
+            color: #FF6600;
         }
 
         .eo-card-icon {
@@ -230,8 +303,8 @@
 
         /* Flow Guide */
         .eo-flow {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -244,24 +317,31 @@
             text-align: center;
         }
 
-        .eo-flow-steps {
+        .eo-flow-chart {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
-            gap: 0.75rem;
+            gap: 1rem;
             flex-wrap: wrap;
             margin-bottom: 1.5rem;
         }
 
         .eo-flow-step {
-            background: rgba(255,255,255,0.06);
+            background: #2a2a2a;
             padding: 1rem 1.25rem;
             border-radius: 8px;
             font-size: 13px;
             font-weight: 600;
             text-align: center;
             min-width: 150px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             position: relative;
+        }
+
+        .eo-flow-step:hover {
+            border: 1px solid #FF6600;
+            transform: translateY(-2px);
         }
 
         .eo-flow-step.highlight {
@@ -269,49 +349,26 @@
             color: #000000;
         }
 
-        .eo-flow-step .step-meta {
-            font-size: 11px;
-            font-weight: 400;
-            color: #888;
-            margin-top: 4px;
+        .eo-flow-step.completed {
+            background: #22C55E;
+            color: #FFFFFF;
         }
 
-        .eo-flow-step.highlight .step-meta {
-            color: rgba(0,0,0,0.6);
-        }
-
-        .eo-flow-step .step-status {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            font-size: 11px;
-            line-height: 20px;
+        .eo-flow-step-name {
+            font-size: 13px;
             font-weight: 700;
             margin-bottom: 4px;
         }
 
-        .step-status.done {
-            background: #22C55E;
-            color: #fff;
-        }
-
-        .step-status.pending {
-            background: rgba(255,255,255,0.06);
-            border: 1px solid #555;
-            color: #888;
-        }
-
-        .eo-flow-step.highlight .step-status.pending {
-            background: rgba(0,0,0,0.2);
-            border-color: rgba(0,0,0,0.3);
-            color: rgba(0,0,0,0.6);
+        .eo-flow-step-meta {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.8;
         }
 
         .eo-flow-arrow {
             font-size: 18px;
             color: #FF6600;
-            padding-top: 1rem;
         }
 
         .eo-flow-desc {
@@ -320,109 +377,61 @@
             color: #A3A3A3;
         }
 
-        /* Resume Assessment */
-        .eo-resume {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .eo-resume-title {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .eo-resume-row {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .eo-resume-field {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .eo-resume-field label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: #888;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-        }
-
-        .eo-resume-field input,
-        .eo-resume-field select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            background: #111827;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 6px;
-            color: #FFFFFF;
+        .eo-flow-subtitle {
+            text-align: center;
             font-size: 14px;
-            font-family: 'DM Sans', sans-serif;
-            outline: none;
-            transition: border-color 0.2s;
+            color: #FF6600;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
         }
 
-        .eo-resume-field input:focus,
-        .eo-resume-field select:focus {
-            border-color: #FF6600;
+        /* Gate overlay */
+        .eo-gate-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .eo-resume-btn {
-            padding: 0.75rem 1.5rem;
+        .eo-gate-modal {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 2px solid #FF6600;
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 520px;
+            text-align: center;
+        }
+        .eo-gate-modal h2 {
+            font-size: 22px;
+            margin-bottom: 1rem;
+            color: #FF6600;
+        }
+        .eo-gate-modal p {
+            font-size: 15px;
+            color: #A3A3A3;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .eo-gate-btn {
+            display: inline-block;
+            padding: 0.85rem 2rem;
             background: #FF6600;
             color: #000;
             border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            white-space: nowrap;
-            transition: background 0.2s;
-        }
-
-        .eo-resume-btn:hover { background: #FF8833; }
-
-        .eo-resume-progress {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-
-        .eo-resume-circle {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.06);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
+            border-radius: 8px;
             font-weight: 700;
-            color: #666;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
         }
-
-        .eo-resume-circle.complete {
-            border-color: #22C55E;
-            color: #22C55E;
-        }
-
-        .eo-resume-circle .circle-score {
-            font-size: 16px;
-            font-weight: 800;
+        .eo-gate-btn.secondary {
+            background: transparent;
+            border: 1px solid #FF6600;
+            color: #FF6600;
         }
 
         /* Scorecard Screen */
@@ -436,8 +445,8 @@
 
         /* Score Input Section */
         .eo-inputs {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -475,7 +484,7 @@
             width: 100%;
             height: 6px;
             border-radius: 3px;
-            background: rgba(255,255,255,0.06);
+            background: #2a2a2a;
             outline: none;
             -webkit-appearance: none;
             appearance: none;
@@ -514,7 +523,7 @@
 
         /* Overall Score Section */
         .eo-overall {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
             border: 1px solid #FF6600;
             border-radius: 12px;
             padding: 2rem;
@@ -568,8 +577,8 @@
         }
 
         .eo-pillar-card {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 1.5rem;
         }
@@ -595,7 +604,7 @@
         .eo-pillar-bar {
             width: 100%;
             height: 8px;
-            background: rgba(255,255,255,0.06);
+            background: #2a2a2a;
             border-radius: 4px;
             margin-bottom: 1rem;
             overflow: hidden;
@@ -609,7 +618,7 @@
 
         .eo-pillar-band {
             display: inline-block;
-            background: rgba(255,255,255,0.06);
+            background: #2a2a2a;
             padding: 0.35rem 0.75rem;
             border-radius: 4px;
             font-size: 11px;
@@ -665,8 +674,8 @@
 
         /* 2x2 Matrix */
         .eo-matrix {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 1.25rem;
             margin-bottom: 2rem;
@@ -720,8 +729,8 @@
         }
 
         .eo-matrix-cell {
-            background: #111827;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
             border-radius: 8px;
             padding: 0.75rem;
             text-align: center;
@@ -754,8 +763,8 @@
 
         /* Next Steps */
         .eo-nextsteps {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 2rem;
             margin-bottom: 2rem;
@@ -791,7 +800,7 @@
         }
 
         .eo-cta-button {
-            background: #050A12;
+            background: #000000;
             color: #FF6600;
             border: none;
             padding: 0.75rem 2rem;
@@ -804,14 +813,14 @@
         }
 
         .eo-cta-button:hover {
-            background: #0C1220;
+            background: #1a1a1a;
             color: #FF6600;
         }
 
         /* Score History */
         .eo-history {
-            background: linear-gradient(135deg, #0C1220 0%, #111827 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 1px solid #2a2a2a;
             border-radius: 12px;
             padding: 2rem;
         }
@@ -837,14 +846,14 @@
         .eo-history-table th {
             text-align: left;
             padding: 0.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid #2a2a2a;
             font-weight: 600;
             color: #A3A3A3;
         }
 
         .eo-history-table td {
             padding: 0.75rem;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid #2a2a2a;
         }
 
         .eo-history-table tr:last-child td {
@@ -905,10 +914,6 @@
                 aspect-ratio: auto;
                 padding: 1rem;
             }
-
-            .eo-resume-row {
-                flex-direction: column;
-            }
         }
 
         /* RTL Toggle */
@@ -931,7 +936,7 @@
         .rtl-toggle:hover { background: rgba(255,255,255,0.2); }
         body.rtl { direction: rtl; text-align: right; }
         body.rtl .eo-header-content { flex-direction: row-reverse; }
-        body.rtl .eo-flow-steps { flex-direction: row-reverse; }
+        body.rtl .eo-flow-chart { flex-direction: row-reverse; }
         body.rtl .eo-nav { flex-direction: row-reverse; }
 
         /* Hide/Show */
@@ -940,11 +945,25 @@
         }
 
         /* Status Colors */
-        .status-launch { color: #4CAF50; }
-        .status-almost { color: #FFC107; }
-        .status-needs { color: #FF9800; }
-        .status-early { color: #F44336; }
-        .status-reset { color: #D32F2F; }
+        .status-launch {
+            color: #4CAF50;
+        }
+
+        .status-almost {
+            color: #FFC107;
+        }
+
+        .status-needs {
+            color: #FF9800;
+        }
+
+        .status-early {
+            color: #F44336;
+        }
+
+        .status-reset {
+            color: #D32F2F;
+        }
     </style>
 </head>
 <body>
@@ -958,7 +977,6 @@
                     <div class="eo-logo-text">
                         <div class="eo-logo-main">EO Founder Assessment</div>
                         <div class="eo-logo-sub">by Entrepreneurs Oasis MENA</div>
-                        <div id="venture-name-display" style="font-size: 13px; color: #FF6600; font-weight: 600; margin-top: 2px; display: none;"></div>
                     </div>
                 </div>
                 <div class="eo-nav">
@@ -973,122 +991,133 @@
             <div id="hub-screen" class="eo-hub">
                 <!-- Intro -->
                 <div class="eo-intro">
-                    <h1 class="eo-title">MENA MicroSaaS Founders OS — Clarity Suite</h1>
-                    <p class="eo-subtitle">First Step to Launch Your MicroSaaS with AI.</p>
-                    <p class="eo-subtitle-small">Five tools. One system.</p>
+                    <h1 class="eo-title">MicroSaaS Founder Operating System</h1>
+                    <p class="eo-subtitle">Your first step to launching with AI. Five assessments. One strategic blueprint.</p>
                 </div>
 
-                <!-- Flow Guide (ABOVE tool cards) -->
-                <div class="eo-flow">
-                    <div class="eo-flow-title">Assessment Flow Guide</div>
-                    <div class="eo-flow-steps" id="flow-steps">
-                        <div class="eo-flow-step highlight" data-sc="1">
-                            <div class="step-status pending" id="flow-status-1">1</div>
-                            <div>Project Definition</div>
-                            <div class="step-meta">7 questions · ~15 min</div>
+                <!-- Assessment Flow Guide (Journey Map) -->
+                <div class="eo-flow" id="flow-guide">
+                    <div class="eo-flow-title">Your Assessment Journey</div>
+                    <div class="eo-flow-subtitle">Complete all 5 assessments to unlock your full strategic analysis · Total: ~80 min</div>
+                    <div class="eo-flow-chart">
+                        <div class="eo-flow-step highlight" id="flow-pd" onclick="openTool('pd')">
+                            <div class="eo-flow-step-name">1. Project Definition</div>
+                            <div class="eo-flow-step-meta">21 questions · ~15 min</div>
                         </div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step" data-sc="2">
-                            <div class="step-status pending" id="flow-status-2">2</div>
-                            <div>ICP Clarity</div>
-                            <div class="step-meta">6 questions · ~12 min</div>
+                        <div class="eo-flow-step" id="flow-icp" onclick="openTool('icp')">
+                            <div class="eo-flow-step-name">2. ICP Clarity</div>
+                            <div class="eo-flow-step-meta">27 questions · ~20 min</div>
                         </div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step" data-sc="3">
-                            <div class="step-status pending" id="flow-status-3">3</div>
-                            <div>Market Attractiveness</div>
-                            <div class="step-meta">6 questions · ~25 min</div>
+                        <div class="eo-flow-step" id="flow-market" onclick="openTool('market')">
+                            <div class="eo-flow-step-name">3. Market Attractiveness</div>
+                            <div class="eo-flow-step-meta">20 questions · ~15 min</div>
                         </div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step" data-sc="4">
-                            <div class="step-status pending" id="flow-status-4">4</div>
-                            <div>Strategy Selector</div>
-                            <div class="step-meta">10 questions · ~20 min</div>
+                        <div class="eo-flow-step" id="flow-strategy" onclick="openTool('strategy')">
+                            <div class="eo-flow-step-name">4. Strategy Selector</div>
+                            <div class="eo-flow-step-meta">20 questions · ~15 min</div>
                         </div>
                         <div class="eo-flow-arrow">→</div>
-                        <div class="eo-flow-step" data-sc="5">
-                            <div class="step-status pending" id="flow-status-5">5</div>
-                            <div>GTM Fitness</div>
-                            <div class="step-meta">10 questions · ~25 min</div>
+                        <div class="eo-flow-step" id="flow-gtm" onclick="openTool('gtm')">
+                            <div class="eo-flow-step-name">5. GTM Fitness</div>
+                            <div class="eo-flow-step-meta">22 questions · ~15 min</div>
                         </div>
                     </div>
-                    <div class="eo-flow-desc">Start with Project Definition to set your niche and scope. Then define your buyer (ICP), validate market, pick strategy path, and plan GTM. Each assessment builds on the previous one — data flows downstream automatically.</div>
+                    <div class="eo-flow-desc">Each assessment builds on the previous — data flows downstream automatically. Start with Project Definition and work your way through.</div>
                 </div>
 
-                <!-- Resume Assessment Section -->
-                <div class="eo-resume" id="resume-section">
-                    <div class="eo-resume-title">Resume Your Assessment</div>
-                    <div class="eo-resume-row">
-                        <div class="eo-resume-field">
-                            <label>Your Email</label>
-                            <input type="email" id="resume-email" placeholder="founder@company.com">
-                        </div>
-                        <div class="eo-resume-field" id="resume-venture-field" style="display:none">
-                            <label>Select Venture</label>
-                            <select id="resume-venture-select">
-                                <option value="">— Choose your venture —</option>
-                            </select>
-                        </div>
-                        <button class="eo-resume-btn" onclick="handleResume()">Load Scores</button>
+                <!-- Hub Progress Bar -->
+                <div class="eo-hub-progress" id="hub-progress">
+                    <div class="eo-hub-progress-label">Assessment Progress: <span id="hub-progress-count">0/5</span> completed</div>
+                    <div class="eo-hub-progress-track">
+                        <div class="eo-hub-progress-fill" id="hub-progress-fill" style="width: 0%"></div>
                     </div>
-                    <div id="resume-status" style="font-size: 13px; color: #A3A3A3; margin-top: 4px;"></div>
-                    <div class="eo-resume-progress" id="resume-progress" style="display:none">
-                        <div class="eo-resume-circle" id="resume-sc1"><div class="circle-score">—</div><div>SC1</div></div>
-                        <div class="eo-resume-circle" id="resume-sc2"><div class="circle-score">—</div><div>SC2</div></div>
-                        <div class="eo-resume-circle" id="resume-sc3"><div class="circle-score">—</div><div>SC3</div></div>
-                        <div class="eo-resume-circle" id="resume-sc4"><div class="circle-score">—</div><div>SC4</div></div>
-                        <div class="eo-resume-circle" id="resume-sc5"><div class="circle-score">—</div><div>SC5</div></div>
-                    </div>
-                    <div id="resume-cta" style="display:none;text-align:center;margin-top:16px"></div>
+                    <div class="eo-hub-progress-score" id="hub-progress-score"></div>
                 </div>
 
                 <!-- Tool Cards -->
                 <div class="eo-grid">
+                    <!-- Card 1: Project Definition -->
                     <div class="eo-card" data-tool="pd">
                         <div class="eo-card-icon">📋</div>
                         <div class="eo-card-badge">START HERE</div>
+                        <div class="eo-card-score-display" id="score-display-pd">
+                            <div class="score-number">—</div>
+                            <div class="score-label">Score</div>
+                        </div>
                         <div class="eo-card-title">Project Definition Scoring</div>
-                        <div class="eo-card-desc">Define your niche, positioning, and project scope. 7 conversational questions.</div>
+                        <div class="eo-card-desc">Define your niche, positioning, and project scope. 21 questions across 6 sections.</div>
                         <div class="eo-card-source">Foundation for all downstream assessments</div>
                         <button class="eo-card-btn" onclick="openTool('pd')">Define Your Project →</button>
                     </div>
 
+                    <!-- Card 2: ICP Clarity -->
                     <div class="eo-card" data-tool="icp">
                         <div class="eo-card-icon">👤</div>
                         <div class="eo-card-badge">SC2</div>
+                        <div class="eo-card-score-display" id="score-display-icp">
+                            <div class="score-number">—</div>
+                            <div class="score-label">Score</div>
+                        </div>
                         <div class="eo-card-title">ICP Clarity Scoring</div>
-                        <div class="eo-card-desc">Build a complete buyer profile. 6 conversational questions.</div>
+                        <div class="eo-card-desc">Comprehensive buyer clarity assessment. 27 questions across 5 sections.</div>
                         <div class="eo-card-source">Based on Expert Secrets + DotCom Secrets</div>
                         <button class="eo-card-btn" onclick="openTool('icp')">Score Your ICP →</button>
                     </div>
 
+                    <!-- Card 3: Market Attractiveness -->
                     <div class="eo-card" data-tool="market">
                         <div class="eo-card-icon">🎯</div>
                         <div class="eo-card-badge">SC3</div>
+                        <div class="eo-card-score-display" id="score-display-market">
+                            <div class="score-number">—</div>
+                            <div class="score-label">Score</div>
+                        </div>
                         <div class="eo-card-title">Market Attractiveness Scoring</div>
-                        <div class="eo-card-desc">6 evidence-based questions with upstream SC1/SC2 data inheritance.</div>
-                        <div class="eo-card-source">Based on $100M Offers + Hormozi Grand Slam Framework</div>
+                        <div class="eo-card-desc">Deep 20-question assessment of your market opportunity strength.</div>
+                        <div class="eo-card-source">Based on $100M Offers + Ultimate Sales Machine</div>
                         <button class="eo-card-btn" onclick="openTool('market')">Score Your Market →</button>
                     </div>
 
+                    <!-- Card 4: Strategy Selector -->
                     <div class="eo-card" data-tool="strategy">
                         <div class="eo-card-icon">🧭</div>
                         <div class="eo-card-badge">SC4</div>
+                        <div class="eo-card-score-display" id="score-display-strategy">
+                            <div class="score-number">—</div>
+                            <div class="score-label">Score</div>
+                        </div>
                         <div class="eo-card-title">Strategy Selector</div>
-                        <div class="eo-card-desc">Find your optimal strategy path. 10 questions, 4 strategy paths, dynamic execution questions.</div>
+                        <div class="eo-card-desc">Find your optimal strategy path. 20 questions, 4 strategy paths, dynamic execution questions.</div>
                         <div class="eo-card-source">Synthesizes SC1-SC3 data for path recommendation</div>
                         <button class="eo-card-btn" onclick="openTool('strategy')">Find Your Strategy →</button>
                     </div>
 
+                    <!-- Card 5: GTM Fitness -->
                     <div class="eo-card" data-tool="gtm">
                         <div class="eo-card-icon">🚀</div>
                         <div class="eo-card-badge">FINAL</div>
+                        <div class="eo-card-score-display" id="score-display-gtm">
+                            <div class="score-number">—</div>
+                            <div class="score-label">Score</div>
+                        </div>
                         <div class="eo-card-title">GTM Fitness Scoring</div>
-                        <div class="eo-card-desc">Evaluate readiness across 13 GTM motions. Dynamic top-5 deep dive. 10 questions.</div>
+                        <div class="eo-card-desc">Evaluate readiness across 13 GTM motions. Dynamic top-5 deep dive. 22 questions.</div>
                         <div class="eo-card-source">Based on Entrepreneurs Oasis MENA GTM Matrix</div>
                         <button class="eo-card-btn" onclick="openTool('gtm')">Score Your GTM →</button>
                     </div>
                 </div>
+
+                <!-- Generate Project Brief (visible when all 5 complete) -->
+                <div id="btn-generate-brief" style="display:none; text-align:center; margin: 2rem 0;">
+                    <button onclick="generateProjectBrief()" style="padding: 1rem 2.5rem; background: linear-gradient(135deg, #FF6600, #CC5200); color: #FFFFFF; border: none; border-radius: 8px; font-weight: 700; font-size: 16px; cursor: pointer; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(255,102,0,0.3);">
+                        📄 Generate Project Brief (MD)
+                    </button>
+                    <p style="color: #A3A3A3; font-size: 13px; margin-top: 0.5rem;">All assessments complete! Download your consolidated project brief.</p>
+                </div>
+
             </div>
 
             <!-- SCORECARD SCREEN -->
@@ -1098,9 +1127,9 @@
                     <div class="eo-inputs-title">Load Your Assessment Results</div>
                     <p style="color: #A3A3A3; font-size: 14px; margin-bottom: 1rem;">Enter the email you used during your assessments to load your scores automatically.</p>
                     <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-                        <input type="email" id="lookup-email" placeholder="your@email.com" style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; background: #111827; border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; color: #FFFFFF; font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none;" onfocus="this.style.borderColor='#FF6600'" onblur="this.style.borderColor='rgba(255,255,255,0.06)'">
-                        <button onclick="fetchMyScores()" style="padding: 0.75rem 1.5rem; background: #FF6600; color: #000; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap;">Fetch My Scores</button>
-                        <button onclick="loadFromLocalData()" style="padding: 0.75rem 1.5rem; background: transparent; color: #FF6600; border: 1px solid #FF6600; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap;">Load Local Data</button>
+                        <input type="email" id="lookup-email" placeholder="your@email.com" style="flex: 1; min-width: 200px; padding: 0.75rem 1rem; background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 6px; color: #FFFFFF; font-size: 14px; font-family: 'Inter', sans-serif; outline: none;" onfocus="this.style.borderColor='#FF6600'" onblur="this.style.borderColor='#2a2a2a'">
+                        <button onclick="fetchMyScores()" style="padding: 0.75rem 1.5rem; background: #FF6600; color: #000; border: none; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap;">Fetch My Scores</button>
+                        <button onclick="loadFromLocalData()" style="padding: 0.75rem 1.5rem; background: transparent; color: #FF6600; border: 1px solid #FF6600; border-radius: 6px; font-weight: 600; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap;">Load Local Data</button>
                     </div>
                     <div id="lookup-status" style="margin-top: 0.75rem; font-size: 13px; color: #A3A3A3;"></div>
                 </div>
@@ -1139,7 +1168,7 @@
                     <div class="eo-overall-title">Overall Founder Readiness Score</div>
                     <div class="eo-radial">
                         <svg class="eo-radial-svg" viewBox="0 0 200 200">
-                            <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2"/>
+                            <circle cx="100" cy="100" r="90" fill="none" stroke="#2a2a2a" stroke-width="2"/>
                             <circle cx="100" cy="100" r="90" fill="none" stroke="#FF6600" stroke-width="2" id="score-circle" stroke-dasharray="0, 565" stroke-linecap="round" style="transform: rotate(-90deg); transform-origin: 100px 100px; transition: all 0.3s ease;"/>
                             <text x="100" y="110" text-anchor="middle" font-size="48" font-weight="700" fill="#FF6600" id="score-text">0</text>
                         </svg>
@@ -1152,14 +1181,21 @@
                 <!-- Three-Pillar Radar Chart -->
                 <div class="eo-radar-container" id="radar-section" style="display: none;">
                     <svg class="eo-radar-svg" viewBox="0 0 300 300">
-                        <circle cx="150" cy="150" r="120" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <circle cx="150" cy="150" r="90" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <circle cx="150" cy="150" r="60" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <circle cx="150" cy="150" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <line x1="150" y1="30" x2="150" y2="270" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <line x1="74" y1="220" x2="226" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-                        <line x1="226" y1="80" x2="74" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+                        <!-- Grid -->
+                        <circle cx="150" cy="150" r="120" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+                        <circle cx="150" cy="150" r="90" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+                        <circle cx="150" cy="150" r="60" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+                        <circle cx="150" cy="150" r="30" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+
+                        <!-- Axes -->
+                        <line x1="150" y1="30" x2="150" y2="270" stroke="#2a2a2a" stroke-width="1"/>
+                        <line x1="74" y1="220" x2="226" y2="220" stroke="#2a2a2a" stroke-width="1"/>
+                        <line x1="226" y1="80" x2="74" y2="220" stroke="#2a2a2a" stroke-width="1"/>
+
+                        <!-- Data polygon -->
                         <polygon id="radar-polygon" fill="rgba(255, 102, 0, 0.2)" stroke="#FF6600" stroke-width="2" points="150,150"/>
+
+                        <!-- Labels -->
                         <text x="150" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#FF6600">Market</text>
                         <text x="60" y="245" text-anchor="middle" font-size="12" font-weight="600" fill="#FF6600">ICP</text>
                         <text x="240" y="245" text-anchor="middle" font-size="12" font-weight="600" fill="#FF6600">GTM</text>
@@ -1168,6 +1204,7 @@
 
                 <!-- Three Pillar Cards -->
                 <div class="eo-pillars" id="pillars-section" style="display: none;">
+                    <!-- Market Attractiveness -->
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
                             <div class="eo-pillar-name">Market Attractiveness</div>
@@ -1180,6 +1217,8 @@
                         <div class="eo-pillar-weakness" id="pillar-mas-weakness">-</div>
                         <div class="eo-pillar-action">→ Focus on market validation</div>
                     </div>
+
+                    <!-- ICP Clarity -->
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
                             <div class="eo-pillar-name">ICP Clarity</div>
@@ -1192,6 +1231,8 @@
                         <div class="eo-pillar-weakness" id="pillar-icp-weakness">-</div>
                         <div class="eo-pillar-action">→ Sharpen buyer definition</div>
                     </div>
+
+                    <!-- GTM Fitness -->
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
                             <div class="eo-pillar-name">GTM Fitness</div>
@@ -1211,6 +1252,47 @@
                     <div class="eo-bottleneck-label">FOCUS HERE</div>
                     <div class="eo-bottleneck-title" id="bottleneck-title">-</div>
                     <div class="eo-bottleneck-desc" id="bottleneck-desc">-</div>
+                </div>
+
+                <!-- AI Analysis Section (hidden by default, shown when consolidated data loads) -->
+                <div id="ai-analysis-section" style="display: none;">
+                    <!-- Archetype -->
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #FF6600; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #FF6600; margin-bottom: 0.5rem;">YOUR ARCHETYPE</div>
+                        <div id="ai-archetype-name" style="font-size: 24px; font-weight: 700; margin-bottom: 0.5rem;">-</div>
+                        <div id="ai-archetype-strategy" style="font-size: 14px; color: #A3A3A3; line-height: 1.6;">-</div>
+                    </div>
+
+                    <!-- Key Insight -->
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #FF6600; margin-bottom: 0.75rem;">KEY INSIGHT</div>
+                        <div id="ai-key-insight" style="font-size: 16px; font-weight: 500; line-height: 1.6;">-</div>
+                    </div>
+
+                    <!-- GTM Prescription -->
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 1.5rem;">GTM Motion Prescription</div>
+                        <div id="ai-gtm-primary" style="margin-bottom: 1rem;"></div>
+                        <div id="ai-gtm-secondary" style="margin-bottom: 1rem;"></div>
+                        <div id="ai-gtm-avoid" style="margin-bottom: 1rem;"></div>
+                        <div id="ai-gtm-sequencing" style="font-size: 14px; color: #A3A3A3; line-height: 1.6; border-top: 1px solid #2a2a2a; padding-top: 1rem;"></div>
+                    </div>
+
+                    <!-- 90-Day Plan -->
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 16px; font-weight: 700; margin-bottom: 1.5rem;">90-Day Roadmap</div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                            <div id="ai-month1" style="background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.5rem;"></div>
+                            <div id="ai-month2" style="background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.5rem;"></div>
+                            <div id="ai-month3" style="background: #0f0f0f; border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.5rem;"></div>
+                        </div>
+                    </div>
+
+                    <!-- MENA Adjustments -->
+                    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #FF6600; margin-bottom: 0.75rem;">MENA MARKET ADJUSTMENTS</div>
+                        <div id="ai-mena" style="font-size: 14px; color: #A3A3A3; line-height: 1.6;">-</div>
+                    </div>
                 </div>
 
                 <!-- 2x2 Matrix -->
@@ -1248,12 +1330,34 @@
                     <div class="eo-nextsteps-content" id="nextsteps-content">-</div>
                 </div>
 
+                <!-- Strategic Summary Section -->
+                <div id="strategic-summary-section" style="display: none; background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #FF6600; margin-bottom: 0.75rem;">STRATEGIC DIRECTION</div>
+                    <div id="strategic-summary-content" style="font-size: 15px; line-height: 1.8; color: #FFFFFF;"></div>
+                </div>
+
+                <!-- Document Downloads Section -->
+                <div style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); border: 1px solid #2a2a2a; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.05em; color: #FF6600; margin-bottom: 0.75rem;">YOUR VENTURE DOCUMENTS</div>
+                    <p style="color: #A3A3A3; font-size: 14px; margin-bottom: 1.5rem;">Download your assessment results as polished, shareable documents. These are NOT raw printouts — they're professionally formatted summaries of your venture analysis.</p>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button onclick="downloadAllAnswers()" style="flex: 1; min-width: 220px; padding: 1rem 1.5rem; background: transparent; color: #FF6600; border: 1px solid #FF6600; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s;" onmouseover="this.style.background='#FF6600'; this.style.color='#000'" onmouseout="this.style.background='transparent'; this.style.color='#FF6600'">
+                            📋 Download All Answers
+                        </button>
+                        <button onclick="downloadStrategicSummary()" style="flex: 1; min-width: 220px; padding: 1rem 1.5rem; background: linear-gradient(135deg, #FF6600, #CC5200); color: #FFFFFF; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: 'Inter', sans-serif; box-shadow: 0 4px 15px rgba(255,102,0,0.3); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                            📄 Download Strategic Summary
+                        </button>
+                    </div>
+                    <div style="display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <span style="font-size: 12px; color: #666;">📋 All Answers = complete record of every response across all 5 scorecards</span>
+                        <span style="font-size: 12px; color: #666;">📄 Strategic Summary = polished executive brief of your venture, scores, and next steps</span>
+                    </div>
+                </div>
+
                 <!-- CTA Section -->
                 <div class="eo-cta">
                     <div class="eo-cta-title">Ready to Move Forward?</div>
-                    <button class="eo-cta-button" onclick="alert('Join the MENA MicroSaaS Movement — 91+ founders on the same journey.')">Join MENA MicroSaaS Movement →</button>
-                    <button class="eo-cta-button" onclick="alert('Join the EO Community: 91+ MENA founders on the same journey.')">Join EO Community →</button>
-                    <button class="eo-cta-button" onclick="generateProjectBrief()">Download Scorecard (MD)</button>
+                    <button class="eo-cta-button" onclick="alert('Join the MENA MicroSaaS Movement — launching soon.')">Join EO MicroSaaS Training →</button>
                 </div>
 
                 <!-- Score History -->
@@ -1279,292 +1383,21 @@
     </div>
 
     <script>
-        // ========================================
-        // SHARED PATTERNS (from SHARED-PATTERNS.md)
-        // ========================================
+        // State
+        let scores = {
+            mas: 0,
+            icp: 0,
+            gtm: 0
+        };
+        let dashboardAiData = null;
 
-        function slugify(text) {
-          return text
-            .toString()
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w\-]+/g, '')
-            .replace(/\-\-+/g, '-')
-            .replace(/^-+/, '')
-            .replace(/-+$/, '');
-        }
+        let history = JSON.parse(localStorage.getItem('eo-history')) || [];
 
-        function getVentures(email) {
-          try {
-            return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]');
-          } catch(e) { return []; }
-        }
-
-        function saveVenture(email, ventureName) {
-          var slug = slugify(ventureName);
-          if (slug.length < 2) {
-            slug = 'venture-' + Date.now().toString(36);
-          }
-          var ventures = getVentures(email);
-          var existing = ventures.find(function(v) { return v.venture_slug === slug; });
-          if (existing) {
-            existing.last_active = new Date().toISOString().split('T')[0];
-            localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-            return { venture_name: existing.venture_name, venture_slug: slug, isNew: false };
-          }
-          var venture = {
-            venture_name: ventureName.trim(),
-            venture_slug: slug,
-            created_at: new Date().toISOString().split('T')[0],
-            last_active: new Date().toISOString().split('T')[0]
-          };
-          ventures.push(venture);
-          localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-          return { venture_name: venture.venture_name, venture_slug: slug, isNew: true };
-        }
-
-        function updateVentureActivity(email, slug) {
-          var ventures = getVentures(email);
-          var venture = ventures.find(function(v) { return v.venture_slug === slug; });
-          if (venture) {
-            venture.last_active = new Date().toISOString().split('T')[0];
-            localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-          }
-        }
-
-        function storageKey(type, scNumber, email, ventureSlug) {
-          return 'eo_sc' + scNumber + '_' + type + '_' + email + '_' + ventureSlug;
-        }
-
-        function getScores(email, ventureSlug) {
-          try {
-            return JSON.parse(localStorage.getItem('eo_scores_' + email + '_' + ventureSlug) || '{}');
-          } catch(e) { return {}; }
-        }
-
-        function saveScore(email, ventureSlug, scNumber, score) {
-          var scores = getScores(email, ventureSlug);
-          scores['sc' + scNumber] = score;
-          localStorage.setItem('eo_scores_' + email + '_' + ventureSlug, JSON.stringify(scores));
-        }
-
-        function getUpstreamResult(scNumber, email, ventureSlug) {
-          try {
-            return JSON.parse(localStorage.getItem(storageKey('result', scNumber, email, ventureSlug)) || 'null');
-          } catch(e) { return null; }
-        }
-
-        // ========================================
-        // MIGRATION (old format → new format)
-        // ========================================
-
-        function migrateOldData() {
-          for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            var match = key.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/);
-            if (match) {
-              var email = match[2];
-              var scNum = match[1];
-              var migrationNeeded = {};
-              try { migrationNeeded = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
-              if (!migrationNeeded[email]) migrationNeeded[email] = [];
-              if (migrationNeeded[email].indexOf(parseInt(scNum)) === -1) {
-                migrationNeeded[email].push(parseInt(scNum));
-              }
-              localStorage.setItem('eo_migration_pending', JSON.stringify(migrationNeeded));
-            }
-          }
-        }
-
-        function executeMigration(email, ventureName) {
-          var slug = slugify(ventureName);
-          for (var sc = 1; sc <= 5; sc++) {
-            var oldAnswers = localStorage.getItem('eo_sc' + sc + '_answers_' + email);
-            if (oldAnswers) {
-              localStorage.setItem(storageKey('answers', sc, email, slug), oldAnswers);
-              localStorage.removeItem('eo_sc' + sc + '_answers_' + email);
-            }
-            var oldResult = localStorage.getItem('eo_sc' + sc + '_result');
-            if (oldResult) {
-              localStorage.setItem(storageKey('result', sc, email, slug), oldResult);
-              localStorage.removeItem('eo_sc' + sc + '_result');
-            }
-          }
-          var oldScores = localStorage.getItem('eo-scores');
-          if (oldScores) {
-            localStorage.setItem('eo_scores_' + email + '_' + slug, oldScores);
-            localStorage.removeItem('eo-scores');
-          }
-          saveVenture(email, ventureName);
-          var pending = {};
-          try { pending = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
-          delete pending[email];
-          if (Object.keys(pending).length === 0) {
-            localStorage.removeItem('eo_migration_pending');
-          } else {
-            localStorage.setItem('eo_migration_pending', JSON.stringify(pending));
-          }
-        }
-
-        migrateOldData();
-
-        // ========================================
-        // DASHBOARD STATE
-        // ========================================
-
-        var dashScores = { mas: 0, icp: 0, gtm: 0 };
-        var dashboardAiData = null;
-        var resumeEmail = '';
-        var resumeVentureSlug = '';
-        var resumeVentureName = '';
-        var history = [];
-        try { history = JSON.parse(localStorage.getItem('eo-history')) || []; } catch(e) { history = []; }
-
-        // ========================================
-        // RESUME ASSESSMENT FLOW
-        // ========================================
-
-        function handleResume() {
-            var email = document.getElementById('resume-email').value.trim().toLowerCase();
-            if (!email || email.indexOf('@') === -1) {
-                document.getElementById('resume-status').textContent = 'Please enter a valid email address.';
-                document.getElementById('resume-status').style.color = '#EF4444';
-                return;
-            }
-
-            resumeEmail = email;
-            var ventures = getVentures(email);
-
-            if (ventures.length === 0) {
-                document.getElementById('resume-status').innerHTML = 'No assessments found for this email. <a href="EO-Project-Definition-Scoring.html" style="color:#FF6600">Start your first assessment →</a>';
-                document.getElementById('resume-status').style.color = '#F59E0B';
-                document.getElementById('resume-venture-field').style.display = 'none';
-                return;
-            }
-
-            if (ventures.length === 1) {
-                resumeVentureSlug = ventures[0].venture_slug;
-                resumeVentureName = ventures[0].venture_name;
-                loadVentureScores();
-            } else {
-                var sel = document.getElementById('resume-venture-select');
-                sel.innerHTML = '<option value="">— Choose your venture —</option>';
-                ventures.forEach(function(v) {
-                    sel.innerHTML += '<option value="' + v.venture_slug + '">' + v.venture_name + '</option>';
-                });
-                document.getElementById('resume-venture-field').style.display = 'block';
-                sel.onchange = function() {
-                    if (sel.value) {
-                        var v = ventures.find(function(x) { return x.venture_slug === sel.value; });
-                        if (v) {
-                            resumeVentureSlug = v.venture_slug;
-                            resumeVentureName = v.venture_name;
-                            loadVentureScores();
-                        }
-                    }
-                };
-                document.getElementById('resume-status').textContent = 'Multiple ventures found. Select one above.';
-                document.getElementById('resume-status').style.color = '#A3A3A3';
-            }
-        }
-
-        function loadVentureScores() {
-            var sc = getScores(resumeEmail, resumeVentureSlug);
-            var progressEl = document.getElementById('resume-progress');
-            progressEl.style.display = 'flex';
-
-            // Update venture name display
-            var vnDisplay = document.getElementById('venture-name-display');
-            if (vnDisplay) { vnDisplay.textContent = resumeVentureName; vnDisplay.style.display = 'block'; }
-
-            // Update progress circles
-            var completedCount = 0;
-            var firstIncomplete = null;
-            var scNames = { 1: 'Project Definition', 2: 'ICP Clarity', 3: 'Market Attractiveness', 4: 'Strategy Selector', 5: 'GTM Fitness' };
-            var scFiles = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html', 3: 'EO-Market-Attractiveness-Scoring.html', 4: 'EO-Strategy-Selector.html', 5: 'EO-GTM-Fitness-Scoring.html' };
-
-            for (var i = 1; i <= 5; i++) {
-                var circle = document.getElementById('resume-sc' + i);
-                var scoreVal = sc['sc' + i];
-                if (scoreVal && scoreVal > 0) {
-                    circle.classList.add('complete');
-                    circle.querySelector('.circle-score').textContent = scoreVal;
-                    completedCount++;
-                } else {
-                    circle.classList.remove('complete');
-                    circle.querySelector('.circle-score').textContent = '—';
-                    if (!firstIncomplete) firstIncomplete = i;
-                }
-            }
-
-            // Update flow guide completion indicators
-            updateFlowGuideCompletion(sc);
-
-            // Update hub card badges
-            updateHubCardBadges(sc);
-
-            // Status message
-            document.getElementById('resume-status').textContent = 'Loaded ' + completedCount + '/5 scores for "' + resumeVentureName + '".';
-            document.getElementById('resume-status').style.color = '#22C55E';
-
-            // Show continue CTA
-            var ctaEl = document.getElementById('resume-cta');
-            if (firstIncomplete) {
-                ctaEl.innerHTML = '<a href="' + scFiles[firstIncomplete] + '" style="display:inline-block;padding:12px 28px;background:#FF6600;color:#000;border-radius:6px;font-weight:700;font-size:14px;text-decoration:none">Continue to ' + scNames[firstIncomplete] + ' →</a>';
-            } else {
-                ctaEl.innerHTML = '<span style="color:#22C55E;font-weight:700">All assessments complete!</span>';
-            }
-            ctaEl.style.display = 'block';
-
-            // Also load into scorecard sliders
-            if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
-            if (sc.sc2) { dashScores.icp = sc.sc2; document.getElementById('icp-slider').value = sc.sc2; document.getElementById('icp-display').textContent = sc.sc2; }
-            if (sc.sc5) { dashScores.gtm = sc.sc5; document.getElementById('gtm-slider').value = sc.sc5; document.getElementById('gtm-display').textContent = sc.sc5; }
-        }
-
-        function updateFlowGuideCompletion(sc) {
-            for (var i = 1; i <= 5; i++) {
-                var statusEl = document.getElementById('flow-status-' + i);
-                if (sc['sc' + i] && sc['sc' + i] > 0) {
-                    statusEl.className = 'step-status done';
-                    statusEl.textContent = '✓';
-                } else {
-                    statusEl.className = 'step-status pending';
-                    statusEl.textContent = i;
-                }
-            }
-        }
-
-        function updateHubCardBadges(sc) {
-            var mapping = {
-                pd: { scKey: 'sc1' },
-                icp: { scKey: 'sc2' },
-                market: { scKey: 'sc3' },
-                strategy: { scKey: 'sc4' },
-                gtm: { scKey: 'sc5' }
-            };
-            Object.keys(mapping).forEach(function(tool) {
-                var card = document.querySelector('[data-tool="' + tool + '"]');
-                if (!card) return;
-                var badge = card.querySelector('.eo-card-badge');
-                var scoreVal = sc[mapping[tool].scKey];
-                if (scoreVal && scoreVal > 0 && badge) {
-                    badge.textContent = '✓ DONE (' + scoreVal + ')';
-                    badge.style.background = '#22C55E';
-                    badge.style.color = '#FFFFFF';
-                }
-            });
-        }
-
-        // ========================================
-        // SCREEN SWITCHING
-        // ========================================
-
+        // Screen switching
         function switchScreen(screen) {
-            var hub = document.getElementById('hub-screen');
-            var scorecard = document.getElementById('scorecard-screen');
-            var navBtns = document.querySelectorAll('.eo-nav-btn');
+            const hub = document.getElementById('hub-screen');
+            const scorecard = document.getElementById('scorecard-screen');
+            const navBtns = document.querySelectorAll('.eo-nav-btn');
 
             if (screen === 'hub') {
                 hub.classList.remove('hidden');
@@ -1580,58 +1413,57 @@
             }
         }
 
-        // ========================================
-        // SCORE MANAGEMENT
-        // ========================================
-
+        // Update scores
         function updateScores() {
-            dashScores.mas = parseInt(document.getElementById('mas-slider').value);
-            dashScores.icp = parseInt(document.getElementById('icp-slider').value);
-            dashScores.gtm = parseInt(document.getElementById('gtm-slider').value);
-            document.getElementById('mas-display').textContent = dashScores.mas;
-            document.getElementById('icp-display').textContent = dashScores.icp;
-            document.getElementById('gtm-display').textContent = dashScores.gtm;
-            if (dashScores.mas > 0 || dashScores.icp > 0 || dashScores.gtm > 0) {
+            scores.mas = parseInt(document.getElementById('mas-slider').value);
+            scores.icp = parseInt(document.getElementById('icp-slider').value);
+            scores.gtm = parseInt(document.getElementById('gtm-slider').value);
+
+            document.getElementById('mas-display').textContent = scores.mas;
+            document.getElementById('icp-display').textContent = scores.icp;
+            document.getElementById('gtm-display').textContent = scores.gtm;
+
+            if (scores.mas > 0 || scores.icp > 0 || scores.gtm > 0) {
                 renderDashboard();
             }
         }
 
+        // Calculate overall score (35% MAS, 35% ICP, 30% GTM)
         function getOverallScore() {
-            return Math.round((dashScores.mas * 0.35) + (dashScores.icp * 0.35) + (dashScores.gtm * 0.30));
+            return Math.round((scores.mas * 0.35) + (scores.icp * 0.35) + (scores.gtm * 0.30));
         }
 
+        // Get band info
         function getBandInfo(score) {
-            if (score >= 85) return { band: 'LAUNCH READY', color: 'status-launch', desc: 'You have a strong market, clear ICP, and viable GTM. Execute.' };
-            if (score >= 70) return { band: 'ALMOST THERE', color: 'status-almost', desc: 'Foundation is solid. Address the weakest area before scaling.' };
-            if (score >= 55) return { band: 'NEEDS WORK', color: 'status-needs', desc: 'Multiple gaps to close. Focus on the lowest score first.' };
-            if (score >= 40) return { band: 'EARLY STAGE', color: 'status-early', desc: 'Significant building required. Start with ICP clarity.' };
+            if (score >= 80) return { band: 'LAUNCH READY', color: 'status-launch', desc: 'You have a strong market, clear ICP, and viable GTM. Execute.' };
+            if (score >= 60) return { band: 'ALMOST THERE', color: 'status-almost', desc: 'Foundation is solid. Address the weakest area before scaling.' };
+            if (score >= 40) return { band: 'NEEDS WORK', color: 'status-needs', desc: 'Multiple gaps to close. Focus on the lowest score first.' };
+            if (score >= 20) return { band: 'EARLY STAGE', color: 'status-early', desc: 'Significant building required. Start with ICP clarity.' };
             return { band: 'RESET', color: 'status-reset', desc: 'Go back to fundamentals. Talk to buyers before building.' };
         }
 
+        // Get pillar band
         function getPillarBand(score) {
-            if (score >= 85) return 'Launch Ready';
-            if (score >= 70) return 'Almost There';
-            if (score >= 55) return 'Needs Work';
-            if (score >= 40) return 'Early Stage';
-            return 'Reset';
+            if (score >= 80) return 'Strong';
+            if (score >= 60) return 'Good';
+            if (score >= 40) return 'Weak';
+            return 'Critical';
         }
 
+        // Get weakness
         function getWeakness(score) {
-            if (score >= 85) return 'Solid foundation';
-            if (score >= 70) return 'Minor improvements needed';
-            if (score >= 55) return 'Needs focused work';
-            if (score >= 40) return 'Needs significant focus';
+            if (score >= 80) return 'Solid foundation';
+            if (score >= 60) return 'Room for improvement';
+            if (score >= 40) return 'Needs focus';
             return 'Critical gap';
         }
 
-        // ========================================
-        // RENDER DASHBOARD
-        // ========================================
-
+        // Render dashboard
         function renderDashboard() {
-            var overall = getOverallScore();
-            var bandInfo = getBandInfo(overall);
+            const overall = getOverallScore();
+            const bandInfo = getBandInfo(overall);
 
+            // Show sections
             document.getElementById('overall-section').style.display = 'block';
             document.getElementById('radar-section').style.display = 'block';
             document.getElementById('pillars-section').style.display = 'grid';
@@ -1640,372 +1472,1161 @@
             document.getElementById('nextsteps-section').style.display = 'block';
             document.getElementById('history-section').style.display = 'block';
 
+            // Update overall
             document.getElementById('overall-score').textContent = overall;
             document.getElementById('overall-band').textContent = bandInfo.band;
             document.getElementById('overall-band').className = bandInfo.color;
             document.getElementById('overall-desc').textContent = bandInfo.desc;
 
-            var circumference = 565;
-            var offset = circumference - (overall / 100 * circumference);
-            document.getElementById('score-circle').setAttribute('stroke-dasharray', (circumference - offset) + ', ' + circumference);
+            // Update radial
+            const circumference = 565;
+            const offset = circumference - (overall / 100 * circumference);
+            document.getElementById('score-circle').setAttribute('stroke-dasharray', `${circumference - offset}, ${circumference}`);
             document.getElementById('score-text').textContent = overall;
 
+            // Update radar
             updateRadar();
+
+            // Update pillars
             updatePillars();
+
+            // Update bottleneck
             updateBottleneck();
+
+            // Update matrix
             updateMatrix();
+
+            // Update next steps
             updateNextSteps();
+
+            // Strategic summary
+            updateStrategicSummary(overall, bandInfo);
+
+            // Save to history
             saveToHistory(overall);
+
+            // Update history
             updateHistory();
         }
 
+        // Update radar chart
         function updateRadar() {
-            var centerX = 150, centerY = 150, radius = 120;
-            var masP = dashScores.mas / 100;
-            var icpP = dashScores.icp / 100;
-            var gtmP = dashScores.gtm / 100;
+            const centerX = 150;
+            const centerY = 150;
+            const radius = 120;
 
-            var masX = centerX + radius * masP * Math.cos((-90) * Math.PI / 180);
-            var masY = centerY + radius * masP * Math.sin((-90) * Math.PI / 180);
-            var icpX = centerX + radius * icpP * Math.cos((210) * Math.PI / 180);
-            var icpY = centerY + radius * icpP * Math.sin((210) * Math.PI / 180);
-            var gtmX = centerX + radius * gtmP * Math.cos((330) * Math.PI / 180);
-            var gtmY = centerY + radius * gtmP * Math.sin((330) * Math.PI / 180);
+            // Calculate points (top = Market, bottom-left = ICP, bottom-right = GTM)
+            const masPercent = scores.mas / 100;
+            const icpPercent = scores.icp / 100;
+            const gtmPercent = scores.gtm / 100;
 
-            document.getElementById('radar-polygon').setAttribute('points', masX + ',' + masY + ' ' + gtmX + ',' + gtmY + ' ' + icpX + ',' + icpY);
+            // Angles: top = -90°, bottom-left = 210°, bottom-right = 330°
+            const masX = centerX + radius * masPercent * Math.cos((-90) * Math.PI / 180);
+            const masY = centerY + radius * masPercent * Math.sin((-90) * Math.PI / 180);
+
+            const icpX = centerX + radius * icpPercent * Math.cos((210) * Math.PI / 180);
+            const icpY = centerY + radius * icpPercent * Math.sin((210) * Math.PI / 180);
+
+            const gtmX = centerX + radius * gtmPercent * Math.cos((330) * Math.PI / 180);
+            const gtmY = centerY + radius * gtmPercent * Math.sin((330) * Math.PI / 180);
+
+            const points = `${masX},${masY} ${gtmX},${gtmY} ${icpX},${icpY}`;
+            document.getElementById('radar-polygon').setAttribute('points', points);
         }
 
+        // Update pillar cards
         function updatePillars() {
-            document.getElementById('pillar-mas-score').textContent = dashScores.mas;
-            document.getElementById('pillar-mas-bar').style.width = dashScores.mas + '%';
-            document.getElementById('pillar-mas-band').textContent = getPillarBand(dashScores.mas);
-            document.getElementById('pillar-mas-weakness').textContent = getWeakness(dashScores.mas);
+            // Market
+            document.getElementById('pillar-mas-score').textContent = scores.mas;
+            document.getElementById('pillar-mas-bar').style.width = scores.mas + '%';
+            document.getElementById('pillar-mas-band').textContent = getPillarBand(scores.mas);
+            document.getElementById('pillar-mas-weakness').textContent = getWeakness(scores.mas);
 
-            document.getElementById('pillar-icp-score').textContent = dashScores.icp;
-            document.getElementById('pillar-icp-bar').style.width = dashScores.icp + '%';
-            document.getElementById('pillar-icp-band').textContent = getPillarBand(dashScores.icp);
-            document.getElementById('pillar-icp-weakness').textContent = getWeakness(dashScores.icp);
+            // ICP
+            document.getElementById('pillar-icp-score').textContent = scores.icp;
+            document.getElementById('pillar-icp-bar').style.width = scores.icp + '%';
+            document.getElementById('pillar-icp-band').textContent = getPillarBand(scores.icp);
+            document.getElementById('pillar-icp-weakness').textContent = getWeakness(scores.icp);
 
-            document.getElementById('pillar-gtm-score').textContent = dashScores.gtm;
-            document.getElementById('pillar-gtm-bar').style.width = dashScores.gtm + '%';
-            document.getElementById('pillar-gtm-band').textContent = getPillarBand(dashScores.gtm);
-            document.getElementById('pillar-gtm-weakness').textContent = getWeakness(dashScores.gtm);
+            // GTM
+            document.getElementById('pillar-gtm-score').textContent = scores.gtm;
+            document.getElementById('pillar-gtm-bar').style.width = scores.gtm + '%';
+            document.getElementById('pillar-gtm-band').textContent = getPillarBand(scores.gtm);
+            document.getElementById('pillar-gtm-weakness').textContent = getWeakness(scores.gtm);
         }
 
+        // Update bottleneck
         function updateBottleneck() {
-            var lowest = Math.min(dashScores.mas, dashScores.icp, dashScores.gtm);
-            var title = '', desc = '';
-            if (lowest === dashScores.mas) {
+            const lowest = Math.min(scores.mas, scores.icp, scores.gtm);
+            let title = '';
+            let desc = '';
+
+            if (lowest === scores.mas) {
                 title = 'Market Validation Needed';
-                desc = 'Your market signal is the weakest area. Do not invest heavily in GTM until market score reaches 70+. Focus on customer interviews and market research.';
-            } else if (lowest === dashScores.icp) {
+                desc = 'Your market signal is the weakest area. Do not invest heavily in GTM until market score reaches 60+. Focus on customer interviews and market research.';
+            } else if (lowest === scores.icp) {
                 title = 'ICP Clarity Crisis';
                 desc = 'You\'re selling to a blur. Sharpen your buyer definition before spending on distribution. Do deep ICP research before any GTM investment.';
             } else {
                 title = 'GTM Machine Needed';
                 desc = 'You have a market and know your buyer — now build the distribution machine. Your execution readiness is the limiting factor.';
             }
+
             document.getElementById('bottleneck-title').textContent = title;
             document.getElementById('bottleneck-desc').textContent = desc;
         }
 
+        // Update matrix (Demand-First Matrix from consolidated config)
+        // Y-axis: Market Pull = MAS score, X-axis: Execution Readiness = (ICP + GTM) / 2
         function updateMatrix() {
-            var marketPull = dashScores.mas;
-            var execReadiness = (dashScores.icp + dashScores.gtm) / 2;
-            var cells = document.querySelectorAll('.eo-matrix-cell');
-            cells.forEach(function(cell) { cell.classList.remove('active'); });
-            if (marketPull >= 60 && execReadiness >= 60) document.getElementById('matrix-cell-1').classList.add('active');
-            else if (marketPull >= 60 && execReadiness < 60) document.getElementById('matrix-cell-2').classList.add('active');
-            else if (marketPull < 60 && execReadiness >= 60) document.getElementById('matrix-cell-3').classList.add('active');
-            else document.getElementById('matrix-cell-4').classList.add('active');
+            const marketPull = scores.mas;
+            const execReadiness = (scores.icp + scores.gtm) / 2;
+
+            const cells = document.querySelectorAll('.eo-matrix-cell');
+            cells.forEach(cell => cell.classList.remove('active'));
+
+            if (marketPull >= 60 && execReadiness >= 60) {
+                document.getElementById('matrix-cell-1').classList.add('active'); // SCALE
+            } else if (marketPull >= 60 && execReadiness < 60) {
+                document.getElementById('matrix-cell-2').classList.add('active'); // VALIDATE
+            } else if (marketPull < 60 && execReadiness >= 60) {
+                document.getElementById('matrix-cell-3').classList.add('active'); // OPTIMIZE
+            } else {
+                document.getElementById('matrix-cell-4').classList.add('active'); // BUILD
+            }
         }
 
+        // Update next steps
         function updateNextSteps() {
-            var content = '';
-            if (dashScores.mas >= 70 && dashScores.icp >= 70 && dashScores.gtm >= 70) {
-                content = 'You\'re ready for the 8-Week MicroSaaS Sprint. Join the MENA MicroSaaS Movement to get started on execution.';
-            } else if (dashScores.mas >= 60 && (dashScores.icp < 60 || dashScores.gtm < 60)) {
-                content = 'Strong market signal. Invest 2 weeks in ICP research and GTM validation before launching heavy campaigns.';
-            } else if (dashScores.gtm >= 60 && dashScores.mas < 60) {
-                content = 'You have channels but unclear target. Lock ICP clarity before running campaigns to avoid wasted spend.';
+            let content = '';
+
+            if (scores.mas >= 60 && scores.icp >= 60 && scores.gtm >= 60) {
+                content = '✓ You\'re ready for the 8-Week MicroSaaS Sprint. Join the MENA MicroSaaS Movement to get started on execution.';
+            } else if (scores.mas >= 60 && (scores.icp < 60 || scores.gtm < 60)) {
+                content = '✓ Strong market signal. Invest 2 weeks in ICP research and GTM validation before launching heavy campaigns.';
+            } else if (scores.gtm >= 60 && scores.mas < 60) {
+                content = '✓ You have channels but unclear target. Lock ICP clarity before running campaigns to avoid wasted spend.';
             } else if (getOverallScore() >= 40) {
-                content = 'Foundation building phase. Close your lowest-scoring gap first, then revisit the assessment in 2 weeks.';
+                content = '✓ Foundation building phase. Close your lowest-scoring gap first, then revisit the assessment in 2 weeks.';
             } else {
-                content = 'Back to basics. The Strategy Selector will help you find direction. Start with customer discovery.';
+                content = '✓ Back to basics. The Strategy Selector Lite will help you find direction. Start with customer discovery.';
             }
+
             document.getElementById('nextsteps-content').textContent = content;
         }
 
-        // ========================================
-        // HISTORY
-        // ========================================
+        // Strategic summary (non-AI fallback when webhook data isn't available)
+        function updateStrategicSummary(overall, bandInfo) {
+            const section = document.getElementById('strategic-summary-section');
+            const content = document.getElementById('strategic-summary-content');
+            if (!section || !content) return;
 
-        function saveToHistory(overall) {
-            var today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            var existingIndex = history.findIndex(function(h) { return h.date === today; });
-            if (existingIndex >= 0) {
-                history[existingIndex] = { date: today, mas: dashScores.mas, icp: dashScores.icp, gtm: dashScores.gtm, overall: overall };
-            } else {
-                history.push({ date: today, mas: dashScores.mas, icp: dashScores.icp, gtm: dashScores.gtm, overall: overall });
+            // If AI data is loaded, the AI analysis section handles this
+            if (dashboardAiData && dashboardAiData.keyInsight) {
+                section.style.display = 'none';
+                return;
             }
-            if (history.length > 12) history = history.slice(-12);
+
+            section.style.display = 'block';
+            let html = '';
+
+            if (overall >= 80) {
+                html = '<p><strong>You are launch-ready.</strong> Your market signal, buyer clarity, and GTM infrastructure are aligned. The risk now is overthinking — not under-preparing. Pick your top GTM motion and execute within the next 14 days. Build your MVP, get it in front of 10 paying users, and iterate based on real revenue signal — not assumptions.</p>';
+            } else if (overall >= 60) {
+                const weakest = scores.mas <= scores.icp && scores.mas <= scores.gtm ? 'market validation' : scores.icp <= scores.gtm ? 'ICP clarity' : 'GTM execution readiness';
+                html = '<p><strong>You\'re close, but one gap will kill your launch velocity.</strong> Your weakest area is <strong>' + weakest + '</strong>. Founders at this stage typically waste 2-3 months by ignoring their bottleneck and over-investing in their strength. Spend the next 2 weeks closing this specific gap before you push on distribution.</p>';
+            } else if (overall >= 40) {
+                html = '<p><strong>You\'re in the building phase — and that\'s exactly where you should be honest.</strong> Multiple areas need work. The mistake most founders make here is trying to fix everything at once. Focus on your lowest score first — that\'s your binding constraint. Everything else improves when you fix the weakest link.</p>';
+            } else {
+                html = '<p><strong>You\'re at the discovery stage.</strong> This isn\'t a bad thing — but it means you should be talking to potential buyers, not building product. Run 10 buyer conversations before writing a single line of code. Your assessment scores will jump 20-30 points just from that clarity.</p>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        // History functions
+        function saveToHistory(overall) {
+            const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+            // Check if today's entry exists
+            const existingIndex = history.findIndex(h => h.date === today);
+
+            if (existingIndex >= 0) {
+                history[existingIndex] = { date: today, mas: scores.mas, icp: scores.icp, gtm: scores.gtm, overall };
+            } else {
+                history.push({ date: today, mas: scores.mas, icp: scores.icp, gtm: scores.gtm, overall });
+            }
+
+            // Keep only last 12 entries
+            if (history.length > 12) {
+                history = history.slice(-12);
+            }
+
             localStorage.setItem('eo-history', JSON.stringify(history));
         }
 
         function updateHistory() {
-            var tbody = document.getElementById('history-tbody');
+            const tbody = document.getElementById('history-tbody');
             tbody.innerHTML = '';
-            history.forEach(function(entry) {
-                var row = document.createElement('tr');
-                row.innerHTML = '<td>' + entry.date + '</td><td>' + entry.mas + '</td><td>' + entry.icp + '</td><td>' + entry.gtm + '</td><td><strong>' + entry.overall + '</strong></td>';
+
+            history.forEach(entry => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${entry.date}</td>
+                    <td>${entry.mas}</td>
+                    <td>${entry.icp}</td>
+                    <td>${entry.gtm}</td>
+                    <td><strong>${entry.overall}</strong></td>
+                `;
                 tbody.appendChild(row);
             });
+
             drawHistoryChart();
         }
 
         function drawHistoryChart() {
-            var canvas = document.getElementById('history-canvas');
-            var ctx = canvas.getContext('2d');
-            var rect = canvas.getBoundingClientRect();
-            var dpr = window.devicePixelRatio || 1;
+            const canvas = document.getElementById('history-canvas');
+            const ctx = canvas.getContext('2d');
+            const rect = canvas.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+
             canvas.width = rect.width * dpr;
             canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
-            var width = rect.width, height = rect.height, padding = 30;
-            var graphWidth = width - 2 * padding, graphHeight = height - 2 * padding;
+
+            const width = rect.width;
+            const height = rect.height;
+            const padding = 30;
+            const graphWidth = width - 2 * padding;
+            const graphHeight = height - 2 * padding;
+
+            // Background
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, width, height);
-            if (history.length < 2) {
+
+            if (history.length === 0) {
                 ctx.fillStyle = '#A3A3A3';
-                ctx.font = '14px DM Sans';
+                ctx.font = '14px Inter';
                 ctx.textAlign = 'center';
-                ctx.fillText('Add more assessments to see progress', width / 2, height / 2);
+                ctx.fillText('Complete an assessment to see your progress', width / 2, height / 2);
                 return;
             }
-            ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+
+            if (history.length === 1) {
+                // Single entry: draw bar chart instead of line chart
+                const entry = history[0];
+                const barWidth = graphWidth / 5;
+                const gap = barWidth * 0.2;
+                const datasets = [
+                    { key: 'mas', label: 'Market', color: '#FF6600' },
+                    { key: 'icp', label: 'ICP', color: '#A3A3A3' },
+                    { key: 'gtm', label: 'GTM', color: '#666666' }
+                ];
+
+                // Grid lines
+                ctx.strokeStyle = '#2a2a2a';
+                ctx.lineWidth = 1;
+                for (let i = 0; i <= 4; i++) {
+                    const y = padding + (graphHeight / 4) * i;
+                    ctx.beginPath();
+                    ctx.moveTo(padding, y);
+                    ctx.lineTo(width - padding, y);
+                    ctx.stroke();
+                    ctx.fillStyle = '#666';
+                    ctx.font = '10px Inter';
+                    ctx.textAlign = 'right';
+                    ctx.fillText((100 - i * 25) + '', padding - 5, y + 4);
+                }
+
+                datasets.forEach(function(ds, idx) {
+                    const x = padding + (idx + 0.5) * (graphWidth / 3) - barWidth / 2 + gap;
+                    const val = entry[ds.key] || 0;
+                    const barH = (val / 100) * graphHeight;
+                    const y = height - padding - barH;
+
+                    ctx.fillStyle = ds.color;
+                    ctx.fillRect(x, y, barWidth - gap * 2, barH);
+
+                    // Value on top
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.font = 'bold 14px Inter';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(val + '', x + (barWidth - gap * 2) / 2, y - 8);
+
+                    // Label below
+                    ctx.fillStyle = ds.color;
+                    ctx.font = '12px Inter';
+                    ctx.fillText(ds.label, x + (barWidth - gap * 2) / 2, height - 8);
+                });
+
+                // Date
+                ctx.fillStyle = '#A3A3A3';
+                ctx.font = '11px Inter';
+                ctx.textAlign = 'center';
+                ctx.fillText(entry.date + ' — Overall: ' + (entry.overall || 0), width / 2, padding - 8);
+                return;
+            }
+
+            // Draw grid
+            ctx.strokeStyle = '#2a2a2a';
             ctx.lineWidth = 1;
-            for (var i = 0; i <= 4; i++) {
-                var y = padding + (graphHeight / 4) * i;
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (graphHeight / 4) * i;
                 ctx.beginPath();
                 ctx.moveTo(padding, y);
                 ctx.lineTo(width - padding, y);
                 ctx.stroke();
             }
-            var colors = ['#FF6600', '#A3A3A3', '#666666'];
-            var datasets = ['mas', 'icp', 'gtm'];
-            datasets.forEach(function(key, idx) {
+
+            // Draw lines
+            const colors = ['#FF6600', '#A3A3A3', '#666666'];
+            const datasets = ['mas', 'icp', 'gtm'];
+
+            datasets.forEach((key, idx) => {
                 ctx.strokeStyle = colors[idx];
                 ctx.lineWidth = 2;
                 ctx.beginPath();
-                history.forEach(function(entry, i) {
-                    var x = padding + (graphWidth / (history.length - 1)) * i;
-                    var yy = height - padding - (entry[key] / 100) * graphHeight;
-                    if (i === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
+
+                history.forEach((entry, i) => {
+                    const x = padding + (graphWidth / (history.length - 1)) * i;
+                    const y = height - padding - (entry[key] / 100) * graphHeight;
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
                 });
+
                 ctx.stroke();
             });
-            ctx.font = '12px DM Sans';
-            ctx.fillStyle = '#FF6600'; ctx.fillText('Market', width - 150, height - 10);
-            ctx.fillStyle = '#A3A3A3'; ctx.fillText('ICP', width - 100, height - 10);
-            ctx.fillStyle = '#666666'; ctx.fillText('GTM', width - 50, height - 10);
+
+            // Legend
+            ctx.font = '12px Inter';
+            ctx.fillStyle = '#FF6600';
+            ctx.fillText('Market', width - 150, height - 10);
+            ctx.fillStyle = '#A3A3A3';
+            ctx.fillText('ICP', width - 100, height - 10);
+            ctx.fillStyle = '#666666';
+            ctx.fillText('GTM', width - 50, height - 10);
         }
 
-        // ========================================
-        // LOAD SCORES (Scorecard Screen)
-        // ========================================
-
+        // Load scores from localStorage (eo_completion_status saved by each scorecard)
         function loadScores() {
-            // Try new composite key format first
-            if (resumeEmail && resumeVentureSlug) {
-                var sc = getScores(resumeEmail, resumeVentureSlug);
-                if (sc.sc3) { dashScores.mas = sc.sc3; }
-                if (sc.sc2) { dashScores.icp = sc.sc2; }
-                if (sc.sc5) { dashScores.gtm = sc.sc5; }
-            } else {
-                // Fallback: try old format
-                var status = {};
-                try { status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}'); } catch(e) {}
-                var saved = {};
-                try { saved = JSON.parse(localStorage.getItem('eo-scores')) || {}; } catch(e) {}
-                if (status.mas && status.mas.score > 0) saved.mas = status.mas.score;
-                if (status.icp && status.icp.score > 0) saved.icp = status.icp.score;
-                if (status.gtm && status.gtm.score > 0) saved.gtm = status.gtm.score;
-                dashScores = { mas: saved.mas || 0, icp: saved.icp || 0, gtm: saved.gtm || 0 };
-            }
+            // First try eo_completion_status (saved by individual scorecards)
+            const status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            const saved = JSON.parse(localStorage.getItem('eo-scores')) || { mas: 0, icp: 0, gtm: 0 };
 
-            document.getElementById('mas-slider').value = dashScores.mas;
-            document.getElementById('icp-slider').value = dashScores.icp;
-            document.getElementById('gtm-slider').value = dashScores.gtm;
+            // Merge: completion_status takes priority over manual slider values
+            if (status.mas && status.mas.score > 0) saved.mas = status.mas.score;
+            if (status.icp && status.icp.score > 0) saved.icp = status.icp.score;
+            if (status.gtm && status.gtm.score > 0) saved.gtm = status.gtm.score;
+
+            scores = saved;
+
+            document.getElementById('mas-slider').value = scores.mas;
+            document.getElementById('icp-slider').value = scores.icp;
+            document.getElementById('gtm-slider').value = scores.gtm;
+
             updateScores();
+
+            // Update hub completion states
+            updateHubStates(status);
         }
 
+        // Save scores
         function saveScores() {
-            // Save in old format for backward compat
-            localStorage.setItem('eo-scores', JSON.stringify(dashScores));
+            localStorage.setItem('eo-scores', JSON.stringify(scores));
         }
 
-        // Load from local data (fallback)
-        function loadFromLocalData() {
-            var statusEl = document.getElementById('lookup-status');
+        // Get completion status for all assessments
+        function getCompletionStatus() {
+            return JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+        }
 
-            // Try new format first
-            var email = document.getElementById('lookup-email').value.trim().toLowerCase();
-            if (email) {
-                var ventures = getVentures(email);
-                if (ventures.length > 0) {
-                    var slug = ventures[0].venture_slug;
-                    var sc = getScores(email, slug);
-                    if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
-                    if (sc.sc2) { dashScores.icp = sc.sc2; document.getElementById('icp-slider').value = sc.sc2; document.getElementById('icp-display').textContent = sc.sc2; }
-                    if (sc.sc5) { dashScores.gtm = sc.sc5; document.getElementById('gtm-slider').value = sc.sc5; document.getElementById('gtm-display').textContent = sc.sc5; }
-                    renderDashboard();
-                    statusEl.textContent = 'Loaded scores for "' + ventures[0].venture_name + '".';
-                    statusEl.style.color = '#22C55E';
-                    return;
+        // Update hub card states based on completion
+        function updateHubStates(status) {
+            const cards = {
+                pd: document.querySelector('[data-tool="pd"]'),
+                icp: document.querySelector('[data-tool="icp"]'),
+                market: document.querySelector('[data-tool="market"]'),
+                strategy: document.querySelector('[data-tool="strategy"]'),
+                gtm: document.querySelector('[data-tool="gtm"]')
+            };
+
+            const statusMap = {
+                pd: status.pd,
+                icp: status.icp,
+                market: status.mas,
+                strategy: status.strategy,
+                gtm: status.gtm
+            };
+
+            let completedCount = 0;
+            Object.keys(cards).forEach(function(key) {
+                const card = cards[key];
+                if (!card) return;
+                const badge = card.querySelector('.eo-card-badge');
+                const scoreDisplay = document.getElementById('score-display-' + key);
+                if (statusMap[key] && statusMap[key].score > 0) {
+                    completedCount++;
+                    // Green badge
+                    if (badge) {
+                        badge.textContent = '✅ COMPLETED';
+                        badge.style.background = '#22C55E';
+                        badge.style.color = '#FFFFFF';
+                    }
+                    // Green card border
+                    card.classList.add('completed');
+                    // Show score prominently
+                    if (scoreDisplay) {
+                        scoreDisplay.style.display = 'block';
+                        scoreDisplay.querySelector('.score-number').textContent = statusMap[key].score;
+                    }
+                    // Update button text
+                    const btn = card.querySelector('.eo-card-btn');
+                    if (btn) {
+                        btn.textContent = 'View Results →';
+                        btn.style.background = '#22C55E';
+                    }
+                }
+            });
+
+            // Update hub progress bar
+            const progressFill = document.getElementById('hub-progress-fill');
+            const progressCount = document.getElementById('hub-progress-count');
+            const progressScore = document.getElementById('hub-progress-score');
+            if (progressFill) progressFill.style.width = (completedCount / 5 * 100) + '%';
+            if (progressCount) progressCount.textContent = completedCount + '/5';
+            if (progressScore) {
+                if (completedCount > 0) {
+                    const scoreParts = [];
+                    if (status.pd && status.pd.score) scoreParts.push('PD: ' + status.pd.score);
+                    if (status.icp && status.icp.score) scoreParts.push('ICP: ' + status.icp.score);
+                    if (status.mas && status.mas.score) scoreParts.push('MAS: ' + status.mas.score);
+                    if (status.strategy && status.strategy.score) scoreParts.push('Strategy: ' + status.strategy.score);
+                    if (status.gtm && status.gtm.score) scoreParts.push('GTM: ' + status.gtm.score);
+                    progressScore.innerHTML = '<strong>Last Scores:</strong> ' + scoreParts.join(' · ');
+                } else {
+                    progressScore.textContent = 'Start with Project Definition to begin your assessment journey.';
                 }
             }
 
-            // Fallback: old format
-            var status = {};
-            try { status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}'); } catch(e) {}
+            // Update flow guide steps to show completion
+            const flowMap = { pd: 'flow-pd', icp: 'flow-icp', mas: 'flow-market', strategy: 'flow-strategy', gtm: 'flow-gtm' };
+            Object.keys(flowMap).forEach(function(key) {
+                const flowEl = document.getElementById(flowMap[key]);
+                if (flowEl && status[key] && status[key].score > 0) {
+                    flowEl.classList.add('completed');
+                    flowEl.classList.remove('highlight');
+                    const nameEl = flowEl.querySelector('.eo-flow-step-name');
+                    if (nameEl && !nameEl.textContent.includes('✅')) {
+                        nameEl.textContent = '✅ ' + nameEl.textContent;
+                    }
+                }
+            });
+
+            // Highlight next incomplete step
+            const order = ['pd', 'icp', 'mas', 'strategy', 'gtm'];
+            for (let i = 0; i < order.length; i++) {
+                if (!status[order[i]] || !status[order[i]].score) {
+                    const flowEl = document.getElementById(flowMap[order[i]]);
+                    if (flowEl && !flowEl.classList.contains('completed')) {
+                        flowEl.classList.add('highlight');
+                    }
+                    break;
+                }
+            }
+
+            // Show "Generate Project Brief" button if all 5 complete
+            const allComplete = status.pd && status.icp && status.mas && status.strategy && status.gtm;
+            const briefBtn = document.getElementById('btn-generate-brief');
+            if (briefBtn) {
+                briefBtn.style.display = allComplete ? 'block' : 'none';
+            }
+        }
+
+        // Load from local assessment data (fallback when webhook fails)
+        function loadFromLocalData() {
+            const status = getCompletionStatus();
+            const statusEl = document.getElementById('lookup-status');
+
             if (!status || Object.keys(status).length === 0) {
                 statusEl.textContent = 'No local assessment data found. Complete at least one assessment first.';
                 statusEl.style.color = '#F59E0B';
                 return;
             }
-            if (status.mas) { dashScores.mas = status.mas.score; document.getElementById('mas-slider').value = dashScores.mas; document.getElementById('mas-display').textContent = dashScores.mas; }
-            if (status.icp) { dashScores.icp = status.icp.score; document.getElementById('icp-slider').value = dashScores.icp; document.getElementById('icp-display').textContent = dashScores.icp; }
-            if (status.gtm) { dashScores.gtm = status.gtm.score; document.getElementById('gtm-slider').value = dashScores.gtm; document.getElementById('gtm-display').textContent = dashScores.gtm; }
+
+            if (status.mas) { scores.mas = status.mas.score; document.getElementById('mas-slider').value = scores.mas; document.getElementById('mas-display').textContent = scores.mas; }
+            if (status.icp) { scores.icp = status.icp.score; document.getElementById('icp-slider').value = scores.icp; document.getElementById('icp-display').textContent = scores.icp; }
+            if (status.gtm) { scores.gtm = status.gtm.score; document.getElementById('gtm-slider').value = scores.gtm; document.getElementById('gtm-display').textContent = scores.gtm; }
+
             renderDashboard();
-            var count = [status.pd, status.icp, status.mas, status.strategy, status.gtm].filter(function(s) { return s && s.score > 0; }).length;
+
+            const count = [status.pd, status.icp, status.mas, status.strategy, status.gtm].filter(function(s) { return s && s.score > 0; }).length;
             statusEl.textContent = 'Loaded ' + count + '/5 assessment scores from local data.';
             statusEl.style.color = '#22C55E';
         }
 
-        // ========================================
-        // FETCH FROM WEBHOOK
-        // ========================================
+        // Download scorecard
+        function downloadScorecard() {
+            const overall = getOverallScore();
+            const bandInfo = getBandInfo(overall);
 
-        var CONSOLIDATED_WEBHOOK = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-full';
+            const content = `
+EO FOUNDER ASSESSMENT SCORECARD
+Generated: ${new Date().toLocaleDateString()}
 
-        async function fetchMyScores() {
-            var email = document.getElementById('lookup-email').value.trim().toLowerCase();
-            var statusEl = document.getElementById('lookup-status');
-            if (!email || email.indexOf('@') === -1) {
-                statusEl.textContent = 'Please enter a valid email address.';
-                statusEl.style.color = '#EF4444';
-                return;
-            }
-            statusEl.textContent = 'Fetching your scores...';
-            statusEl.style.color = '#FF6600';
-            try {
-                var response = await fetch(CONSOLIDATED_WEBHOOK, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, action: 'retrieve' })
-                });
-                if (!response.ok) throw new Error('Server returned ' + response.status);
-                var data = await response.json();
-                if (!data.success) {
-                    statusEl.textContent = 'No assessments found. Try loading local data instead.';
-                    statusEl.style.color = '#F59E0B';
-                    return;
-                }
-                if (data.pillar_scores) {
-                    var mas = data.pillar_scores.mas || 0;
-                    var icp = data.pillar_scores.icp || 0;
-                    var gtm = data.pillar_scores.gtm || 0;
-                    document.getElementById('mas-slider').value = mas;
-                    document.getElementById('icp-slider').value = icp;
-                    document.getElementById('gtm-slider').value = gtm;
-                    dashScores.mas = mas;
-                    dashScores.icp = icp;
-                    dashScores.gtm = gtm;
-                    document.getElementById('mas-display').textContent = mas;
-                    document.getElementById('icp-display').textContent = icp;
-                    document.getElementById('gtm-display').textContent = gtm;
-                    renderDashboard();
-                }
-                statusEl.textContent = 'Scores loaded successfully.';
-                statusEl.style.color = '#22C55E';
-            } catch (err) {
-                statusEl.textContent = 'Could not reach server. Loading from local data instead...';
-                statusEl.style.color = '#F59E0B';
-                setTimeout(function() { loadFromLocalData(); }, 500);
-            }
+OVERALL READINESS: ${overall}/100
+Status: ${bandInfo.band}
+
+PILLAR SCORES:
+Market Attractiveness: ${scores.mas}/100
+ICP Clarity: ${scores.icp}/100
+GTM Fitness: ${scores.gtm}/100
+
+BAND DESCRIPTION:
+${bandInfo.desc}
+
+NEXT STEPS:
+${document.getElementById('nextsteps-content').textContent}
+
+Download full assessment dashboard at:
+https://eomicro.saas/eo-assessment
+            `;
+
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+            element.setAttribute('download', 'EO_Scorecard.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
         }
 
-        // ========================================
-        // TOOL LINKS
-        // ========================================
-
+        // Tool links (actual file names)
         function openTool(tool) {
-            var toolUrls = {
+            const toolUrls = {
                 pd: 'EO-Project-Definition-Scoring.html',
                 icp: 'EO-ICP-Clarity-Scoring.html',
                 market: 'EO-Market-Attractiveness-Scoring.html',
                 strategy: 'EO-Strategy-Selector.html',
                 gtm: 'EO-GTM-Fitness-Scoring.html'
             };
+
+            // Check free scoring gate
+            const status = getCompletionStatus();
+            const toolStatusMap = { pd: 'pd', icp: 'icp', market: 'mas', strategy: 'strategy', gtm: 'gtm' };
+            const statusKey = toolStatusMap[tool];
+
+            if (status[statusKey] && status[statusKey].score > 0) {
+                // Already completed — check if ALL 5 are done (full gate)
+                const allComplete = status.pd && status.icp && status.mas && status.strategy && status.gtm;
+                if (allComplete) {
+                    showGateModal();
+                    return;
+                }
+            }
+
             if (toolUrls[tool]) {
                 window.location.href = toolUrls[tool];
             }
         }
 
-        // ========================================
-        // MD DOWNLOAD
-        // ========================================
+        // Show paid training gate modal
+        function showGateModal() {
+            // Don't show if already showing
+            if (document.getElementById('eo-gate')) return;
 
+            const overlay = document.createElement('div');
+            overlay.className = 'eo-gate-overlay';
+            overlay.id = 'eo-gate';
+            overlay.innerHTML = `
+                <div class="eo-gate-modal">
+                    <h2>You've Completed Your Free Assessment</h2>
+                    <p>Great work — you've finished all 5 assessments. Your results are saved and you can view them anytime from the <strong>My Scorecard</strong> tab.</p>
+                    <p>To retake assessments and track your progress over time, sign up for the <strong>EO MicroSaaS Training Program</strong>.</p>
+                    <a href="#" class="eo-gate-btn" onclick="alert('Join the EO MENA MicroSaaS Training — launching soon.'); return false;">Join EO Training Program →</a>
+                    <button class="eo-gate-btn secondary" onclick="document.getElementById('eo-gate').remove(); switchScreen('scorecard');">View My Results Instead</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+        }
+
+        // Consolidated webhook URL
+        const CONSOLIDATED_WEBHOOK = 'https://ai.mamounalamouri.smorchestra.com/webhook/eo-consolidated';
+
+        // Fetch scores from backend
+        async function fetchMyScores() {
+            const email = document.getElementById('lookup-email').value.trim().toLowerCase();
+            const statusEl = document.getElementById('lookup-status');
+
+            if (!email || !email.includes('@')) {
+                statusEl.textContent = 'Please enter a valid email address.';
+                statusEl.style.color = '#EF4444';
+                return;
+            }
+
+            statusEl.textContent = 'Fetching your scores... (this may take 30-60 seconds)';
+            statusEl.style.color = '#FF6600';
+
+            try {
+                const response = await fetch(CONSOLIDATED_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Server returned ' + response.status);
+                }
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    statusEl.textContent = 'No assessments found for this email. Complete at least one assessment first.';
+                    statusEl.style.color = '#F59E0B';
+                    return;
+                }
+
+                // Update sliders with real scores
+                const mas = data.pillar_scores.mas || 0;
+                const icp = data.pillar_scores.icp || 0;
+                const gtm = data.pillar_scores.gtm || 0;
+
+                document.getElementById('mas-slider').value = mas;
+                document.getElementById('icp-slider').value = icp;
+                document.getElementById('gtm-slider').value = gtm;
+
+                scores.mas = mas;
+                scores.icp = icp;
+                scores.gtm = gtm;
+
+                document.getElementById('mas-display').textContent = mas;
+                document.getElementById('icp-display').textContent = icp;
+                document.getElementById('gtm-display').textContent = gtm;
+
+                // Render dashboard with scores
+                renderDashboard();
+
+                // Render AI analysis if available
+                if (data.ai_analysis) {
+                    dashboardAiData = data.ai_analysis;
+                    renderAIAnalysis(data.ai_analysis);
+                }
+
+                const completed = data.assessments_completed || 0;
+                statusEl.textContent = 'Loaded ' + completed + '/3 scored assessments.' + (data.all_complete ? ' Full analysis generated!' : ' Complete remaining assessments for full analysis.');
+                statusEl.style.color = '#22C55E';
+
+            } catch (err) {
+                statusEl.textContent = 'Could not reach server. Loading from local data instead...';
+                statusEl.style.color = '#F59E0B';
+                // Fallback to local data
+                setTimeout(function() { loadFromLocalData(); }, 500);
+            }
+        }
+
+        // Render AI analysis sections
+        function renderAIAnalysis(ai) {
+            const section = document.getElementById('ai-analysis-section');
+            if (!ai || !ai.keyInsight) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+
+            // Archetype
+            if (ai.archetype) {
+                document.getElementById('ai-archetype-name').textContent = ai.archetype.name || 'Unknown';
+                document.getElementById('ai-archetype-strategy').textContent = ai.archetype.strategy || '';
+            }
+
+            // Key Insight
+            document.getElementById('ai-key-insight').textContent = ai.keyInsight;
+
+            // GTM Prescription
+            if (ai.gtmPrescription) {
+                const gtm = ai.gtmPrescription;
+                let primaryHtml = '<div style="font-size: 11px; font-weight: 700; color: #22C55E; margin-bottom: 0.5rem;">PRIMARY MOTIONS</div>';
+                (gtm.primary || []).forEach(function(m) {
+                    primaryHtml += '<div style="font-size: 14px; margin-bottom: 0.25rem;"><strong>' + m.motion + '</strong> — ' + m.why + '</div>';
+                });
+                document.getElementById('ai-gtm-primary').innerHTML = primaryHtml;
+
+                let secHtml = '<div style="font-size: 11px; font-weight: 700; color: #3B82F6; margin-bottom: 0.5rem;">SECONDARY MOTIONS</div>';
+                (gtm.secondary || []).forEach(function(m) {
+                    secHtml += '<div style="font-size: 14px; margin-bottom: 0.25rem;"><strong>' + m.motion + '</strong> — ' + m.why + '</div>';
+                });
+                document.getElementById('ai-gtm-secondary').innerHTML = secHtml;
+
+                let avoidHtml = '<div style="font-size: 11px; font-weight: 700; color: #EF4444; margin-bottom: 0.5rem;">AVOID</div>';
+                (gtm.avoid || []).forEach(function(m) {
+                    avoidHtml += '<div style="font-size: 14px; margin-bottom: 0.25rem;"><strong>' + m.motion + '</strong> — ' + m.why + '</div>';
+                });
+                document.getElementById('ai-gtm-avoid').innerHTML = avoidHtml;
+
+                document.getElementById('ai-gtm-sequencing').textContent = gtm.sequencing || '';
+            }
+
+            // 90-Day Plan
+            if (ai.ninetyDayPlan) {
+                var plan = ai.ninetyDayPlan;
+                ['month1', 'month2', 'month3'].forEach(function(key, idx) {
+                    var month = plan[key];
+                    if (!month) return;
+                    var html = '<div style="font-size: 11px; font-weight: 700; color: #FF6600; margin-bottom: 0.5rem;">MONTH ' + (idx + 1) + ': ' + (month.theme || '').toUpperCase() + '</div>';
+                    (month.actions || []).forEach(function(a) {
+                        html += '<div style="font-size: 13px; color: #FFFFFF; margin-bottom: 0.25rem;">• ' + a + '</div>';
+                    });
+                    if (month.kpis && month.kpis.length > 0) {
+                        html += '<div style="font-size: 11px; color: #666; margin-top: 0.5rem;">KPIs: ' + month.kpis.join(', ') + '</div>';
+                    }
+                    document.getElementById('ai-' + key).innerHTML = html;
+                });
+            }
+
+            // MENA
+            if (ai.menaAdjustments) {
+                document.getElementById('ai-mena').textContent = ai.menaAdjustments;
+            }
+        }
+
+        // Generate consolidated project-brief.md with Q&A + strategic analysis
         function generateProjectBrief() {
-            var today = new Date();
-            var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-            var overall = getOverallScore();
-            var bandInfo = getBandInfo(overall);
-            var vName = resumeVentureName || 'My Venture';
+            const status = getCompletionStatus();
+            const today = new Date();
+            const dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+            const overall = getOverallScore();
+            const bandInfo = getBandInfo(overall);
+            const lowest = Math.min(scores.mas, scores.icp, scores.gtm);
 
-            var md = '';
-            md += '# Entrepreneurs Oasis MENA — Founder Project Brief\n\n';
-            md += '**Venture:** ' + vName + '\n';
-            md += '**Generated:** ' + dateStr + '\n';
-            md += '**Overall Readiness:** ' + overall + '/100 — ' + bandInfo.band + '\n\n';
-            md += '> ' + bandInfo.desc + '\n\n';
+            let md = '';
+            md += '# MicroSaaS Founder Operating System — Project Brief\n\n';
+            md += '> Generated by Entrepreneurs Oasis MENA Assessment Suite\n\n';
+            md += '**Date:** ' + dateStr + '\n';
+            md += '**Overall Readiness:** ' + overall + '/100 — **' + bandInfo.band + '**\n\n';
+            md += '---\n\n';
 
-            md += '## Assessment Scores\n\n';
-            md += '| Assessment | Score | Band |\n';
-            md += '|------------|-------|------|\n';
-            md += '| Market Attractiveness | ' + dashScores.mas + '/100 | ' + getPillarBand(dashScores.mas) + ' |\n';
-            md += '| ICP Clarity | ' + dashScores.icp + '/100 | ' + getPillarBand(dashScores.icp) + ' |\n';
-            md += '| GTM Fitness | ' + dashScores.gtm + '/100 | ' + getPillarBand(dashScores.gtm) + ' |\n\n';
+            // ===== SECTION 1: EXECUTIVE SUMMARY =====
+            md += '## Executive Summary\n\n';
+            md += bandInfo.desc + '\n\n';
 
-            md += '## Demand-First Matrix Position\n\n';
-            var execReady = Math.round((dashScores.icp + dashScores.gtm) / 2);
-            var marketPull = dashScores.mas;
-            var quadrant = 'BUILD';
+            // Strategic direction based on scores
+            const execReady = Math.round((scores.icp + scores.gtm) / 2);
+            const marketPull = scores.mas;
+            let quadrant = 'BUILD';
             if (marketPull >= 60 && execReady >= 60) quadrant = 'SCALE';
             else if (marketPull >= 60) quadrant = 'VALIDATE';
             else if (execReady >= 60) quadrant = 'OPTIMIZE';
-            md += '- **Market Pull:** ' + marketPull + ' | **Execution Readiness:** ' + execReady + '\n';
-            md += '- **Quadrant:** ' + quadrant + '\n\n';
 
-            md += '## Next Steps\n\n';
-            md += document.getElementById('nextsteps-content').textContent + '\n\n';
-            md += '---\n*Generated by Entrepreneurs Oasis MENA Founder Assessment Suite*\n';
+            md += '**Your Position:** ' + quadrant + ' quadrant (Market Pull: ' + marketPull + ' | Execution Readiness: ' + execReady + ')\n\n';
 
-            var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
+            if (overall >= 80) {
+                md += 'You have the foundation to execute. Your next move is not more planning — it\'s launching your MVP and getting real revenue signal within 30 days.\n\n';
+            } else if (overall >= 60) {
+                const weakestName = lowest === scores.mas ? 'Market Validation' : lowest === scores.icp ? 'ICP Clarity' : 'GTM Execution';
+                md += 'You\'re close to launch-ready, but **' + weakestName + '** is your binding constraint. Fix this before scaling anything else — otherwise you\'re accelerating in the wrong direction.\n\n';
+            } else if (overall >= 40) {
+                md += 'Multiple areas need work. The strategic move is to focus exclusively on your lowest score for the next 2 weeks. Everything else improves when you fix the weakest link.\n\n';
+            } else {
+                md += 'You\'re in discovery mode. Before building anything, run 10+ buyer conversations. Your scores will jump 20-30 points from that clarity alone.\n\n';
+            }
+
+            // ===== SECTION 2: SCORE BREAKDOWN =====
+            md += '## Assessment Scores\n\n';
+            md += '| Assessment | Score | Band | Status |\n';
+            md += '|------------|-------|------|--------|\n';
+            if (status.pd) md += '| Project Definition | ' + status.pd.score + '/100 | ' + getPillarBand(status.pd.score) + ' | ✅ Complete |\n';
+            md += '| ICP Clarity | ' + scores.icp + '/100 | ' + getPillarBand(scores.icp) + ' | ' + (status.icp ? '✅ Complete' : '⬜ Pending') + ' |\n';
+            md += '| Market Attractiveness | ' + scores.mas + '/100 | ' + getPillarBand(scores.mas) + ' | ' + (status.mas ? '✅ Complete' : '⬜ Pending') + ' |\n';
+            if (status.strategy) md += '| Strategy Selector | ' + status.strategy.score + '/100 | ' + getPillarBand(status.strategy.score) + ' | ✅ Complete |\n';
+            md += '| GTM Fitness | ' + scores.gtm + '/100 | ' + getPillarBand(scores.gtm) + ' | ' + (status.gtm ? '✅ Complete' : '⬜ Pending') + ' |\n';
+            md += '\n';
+
+            // ===== SECTION 3: BOTTLENECK ANALYSIS =====
+            md += '## Bottleneck Analysis\n\n';
+            if (lowest === scores.mas) {
+                md += '**Primary Bottleneck: Market Attractiveness** (Score: ' + scores.mas + '/100)\n\n';
+                md += 'Your market signal is the weakest area. Do not invest in GTM until market score reaches 60+. Focus on: validating buyer pain intensity, confirming willingness to pay, and sizing your addressable market in your target geography.\n\n';
+            } else if (lowest === scores.icp) {
+                md += '**Primary Bottleneck: ICP Clarity** (Score: ' + scores.icp + '/100)\n\n';
+                md += 'You\'re selling to a blur. Sharpen your buyer definition before spending on distribution. Focus on: identifying your Dream 100 prospects, understanding their daily workflow pain, and mapping their decision-making process.\n\n';
+            } else {
+                md += '**Primary Bottleneck: GTM Fitness** (Score: ' + scores.gtm + '/100)\n\n';
+                md += 'You know your market and buyer — now build the distribution machine. Focus on: selecting your top 2 GTM motions, building the infrastructure for those motions, and creating a repeatable outbound sequence.\n\n';
+            }
+
+            // ===== SECTION 4: YOUR ANSWERS (Q&A from each assessment) =====
+            md += '## Your Assessment Answers\n\n';
+            md += 'Below are your responses from each assessment, preserved for your project files.\n\n';
+
+            const assessmentConfigs = [
+                { key: 'pd', name: 'Project Definition', storageKey: 'eo_pd_answers' },
+                { key: 'icp', name: 'ICP Clarity', storageKey: 'eo_icp_answers' },
+                { key: 'mas', name: 'Market Attractiveness', storageKey: 'eo_mas_answers' },
+                { key: 'strategy', name: 'Strategy Selector', storageKey: 'eo_strategy_answers' },
+                { key: 'gtm', name: 'GTM Fitness', storageKey: 'eo_gtm_answers' }
+            ];
+
+            let hasAnswers = false;
+            assessmentConfigs.forEach(function(a) {
+                let answers = null;
+                try { answers = JSON.parse(localStorage.getItem(a.storageKey)); } catch(e) {}
+                // Also try alternate storage key patterns
+                if (!answers) try { answers = JSON.parse(localStorage.getItem('eo-' + a.key + '-answers')); } catch(e) {}
+                if (!answers) try { answers = JSON.parse(localStorage.getItem('eo_' + a.key + '_responses')); } catch(e) {}
+
+                const s = status[a.key];
+                if (s) {
+                    md += '### ' + a.name + ' (Score: ' + s.score + (a.key === 'strategy' ? '%' : '/100') + ')\n\n';
+                    if (s.date) md += '*Completed: ' + s.date + '*\n\n';
+                    if (s.path) md += '**Primary Strategy Path:** ' + s.path + '\n\n';
+
+                    if (answers && typeof answers === 'object') {
+                        hasAnswers = true;
+                        if (Array.isArray(answers)) {
+                            answers.forEach(function(item, idx) {
+                                if (item.question && item.answer) {
+                                    md += '**Q' + (idx + 1) + ': ' + item.question + '**\n';
+                                    md += item.answer + '\n\n';
+                                } else if (typeof item === 'string') {
+                                    md += '- ' + item + '\n';
+                                }
+                            });
+                        } else {
+                            Object.keys(answers).forEach(function(qKey) {
+                                const val = answers[qKey];
+                                if (val && val !== '') {
+                                    const label = qKey.replace(/_/g, ' ').replace(/^q\d+\s*/i, '');
+                                    md += '**' + (label || qKey) + ':** ' + val + '\n\n';
+                                }
+                            });
+                        }
+                    } else {
+                        md += '*Answers not available in local storage. Complete this assessment to capture your responses.*\n\n';
+                    }
+                } else {
+                    md += '### ' + a.name + '\n\n';
+                    md += '*Not yet completed.*\n\n';
+                }
+            });
+
+            // ===== SECTION 5: STRATEGIC ANALYSIS =====
+            md += '## Strategic Analysis & Direction\n\n';
+
+            // Demand-First Matrix
+            md += '### Demand-First Matrix Position: ' + quadrant + '\n\n';
+            if (quadrant === 'SCALE') md += 'Strong market pull combined with execution readiness. You are in the best position to scale. Focus on velocity — speed to market is your competitive advantage.\n\n';
+            else if (quadrant === 'VALIDATE') md += 'The market wants what you\'re building, but your execution infrastructure isn\'t ready. Invest in GTM motions and ICP sharpening before scaling spend.\n\n';
+            else if (quadrant === 'OPTIMIZE') md += 'You can execute, but market signal is weak. Before building more infrastructure, validate that buyers actually want this at this price point.\n\n';
+            else md += 'Both market signal and execution readiness need work. Start with customer discovery — 10+ conversations before any product or campaign investment.\n\n';
+
+            /* Deep Analysis from AI (if available) */
+            if (dashboardAiData && dashboardAiData.keyInsight) {
+                if (dashboardAiData.archetype) {
+                    md += '### Founder Archetype: ' + (dashboardAiData.archetype.name || 'Unknown') + '\n\n';
+                    md += (dashboardAiData.archetype.strategy || '') + '\n\n';
+                }
+
+                md += '### Key Strategic Insight\n\n';
+                md += dashboardAiData.keyInsight + '\n\n';
+
+                if (dashboardAiData.gtmPrescription) {
+                    var gtmRx = dashboardAiData.gtmPrescription;
+                    md += '### GTM Motion Prescription\n\n';
+
+                    if (gtmRx.primary && gtmRx.primary.length > 0) {
+                        md += '**Primary Motions:**\n';
+                        gtmRx.primary.forEach(function(m) { md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n'; });
+                        md += '\n';
+                    }
+                    if (gtmRx.secondary && gtmRx.secondary.length > 0) {
+                        md += '**Secondary Motions:**\n';
+                        gtmRx.secondary.forEach(function(m) { md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n'; });
+                        md += '\n';
+                    }
+                    if (gtmRx.avoid && gtmRx.avoid.length > 0) {
+                        md += '**Avoid:**\n';
+                        gtmRx.avoid.forEach(function(m) { md += '- **' + (m.motion || '') + '**: ' + (m.why || '') + '\n'; });
+                        md += '\n';
+                    }
+                    if (gtmRx.sequencing) md += '**Sequencing:** ' + gtmRx.sequencing + '\n\n';
+                }
+
+                if (dashboardAiData.ninetyDayPlan) {
+                    var plan90 = dashboardAiData.ninetyDayPlan;
+                    md += '### 90-Day Roadmap\n\n';
+                    ['month1', 'month2', 'month3'].forEach(function(key, idx) {
+                        var month = plan90[key];
+                        if (!month) return;
+                        md += '**Month ' + (idx + 1) + ': ' + (month.theme || '') + '**\n';
+                        if (month.actions) month.actions.forEach(function(a) { md += '- ' + a + '\n'; });
+                        if (month.kpis && month.kpis.length > 0) md += '\nKPIs: ' + month.kpis.join(', ') + '\n';
+                        md += '\n';
+                    });
+                }
+
+                if (dashboardAiData.menaAdjustments) {
+                    md += '### MENA Market Adjustments\n\n';
+                    md += dashboardAiData.menaAdjustments + '\n\n';
+                }
+            }
+
+            // ===== SECTION 6: NEXT STEPS =====
+            md += '## Recommended Next Steps\n\n';
+            if (overall >= 80) {
+                md += '1. **Launch your MVP within 14 days** — not a perfect product, a testable one\n';
+                md += '2. **Execute your top GTM motion** — pick one channel, master it\n';
+                md += '3. **Target first 10 paying customers** — revenue validates everything\n';
+                md += '4. **Use Claude Desktop** with this project brief to build your execution plan\n';
+            } else if (overall >= 60) {
+                const weakestLabel = lowest === scores.mas ? 'Market Validation' : lowest === scores.icp ? 'ICP Research' : 'GTM Infrastructure';
+                md += '1. **Close your ' + weakestLabel + ' gap** — this is your #1 priority for the next 2 weeks\n';
+                md += '2. **Run 5+ buyer validation conversations** — real signal beats assumptions\n';
+                md += '3. **Retake the assessment** after closing the gap to track progress\n';
+                md += '4. **Join the EO MicroSaaS Training** for guided execution support\n';
+            } else {
+                md += '1. **Start with buyer conversations** — talk to 10+ potential customers this week\n';
+                md += '2. **Validate demand before building** — don\'t write code until you have signal\n';
+                md += '3. **Re-assess in 2 weeks** — your scores will jump from the clarity\n';
+                md += '4. **Join the EO MicroSaaS Community** — learn from founders ahead of you\n';
+            }
+            md += '\n';
+
+            // ===== SECTION 7: CLAUDE PROMPT =====
+            md += '## Claude Prompt for Build Phase\n\n';
+            md += '```\n';
+            md += 'I am a MENA-based MicroSaaS founder. My assessment scores are:\n';
+            md += '- Market Attractiveness: ' + scores.mas + '/100\n';
+            md += '- ICP Clarity: ' + scores.icp + '/100\n';
+            md += '- GTM Fitness: ' + scores.gtm + '/100\n';
+            md += '- Overall: ' + overall + '/100 (' + bandInfo.band + ')\n';
+            if (status.strategy && status.strategy.path) md += '- Strategy Path: ' + status.strategy.path + '\n';
+            md += '\nMy biggest bottleneck is ' + (lowest === scores.mas ? 'Market Validation' : lowest === scores.icp ? 'ICP Clarity' : 'GTM Execution') + '.\n';
+            md += '\nHelp me build a focused 90-day action plan to move from ' + bandInfo.band + ' to LAUNCH READY,\n';
+            md += 'prioritizing my weakest area first. Give me weekly milestones.\n';
+            md += '```\n\n';
+
+            md += '---\n\n';
+            md += '*Generated by EO MicroSaaS Founder Operating System — Entrepreneurs Oasis MENA*\n';
+
+            // Download
+            const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
             a.href = url;
-            a.download = 'project-brief-' + dateStr + '.md';
+            a.download = 'EO-Project-Brief-' + dateStr + '.md';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
 
-        // ========================================
-        // RTL
-        // ========================================
 
+        // ============================================================
+        // DOCUMENT DOWNLOADS: All Answers + Strategic Summary
+        // ============================================================
+
+        function downloadAllAnswers() {
+            var status = JSON.parse(localStorage.getItem('eo-assessment-status')) || {};
+            var ventureName = (status.ventureName) ? status.ventureName : 'My Venture';
+            var dateStr = new Date().toISOString().split('T')[0];
+
+            // Build styled HTML document (opens clean in any browser, prints to PDF perfectly)
+            var html = '<!DOCTYPE html><html><head><meta charset="utf-8">';
+            html += '<title>' + ventureName + ' — Complete Assessment Answers</title>';
+            html += '<style>';
+            html += 'body { font-family: "Segoe UI", Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; color: #1a1a1a; line-height: 1.7; }';
+            html += 'h1 { font-size: 28px; border-bottom: 3px solid #FF6600; padding-bottom: 12px; margin-bottom: 8px; }';
+            html += 'h2 { font-size: 20px; color: #FF6600; margin-top: 32px; border-bottom: 1px solid #ddd; padding-bottom: 8px; }';
+            html += 'h3 { font-size: 16px; color: #333; margin-top: 20px; }';
+            html += '.meta { color: #888; font-size: 13px; margin-bottom: 24px; }';
+            html += '.question { background: #f8f8f8; padding: 12px 16px; border-left: 3px solid #FF6600; margin: 12px 0 8px 0; font-weight: 600; font-size: 14px; }';
+            html += '.answer { padding: 8px 16px; font-size: 14px; white-space: pre-wrap; }';
+            html += '.score-badge { display: inline-block; background: #FF6600; color: white; padding: 2px 10px; border-radius: 4px; font-size: 12px; font-weight: 700; margin-left: 8px; }';
+            html += '.no-answer { color: #bbb; font-style: italic; }';
+            html += '@media print { body { padding: 20px; } }';
+            html += '</style></head><body>';
+
+            html += '<h1>' + ventureName + '</h1>';
+            html += '<div class="meta">Complete Assessment Record — Generated ' + dateStr + '<br>EO MicroSaaS Founder Operating System — Entrepreneurs Oasis MENA</div>';
+
+            // Pull all stored answers from localStorage
+            var scorecards = [
+                { key: 'pd', title: 'Scorecard 1: Project Definition', score: status.pd ? status.pd.score : null },
+                { key: 'icp', title: 'Scorecard 2: ICP Clarity', score: status.icp ? status.icp.score : null },
+                { key: 'market', title: 'Scorecard 3: Market Attractiveness', score: status.market ? status.market.score : null },
+                { key: 'strategy', title: 'Scorecard 4: Strategy Selector', score: status.strategy ? status.strategy.score : null },
+                { key: 'gtm', title: 'Scorecard 5: GTM Fitness', score: status.gtm ? status.gtm.score : null }
+            ];
+
+            scorecards.forEach(function(sc) {
+                html += '<h2>' + sc.title;
+                if (sc.score !== null && sc.score !== undefined) html += ' <span class="score-badge">' + sc.score + '/100</span>';
+                html += '</h2>';
+
+                var answers = null;
+                try { answers = JSON.parse(localStorage.getItem('eo-answers-' + sc.key)); } catch(e) {}
+
+                if (!answers || Object.keys(answers).length === 0) {
+                    html += '<p class="no-answer">No answers recorded for this scorecard yet.</p>';
+                } else {
+                    Object.keys(answers).sort().forEach(function(qKey) {
+                        html += '<div class="question">' + qKey + '</div>';
+                        html += '<div class="answer">' + (answers[qKey] || '<span class="no-answer">No answer</span>') + '</div>';
+                    });
+                }
+            });
+
+            html += '<hr style="margin-top: 40px; border: none; border-top: 2px solid #FF6600;">';
+            html += '<p style="text-align: center; color: #888; font-size: 12px;">Generated by EO MicroSaaS Founder Operating System — Entrepreneurs Oasis MENA</p>';
+            html += '</body></html>';
+
+            var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = ventureName.replace(/[^a-zA-Z0-9]/g, '-') + '-All-Answers-' + dateStr + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadStrategicSummary() {
+            var status = JSON.parse(localStorage.getItem('eo-assessment-status')) || {};
+            var ventureName = (status.ventureName) ? status.ventureName : 'My Venture';
+            var dateStr = new Date().toISOString().split('T')[0];
+            var overall = Math.round(scores.mas * 0.35 + scores.icp * 0.35 + scores.gtm * 0.30);
+            var bandInfo = getBand(overall);
+            var lowest = Math.min(scores.mas, scores.icp, scores.gtm);
+            var weakest = lowest === scores.mas ? 'Market Attractiveness' : lowest === scores.icp ? 'ICP Clarity' : 'GTM Fitness';
+            var strongest = Math.max(scores.mas, scores.icp, scores.gtm);
+            var strongLabel = strongest === scores.mas ? 'Market Attractiveness' : strongest === scores.icp ? 'ICP Clarity' : 'GTM Fitness';
+
+            var html = '<!DOCTYPE html><html><head><meta charset="utf-8">';
+            html += '<title>' + ventureName + ' — Strategic Summary</title>';
+            html += '<style>';
+            html += 'body { font-family: "Segoe UI", Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 40px; color: #1a1a1a; line-height: 1.8; }';
+            html += '.header { text-align: center; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 3px solid #FF6600; }';
+            html += '.header h1 { font-size: 32px; margin: 0 0 4px 0; }';
+            html += '.header .subtitle { font-size: 14px; color: #888; }';
+            html += '.score-hero { text-align: center; margin: 32px 0; padding: 32px; background: linear-gradient(135deg, #FFF7ED, #FFF); border: 2px solid #FF6600; border-radius: 12px; }';
+            html += '.score-hero .number { font-size: 72px; font-weight: 800; color: #FF6600; line-height: 1; }';
+            html += '.score-hero .band { font-size: 20px; font-weight: 700; color: #333; margin-top: 8px; }';
+            html += '.score-hero .formula { font-size: 12px; color: #999; margin-top: 8px; }';
+            html += '.pillar-row { display: flex; gap: 16px; margin: 24px 0; }';
+            html += '.pillar { flex: 1; padding: 20px; background: #f8f8f8; border-radius: 8px; text-align: center; }';
+            html += '.pillar .label { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }';
+            html += '.pillar .val { font-size: 36px; font-weight: 800; color: #FF6600; margin: 8px 0; }';
+            html += '.pillar .desc { font-size: 12px; color: #666; }';
+            html += 'h2 { font-size: 18px; color: #FF6600; margin-top: 36px; border-bottom: 1px solid #eee; padding-bottom: 8px; }';
+            html += '.insight { background: #FFF7ED; padding: 16px 20px; border-left: 3px solid #FF6600; margin: 16px 0; font-size: 14px; }';
+            html += '.next-steps li { margin-bottom: 8px; font-size: 14px; }';
+            html += '@media print { .pillar-row { display: flex !important; } body { padding: 20px; } }';
+            html += '</style></head><body>';
+
+            // Header
+            html += '<div class="header">';
+            html += '<h1>' + ventureName + '</h1>';
+            html += '<div class="subtitle">Strategic Assessment Summary — ' + dateStr + '</div>';
+            html += '<div class="subtitle">EO MicroSaaS Founder Operating System — Entrepreneurs Oasis MENA</div>';
+            html += '</div>';
+
+            // Score Hero
+            html += '<div class="score-hero">';
+            html += '<div class="number">' + overall + '</div>';
+            html += '<div class="band">' + bandInfo.band + '</div>';
+            html += '<div class="formula">Formula: (Market × 0.35) + (ICP × 0.35) + (GTM × 0.30)</div>';
+            html += '</div>';
+
+            // Three Pillars
+            html += '<div class="pillar-row">';
+            html += '<div class="pillar"><div class="label">Market Attractiveness</div><div class="val">' + scores.mas + '</div><div class="desc">/100</div></div>';
+            html += '<div class="pillar"><div class="label">ICP Clarity</div><div class="val">' + scores.icp + '</div><div class="desc">/100</div></div>';
+            html += '<div class="pillar"><div class="label">GTM Fitness</div><div class="val">' + scores.gtm + '</div><div class="desc">/100</div></div>';
+            html += '</div>';
+
+            // Strategy Path
+            if (status.strategy && status.strategy.path) {
+                html += '<h2>Strategy Path</h2>';
+                html += '<div class="insight"><strong>' + status.strategy.path + '</strong>';
+                if (status.strategy.archetype) html += ' — Founder Archetype: ' + status.strategy.archetype;
+                html += '</div>';
+            }
+
+            // Key Insights
+            html += '<h2>Key Insights</h2>';
+            html += '<div class="insight"><strong>Strongest Pillar:</strong> ' + strongLabel + ' (' + strongest + '/100) — This is your foundation. Build your first 90-day plan from this strength.</div>';
+            html += '<div class="insight"><strong>Biggest Gap:</strong> ' + weakest + ' (' + lowest + '/100) — Closing this gap will have the highest impact on your overall readiness.</div>';
+
+            if (dashboardAiData && dashboardAiData.strategicDirection) {
+                html += '<div class="insight">' + dashboardAiData.strategicDirection + '</div>';
+            }
+
+            // MENA Context
+            if (dashboardAiData && dashboardAiData.menaAdjustments) {
+                html += '<h2>MENA Market Context</h2>';
+                html += '<div class="insight">' + dashboardAiData.menaAdjustments + '</div>';
+            }
+
+            // GTM Motions
+            if (dashboardAiData && dashboardAiData.motionRanking) {
+                html += '<h2>Recommended GTM Motions</h2>';
+                html += '<ol class="next-steps">';
+                dashboardAiData.motionRanking.forEach(function(m) {
+                    html += '<li><strong>' + m.motion + '</strong> — ' + m.tier + (m.reason ? ': ' + m.reason : '') + '</li>';
+                });
+                html += '</ol>';
+            }
+
+            // Next Steps
+            html += '<h2>Recommended Next Steps</h2>';
+            html += '<ol class="next-steps">';
+            if (overall >= 80) {
+                html += '<li><strong>Launch your MVP within 14 days</strong> — not perfect, testable</li>';
+                html += '<li><strong>Execute your PRIMARY GTM motion</strong> — one channel, master it</li>';
+                html += '<li><strong>Target first 10 paying customers</strong> — revenue validates everything</li>';
+            } else if (overall >= 60) {
+                html += '<li><strong>Close your ' + weakest + ' gap</strong> — #1 priority for next 2 weeks</li>';
+                html += '<li><strong>Run 5+ buyer validation conversations</strong> — real signal beats assumptions</li>';
+                html += '<li><strong>Retake the assessment</strong> after closing the gap</li>';
+            } else {
+                html += '<li><strong>Start with buyer conversations</strong> — talk to 10+ potential customers</li>';
+                html += '<li><strong>Validate demand before building</strong> — don\'t code until you have signal</li>';
+                html += '<li><strong>Re-assess in 2 weeks</strong> — clarity will jump your scores</li>';
+            }
+            html += '</ol>';
+
+            html += '<hr style="margin-top: 40px; border: none; border-top: 2px solid #FF6600;">';
+            html += '<p style="text-align: center; color: #888; font-size: 12px;">Strategic Summary generated by EO MicroSaaS Founder Operating System<br>Entrepreneurs Oasis MENA — ' + dateStr + '</p>';
+            html += '</body></html>';
+
+            var blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = ventureName.replace(/[^a-zA-Z0-9]/g, '-') + '-Strategic-Summary-' + dateStr + '.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Check URL params for pre-loaded scores (from assessment completion redirects)
+        function checkUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const email = params.get('email');
+            if (email) {
+                document.getElementById('lookup-email').value = email;
+                switchScreen('scorecard');
+                fetchMyScores();
+            }
+        }
+
+        // RTL toggle
         function toggleRTL() {
             document.body.classList.toggle('rtl');
             var isRTL = document.body.classList.contains('rtl');
@@ -2014,42 +2635,31 @@
             try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
         }
 
-        // ========================================
-        // INIT
-        // ========================================
-
+        // Restore RTL on load
         (function() {
             try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
         })();
 
+        // Initialize
         window.addEventListener('beforeunload', saveScores);
         loadScores();
+        checkUrlParams();
 
-        // Auto-fill email
+        // Auto-fill email from shared localStorage
         (function() {
             try {
-                var storedEmail = localStorage.getItem('eo_user_email');
-                if (storedEmail) {
-                    var lookupEl = document.getElementById('lookup-email');
-                    var resumeEl = document.getElementById('resume-email');
-                    if (lookupEl && !lookupEl.value) lookupEl.value = storedEmail;
-                    if (resumeEl && !resumeEl.value) resumeEl.value = storedEmail;
-                    // Auto-trigger resume so flow steps show green checks + scores on load
-                    setTimeout(function() { handleResume(); }, 100);                    // Auto-trigger resume so flow steps show green checks + scores on load
-                    setTimeout(function() { handleResume(); }, 100);                }
-            } catch (e) {}
+                const storedEmail = localStorage.getItem('eo_user_email');
+                const lookupEl = document.getElementById('lookup-email');
+                if (storedEmail && lookupEl && !lookupEl.value) {
+                    lookupEl.value = storedEmail;
+                }
+            } catch (e) { /* silent */ }
         })();
 
-        // Check URL params
+        // Auto-update hub states on page load
         (function() {
-            var params = new URLSearchParams(window.location.search);
-            var email = params.get('email');
-            if (email) {
-                document.getElementById('lookup-email').value = email;
-                document.getElementById('resume-email').value = email;
-                switchScreen('scorecard');
-                fetchMyScores();
-            }
+            const status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            updateHubStates(status);
         })();
     </script>
 </body>

@@ -4,28 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entrepreneurs Oasis MENA — Project Definition Scoring</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-    --eo-dark: #050A12;
-    --eo-orange: #FF6600;
-    --eo-beige: #0C1220;
-    --eo-card-bg: #111827;
-    --eo-gray-text: #94A3B8;
-    --eo-gray-border: rgba(255,255,255,0.06);
-    --eo-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    --eo-radius: 14px;
+    --eo-dark: #1A1A2E;
+    --eo-orange: #E94D1B;
+    --eo-beige: #FAF5EF;
+    --eo-card-bg: #FFFFFF;
+    --eo-gray-text: #6B7280;
+    --eo-gray-border: #E5E7EB;
+    --eo-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    --eo-radius: 12px;
     --eo-radius-sm: 8px;
     --eo-transition: 300ms ease;
-    --green: #22C55E;
-    --gold: #D97706;
-    --red: #EF4444;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--eo-dark);
     color: #FFFFFF;
     min-height: 100vh;
@@ -37,6 +34,7 @@ body {
 body.rtl { direction: rtl; text-align: right; }
 body.rtl .nav-buttons { flex-direction: row-reverse; }
 body.rtl .section-bar-row { flex-direction: row-reverse; }
+body.rtl .reco-list li { padding: 6px 24px 6px 0; }
 body.rtl .progress-meta { flex-direction: row-reverse; }
 body.rtl .option-card { text-align: right; }
 
@@ -119,8 +117,8 @@ body.rtl .option-card { text-align: right; }
 .screen { display: none; }
 .screen.active { display: block; }
 
-/* Auth Screen */
-.auth-capture {
+/* Email Capture */
+.email-capture {
     max-width: 480px;
     margin: 60px auto;
     padding: 40px;
@@ -129,40 +127,18 @@ body.rtl .option-card { text-align: right; }
     border-radius: var(--eo-radius);
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
-.auth-capture h2 {
+.email-capture h2 {
     font-size: 26px;
     font-weight: 800;
-    color: #1A1A2E;
+    color: var(--eo-dark);
     margin-bottom: 8px;
 }
-.auth-capture .intro-badge {
-    display: inline-block;
-    background: var(--eo-orange);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-}
-.auth-capture p {
+.email-capture p {
     color: var(--eo-gray-text);
-    margin-bottom: 24px;
+    margin-bottom: 28px;
     font-size: 15px;
 }
-.auth-capture label {
-    display: block;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 700;
-    color: #1A1A2E;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    margin-top: 16px;
-}
-.auth-capture input {
+.email-capture input {
     width: 100%;
     padding: 14px 16px;
     border: 2px solid var(--eo-gray-border);
@@ -171,16 +147,12 @@ body.rtl .option-card { text-align: right; }
     font-family: inherit;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #1A1A2E;
+    margin-bottom: 16px;
+    color: var(--eo-dark);
+    background: #FFFFFF;
 }
-.auth-capture input:focus { border-color: var(--eo-orange); }
-.auth-capture .q-hint {
-    font-size: 12px;
-    color: var(--eo-gray-text);
-    text-align: left;
-    margin-top: 6px;
-}
-.auth-capture .btn-primary { width: 100%; margin-top: 20px; }
+.email-capture input:focus { border-color: var(--eo-orange); }
+.email-capture .btn-primary { width: 100%; }
 
 /* Question Card */
 .question-card {
@@ -191,6 +163,16 @@ body.rtl .option-card { text-align: right; }
     max-width: 640px;
     margin: 0 auto;
     position: relative;
+}
+.question-card.shake {
+    animation: shake 0.4s ease;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
 }
 
 .question-text {
@@ -210,6 +192,37 @@ body.rtl .option-card { text-align: right; }
     font-style: italic;
 }
 
+/* Options */
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.option-card {
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--eo-dark);
+    transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
+    user-select: none;
+    line-height: 1.4;
+}
+.option-card:hover {
+    border-color: var(--eo-orange);
+}
+.option-card.selected {
+    background: var(--eo-orange);
+    border-color: var(--eo-orange);
+    color: #FFFFFF;
+}
+.option-card.focused {
+    outline: 2px solid var(--eo-orange);
+    outline-offset: 2px;
+}
+
 /* Free-text Input */
 .freetext-input {
     width: 100%;
@@ -219,12 +232,12 @@ body.rtl .option-card { text-align: right; }
     font-size: 15px;
     font-family: inherit;
     resize: vertical;
-    min-height: 160px;
+    min-height: 120px;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #1A1A2E;
+    color: var(--eo-dark);
     line-height: 1.5;
-    background: var(--eo-card-bg);
+    background: #FFFFFF;
 }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; font-size: 14px; }
@@ -235,6 +248,17 @@ body.rtl .option-card { text-align: right; }
     color: #9CA3AF;
     margin-top: 6px;
 }
+.char-count.over { color: #EF4444; }
+
+/* Evidence Label */
+.evidence-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--eo-dark);
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+.evidence-input { min-height: 80px; }
 
 /* Nav Buttons */
 .nav-buttons {
@@ -269,7 +293,10 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 .btn-next:hover { background: #d4441a; }
-.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-next:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 .btn-primary {
     background: var(--eo-orange);
     color: #FFFFFF;
@@ -283,6 +310,7 @@ body.rtl .option-card { text-align: right; }
     transition: all var(--eo-transition);
 }
 .btn-primary:hover { background: #d4441a; }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Toast */
 .toast {
@@ -300,7 +328,74 @@ body.rtl .option-card { text-align: right; }
     transition: transform 0.4s ease;
     white-space: nowrap;
 }
-.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Contact Form */
+.contact-screen {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+.contact-card {
+    background: var(--eo-beige);
+    border-radius: var(--eo-radius);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    padding: 32px;
+}
+.contact-card h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--eo-dark);
+    text-align: center;
+    margin-bottom: 6px;
+}
+.contact-card .subtitle {
+    font-size: 14px;
+    color: var(--eo-gray-text);
+    text-align: center;
+    margin-bottom: 24px;
+}
+.form-group {
+    margin-bottom: 16px;
+}
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--eo-dark);
+    margin-bottom: 6px;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid var(--eo-gray-border);
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--eo-transition);
+    color: var(--eo-dark);
+    background: #FFFFFF;
+}
+.form-group input:focus { border-color: var(--eo-orange); }
+.contact-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+.btn-skip {
+    background: transparent;
+    color: var(--eo-gray-text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    text-decoration: underline;
+}
 
 /* Loading */
 .loading-overlay {
@@ -336,22 +431,19 @@ body.rtl .option-card { text-align: right; }
     text-align: center;
     padding: 40px 20px 32px;
 }
-.score-gauge {
-    width: 160px;
-    height: 160px;
+.score-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin: 0 auto 16px;
-    position: relative;
 }
-.score-gauge svg { width: 100%; height: 100%; }
-.score-gauge-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-.score-gauge-number { font-size: 42px; font-weight: 800; display: block; }
-.score-gauge-label { font-size: 12px; color: #9CA3AF; }
+.score-circle-inner { text-align: center; }
+.score-number { font-size: 48px; font-weight: 800; display: block; }
+.score-total { font-size: 16px; color: #9CA3AF; }
 .band-label {
     font-size: 18px;
     font-weight: 700;
@@ -359,7 +451,26 @@ body.rtl .option-card { text-align: right; }
     letter-spacing: 1.5px;
     margin-bottom: 4px;
 }
-.band-subtitle { font-size: 14px; color: #9CA3AF; }
+.band-subtitle {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+.band-ready .score-number, .band-ready .band-label { color: #22C55E; }
+.band-partial .score-number, .band-partial .band-label { color: #3B82F6; }
+.band-gaps .score-number, .band-gaps .band-label { color: #F59E0B; }
+.band-startover .score-number, .band-startover .band-label { color: #EF4444; }
+
+/* Pending AI badge */
+.pending-ai-badge {
+    display: inline-block;
+    background: rgba(233,77,27,0.15);
+    color: var(--eo-orange);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+}
 
 .results-card {
     background: rgba(255,255,255,0.06);
@@ -374,57 +485,6 @@ body.rtl .option-card { text-align: right; }
     color: #FFFFFF;
 }
 
-/* Polished Output */
-.polished-card {
-    background: linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,102,0,0.02));
-    border: 1px solid rgba(255,102,0,0.2);
-    border-radius: var(--eo-radius);
-    padding: 28px;
-    margin-bottom: 20px;
-}
-.polished-card h3 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--eo-orange);
-    margin-bottom: 12px;
-}
-.polished-section {
-    margin-bottom: 16px;
-}
-.polished-section h4 {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--eo-orange);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-}
-.polished-section p {
-    font-size: 14px;
-    color: #D1D5DB;
-    line-height: 1.6;
-}
-
-/* Sharpen These Cards */
-.sharpen-card {
-    background: rgba(255,255,255,0.04);
-    border-left: 4px solid var(--gold);
-    border-radius: 0 var(--eo-radius-sm) var(--eo-radius-sm) 0;
-    padding: 16px 20px;
-    margin-bottom: 12px;
-}
-.sharpen-card h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #FFFFFF;
-    margin-bottom: 6px;
-}
-.sharpen-card p {
-    font-size: 13px;
-    color: #D1D5DB;
-    line-height: 1.5;
-}
-
 /* Section bars */
 .section-bar-row {
     display: flex;
@@ -433,7 +493,7 @@ body.rtl .option-card { text-align: right; }
     gap: 12px;
 }
 .section-bar-label {
-    width: 120px;
+    width: 100px;
     font-size: 13px;
     font-weight: 600;
     color: #D1D5DB;
@@ -452,13 +512,113 @@ body.rtl .option-card { text-align: right; }
     transition: width 0.5s ease;
 }
 .section-bar-score {
-    width: 50px;
+    width: 60px;
     text-align: right;
     font-size: 13px;
     font-weight: 600;
     color: #D1D5DB;
     flex-shrink: 0;
 }
+
+/* Recommendations */
+.reco-section { margin-bottom: 16px; }
+.reco-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.reco-icon { font-size: 16px; }
+.reco-title { font-size: 14px; font-weight: 600; color: #FFFFFF; }
+.reco-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 24px;
+}
+.reco-list li {
+    position: relative;
+    padding: 4px 0 4px 16px;
+    font-size: 13px;
+    color: #D1D5DB;
+    line-height: 1.5;
+}
+.reco-list li::before {
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    color: var(--eo-orange);
+}
+
+/* AI Section */
+.ai-section {
+    background: rgba(233,77,27,0.08);
+    border: 1px solid rgba(233,77,27,0.2);
+    border-radius: var(--eo-radius);
+    padding: 24px;
+    margin-bottom: 20px;
+}
+.ai-badge {
+    display: inline-block;
+    background: var(--eo-orange);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+.ai-section h3 { font-size: 15px; margin-bottom: 8px; }
+.ai-insight { font-size: 14px; color: #D1D5DB; margin-bottom: 16px; line-height: 1.6; }
+.ai-plan { margin-bottom: 16px; }
+.ai-plan h4 { font-size: 14px; margin-bottom: 8px; color: var(--eo-orange); }
+.ai-plan ul { margin: 0; padding: 0 0 0 20px; }
+.ai-plan li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
+.ai-reco-list { margin: 0; padding: 0 0 0 20px; }
+.ai-reco-list li { font-size: 13px; color: #D1D5DB; margin-bottom: 6px; }
+
+/* Answer Display in Results */
+.answer-block {
+    background: rgba(255,255,255,0.04);
+    border-radius: var(--eo-radius-sm);
+    padding: 16px;
+    margin-bottom: 12px;
+}
+.answer-block .q-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--eo-orange);
+    margin-bottom: 4px;
+}
+.answer-block .q-text {
+    font-size: 13px;
+    color: #9CA3AF;
+    margin-bottom: 8px;
+}
+.answer-block .a-text {
+    font-size: 14px;
+    color: #D1D5DB;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+.answer-block .a-mc {
+    font-size: 14px;
+    color: #22C55E;
+    font-weight: 600;
+}
+
+/* Gate Warning */
+.gate-warning {
+    background: rgba(239,68,68,0.1);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: var(--eo-radius);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.gate-warning h3 { color: #EF4444; font-size: 16px; margin-bottom: 8px; }
+.gate-warning p { color: #D1D5DB; font-size: 14px; }
 
 /* CTA */
 .results-cta {
@@ -468,21 +628,8 @@ body.rtl .option-card { text-align: right; }
     gap: 12px;
     margin-top: 32px;
 }
-.btn-download-md {
-    background: transparent;
-    border: 2px solid var(--eo-orange);
-    color: var(--eo-orange);
-    padding: 12px 28px;
-    border-radius: var(--eo-radius-sm);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all var(--eo-transition);
-    min-width: 280px;
-}
-.btn-download-md:hover { background: var(--eo-orange); color: #FFFFFF; }
-.btn-retake {
+.results-cta .btn-primary { min-width: 280px; }
+.results-cta .btn-retake {
     background: transparent;
     border: 2px solid #FFFFFF;
     color: #FFFFFF;
@@ -495,71 +642,41 @@ body.rtl .option-card { text-align: right; }
     transition: all var(--eo-transition);
     min-width: 280px;
 }
-.btn-retake:hover { background: rgba(255,255,255,0.15); }
-
-/* Engagement Breaks */
-.engagement-break {
-    max-width: 640px;
-    margin: 0 auto 24px;
-    padding: 0 20px;
-}
-.engagement-break-card {
-    background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
-    border-left: 4px solid var(--eo-orange);
-    border-radius: var(--eo-radius-sm);
-    padding: 16px 20px;
-}
-.engagement-break-card p {
-    font-size: 14px;
-    color: #D1D5DB;
-    line-height: 1.6;
-    font-style: italic;
-}
-
-/* Retrieval Banner */
-.retrieval-banner {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-left: 4px solid var(--green);
-    border-radius: var(--eo-radius-sm);
-    padding: 16px 20px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-.retrieval-score {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255,102,0,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    font-weight: 800;
+.results-cta .btn-retake:hover { background: rgba(255,255,255,0.15); }
+.results-cta .btn-download-md {
+    background: transparent;
+    border: 2px solid var(--eo-orange);
     color: var(--eo-orange);
-    flex-shrink: 0;
-}
-.retrieval-info { flex: 1; min-width: 120px; }
-.retrieval-info strong { display: block; font-size: 14px; color: #fff; }
-.retrieval-info span { font-size: 12px; color: #9CA3AF; }
-.retrieval-actions { display: flex; gap: 8px; }
-.retrieval-actions button {
-    padding: 8px 16px;
+    padding: 12px 28px;
     border-radius: var(--eo-radius-sm);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
-    border: none;
     transition: all var(--eo-transition);
+    min-width: 280px;
 }
-.btn-view-results { background: transparent; border: 1px solid var(--eo-orange); color: var(--eo-orange); }
-.btn-view-results:hover { background: var(--eo-orange); color: #fff; }
-.btn-start-fresh { background: var(--eo-orange); color: #fff; }
-.btn-start-fresh:hover { background: #d4441a; }
+.results-cta .btn-download-md:hover {
+    background: var(--eo-orange);
+    color: #FFFFFF;
+}
+.results-cta .btn-download-pdf {
+    background: transparent;
+    border: 2px solid #6B7280;
+    color: #6B7280;
+    padding: 12px 28px;
+    border-radius: var(--eo-radius-sm);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--eo-transition);
+    min-width: 280px;
+}
+.results-cta .btn-download-pdf:hover {
+    background: #6B7280;
+    color: #FFFFFF;
+}
 
 /* Mobile */
 @media (max-width: 680px) {
@@ -567,798 +684,1261 @@ body.rtl .option-card { text-align: right; }
     .nav-buttons { padding: 0 16px; }
     .question-text { font-size: 18px; }
     .progress-wrapper { padding: 0 16px; }
-    .freetext-input { min-height: 120px; }
-    .auth-capture { margin: 40px 16px; padding: 28px 20px; }
-    .retrieval-banner { flex-direction: column; text-align: center; }
-    .scroll-margin { scroll-margin-top: 120px; }
+    .freetext-input { min-height: 100px; }
+}
+@media (max-width: 400px) {
+    .nav-buttons { flex-direction: column; }
+    .btn-prev.hidden { display: none; }
+    .option-card { padding: 14px 16px; font-size: 14px; }
+    .question-text { font-size: 17px; }
 }
 </style>
 </head>
 <body>
 
+<!-- RTL Toggle -->
 <button class="rtl-toggle" onclick="toggleRTL()">EN / عربي</button>
+
+<!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- Loading Overlay -->
 <div class="loading-overlay" id="loadingOverlay">
     <div class="spinner"></div>
-    <p>Generating your clarity analysis...</p>
+    <p>Generating your advanced analysis...</p>
 </div>
 
+<!-- Header -->
 <div class="eo-header">
     <h1>Entrepreneurs <span>Oasis MENA</span></h1>
 </div>
 
-<!-- AUTH SCREEN -->
-<div class="screen active" id="screenAuth">
-    <div class="auth-capture">
-        <div class="intro-badge">STEP 1 OF 5</div>
-        <h2>Project Definition</h2>
-        <p>7 questions. ~15 minutes. Build your venture foundation.</p>
-
-        <label>Your Email</label>
-        <input type="email" id="auth-email" placeholder="founder@company.com" autocomplete="email">
-
-        <label>Venture Name</label>
-        <input type="text" id="auth-venture" placeholder="e.g., Dubai Real Estate CRM" minlength="3">
-        <div class="q-hint">Give your venture a working name. This identifies your assessment across all 5 scorecards.</div>
-
-        <button class="btn-primary" onclick="handleAuth()">Begin Assessment →</button>
-        <div id="auth-error" style="color:var(--red);font-size:13px;margin-top:12px;display:none"></div>
-        <div id="retrieval-banner" style="display:none"></div>
+<!-- Screen 1: Email Capture -->
+<div class="screen active" id="screenEmail">
+    <div class="email-capture">
+        <h2>Project Definition Scorecard</h2>
+        <p>Define your project foundation with 21 guided questions. Free-text + multiple choice. ~15 minutes.</p>
+        <input type="email" id="emailInput" placeholder="Enter your email to start" autocomplete="email">
+        <button class="btn-primary" id="btnStartAssessment">Start Assessment</button>
     </div>
 </div>
 
-<!-- QUESTION SCREEN -->
+<!-- Screen 2: Stepper Questions -->
 <div class="screen" id="screenStepper">
     <div class="progress-wrapper">
         <div class="progress-meta">
-            <div class="section-label" id="sectionLabel">Your Venture</div>
-            <div class="progress-counter" id="progressCounter">Question 1 of 7</div>
+            <div class="section-label" id="sectionLabel">Section A: Founder Context</div>
+            <div class="progress-counter" id="progressCounter">Question 1 of 21</div>
         </div>
         <div class="progress-track">
             <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
-    <div id="engagementSlot"></div>
     <div class="question-card" id="questionCard">
         <div class="question-text" id="questionText"></div>
-        <div class="question-help" id="questionHelp" style="display:none"></div>
-        <div id="answerArea"></div>
+        <div class="question-help" id="questionHelp" style="display:none;"></div>
+        <div class="options-list" id="optionsList"></div>
     </div>
     <div class="nav-buttons">
-        <button class="btn btn-prev hidden" id="btnPrev" onclick="prevQuestion()">← Previous</button>
-        <button class="btn btn-next" id="btnNext" onclick="nextQuestion()" disabled>Next →</button>
+        <button class="btn btn-prev hidden" id="btnPrev">Previous</button>
+        <button class="btn btn-next" id="btnNext" disabled>Next</button>
     </div>
 </div>
 
-<!-- RESULTS SCREEN -->
+<!-- Screen 3: Contact Form -->
+<div class="screen" id="screenContact">
+    <div class="contact-screen">
+        <div class="contact-card">
+            <h2>Almost Done!</h2>
+            <p class="subtitle">Get your personalized AI-powered analysis.</p>
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="contactName" placeholder="Your full name" autocomplete="name">
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" id="contactEmail" placeholder="your@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label>Company / Project *</label>
+                <input type="text" id="contactCompany" placeholder="Your company or project name">
+            </div>
+            <div class="contact-actions">
+                <button class="btn-primary" id="btnSubmitContact">Get My Analysis</button>
+                <button class="btn-skip" id="btnSkipContact">Skip and see results</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Screen 4: Results -->
 <div class="screen" id="screenResults">
     <div class="results-container" id="resultsContent"></div>
 </div>
 
 <script>
-// ========================================
-// SHARED PATTERNS (from SHARED-PATTERNS.md)
-// ========================================
-
-function slugify(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-')
-    .replace(/^-+/, '')
-    .replace(/-+$/, '');
-}
-
-function getVentures(email) {
-  try { return JSON.parse(localStorage.getItem('eo_ventures_' + email) || '[]'); }
-  catch(e) { return []; }
-}
-
-function saveVenture(email, ventureName) {
-  var slug = slugify(ventureName);
-  if (slug.length < 2) slug = 'venture-' + Date.now().toString(36);
-  var ventures = getVentures(email);
-  var existing = ventures.find(function(v) { return v.venture_slug === slug; });
-  if (existing) {
-    existing.last_active = new Date().toISOString().split('T')[0];
-    localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-    return { venture_name: existing.venture_name, venture_slug: slug, isNew: false };
-  }
-  var venture = {
-    venture_name: ventureName.trim(),
-    venture_slug: slug,
-    created_at: new Date().toISOString().split('T')[0],
-    last_active: new Date().toISOString().split('T')[0]
-  };
-  ventures.push(venture);
-  localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-  return { venture_name: venture.venture_name, venture_slug: slug, isNew: true };
-}
-
-function updateVentureActivity(email, slug) {
-  var ventures = getVentures(email);
-  var venture = ventures.find(function(v) { return v.venture_slug === slug; });
-  if (venture) {
-    venture.last_active = new Date().toISOString().split('T')[0];
-    localStorage.setItem('eo_ventures_' + email, JSON.stringify(ventures));
-  }
-}
-
-function storageKey(type, scNumber, email, ventureSlug) {
-  return 'eo_sc' + scNumber + '_' + type + '_' + email + '_' + ventureSlug;
-}
-
-function getScores(email, ventureSlug) {
-  try { return JSON.parse(localStorage.getItem('eo_scores_' + email + '_' + ventureSlug) || '{}'); }
-  catch(e) { return {}; }
-}
-
-function saveScore(email, ventureSlug, scNumber, score) {
-  var scores = getScores(email, ventureSlug);
-  scores['sc' + scNumber] = score;
-  localStorage.setItem('eo_scores_' + email + '_' + ventureSlug, JSON.stringify(scores));
-}
-
-function getUpstreamAnswers(scNumber, email, ventureSlug) {
-  try { return JSON.parse(localStorage.getItem(storageKey('answers', scNumber, email, ventureSlug)) || '{}'); }
-  catch(e) { return {}; }
-}
-
-function getUpstreamResult(scNumber, email, ventureSlug) {
-  try { return JSON.parse(localStorage.getItem(storageKey('result', scNumber, email, ventureSlug)) || 'null'); }
-  catch(e) { return null; }
-}
-
-// Migration
-function migrateOldData() {
-  for (var i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var match = key ? key.match(/^eo_sc(\d)_answers_([^_]+@[^_]+\.[^_]+)$/) : null;
-    if (match) {
-      var migrationNeeded = {};
-      try { migrationNeeded = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
-      if (!migrationNeeded[match[2]]) migrationNeeded[match[2]] = [];
-      if (migrationNeeded[match[2]].indexOf(parseInt(match[1])) === -1) migrationNeeded[match[2]].push(parseInt(match[1]));
-      localStorage.setItem('eo_migration_pending', JSON.stringify(migrationNeeded));
-    }
-  }
-}
-
-function executeMigration(email, ventureName) {
-  var slug = slugify(ventureName);
-  for (var sc = 1; sc <= 5; sc++) {
-    var oldA = localStorage.getItem('eo_sc' + sc + '_answers_' + email);
-    if (oldA) { localStorage.setItem(storageKey('answers', sc, email, slug), oldA); localStorage.removeItem('eo_sc' + sc + '_answers_' + email); }
-    var oldR = localStorage.getItem('eo_sc' + sc + '_result');
-    if (oldR) { localStorage.setItem(storageKey('result', sc, email, slug), oldR); localStorage.removeItem('eo_sc' + sc + '_result'); }
-  }
-  var oldS = localStorage.getItem('eo-scores');
-  if (oldS) { localStorage.setItem('eo_scores_' + email + '_' + slug, oldS); localStorage.removeItem('eo-scores'); }
-  saveVenture(email, ventureName);
-  var pending = {};
-  try { pending = JSON.parse(localStorage.getItem('eo_migration_pending') || '{}'); } catch(e) {}
-  delete pending[email];
-  if (Object.keys(pending).length === 0) localStorage.removeItem('eo_migration_pending');
-  else localStorage.setItem('eo_migration_pending', JSON.stringify(pending));
-}
-
-migrateOldData();
-
-function showError(msg) {
-  var el = document.getElementById('auth-error');
-  el.innerHTML = msg;
-  el.style.display = 'block';
-  setTimeout(function() { el.style.display = 'none'; }, 8000);
-}
-
-// ========================================
-// STATE
-// ========================================
-
-var SC_NUMBER = 1;
-var userEmail = '';
-var ventureSlug = '';
-var ventureName = '';
-var currentQ = 0;
-var answers = {};
-
-var questions = [
-  {
-    id: 'venture_intro',
-    section: 'Your Venture',
-    text: "Tell me what you're building — the problem, who it's for, and why it matters.",
-    help: "Talk to me like you're explaining it to a sharp friend over coffee. Be specific about the problem, the audience, and the value.",
-    placeholder: "We're building a CRM specifically for real estate brokerages in Dubai with 5-20 agents who currently track leads on WhatsApp and Excel..."
-  },
-  {
-    id: 'founder_fit',
-    section: 'Founder Advantage',
-    text: "Why are YOU the person to build this? What's your unfair advantage — experience, access, obsession?",
-    help: "What combination of skills, network, or insight makes you uniquely positioned to solve this problem?",
-    placeholder: "I spent 8 years managing a real estate brokerage in Dubai Marina. I know every pain point because I lived them daily..."
-  },
-  {
-    id: 'niche',
-    section: 'Niche Definition',
-    text: "Who exactly is this for? Give me the specific niche — not 'SMEs' but the exact type of business, their size, their geography, and what makes them YOUR buyer.",
-    help: "The more specific, the better. Think: role, company size, industry vertical, geography, and current behavior.",
-    placeholder: "Independent real estate brokerages in Dubai and Abu Dhabi with 5-20 agents, currently using WhatsApp for lead management, doing 10-50 transactions per month...",
-    engagement: "Good — your venture context is clear. Now let's sharpen the niche."
-  },
-  {
-    id: 'positioning',
-    section: 'Positioning',
-    text: "If your ideal buyer is comparing you to alternatives right now, what do they use today and why would they switch to you?",
-    help: "Complete this: '[Product] is a _____ for _____ that _____ unlike _____.'",
-    placeholder: "Right now they use generic CRMs like Zoho or just WhatsApp groups. They'd switch because we handle Arabic/English, integrate with Property Finder listings, and show agent performance dashboards..."
-  },
-  {
-    id: 'product_vision',
-    section: 'Product Vision',
-    text: "Walk me through the product: what does the MVP look like, what are the 3-5 core features, and how fast does a new user get their first win?",
-    help: "Think minimal viable product — what ships in 4 weeks that delivers real value?",
-    placeholder: "MVP: (1) WhatsApp lead capture bot, (2) Deal pipeline board, (3) Agent leaderboard dashboard. First win in under 5 minutes — import contacts and see them organized...",
-    engagement: "Strong product thinking. Now let's add the human layer."
-  },
-  {
-    id: 'founder_story',
-    section: 'Founder Story',
-    text: "What's your founder story? Which archetype fits you — Leader, Reluctant Hero, Reporter, or Adventurer? Tell me the 3-sentence version of why you started this.",
-    help: "Your story is your marketing. What personal experience drives you to solve this problem?",
-    placeholder: "Reluctant Hero — I was a top-performing agent who kept losing deals because my brokerage had no system. I built an internal tool that doubled our close rate. Now I'm making it available to every mid-size brokerage in the Gulf..."
-  },
-  {
-    id: 'mena_context',
-    section: 'MENA Context',
-    text: "Where are you launching first, what languages will you support, and how does your product account for MENA business culture?",
-    help: "Think about: Arabic vs English, WhatsApp dependency, Ramadan timing, payment methods, trust-building in the region.",
-    placeholder: "Launching in Dubai first, then Abu Dhabi. Arabic + English UI. WhatsApp-first because that's how every deal happens here. Payment via bank transfer (no credit cards for B2B in UAE)..."
-  }
-];
-
-// ========================================
-// AUTH
-// ========================================
-
-function handleAuth() {
-  var email = document.getElementById('auth-email').value.trim().toLowerCase();
-  var name = document.getElementById('auth-venture').value.trim();
-
-  if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
-  if (!name || name.length < 3) { showError('Venture name must be at least 3 characters'); return; }
-
-  userEmail = email;
-  ventureName = name;
-  var result = saveVenture(email, name);
-  ventureSlug = result.venture_slug;
-
-  // Store email for cross-file use
-  localStorage.setItem('eo_user_email', email);
-
-  // Check for existing results
-  var existingResult = getUpstreamResult(SC_NUMBER, email, ventureSlug);
-  if (existingResult) {
-    showRetrievalBanner(existingResult);
-  } else {
-    // Check for old data to migrate
-    var oldAnswers = localStorage.getItem('eo-project-definition');
-    if (oldAnswers && !result.isNew) {
-      // Migrate old format
-      localStorage.setItem(storageKey('answers', SC_NUMBER, email, ventureSlug), oldAnswers);
-      localStorage.removeItem('eo-project-definition');
-    }
-    startQuestions();
-  }
-}
-
-function showRetrievalBanner(result) {
-  var banner = document.getElementById('retrieval-banner');
-  banner.innerHTML = '<div class="retrieval-banner">' +
-    '<div class="retrieval-score">' + (result.score || '?') + '</div>' +
-    '<div class="retrieval-info"><strong>Previously Completed</strong><span>' + (result.band || '') + ' — ' + (result.completed_at || '') + '</span></div>' +
-    '<div class="retrieval-actions">' +
-    '<button class="btn-view-results" onclick="viewPreviousResults()">View Results</button>' +
-    '<button class="btn-start-fresh" onclick="startFresh()">Start Fresh</button>' +
-    '</div></div>';
-  banner.style.display = 'block';
-}
-
-function viewPreviousResults() {
-  var result = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
-  if (result) renderResults(result);
-}
-
-function startFresh() {
-  localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
-  localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
-  document.getElementById('retrieval-banner').style.display = 'none';
-  startQuestions();
-}
-
-// ========================================
-// QUESTIONS
-// ========================================
-
-function startQuestions() {
-  // Load any saved answers
-  try {
-    var saved = JSON.parse(localStorage.getItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug)) || '{}');
-    if (saved && Object.keys(saved).length > 0) answers = saved;
-  } catch(e) {}
-
-  showScreen('screenStepper');
-  currentQ = 0;
-  renderQuestion();
-}
-
-function renderQuestion() {
-  var q = questions[currentQ];
-  document.getElementById('sectionLabel').textContent = q.section;
-  document.getElementById('progressCounter').textContent = 'Question ' + (currentQ + 1) + ' of ' + questions.length;
-  document.getElementById('progressFill').style.width = ((currentQ + 1) / questions.length * 100) + '%';
-  document.getElementById('questionText').textContent = q.text;
-
-  if (q.help) {
-    document.getElementById('questionHelp').textContent = q.help;
-    document.getElementById('questionHelp').style.display = 'block';
-  } else {
-    document.getElementById('questionHelp').style.display = 'none';
-  }
-
-  // Engagement break
-  var engSlot = document.getElementById('engagementSlot');
-  if (q.engagement) {
-    engSlot.innerHTML = '<div class="engagement-break"><div class="engagement-break-card"><p>' + q.engagement + '</p></div></div>';
-  } else {
-    engSlot.innerHTML = '';
-  }
-
-  // Render textarea
-  var area = document.getElementById('answerArea');
-  var savedVal = answers[q.id] || '';
-  area.innerHTML = '<textarea class="freetext-input" id="currentAnswer" placeholder="' + (q.placeholder || '') + '" oninput="handleInput()">' + escapeHtml(savedVal) + '</textarea>' +
-    '<div class="char-count" id="charCount">' + countWords(savedVal) + ' words</div>';
-
-  // Focus textarea
-  setTimeout(function() { document.getElementById('currentAnswer').focus(); }, 100);
-
-  // Prev button
-  document.getElementById('btnPrev').className = currentQ === 0 ? 'btn btn-prev hidden' : 'btn btn-prev';
-
-  // Next button state
-  updateNextBtn();
-}
-
-function handleInput() {
-  var val = document.getElementById('currentAnswer').value;
-  document.getElementById('charCount').textContent = countWords(val) + ' words';
-  updateNextBtn();
-}
-
-function updateNextBtn() {
-  var val = document.getElementById('currentAnswer').value.trim();
-  document.getElementById('btnNext').disabled = val.length < 10;
-
-  // Update button text for last question
-  document.getElementById('btnNext').textContent = currentQ === questions.length - 1 ? 'See Results →' : 'Next →';
-}
-
-function nextQuestion() {
-  var val = document.getElementById('currentAnswer').value.trim();
-  if (val.length < 10) return;
-
-  answers[questions[currentQ].id] = val;
-  saveAnswersToStorage();
-
-  if (currentQ < questions.length - 1) {
-    currentQ++;
-    renderQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else {
-    finishAssessment();
-  }
-}
-
-function prevQuestion() {
-  if (currentQ > 0) {
-    // Save current answer
-    var val = document.getElementById('currentAnswer').value.trim();
-    if (val) answers[questions[currentQ].id] = val;
-    saveAnswersToStorage();
-    currentQ--;
-    renderQuestion();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-}
-
-function saveAnswersToStorage() {
-  localStorage.setItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(answers));
-}
-
-// ========================================
-// SCORING (AI Heuristic - client-side)
-// ========================================
-
-function scoreAnswer(text, id) {
-  var score = 30; // base
-  var words = countWords(text);
-
-  // Length/depth
-  if (words >= 20) score += 5;
-  if (words >= 50) score += 5;
-  if (words >= 100) score += 10;
-  if (words >= 150) score += 5;
-
-  // Specificity signals
-  var specificity = 0;
-  if (/\d+/.test(text)) specificity += 8; // numbers
-  if (/\$|\bUSD|\bAED|\bSAR/.test(text)) specificity += 5; // currency
-  if (/\b(dubai|abu dhabi|riyadh|jeddah|cairo|bahrain|kuwait|oman|qatar|saudi|uae|emirates|mena|gulf|gcc)\b/i.test(text)) specificity += 8; // MENA
-  if (/\b(whatsapp|arabic|ramadan|arabic)\b/i.test(text)) specificity += 5; // MENA culture
-  if (/"[^"]+"|'[^']+'/.test(text)) specificity += 3; // quoted specifics
-  if (/\b\d+[-–]\d+\b/.test(text)) specificity += 3; // ranges
-
-  // Competitive awareness
-  if (/\b(competitor|alternative|vs|compared to|unlike|instead of|currently use|switch)\b/i.test(text)) specificity += 5;
-  // Named companies
-  if (/\b(zoho|hubspot|salesforce|freshworks|pipedrive|notion|slack|asana|stripe|paypal)\b/i.test(text)) specificity += 3;
-
-  // Evidence
-  if (/\b(interview|survey|pilot|tested|validated|customers? told|feedback|data shows)\b/i.test(text)) specificity += 8;
-  if (/\b(revenue|mrr|arr|users|customers|clients|subscribers)\b/i.test(text)) specificity += 5;
-
-  // Framework
-  if (/\b(positioning|niche|mvp|pmf|product.market.fit|value prop|unfair advantage)\b/i.test(text)) specificity += 3;
-
-  score += Math.min(specificity, 45);
-  return Math.min(score, 100);
-}
-
-function calculateScores() {
-  var sectionScores = {};
-  var total = 0;
-
-  questions.forEach(function(q) {
-    var text = answers[q.id] || '';
-    var s = scoreAnswer(text, q.id);
-    sectionScores[q.id] = s;
-    total += s;
-  });
-
-  var avgScore = Math.round(total / questions.length);
-
-  return {
-    total: avgScore,
-    sections: sectionScores
-  };
-}
-
-function getBand(score) {
-  if (score >= 85) return { band: 'Launch Ready', color: 'var(--green)', cls: 'band-ready' };
-  if (score >= 70) return { band: 'Almost There', color: 'var(--eo-orange)', cls: 'band-partial' };
-  if (score >= 55) return { band: 'Needs Work', color: 'var(--gold)', cls: 'band-gaps' };
-  if (score >= 40) return { band: 'Early Stage', color: 'var(--red)', cls: 'band-startover' };
-  return { band: 'Reset', color: 'var(--red)', cls: 'band-startover' };
-}
-
-// ========================================
-// POLISHED OUTPUT GENERATION
-// ========================================
-
-function generatePolishedOutput() {
-  var a = answers;
-
-  // Extract key phrases from answers
-  var ventureDesc = (a.venture_intro || '').substring(0, 300);
-  var nicheText = (a.niche || '').substring(0, 200);
-  var posText = (a.positioning || '').substring(0, 200);
-  var mvpText = (a.product_vision || '').substring(0, 200);
-
-  return {
-    venture_description: ventureDesc || 'No venture description provided.',
-    niche_definition: nicheText || 'No niche defined.',
-    positioning_statement: posText || 'No positioning statement provided.',
-    mvp_scope: mvpText || 'No MVP scope defined.',
-    founder_story: (a.founder_story || '').substring(0, 200),
-    mena_context: (a.mena_context || '').substring(0, 200)
-  };
-}
-
-function findWeakestAreas(sectionScores) {
-  var sorted = Object.keys(sectionScores).map(function(k) {
-    return { id: k, score: sectionScores[k] };
-  }).sort(function(a, b) { return a.score - b.score; });
-
-  var weakest = sorted.slice(0, 3);
-  var labels = {
-    venture_intro: { name: 'Venture Description', advice: 'Be more specific about the problem you solve, who experiences it, and the measurable cost of the status quo.' },
-    founder_fit: { name: 'Founder Advantage', advice: 'Clarify your unique edge. Name specific experience, relationships, or insights that competitors lack.' },
-    niche: { name: 'Niche Definition', advice: 'Your niche is too broad. Get specific: exact role, company size, geography, and current behavior.' },
-    positioning: { name: 'Positioning', advice: 'Name your competitors explicitly and articulate what you do differently. Use the template: "[Product] is a _____ for _____ that _____ unlike _____."' },
-    product_vision: { name: 'Product Vision', advice: 'Define your MVP more concretely. List 3-5 features and how quickly a user gets value.' },
-    founder_story: { name: 'Founder Story', advice: 'Your story needs a personal hook. Why do YOU care about this problem? What happened to you?' },
-    mena_context: { name: 'MENA Context', advice: 'Mention specific regional adaptations: Arabic language, WhatsApp integration, local payment methods, cultural timing (Ramadan, etc).' }
-  };
-
-  return weakest.map(function(w) {
-    var info = labels[w.id] || { name: w.id, advice: 'Add more specificity and evidence.' };
-    return { name: info.name, score: w.score, advice: info.advice };
-  });
-}
-
-// ========================================
-// FINISH & RESULTS
-// ========================================
-
-function finishAssessment() {
-  document.getElementById('loadingOverlay').classList.add('active');
-
-  setTimeout(function() {
-    var scores = calculateScores();
-    var bandInfo = getBand(scores.total);
-    var polished = generatePolishedOutput();
-    var weakAreas = findWeakestAreas(scores.sections);
-
-    var resultObj = {
-      score: scores.total,
-      band: bandInfo.band,
-      sections: scores.sections,
-      polished_output: polished,
-      weak_areas: weakAreas,
-      completed_at: new Date().toISOString().split('T')[0]
+/* ═══════════════════════════════════════════════════
+   EO PROJECT DEFINITION SCORING — SCORECARD 1
+   21 Questions | 6 Sections (A-F) | 100 Points
+   Question Types: MC, Free-Text, MC+Evidence
+   ═══════════════════════════════════════════════════ */
+(function() {
+    'use strict';
+
+    /* ===================================
+       QUESTION TYPE CONSTANTS
+       =================================== */
+    var Q_MC = 1;
+    var Q_FREETEXT = 2;
+    var Q_MC_EVIDENCE = 3;
+
+    /* ===================================
+       ASSESSMENT CONFIG
+       =================================== */
+    var ASSESSMENT_ID = 'project-definition';
+    var ASSESSMENT_TITLE = 'Project Definition';
+
+    var SECTIONS = [
+        { id: 'A', name: 'FOUNDER', fullName: 'Founder Context & Problem Origin' },
+        { id: 'B', name: 'NICHE', fullName: '3-Level Niche Definition' },
+        { id: 'C', name: 'POSITIONING', fullName: 'Positioning & Differentiation' },
+        { id: 'D', name: 'PRODUCT', fullName: 'Product Vision & Spec' },
+        { id: 'E', name: 'VOICE', fullName: 'Brand Voice & Founder Story' },
+        { id: 'F', name: 'MENA', fullName: 'MENA Context & Localization' }
+    ];
+
+    var SECTION_MAXES = { 'A': 15, 'B': 25, 'C': 20, 'D': 20, 'E': 10, 'F': 10 };
+
+    var SECTION_NAME_MAP = {
+        'A': 'Founder Context',
+        'B': 'Niche Definition',
+        'C': 'Positioning',
+        'D': 'Product Vision',
+        'E': 'Brand Voice',
+        'F': 'MENA Context'
     };
 
-    // Save
-    localStorage.setItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug), JSON.stringify(resultObj));
-    saveScore(userEmail, ventureSlug, SC_NUMBER, scores.total);
-    saveAnswersToStorage();
+    /* ===================================
+       QUESTION DEFINITIONS (21 Questions)
+       =================================== */
+    var allQuestions = [
+        /* ── SECTION A: FOUNDER CONTEXT (15 pts) ── */
+        {
+            id: 'a1', sectionId: 'A', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'Describe the specific moment you realized this problem needed solving. What happened? Who was affected? What was the cost of doing nothing?',
+            help: 'Not about your overall vision. This is about a specific, real moment where you witnessed this problem.',
+            placeholder: 'e.g., "In Q3 2024, I watched 3 real estate brokers in Dubai lose AED 180K combined because they were tracking 200+ leads in WhatsApp with no follow-up system..."',
+            rubric: '5=Vivid specific moment with named entities, timing, clear cost; 4=Specific moment with some cost; 3=Specific but lacks cost/detail; 2=Vague observation; 1=Generic; 0=Blank'
+        },
+        {
+            id: 'a2', sectionId: 'A', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
+            text: 'Why are YOU the right person to solve this? What experience, access, or unfair advantage do you bring that a random developer couldn\'t replicate?',
+            help: 'Not about passion. What specific domain knowledge, network, or lived experience gives you an edge?',
+            placeholder: 'e.g., "I spent 8 years as a broker myself, own a network of 200+ active brokers in MENA, and know their exact pain points from 1,000+ conversations..."',
+            rubric: '5=Crystal-clear unfair advantage with evidence; 4=Specific advantage; 3=Clear experience, underdeveloped; 2=Some relevant experience; 1=Generic passion; 0=Blank'
+        },
+        {
+            id: 'a3', sectionId: 'A', sectionIndex: 0,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 150,
+            text: 'What evidence do you have that this problem is real beyond your own experience? List conversations, failed alternatives, market data, competitor traction.',
+            help: 'Specificity matters. "I talked to 5 brokers" is evidence. "They confirmed the pain" is not.',
+            placeholder: 'e.g., "5 broker interviews: all use WhatsApp + Sheets for leads. Competitor X charges $300/mo but has 0 solo broker users. Industry growing 15% YoY per RERA data..."',
+            rubric: '5=Multiple evidence types with specifics; 4=2-3 types with detail; 3=1-2 types with specifics; 2=Vague evidence; 1=Assumption only; 0=Blank'
+        },
 
-    // Webhook
-    sendToWebhook(scores, resultObj);
+        /* ── SECTION B: 3-LEVEL NICHE (25 pts) ── */
+        {
+            id: 'b1', sectionId: 'B', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
+            text: 'What is the broad market you\'re entering? (e.g., "Real Estate Technology", "Healthcare SaaS"). Describe the category and its natural boundaries.',
+            help: 'Market level is where your product is one of many. Think "Real Estate Tech" not "WhatsApp bots for brokers".',
+            placeholder: 'e.g., "Real Estate Technology — CRM, lead capture, and deal management tools for real estate professionals"',
+            rubric: '3=Clear recognizable market with scope; 2=Recognizable but vague; 1=Too broad or too narrow; 0=Blank'
+        },
+        {
+            id: 'b2', sectionId: 'B', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'Within that market, what specific sub-market are you targeting? Show how you\'ve narrowed from your market level.',
+            help: 'Sub-market narrows the field. Instead of "all real estate," you\'re saying "independent brokers" or "boutique brokerages."',
+            placeholder: 'e.g., "CRM for independent real estate brokers managing <50 listings in Gulf countries"',
+            rubric: '4=Sharp sub-market with buyer group identified; 3=Clear sub-market; 2=Some narrowing but broad; 1=Same as market; 0=Blank'
+        },
+        {
+            id: 'b3', sectionId: 'B', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 10, wordLimit: 150,
+            text: 'What is your exact niche? Describe the specific person/company, their situation, their problem, and the outcome you deliver. So tight you could target them in an ad.',
+            help: 'Four elements: (1) Specific Person, (2) Specific Situation, (3) Specific Problem, (4) Specific Outcome. All four must be present.',
+            placeholder: 'e.g., "WhatsApp-based lead capture for independent real estate brokers in Dubai managing 10-30 active listings who lose 40%+ of leads due to manual tracking..."',
+            rubric: '10=Razor-sharp all 4 elements + market validation; 8=All 4 strong; 6=3-4 elements present; 4=2 elements; 2=1 element only; 0=Blank'
+        },
+        {
+            id: 'b4', sectionId: 'B', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'Explain WHY this niche is better than going broader. Address: pricing power, competitive advantage, expansion path, and seasonal/regional factors.',
+            help: 'Don\'t just assert the niche is good. PROVE the logic. What happens if you serve the whole sub-market instead?',
+            placeholder: 'e.g., "If we serve all brokers globally, we compete with HubSpot. Solo MENA brokers have unique WhatsApp-centric workflows that global CRMs ignore..."',
+            rubric: '5=Sophisticated niche economics; 4=Clear reasoning with multiple factors; 3=Some reasoning; 2=Basic logic; 1=Assertion only; 0=Blank'
+        },
+        {
+            id: 'b5', sectionId: 'B', sectionIndex: 1,
+            type: Q_FREETEXT, maxScore: 3, wordLimit: 100,
+            text: 'Estimate the number of potential buyers in your niche in your primary geography. Show your math or reasoning.',
+            help: 'Bottom-up estimation. "There are 2,000 independent brokers in UAE" is better than "200 million people use WhatsApp."',
+            placeholder: 'e.g., "UAE real estate board: 15,000 brokers. 60% independent. 40% manage 10-30 listings = ~3,600 TAM"',
+            rubric: '3=Detailed bottom-up with sources; 2=Estimation with partial method; 1=Guess without math; 0=Blank'
+        },
 
-    document.getElementById('loadingOverlay').classList.remove('active');
-    renderResults(resultObj);
-  }, 1500);
-}
+        /* ── SECTION C: POSITIONING (20 pts) ── */
+        {
+            id: 'c1', sectionId: 'C', sectionIndex: 2,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
+            text: 'Complete this: "[Product Name] is a _____________ for _____________." Make it crisp, clear, and specific.',
+            help: 'Both blanks matter. First blank = what it is (feature + channel). Second blank = who it\'s for (niche).',
+            placeholder: 'e.g., "SalesFast is a WhatsApp-based lead capture system for independent real estate brokers in the Middle East"',
+            rubric: '5=Crisp memorable pitch-deck ready; 4=Specific and clear; 3=Somewhat specific; 2=Vague; 1=Missing one blank; 0=Blank'
+        },
+        {
+            id: 'c2', sectionId: 'C', sectionIndex: 2,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 200,
+            text: 'List the top 3 alternatives your buyer uses TODAY (including "doing nothing"). For each, explain what\'s broken about it.',
+            help: 'Not competitor names. What your buyer ACTUALLY DOES: WhatsApp groups, Google Sheets, expensive CRM, manual process.',
+            placeholder: 'e.g., "1. WhatsApp groups: no history, chaotic. 2. Google Sheets: manual, lost leads. 3. HubSpot: $300/mo, overkill for solo brokers"',
+            rubric: '5=3 real alternatives with specific failures + buyer friction; 4=3 with specific failures; 3=3 with surface weaknesses; 2=1-2 alternatives; 1=Names competitors only; 0=Blank'
+        },
+        {
+            id: 'c3', sectionId: 'C', sectionIndex: 2,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 100,
+            text: 'What is the ONE thing your product does differently that makes old alternatives obsolete? Not a feature list — the core mechanism.',
+            help: 'Features: "Mobile app, Automation." Mechanism: "Native WhatsApp instead of forcing tool switching." What makes it fundamentally different?',
+            placeholder: 'e.g., "Passive SMS follow-up triggered by lead timestamp, requiring zero broker action — turns lead capture into automatic pipeline"',
+            rubric: '5=Ownable defendable mechanism; 4=Specific differentiator; 3=Real but generic; 2=Feature-adjacent; 1=Feature list; 0=Blank'
+        },
+        {
+            id: 'c4', sectionId: 'C', sectionIndex: 2,
+            type: Q_FREETEXT, maxScore: 5, wordLimit: 50,
+            text: 'Write one sentence that would make your ideal buyer stop scrolling on LinkedIn. Not a tagline — a wedge that creates curiosity and tension.',
+            help: 'Create a gap. Make them think "Wait, I have that problem" or "That\'s different."',
+            placeholder: 'e.g., "Stop losing 40% of your leads to WhatsApp chaos — capture and auto-follow up without leaving the app"',
+            rubric: '5=Would genuinely stop the scroll; 4=Specific + curiosity gap; 3=Some interest; 2=Specific but no gap; 1=Generic marketing; 0=Blank'
+        },
 
-function renderResults(result) {
-  showScreen('screenResults');
-  var bandInfo = getBand(result.score);
-  var polished = result.polished_output || {};
-  var weakAreas = result.weak_areas || [];
-  var sections = result.sections || {};
+        /* ── SECTION D: PRODUCT VISION (20 pts) ── */
+        {
+            id: 'd1', sectionId: 'D', sectionIndex: 3,
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'Describe the exact workflow that is broken for your buyer. What do they do today step by step, and where does it break?',
+            help: 'Workflow specificity: Morning → Afternoon → Evening. Where exactly does it fail?',
+            placeholder: 'e.g., "Morning: 10 new WhatsApp leads. 2pm: Calls 3, forgets 7. 5pm: Lead calls back, broker has no notes..."',
+            rubric: '4=Step-by-step with multiple breakdowns; 3=Clear workflow + 1 failure; 2=Some workflow, vague failure; 1=Abstract problem; 0=Blank'
+        },
+        {
+            id: 'd2', sectionId: 'D', sectionIndex: 3,
+            type: Q_FREETEXT, maxScore: 6, wordLimit: 200,
+            text: 'List 3-5 core MVP features. For EACH: (1) What problem does it solve? (2) Why can\'t it be cut?',
+            help: 'NOT a feature list. A problem-to-feature mapping. If you have more than 5, you\'re building too much.',
+            placeholder: 'e.g., "1. Lead Auto-Capture from WhatsApp: Solves broker forgetting leads. Can\'t cut — core value prop..."',
+            rubric: '6=Tight MVP with clear problem-feature mapping; 5=3-5 with good mapping; 4=3-5 with some mapping; 3=Features with minimal linkage; 2=Feature dump; 0=Blank'
+        },
+        {
+            id: 'd3', sectionId: 'D', sectionIndex: 3,
+            type: Q_MC_EVIDENCE, maxScore: 4,
+            text: 'How fast can a new user get their first meaningful result?',
+            help: 'Speed to value is critical for MENA MicroSaaS — founders need revenue fast.',
+            options: [
+                { label: 'Same day — user solves core problem immediately', score: 4 },
+                { label: 'Within 3 days — quick setup, fast results', score: 3 },
+                { label: 'Within a week — moderate onboarding needed', score: 2 },
+                { label: 'Within a month — significant setup required', score: 1 },
+                { label: 'Longer than a month', score: 0 }
+            ],
+            evidencePrompt: 'Describe what that first result looks like. What does the user DO and EXPERIENCE?',
+            evidenceRubric: 'Specific step-by-step first result = bonus; Vague "they see value" = no bonus'
+        },
+        {
+            id: 'd4', sectionId: 'D', sectionIndex: 3,
+            type: Q_MC, maxScore: 6,
+            text: 'What\'s your build approach for the MVP?',
+            help: 'This is MicroSaaS context — speed to market matters more than technical elegance.',
+            options: [
+                { label: 'No-code (GHL, Bubble, FlutterFlow, Airtable, etc.)', score: 6 },
+                { label: 'Hybrid (No-code for MVP, custom for scale)', score: 5 },
+                { label: 'Low-code (n8n + APIs, Zapier + custom backend)', score: 4 },
+                { label: 'Custom code (React/Next.js, Python, Node)', score: 3 },
+                { label: 'Haven\'t decided yet', score: 1 }
+            ]
+        },
 
-  var html = '';
+        /* ── SECTION E: BRAND VOICE (10 pts) ── */
+        {
+            id: 'e1', sectionId: 'E', sectionIndex: 4,
+            type: Q_MC, maxScore: 3,
+            text: 'Which founder archetype fits you best? (Russell Brunson, Expert Secrets)',
+            help: 'No wrong answer — all archetypes work. This shapes your brand positioning angle.',
+            options: [
+                { label: 'The Reluctant Hero — This problem forced me into action', score: 3 },
+                { label: 'The Adventurer — Exploring new territory, curious about what\'s possible', score: 3 },
+                { label: 'The Reporter — Investigated deeply, now sharing findings', score: 3 },
+                { label: 'The Expert — Deep domain authority, solving a mastered problem', score: 3 }
+            ]
+        },
+        {
+            id: 'e2', sectionId: 'E', sectionIndex: 4,
+            type: Q_FREETEXT, maxScore: 7, wordLimit: 150,
+            text: 'Tell your founder story in 3-5 sentences. What happened, what changed, what you\'re building because of it. Should work as a 30-second VSL opener.',
+            help: 'Not your resume. The human moment that made you a founder.',
+            placeholder: 'e.g., "I spent 10 years as a real estate broker. In 2023, I watched my team lose 40% of leads to WhatsApp chaos..."',
+            rubric: '7=Expert story with specific moment, named impact, failed alternatives; 5=Specific story with emotion; 3=Clear story lacks urgency; 2=Some personal element; 1=Resume-like; 0=Blank'
+        },
 
-  // Score Hero with gauge
-  html += '<div class="score-hero">';
-  html += '<div class="score-gauge">';
-  var circumference = 2 * Math.PI * 70;
-  var dashOffset = circumference - (result.score / 100 * circumference);
-  html += '<svg viewBox="0 0 160 160">';
-  html += '<circle cx="80" cy="80" r="70" fill="none" stroke="#2D2D44" stroke-width="8"/>';
-  html += '<circle cx="80" cy="80" r="70" fill="none" stroke="' + bandInfo.color + '" stroke-width="8" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + dashOffset + '" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:80px 80px;transition:stroke-dashoffset 1s ease"/>';
-  html += '</svg>';
-  html += '<div class="score-gauge-text"><span class="score-gauge-number" style="color:' + bandInfo.color + '">' + result.score + '</span><span class="score-gauge-label">/100</span></div>';
-  html += '</div>';
-  html += '<div class="band-label" style="color:' + bandInfo.color + '">' + result.band + '</div>';
-  html += '<div class="band-subtitle">Clarity Score for "' + escapeHtml(ventureName) + '"</div>';
-  html += '</div>';
+        /* ── SECTION F: MENA CONTEXT (10 pts) ── */
+        {
+            id: 'f1', sectionId: 'F', sectionIndex: 5,
+            type: Q_MC, maxScore: 3,
+            text: 'Where will you launch first?',
+            help: 'This grounds all decisions in your chosen geography.',
+            options: [
+                { label: 'UAE', score: 3 },
+                { label: 'KSA (Saudi Arabia)', score: 3 },
+                { label: 'Egypt', score: 3 },
+                { label: 'Jordan', score: 3 },
+                { label: 'Other MENA', score: 3 },
+                { label: 'Non-MENA', score: 3 }
+            ]
+        },
+        {
+            id: 'f2', sectionId: 'F', sectionIndex: 5,
+            type: Q_MC, maxScore: 3,
+            text: 'What\'s your content and product language strategy?',
+            help: 'Language choice impacts reach, conversion, and competitive positioning in MENA.',
+            options: [
+                { label: 'Arabic-first (all product + content Arabic, English secondary)', score: 3 },
+                { label: 'English-first, Arabic later (launch English, add Arabic after MRR)', score: 3 },
+                { label: 'Bilingual from day one (equal Arabic + English)', score: 3 },
+                { label: 'English only (no Arabic planned)', score: 2 }
+            ]
+        },
+        {
+            id: 'f3', sectionId: 'F', sectionIndex: 5,
+            type: Q_FREETEXT, maxScore: 4, wordLimit: 100,
+            text: 'How does your product account for MENA business culture? Address at least 2 of: relationship-based selling, WhatsApp preference, Ramadan, trust-first buying, payment infrastructure, family business dynamics.',
+            help: 'Don\'t just list MENA characteristics. Show how your product ADAPTS to them.',
+            placeholder: 'e.g., "WhatsApp-native (no tool switching). Arabic UI. Flexible payment (card + bank transfer). Ramadan-aware pause..."',
+            rubric: '4=2+ factors with specific adaptations; 3=2+ factors, 1 adaptation specific; 2=1 factor with vague adaptation; 1=Acknowledges MENA only; 0=Blank'
+        }
+    ];
 
-  // Polished Output Card
-  html += '<div class="polished-card">';
-  html += '<h3>Your Venture Brief</h3>';
+    /* ===================================
+       RECOMMENDATIONS BY SECTION
+       =================================== */
+    var RECOMMENDATIONS = {
+        'A': [
+            'Write your problem origin story as a 3-sentence narrative with specific moment, named people, and quantified cost.',
+            'Document your unfair advantage: list your domain years, network size, and what would take a competitor 2+ years to replicate.',
+            'Conduct 5 buyer validation conversations this week. Document specific quotes, not yes/no answers.'
+        ],
+        'B': [
+            'Map your 3-level niche cascade: Market > Sub-Market > Niche. Each level should be more specific.',
+            'Write your niche statement with all 4 elements: specific person, situation, problem, and outcome.',
+            'Estimate your TAM with bottom-up math: total population x percentage that fits your criteria.',
+            'Explain why going broader would fail: competitive pressure, pricing power, and expansion path.'
+        ],
+        'C': [
+            'Complete the positioning sentence: "[Product] is a ___ for ___" — both blanks specific.',
+            'Map 3 real alternatives (including "doing nothing") with specific failure points for each.',
+            'Define your unique mechanism — what makes old alternatives obsolete, not just "worse."',
+            'Write a scroll-stopping wedge sentence with specific problem + intriguing solution.'
+        ],
+        'D': [
+            'Map the broken workflow step by step: where does it fail, what is the cost of failure?',
+            'Define 3-5 MVP features with problem-to-feature mapping. Cut anything without a clear problem.',
+            'Validate speed-to-value: can a new user solve the core problem on day 1?',
+            'Choose your build approach based on speed to market, not technical preference.'
+        ],
+        'E': [
+            'Choose your founder archetype and write your origin story as a VSL opener.',
+            'Make it personal: specific moment, named impact, failed alternatives, clear connection to product.'
+        ],
+        'F': [
+            'Ground your launch geography decision in market data and personal advantage.',
+            'Align your language strategy with your geography — English-only in Egypt/KSA is a flag.',
+            'Show how your product adapts to MENA culture: WhatsApp, Ramadan, trust-first buying, payments.'
+        ]
+    };
 
-  if (polished.venture_description) {
-    html += '<div class="polished-section"><h4>Venture Description</h4><p>' + escapeHtml(polished.venture_description) + '</p></div>';
-  }
-  if (polished.niche_definition) {
-    html += '<div class="polished-section"><h4>Niche Definition</h4><p>' + escapeHtml(polished.niche_definition) + '</p></div>';
-  }
-  if (polished.positioning_statement) {
-    html += '<div class="polished-section"><h4>Positioning Statement</h4><p>' + escapeHtml(polished.positioning_statement) + '</p></div>';
-  }
-  if (polished.mvp_scope) {
-    html += '<div class="polished-section"><h4>MVP Scope</h4><p>' + escapeHtml(polished.mvp_scope) + '</p></div>';
-  }
-  html += '</div>';
+    /* ===================================
+       STATE
+       =================================== */
+    var STORAGE_KEY = 'eo-project-definition';
+    var answers = {};
+    var currentIndex = 0;
+    var autoAdvanceTimer = null;
+    var focusedOptionIndex = -1;
+    var capturedEmail = '';
+    var aiData = null;
 
-  // Section Breakdown
-  html += '<div class="results-card"><h3>Dimension Scores</h3>';
-  var dimLabels = {
-    venture_intro: 'Venture Clarity',
-    founder_fit: 'Founder Fit',
-    niche: 'Niche Specificity',
-    positioning: 'Positioning',
-    product_vision: 'Product Vision',
-    founder_story: 'Founder Story',
-    mena_context: 'MENA Context'
-  };
-  questions.forEach(function(q) {
-    var s = sections[q.id] || 0;
-    var barColor = s >= 70 ? 'var(--green)' : s >= 55 ? 'var(--eo-orange)' : s >= 40 ? 'var(--gold)' : 'var(--red)';
-    html += '<div class="section-bar-row">';
-    html += '<div class="section-bar-label">' + (dimLabels[q.id] || q.id) + '</div>';
-    html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + s + '%;background:' + barColor + '"></div></div>';
-    html += '<div class="section-bar-score">' + s + '/100</div>';
-    html += '</div>';
-  });
-  html += '</div>';
+    /* ===================================
+       DOM REFS
+       =================================== */
+    var $sectionLabel, $progressCounter, $progressFill, $questionText, $questionHelp;
+    var $optionsList, $questionCard, $btnPrev, $btnNext, $toast;
+    var $emailInput, $btnStart, $btnSubmitContact, $btnSkipContact;
+    var $loadingOverlay, $resultsContent;
 
-  // Sharpen These
-  if (weakAreas.length > 0) {
-    html += '<div class="results-card"><h3>Sharpen These</h3>';
-    weakAreas.forEach(function(w) {
-      html += '<div class="sharpen-card">';
-      html += '<h4>' + escapeHtml(w.name) + ' (' + w.score + '/100)</h4>';
-      html += '<p>' + escapeHtml(w.advice) + '</p>';
-      html += '</div>';
-    });
-    html += '</div>';
-  }
+    /* ===================================
+       INIT
+       =================================== */
+    function init() {
+        $sectionLabel = document.getElementById('sectionLabel');
+        $progressCounter = document.getElementById('progressCounter');
+        $progressFill = document.getElementById('progressFill');
+        $questionText = document.getElementById('questionText');
+        $questionHelp = document.getElementById('questionHelp');
+        $optionsList = document.getElementById('optionsList');
+        $questionCard = document.getElementById('questionCard');
+        $btnPrev = document.getElementById('btnPrev');
+        $btnNext = document.getElementById('btnNext');
+        $toast = document.getElementById('toast');
+        $emailInput = document.getElementById('emailInput');
+        $btnStart = document.getElementById('btnStartAssessment');
+        $btnSubmitContact = document.getElementById('btnSubmitContact');
+        $btnSkipContact = document.getElementById('btnSkipContact');
+        $loadingOverlay = document.getElementById('loadingOverlay');
+        $resultsContent = document.getElementById('resultsContent');
 
-  // CTA
-  html += '<div class="results-cta">';
-  html += '<button class="btn-primary" onclick="window.location.href=\'EO-ICP-Clarity-Scoring.html\'">Continue to ICP Clarity →</button>';
-  html += '<button class="btn-download-md" onclick="downloadMd()">Download Full Analysis (MD)</button>';
-  html += '<button class="btn-retake" onclick="retakeAssessment()">Retake Assessment</button>';
-  html += '</div>';
+        loadAnswers();
+        bindEvents();
+        restoreRTL();
 
-  document.getElementById('resultsContent').innerHTML = html;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+        /* Auto-skip email if already captured */
+        try {
+            var storedEmail = localStorage.getItem('eo_user_email');
+            if (storedEmail) {
+                capturedEmail = storedEmail;
+                if ($emailInput) $emailInput.value = storedEmail;
+                currentIndex = Object.keys(answers).length > 0 ? findFirstUnanswered() : 0;
+                showScreen('screenStepper');
+                renderQuestion();
+            }
+        } catch (e) { /* show email screen */ }
+    }
 
-// ========================================
-// MD DOWNLOAD
-// ========================================
+    function loadAnswers() {
+        try {
+            var saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) answers = JSON.parse(saved);
+        } catch (e) { answers = {}; }
+    }
 
-function downloadMd() {
-  var result = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
-  if (!result) return;
-  var dateStr = new Date().toISOString().split('T')[0];
+    function saveAnswers() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); } catch (e) {}
+    }
 
-  var md = '# Project Definition — Full Analysis\n\n';
-  md += '**Venture:** ' + ventureName + '\n';
-  md += '**Email:** ' + userEmail + '\n';
-  md += '**Date:** ' + dateStr + '\n';
-  md += '**Clarity Score:** ' + result.score + '/100 — ' + result.band + '\n\n';
-  md += '---\n\n';
+    function findFirstUnanswered() {
+        for (var i = 0; i < allQuestions.length; i++) {
+            var q = allQuestions[i];
+            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
+                if (!(q.id in answers)) return i;
+            } else if (q.type === Q_FREETEXT) {
+                if (!(q.id in answers) || !answers[q.id].trim()) return i;
+            }
+        }
+        return allQuestions.length - 1;
+    }
 
-  // Polished output
-  var p = result.polished_output || {};
-  md += '## Venture Brief\n\n';
-  md += '### Venture Description\n' + (p.venture_description || 'N/A') + '\n\n';
-  md += '### Niche Definition\n' + (p.niche_definition || 'N/A') + '\n\n';
-  md += '### Positioning Statement\n' + (p.positioning_statement || 'N/A') + '\n\n';
-  md += '### MVP Scope\n' + (p.mvp_scope || 'N/A') + '\n\n';
-  md += '### Founder Story\n' + (p.founder_story || 'N/A') + '\n\n';
-  md += '### MENA Context\n' + (p.mena_context || 'N/A') + '\n\n';
+    /* ===================================
+       EVENT BINDING
+       =================================== */
+    function bindEvents() {
+        $btnStart.addEventListener('click', startAssessment);
+        $btnPrev.addEventListener('click', prevQuestion);
+        $btnNext.addEventListener('click', nextQuestion);
+        $btnSubmitContact.addEventListener('click', submitContact);
+        $btnSkipContact.addEventListener('click', skipContact);
+        $emailInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); startAssessment(); }
+        });
+        document.addEventListener('keydown', handleKeyboard);
+    }
 
-  md += '---\n\n## Dimension Scores\n\n';
-  md += '| Dimension | Score |\n|-----------|-------|\n';
-  var labels = { venture_intro: 'Venture Clarity', founder_fit: 'Founder Fit', niche: 'Niche Specificity', positioning: 'Positioning', product_vision: 'Product Vision', founder_story: 'Founder Story', mena_context: 'MENA Context' };
-  var secs = result.sections || {};
-  Object.keys(labels).forEach(function(k) {
-    md += '| ' + labels[k] + ' | ' + (secs[k] || 0) + '/100 |\n';
-  });
+    /* ===================================
+       RTL TOGGLE
+       =================================== */
+    function restoreRTL() {
+        try {
+            if (localStorage.getItem('eo-rtl') === '1') {
+                document.body.classList.add('rtl');
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+            }
+        } catch (e) {}
+    }
 
-  md += '\n## Areas to Sharpen\n\n';
-  (result.weak_areas || []).forEach(function(w) {
-    md += '### ' + w.name + ' (' + w.score + '/100)\n' + w.advice + '\n\n';
-  });
+    /* ===================================
+       SCREEN NAVIGATION
+       =================================== */
+    function showScreen(id) {
+        var screens = document.querySelectorAll('.screen');
+        for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+        document.getElementById(id).classList.add('active');
+    }
 
-  md += '---\n\n## Raw Answers\n\n';
-  questions.forEach(function(q) {
-    md += '### ' + q.text + '\n' + (answers[q.id] || 'No answer') + '\n\n';
-  });
+    function showToast(msg) {
+        $toast.textContent = msg;
+        $toast.classList.add('show');
+        setTimeout(function() { $toast.classList.remove('show'); }, 3000);
+    }
 
-  md += '---\n*Generated by Entrepreneurs Oasis MENA — Project Definition Scoring*\n';
+    /* ===================================
+       EMAIL CAPTURE
+       =================================== */
+    function startAssessment() {
+        var email = $emailInput.value.trim().toLowerCase();
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $emailInput.style.borderColor = '#EF4444';
+            $emailInput.focus();
+            return;
+        }
+        capturedEmail = email;
+        $emailInput.style.borderColor = '';
+        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
 
-  var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'SC1-Project-Definition-' + ventureSlug + '-' + dateStr + '.md';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+        if (Object.keys(answers).length > 0) {
+            currentIndex = findFirstUnanswered();
+            showToast('Welcome back! Resuming where you left off.');
+        } else {
+            currentIndex = 0;
+        }
+        showScreen('screenStepper');
+        renderQuestion();
+    }
 
-function retakeAssessment() {
-  answers = {};
-  localStorage.removeItem(storageKey('answers', SC_NUMBER, userEmail, ventureSlug));
-  localStorage.removeItem(storageKey('result', SC_NUMBER, userEmail, ventureSlug));
-  currentQ = 0;
-  showScreen('screenStepper');
-  renderQuestion();
-}
+    /* ===================================
+       RENDER QUESTION (supports all 3 types)
+       =================================== */
+    function renderQuestion() {
+        var q = allQuestions[currentIndex];
+        var section = SECTIONS[q.sectionIndex];
+        focusedOptionIndex = -1;
 
-// ========================================
-// WEBHOOK
-// ========================================
+        $sectionLabel.textContent = 'Section ' + section.id + ': ' + section.name + ' \u2014 ' + section.fullName;
+        $progressCounter.textContent = 'Question ' + (currentIndex + 1) + ' of ' + allQuestions.length;
+        $progressFill.style.width = ((currentIndex + 1) / allQuestions.length * 100) + '%';
+        $questionText.textContent = q.text;
 
-function sendToWebhook(scores, resultObj) {
-  var payload = {
-    email: userEmail,
-    venture_name: ventureName,
-    venture_slug: ventureSlug,
-    scorecard: 'SC1',
-    answers: answers,
-    scores: scores,
-    upstream_data: {},
-    timestamp: new Date().toISOString()
-  };
+        /* Help text */
+        if (q.help) {
+            $questionHelp.textContent = q.help;
+            $questionHelp.style.display = 'block';
+        } else {
+            $questionHelp.style.display = 'none';
+        }
 
-  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-definition', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(function(err) { console.warn('Webhook failed:', err); });
-}
+        $optionsList.innerHTML = '';
 
-// ========================================
-// UTILITIES
-// ========================================
+        if (q.type === Q_FREETEXT) {
+            renderFreetextQuestion(q);
+        } else if (q.type === Q_MC_EVIDENCE) {
+            renderMcEvidenceQuestion(q);
+        } else {
+            renderMcQuestion(q);
+        }
 
-function showScreen(id) {
-  var screens = document.querySelectorAll('.screen');
-  screens.forEach(function(s) { s.classList.remove('active'); });
-  document.getElementById(id).classList.add('active');
-}
+        /* Prev button visibility */
+        if (currentIndex === 0) {
+            $btnPrev.classList.add('hidden');
+        } else {
+            $btnPrev.classList.remove('hidden');
+        }
 
-function showToast(msg) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(function() { t.classList.remove('show'); }, 3000);
-}
+        /* Next button label */
+        var isLast = currentIndex === allQuestions.length - 1;
+        $btnNext.textContent = isLast ? 'Submit Assessment' : 'Next';
+    }
 
-function countWords(text) {
-  if (!text || !text.trim()) return 0;
-  return text.trim().split(/\s+/).length;
-}
+    function renderMcQuestion(q) {
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) div.classList.add('selected');
+            div.addEventListener('click', function() { selectOption(idx); });
+            $optionsList.appendChild(div);
+        });
+        $btnNext.disabled = !(q.id in answers);
+    }
 
-function escapeHtml(text) {
-  if (!text) return '';
-  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+    function renderFreetextQuestion(q) {
+        var ta = document.createElement('textarea');
+        ta.className = 'freetext-input';
+        ta.placeholder = q.placeholder || 'Type your answer here...';
+        ta.rows = 5;
+        ta.value = answers[q.id] || '';
 
+        var charDiv = document.createElement('div');
+        charDiv.className = 'char-count';
+        var wordCount = countWords(ta.value);
+        charDiv.textContent = wordCount + ' / ' + (q.wordLimit || 200) + ' words';
+
+        ta.addEventListener('input', function() {
+            var wc = countWords(ta.value);
+            charDiv.textContent = wc + ' / ' + (q.wordLimit || 200) + ' words';
+            if (wc > (q.wordLimit || 200)) {
+                charDiv.classList.add('over');
+            } else {
+                charDiv.classList.remove('over');
+            }
+            answers[q.id] = ta.value;
+            saveAnswers();
+            $btnNext.disabled = !ta.value.trim();
+        });
+
+        $optionsList.appendChild(ta);
+        $optionsList.appendChild(charDiv);
+        $btnNext.disabled = !(q.id in answers && answers[q.id] && answers[q.id].trim());
+    }
+
+    function renderMcEvidenceQuestion(q) {
+        /* MC part */
+        q.options.forEach(function(opt, idx) {
+            var div = document.createElement('div');
+            div.className = 'option-card';
+            div.textContent = opt.label;
+            div.setAttribute('data-index', idx);
+            if (answers[q.id] === idx) div.classList.add('selected');
+            div.addEventListener('click', function() { selectMcEvidence(idx); });
+            $optionsList.appendChild(div);
+        });
+
+        /* Evidence part */
+        var label = document.createElement('div');
+        label.className = 'evidence-label';
+        label.textContent = q.evidencePrompt || 'Provide supporting evidence:';
+        $optionsList.appendChild(label);
+
+        var ta = document.createElement('textarea');
+        ta.className = 'freetext-input evidence-input';
+        ta.placeholder = 'Share specific examples or evidence...';
+        ta.rows = 3;
+        ta.value = answers[q.id + '_evidence'] || '';
+        ta.addEventListener('input', function() {
+            answers[q.id + '_evidence'] = ta.value;
+            saveAnswers();
+        });
+        $optionsList.appendChild(ta);
+
+        $btnNext.disabled = !(q.id in answers);
+    }
+
+    function selectMcEvidence(idx) {
+        var q = allQuestions[currentIndex];
+        answers[q.id] = idx;
+        saveAnswers();
+        var cards = $optionsList.querySelectorAll('.option-card');
+        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+        cards[idx].classList.add('selected');
+        $btnNext.disabled = false;
+        /* No auto-advance for MC+Evidence — user needs to add evidence */
+    }
+
+    function countWords(text) {
+        if (!text || !text.trim()) return 0;
+        return text.trim().split(/\s+/).length;
+    }
+
+    /* ===================================
+       SELECT OPTION (MC only)
+       =================================== */
+    function selectOption(idx) {
+        var q = allQuestions[currentIndex];
+        answers[q.id] = idx;
+        saveAnswers();
+        var cards = $optionsList.querySelectorAll('.option-card');
+        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('selected');
+        cards[idx].classList.add('selected');
+        focusedOptionIndex = idx;
+        $btnNext.disabled = false;
+
+        /* Auto-advance for pure MC only */
+        var isLast = currentIndex === allQuestions.length - 1;
+        if (!isLast) {
+            clearAutoAdvance();
+            autoAdvanceTimer = setTimeout(function() { nextQuestion(); }, 300);
+        }
+    }
+
+    function clearAutoAdvance() {
+        if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+    }
+
+    /* ===================================
+       NAVIGATION
+       =================================== */
+    function nextQuestion() {
+        var q = allQuestions[currentIndex];
+        var answered = false;
+        if (q.type === Q_FREETEXT) {
+            answered = q.id in answers && answers[q.id] && answers[q.id].trim();
+        } else {
+            answered = q.id in answers;
+        }
+        if (!answered) {
+            $questionCard.classList.add('shake');
+            setTimeout(function() { $questionCard.classList.remove('shake'); }, 400);
+            return;
+        }
+        if (currentIndex === allQuestions.length - 1) {
+            showScreen('screenContact');
+            if (capturedEmail) document.getElementById('contactEmail').value = capturedEmail;
+            return;
+        }
+        currentIndex++;
+        renderQuestion();
+    }
+
+    function prevQuestion() {
+        clearAutoAdvance();
+        if (currentIndex > 0) { currentIndex--; renderQuestion(); }
+    }
+
+    /* ===================================
+       KEYBOARD
+       =================================== */
+    function handleKeyboard(e) {
+        if (!document.getElementById('screenStepper').classList.contains('active')) return;
+        var q = allQuestions[currentIndex];
+        /* Skip keyboard shortcuts for free-text (user is typing) */
+        if (q.type === Q_FREETEXT || q.type === Q_MC_EVIDENCE) {
+            if (e.key === 'ArrowLeft' && e.target.tagName !== 'TEXTAREA') { e.preventDefault(); prevQuestion(); }
+            return;
+        }
+        var cards = $optionsList.querySelectorAll('.option-card');
+        var numOpts = cards.length;
+        if (numOpts === 0) return;
+        switch (e.key) {
+            case 'ArrowDown': e.preventDefault(); focusedOptionIndex = (focusedOptionIndex + 1) % numOpts; updateFocus(cards); break;
+            case 'ArrowUp': e.preventDefault(); focusedOptionIndex = focusedOptionIndex <= 0 ? numOpts - 1 : focusedOptionIndex - 1; updateFocus(cards); break;
+            case 'Enter': e.preventDefault(); if (focusedOptionIndex >= 0) selectOption(focusedOptionIndex); break;
+            case 'ArrowRight': e.preventDefault(); nextQuestion(); break;
+            case 'ArrowLeft': e.preventDefault(); prevQuestion(); break;
+        }
+    }
+
+    function updateFocus(cards) {
+        for (var i = 0; i < cards.length; i++) cards[i].classList.remove('focused');
+        if (focusedOptionIndex >= 0 && focusedOptionIndex < cards.length) {
+            cards[focusedOptionIndex].classList.add('focused');
+            cards[focusedOptionIndex].scrollIntoView({ block: 'nearest' });
+        }
+    }
+
+    /* ===================================
+       SCORING
+       =================================== */
+    function calculateScores() {
+        var sectionScores = {};
+        var total = 0;
+        var mcTotal = 0;
+        var mcMax = 0;
+        var ftCount = 0;
+        Object.keys(SECTION_MAXES).forEach(function(s) { sectionScores[s] = 0; });
+
+        allQuestions.forEach(function(q) {
+            if (q.type === Q_MC || q.type === Q_MC_EVIDENCE) {
+                if (q.id in answers && q.options) {
+                    var score = q.options[answers[q.id]].score;
+                    sectionScores[q.sectionId] += score;
+                    total += score;
+                    mcTotal += score;
+                }
+                mcMax += q.maxScore;
+            } else if (q.type === Q_FREETEXT) {
+                ftCount++;
+                /* Free-text scored 0 locally — AI scores at export */
+            }
+        });
+        return { sectionScores: sectionScores, total: total, mcTotal: mcTotal, mcMax: mcMax, ftCount: ftCount };
+    }
+
+    function getBand(score) {
+        if (score >= 85) return { label: 'Launch Ready', className: 'band-ready' };
+        if (score >= 70) return { label: 'Almost There', className: 'band-partial' };
+        if (score >= 55) return { label: 'Needs Work', className: 'band-gaps' };
+        if (score >= 40) return { label: 'Early Stage', className: 'band-gaps' };
+        return { label: 'Reset', className: 'band-startover' };
+    }
+
+    function getWebhookBand(score) {
+        if (score >= 85) return 'LAUNCH_READY';
+        if (score >= 70) return 'ALMOST_THERE';
+        if (score >= 55) return 'NEEDS_WORK';
+        if (score >= 40) return 'EARLY_STAGE';
+        return 'RESET';
+    }
+
+    function getBarColor(score, max) {
+        var pct = max > 0 ? (score / max) * 100 : 0;
+        if (pct >= 80) return '#22C55E';
+        if (pct >= 60) return '#3B82F6';
+        if (pct >= 40) return '#F59E0B';
+        return '#EF4444';
+    }
+
+    /* ===================================
+       WEBHOOK PAYLOAD
+       =================================== */
+    function buildWebhookPayload(contact) {
+        var result = calculateScores();
+        var answersMap = {};
+        allQuestions.forEach(function(q) {
+            if (q.type === Q_FREETEXT) {
+                answersMap[q.id] = answers[q.id] || '';
+            } else if (q.type === Q_MC_EVIDENCE) {
+                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
+                answersMap[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
+            } else {
+                answersMap[q.id] = q.id in answers ? q.options[answers[q.id]].score : 0;
+            }
+        });
+
+        var sectionScoresNamed = {};
+        Object.keys(SECTION_NAME_MAP).forEach(function(key) {
+            sectionScoresNamed[SECTION_NAME_MAP[key]] = result.sectionScores[key] || 0;
+        });
+
+        return {
+            assessment: ASSESSMENT_ID,
+            answers: answersMap,
+            section_scores: sectionScoresNamed,
+            total_score: result.total,
+            mc_score: result.mcTotal,
+            band: getWebhookBand(result.total),
+            contact: contact
+        };
+    }
+
+    /* ===================================
+       CONTACT FORM
+       =================================== */
+    function submitContact() {
+        var nameEl = document.getElementById('contactName');
+        var emailEl = document.getElementById('contactEmail');
+        var companyEl = document.getElementById('contactCompany');
+        var name = nameEl.value.trim();
+        var email = emailEl.value.trim().toLowerCase();
+        var company = companyEl.value.trim();
+
+        var valid = true;
+        if (!name) { nameEl.style.borderColor = '#EF4444'; valid = false; } else { nameEl.style.borderColor = ''; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { emailEl.style.borderColor = '#EF4444'; valid = false; } else { emailEl.style.borderColor = ''; }
+        if (!company) { companyEl.style.borderColor = '#EF4444'; valid = false; } else { companyEl.style.borderColor = ''; }
+        if (!valid) return;
+
+        capturedEmail = email;
+        try { localStorage.setItem('eo_user_email', email); } catch (e) {}
+        var contact = { name: name, email: email, company: company };
+        var payload = buildWebhookPayload(contact);
+
+        $loadingOverlay.classList.add('active');
+
+        fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-definition', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(function(resp) { return resp.json(); })
+        .then(function(data) {
+            aiData = data;
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        })
+        .catch(function() {
+            $loadingOverlay.classList.remove('active');
+            showResults();
+        });
+    }
+
+    function skipContact() {
+        aiData = null;
+        showResults();
+    }
+
+    /* ===================================
+       RESULTS DISPLAY
+       =================================== */
+    function saveCompletionStatus(scoreId, score) {
+        try {
+            var status = JSON.parse(localStorage.getItem('eo_completion_status') || '{}');
+            status[scoreId] = { score: score, date: new Date().toISOString().split('T')[0] };
+            localStorage.setItem('eo_completion_status', JSON.stringify(status));
+        } catch (e) {}
+    }
+
+    function showResults() {
+        var result = calculateScores();
+        var sectionScores = result.sectionScores;
+        var total = result.mcTotal;
+        var band = getBand(total);
+
+        /* Save for dashboard — use MC score since FT is AI-scored */
+        saveCompletionStatus('pd', total);
+
+        /* Also store all answers for downstream scorecards */
+        try {
+            var downstream = {};
+            allQuestions.forEach(function(q) {
+                if (q.type === Q_FREETEXT) {
+                    downstream[q.id] = answers[q.id] || '';
+                } else if (q.type === Q_MC_EVIDENCE) {
+                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
+                    downstream[q.id + '_evidence'] = answers[q.id + '_evidence'] || '';
+                } else if (q.type === Q_MC) {
+                    downstream[q.id] = q.id in answers ? q.options[answers[q.id]].label : '';
+                }
+            });
+            downstream.niche = answers['b3'] || '';
+            downstream.positioning = answers['c1'] || '';
+            downstream.geography = answers['f1'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f1'; }).options[answers['f1']].label : '';
+            downstream.language = answers['f2'] !== undefined ? allQuestions.find(function(q) { return q.id === 'f2'; }).options[answers['f2']].label : '';
+            localStorage.setItem('eo-project-definition', JSON.stringify(downstream));
+        } catch (e) {}
+
+        var html = '';
+
+        /* Score Hero */
+        html += '<div class="score-hero ' + band.className + '">';
+        html += '<div class="score-circle"><div class="score-circle-inner">';
+        html += '<span class="score-number">' + total + '</span>';
+        html += '<span class="score-total">/ ' + result.mcMax + '</span>';
+        html += '</div></div>';
+        html += '<div class="band-label">' + band.label + '</div>';
+        html += '<div class="band-subtitle">Project Definition MC Score</div>';
+        if (result.ftCount > 0) {
+            html += '<div class="pending-ai-badge">' + result.ftCount + ' free-text answers pending AI review</div>';
+        }
+        html += '</div>';
+
+        /* Section Breakdown */
+        html += '<div class="results-card"><h3>Section Breakdown</h3>';
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
+            var color = getBarColor(score, max);
+            html += '<div class="section-bar-row">';
+            html += '<div class="section-bar-label">' + sec.name + '</div>';
+            html += '<div class="section-bar-track"><div class="section-bar-fill" style="width:' + pct + '%;background:' + color + '"></div></div>';
+            html += '<div class="section-bar-score">' + score + ' / ' + max + '</div>';
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* Answers Summary */
+        html += '<div class="results-card"><h3>Your Answers</h3>';
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            html += '<h4 style="font-size:14px;color:var(--eo-orange);margin:16px 0 8px;">Section ' + sid + ': ' + sec.fullName + '</h4>';
+            allQuestions.forEach(function(q) {
+                if (q.sectionId !== sid) return;
+                html += '<div class="answer-block">';
+                html += '<div class="q-label">' + q.id.toUpperCase() + '</div>';
+                html += '<div class="q-text">' + escapeHtml(q.text) + '</div>';
+                if (q.type === Q_FREETEXT) {
+                    html += '<div class="a-text">' + escapeHtml(answers[q.id] || '(No answer)') + '</div>';
+                } else if (q.type === Q_MC_EVIDENCE) {
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
+                    if (answers[q.id + '_evidence']) {
+                        html += '<div class="a-text" style="margin-top:8px;font-size:13px;"><strong>Evidence:</strong> ' + escapeHtml(answers[q.id + '_evidence']) + '</div>';
+                    }
+                } else {
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    html += '<div class="a-mc">' + (opt ? escapeHtml(opt.label) + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '</div>';
+                }
+                html += '</div>';
+            });
+        });
+        html += '</div>';
+
+        /* Recommendations */
+        html += '<div class="results-card"><h3>Recommendations by Section</h3>';
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
+            var icon = pct >= 80 ? '\u2705' : pct >= 60 ? '\uD83D\uDFE1' : '\u26A0\uFE0F';
+            html += '<div class="reco-section">';
+            html += '<div class="reco-header"><span class="reco-icon">' + icon + '</span>';
+            html += '<span class="reco-title">' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')</span></div>';
+            if (RECOMMENDATIONS[sid]) {
+                html += '<ul class="reco-list">';
+                RECOMMENDATIONS[sid].forEach(function(r) { html += '<li>' + escapeHtml(r) + '</li>'; });
+                html += '</ul>';
+            }
+            html += '</div>';
+        });
+        html += '</div>';
+
+        /* AI Section */
+        if (aiData) {
+            html += '<div class="ai-section">';
+            html += '<span class="ai-badge">Advanced Analysis & Recommendation</span>';
+            if (aiData.key_insight || aiData.keyInsight) {
+                html += '<h3>Key Insight</h3><p class="ai-insight">' + escapeHtml(aiData.key_insight || aiData.keyInsight) + '</p>';
+            }
+            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
+                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
+                html += '<div class="ai-plan"><h4>30-Day Action Plan</h4>';
+                if (typeof plan === 'string') { html += '<p>' + escapeHtml(plan) + '</p>'; }
+                else if (Array.isArray(plan)) { html += '<ul>'; plan.forEach(function(item) { html += '<li>' + escapeHtml(typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '</li>'; }); html += '</ul>'; }
+                html += '</div>';
+            }
+            if (aiData.recommendations || aiData.ai_recommendations) {
+                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
+                html += '<h3>AI Recommendations</h3><ul class="ai-reco-list">';
+                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { html += '<li>' + escapeHtml(typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '</li>'; }); }
+                html += '</ul>';
+            }
+            html += '</div>';
+        }
+
+        /* Next Steps — Claude Integration */
+        html += '<div class="results-card" style="border-left:4px solid var(--eo-orange);padding-left:20px;margin-top:24px;">';
+        html += '<h3 style="color:var(--eo-orange);margin-bottom:12px;">🚀 Next Step: Feed This Into Claude</h3>';
+        html += '<p style="color:var(--eo-dark);font-size:14px;line-height:1.7;margin-bottom:8px;">Download the MD file below and upload it to a <strong>Claude Project</strong>. The file contains everything Claude needs to help you:</p>';
+        html += '<ul style="color:var(--eo-dark);font-size:14px;line-height:1.9;list-style:disc;padding-left:20px;margin-bottom:12px;">';
+        html += '<li>Sharpen your project definition and positioning</li>';
+        html += '<li>Identify gaps in your niche clarity</li>';
+        html += '<li>Generate competitive analysis based on your answers</li>';
+        html += '<li>Produce the first draft of your project brief</li>';
+        html += '</ul>';
+        html += '<p style="color:var(--eo-gray-text);font-size:13px;">This MD file is the input for Step 1 of the MicroSaaS Operating System.</p>';
+        html += '</div>';
+
+        /* CTAs */
+        html += '<div class="results-cta">';
+        html += '<button class="btn-download-md" id="btnDownloadMd" style="font-size:16px;padding:14px 28px;">⬇️ Download Results (MD) — Feed Into Claude</button>';
+        html += '<a href="EO-Assessment-Dashboard.html" class="btn-primary" style="display:inline-block;text-decoration:none;text-align:center;">Go to Dashboard</a>';
+        html += '<button class="btn-download-pdf" id="btnDownloadPdf">Download Results (PDF)</button>';
+        html += '<button class="btn-retake" id="btnRetake">Retake Assessment</button>';
+        html += '</div>';
+
+        $resultsContent.innerHTML = html;
+        showScreen('screenResults');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        document.getElementById('btnRetake').addEventListener('click', retakeAssessment);
+        document.getElementById('btnDownloadMd').addEventListener('click', generateMarkdownExport);
+        document.getElementById('btnDownloadPdf').addEventListener('click', generatePdfExport);
+    }
+
+    function escapeHtml(text) {
+        var div = document.createElement('div');
+        div.appendChild(document.createTextNode(text));
+        return div.innerHTML;
+    }
+
+    /* ===================================
+       MARKDOWN EXPORT
+       =================================== */
+    function generateMarkdownExport() {
+        var result = calculateScores();
+        var sectionScores = result.sectionScores;
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+        var band = getBand(result.mcTotal);
+
+        var md = '';
+        md += '# Project Definition Scorecard Results\n\n';
+        md += '**Student:** ' + capturedEmail + '\n';
+        md += '**Date:** ' + dateStr + '\n';
+        md += '**MC Score:** ' + result.mcTotal + '/' + result.mcMax + ' \u2014 ' + band.label + '\n';
+        md += '**Free-text questions:** ' + result.ftCount + ' (pending AI review)\n\n';
+        md += '---\n\n';
+
+        /* Section Breakdown */
+        md += '## Section Breakdown\n\n';
+        var sectionOrder = ['A', 'B', 'C', 'D', 'E', 'F'];
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            var pct = max > 0 ? Math.round((score / max) * 100) : 0;
+            var strength = pct >= 80 ? '\u2705 Strong' : pct >= 60 ? '\uD83D\uDFE1 Needs Work' : '\u26A0\uFE0F Weak';
+            md += '- **' + sec.name + ': ' + sec.fullName + '** \u2014 ' + score + '/' + max + ' (' + pct + '%) ' + strength + '\n';
+        });
+        md += '\n---\n\n';
+
+        /* Full Answers by Section */
+        md += '## Answers\n\n';
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            md += '### Section ' + sid + ': ' + sec.fullName + '\n\n';
+            allQuestions.forEach(function(q) {
+                if (q.sectionId !== sid) return;
+                md += '**' + q.id.toUpperCase() + '.** ' + q.text + '\n\n';
+                if (q.type === Q_FREETEXT) {
+                    md += '> ' + (answers[q.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
+                    if (q.rubric) md += '_Rubric: ' + q.rubric + '_\n\n';
+                } else if (q.type === Q_MC_EVIDENCE) {
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
+                    if (answers[q.id + '_evidence']) {
+                        md += '**Evidence:** ' + answers[q.id + '_evidence'] + '\n\n';
+                    }
+                } else {
+                    var opt = q.id in answers ? q.options[answers[q.id]] : null;
+                    md += '\u2192 **Selected:** ' + (opt ? opt.label + ' (Score: ' + opt.score + '/' + q.maxScore + ')' : '(No answer)') + '\n\n';
+                }
+            });
+        });
+
+        /* Recommendations */
+        md += '---\n\n## Recommendations\n\n';
+        sectionOrder.forEach(function(sid) {
+            var sec = null;
+            for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
+            var score = sectionScores[sid] || 0;
+            var max = SECTION_MAXES[sid];
+            md += '### ' + sec.name + ': ' + sec.fullName + ' (' + score + '/' + max + ')\n\n';
+            if (RECOMMENDATIONS[sid]) {
+                RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
+            }
+            md += '\n';
+        });
+
+        /* AI Analysis */
+        if (aiData) {
+            md += '---\n\n## Advanced Analysis\n\n';
+            if (aiData.key_insight || aiData.keyInsight) md += '### Key Insight\n\n' + (aiData.key_insight || aiData.keyInsight) + '\n\n';
+            if (aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan']) {
+                var plan = aiData.thirty_day_plan || aiData.thirtyDayPlan || aiData['30_day_plan'];
+                md += '### 30-Day Action Plan\n\n';
+                if (typeof plan === 'string') md += plan + '\n\n';
+                else if (Array.isArray(plan)) { plan.forEach(function(item) { md += '- ' + (typeof item === 'string' ? item : (item.action || item.text || JSON.stringify(item))) + '\n'; }); md += '\n'; }
+            }
+            if (aiData.recommendations || aiData.ai_recommendations) {
+                var aiRecs = aiData.recommendations || aiData.ai_recommendations;
+                md += '### AI Recommendations\n\n';
+                if (Array.isArray(aiRecs)) { aiRecs.forEach(function(r) { md += '- ' + (typeof r === 'string' ? r : (r.text || r.recommendation || JSON.stringify(r))) + '\n'; }); md += '\n'; }
+            }
+        }
+
+        /* AI Scoring Instructions */
+        md += '---\n\n## AI Scoring Instructions\n\n';
+        md += 'To score the free-text answers, copy this file into Claude.ai along with:\n';
+        md += '- `project-files-scoring/SKILL.md`\n\n';
+        md += 'Ask: "Score these Project Definition answers using the rubric provided. Return section scores and total."\n\n';
+
+        var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'project-definition-results-' + dateStr + '.md';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    /* ===================================
+       PDF EXPORT (Print-Friendly Div)
+       =================================== */
+    function generatePdfExport() {
+        var printDiv = document.createElement('div');
+        printDiv.id = 'pdfPrintContainer';
+        printDiv.style.cssText = 'position:absolute;left:-9999px;top:0;width:800px;background:#FFFFFF;color:#1A1A2E;padding:40px;font-family:Inter,sans-serif;';
+
+        var source = document.getElementById('resultsContent');
+        if (!source) return;
+        var clone = source.cloneNode(true);
+
+        /* Convert textareas to styled divs */
+        var tas = clone.querySelectorAll('textarea');
+        for (var i = 0; i < tas.length; i++) {
+            var div = document.createElement('div');
+            div.style.cssText = 'border:1px solid #E5E7EB;border-radius:8px;padding:12px;min-height:40px;white-space:pre-wrap;font-size:14px;color:#1A1A2E;background:#F9FAFB;margin-bottom:8px;';
+            div.textContent = tas[i].value || '(No response)';
+            tas[i].parentNode.replaceChild(div, tas[i]);
+        }
+
+        /* Fix colors for PDF readability */
+        clone.style.color = '#1A1A2E';
+        var allEls = clone.querySelectorAll('*');
+        for (var j = 0; j < allEls.length; j++) {
+            var el = allEls[j];
+            var cs = el.currentStyle || window.getComputedStyle(el);
+            if (cs.color === 'rgb(255, 255, 255)' || cs.color === '#ffffff' || cs.color === '#FFFFFF') {
+                el.style.color = '#1A1A2E';
+            }
+            if (cs.backgroundColor && cs.backgroundColor.indexOf('26, 26, 46') !== -1) {
+                el.style.backgroundColor = '#FFFFFF';
+            }
+        }
+
+        printDiv.appendChild(clone);
+        document.body.appendChild(printDiv);
+
+        var dateStr = new Date().toISOString().split('T')[0];
+        var opt = {
+            margin: [10, 10, 10, 10],
+            filename: 'project-definition-results-' + dateStr + '.pdf',
+            image: { type: 'jpeg', quality: 0.95 },
+            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#FFFFFF' },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        };
+
+        html2pdf().set(opt).from(printDiv).save().then(function() {
+            document.body.removeChild(printDiv);
+        }).catch(function() {
+            try { document.body.removeChild(printDiv); } catch (e) {}
+        });
+    }
+
+    /* ===================================
+       RETAKE
+       =================================== */
+    function retakeAssessment() {
+        answers = {};
+        currentIndex = 0;
+        aiData = null;
+        try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+        $emailInput.value = '';
+        showScreen('screenEmail');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* ===================================
+       BOOT
+       =================================== */
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+
+/* RTL Toggle (global scope) */
 function toggleRTL() {
-  document.body.classList.toggle('rtl');
-  var isRTL = document.body.classList.contains('rtl');
-  document.documentElement.lang = isRTL ? 'ar' : 'en';
-  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-  try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
+    document.body.classList.toggle('rtl');
+    var isRTL = document.body.classList.contains('rtl');
+    document.documentElement.lang = isRTL ? 'ar' : 'en';
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    try { localStorage.setItem('eo-rtl', isRTL ? '1' : '0'); } catch(e) {}
 }
-
-// Keyboard nav
-document.addEventListener('keydown', function(e) {
-  if (document.getElementById('screenStepper').classList.contains('active')) {
-    if (e.key === 'Enter' && e.ctrlKey) {
-      nextQuestion();
-    }
-  }
-});
-
-// Restore RTL
-(function() {
-  try { if (localStorage.getItem('eo-rtl') === '1') { document.body.classList.add('rtl'); document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; } } catch(e) {}
-})();
-
-// Auto-fill email
-(function() {
-  try {
-    var storedEmail = localStorage.getItem('eo_user_email');
-    if (storedEmail) {
-      var el = document.getElementById('auth-email');
-      if (el && !el.value) el.value = storedEmail;
-    }
-  } catch(e) {}
-})();
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
