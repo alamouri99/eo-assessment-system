@@ -132,7 +132,7 @@ body.rtl .option-card { text-align: right; }
 .auth-capture h2 {
     font-size: 26px;
     font-weight: 800;
-    color: #1A1A2E;
+    color: #FFFFFF;
     margin-bottom: 8px;
 }
 .auth-capture .intro-badge {
@@ -156,7 +156,7 @@ body.rtl .option-card { text-align: right; }
     text-align: left;
     font-size: 12px;
     font-weight: 700;
-    color: #1A1A2E;
+    color: #94A3B8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 6px;
@@ -171,7 +171,8 @@ body.rtl .option-card { text-align: right; }
     font-family: inherit;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #1A1A2E;
+    color: #FFFFFF;
+    background: var(--eo-card-bg);
 }
 .auth-capture input:focus { border-color: var(--eo-orange); }
 .auth-capture .q-hint {
@@ -222,7 +223,7 @@ body.rtl .option-card { text-align: right; }
     min-height: 160px;
     outline: none;
     transition: border-color var(--eo-transition);
-    color: #1A1A2E;
+    color: #FFFFFF;
     line-height: 1.5;
     background: var(--eo-card-bg);
 }
@@ -827,7 +828,7 @@ function handleAuth() {
   var email = document.getElementById('auth-email').value.trim().toLowerCase();
   var name = document.getElementById('auth-venture').value.trim();
 
-  if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address'); return; }
   if (!name || name.length < 3) { showError('Venture name must be at least 3 characters'); return; }
 
   userEmail = email;
@@ -1220,39 +1221,65 @@ function downloadMd() {
   if (!result) return;
   var dateStr = new Date().toISOString().split('T')[0];
 
-  var md = '# Project Definition — Full Analysis\n\n';
+  var md = '# SC1: Project Definition — Full Analysis\n\n';
   md += '**Venture:** ' + ventureName + '\n';
   md += '**Email:** ' + userEmail + '\n';
   md += '**Date:** ' + dateStr + '\n';
   md += '**Clarity Score:** ' + result.score + '/100 — ' + result.band + '\n\n';
   md += '---\n\n';
 
+  // 1. STRATEGIC SUMMARY
+  md += '## Strategic Summary\n\n';
+  var secs = result.sections || {};
+  var labels = { venture_intro: 'Venture Clarity', founder_fit: 'Founder Fit', niche: 'Niche Specificity', positioning: 'Positioning', product_vision: 'Product Vision', founder_story: 'Founder Story', mena_context: 'MENA Context' };
+  var strengths = [], gaps = [];
+  Object.keys(labels).forEach(function(k) {
+    var s = secs[k] || 0;
+    if (s >= 70) strengths.push(labels[k] + ' (' + s + ')');
+    else if (s < 55 && s > 0) gaps.push(labels[k] + ' (' + s + ')');
+  });
+  if (strengths.length > 0) md += '**Strengths:** ' + strengths.join(', ') + '\n\n';
+  else md += '**Strengths:** No dimensions above 70 yet — focus on depth and specificity.\n\n';
+  if (gaps.length > 0) md += '**Critical Gaps:** ' + gaps.join(', ') + '\n\n';
+  else md += '**Critical Gaps:** None — all dimensions are in solid shape.\n\n';
+
   // Polished output
   var p = result.polished_output || {};
-  md += '## Venture Brief\n\n';
-  md += '### Venture Description\n' + (p.venture_description || 'N/A') + '\n\n';
-  md += '### Niche Definition\n' + (p.niche_definition || 'N/A') + '\n\n';
-  md += '### Positioning Statement\n' + (p.positioning_statement || 'N/A') + '\n\n';
-  md += '### MVP Scope\n' + (p.mvp_scope || 'N/A') + '\n\n';
-  md += '### Founder Story\n' + (p.founder_story || 'N/A') + '\n\n';
-  md += '### MENA Context\n' + (p.mena_context || 'N/A') + '\n\n';
+  md += '### Venture Brief\n\n';
+  if (p.venture_description) md += '- **Venture:** ' + p.venture_description + '\n';
+  if (p.niche_definition) md += '- **Niche:** ' + p.niche_definition + '\n';
+  if (p.positioning_statement) md += '- **Positioning:** ' + p.positioning_statement + '\n';
+  if (p.mvp_scope) md += '- **MVP Scope:** ' + p.mvp_scope + '\n';
+  if (p.founder_story) md += '- **Founder Story:** ' + p.founder_story + '\n';
+  if (p.mena_context) md += '- **MENA Context:** ' + p.mena_context + '\n';
+  md += '\n';
 
-  md += '---\n\n## Dimension Scores\n\n';
-  md += '| Dimension | Score |\n|-----------|-------|\n';
-  var labels = { venture_intro: 'Venture Clarity', founder_fit: 'Founder Fit', niche: 'Niche Specificity', positioning: 'Positioning', product_vision: 'Product Vision', founder_story: 'Founder Story', mena_context: 'MENA Context' };
-  var secs = result.sections || {};
+  md += '### Dimension Scores\n\n';
+  md += '| Dimension | Score | Status |\n|-----------|-------|--------|\n';
   Object.keys(labels).forEach(function(k) {
-    md += '| ' + labels[k] + ' | ' + (secs[k] || 0) + '/100 |\n';
+    var s = secs[k] || 0;
+    var status = s >= 85 ? 'Launch Ready' : s >= 70 ? 'Almost There' : s >= 55 ? 'Needs Work' : s >= 40 ? 'Early Stage' : 'Reset';
+    md += '| ' + labels[k] + ' | ' + s + '/100 | ' + status + ' |\n';
   });
+  md += '\n---\n\n';
 
-  md += '\n## Areas to Sharpen\n\n';
-  (result.weak_areas || []).forEach(function(w) {
-    md += '### ' + w.name + ' (' + w.score + '/100)\n' + w.advice + '\n\n';
-  });
+  // 2. RECOMMENDED FIXES
+  md += '## Recommended Fixes\n\n';
+  var weakAreas = result.weak_areas || [];
+  if (weakAreas.length > 0) {
+    weakAreas.forEach(function(w, idx) {
+      md += (idx + 1) + '. **' + w.name + ' (' + w.score + '/100):** ' + w.advice + '\n\n';
+    });
+  } else {
+    md += 'All dimensions are strong. Maintain quality as you proceed to ICP Clarity (SC2).\n\n';
+  }
+  md += '---\n\n';
 
-  md += '---\n\n## Raw Answers\n\n';
-  questions.forEach(function(q) {
-    md += '### ' + q.text + '\n' + (answers[q.id] || 'No answer') + '\n\n';
+  // 3. QUESTIONS & ANSWERS
+  md += '## Questions & Answers\n\n';
+  questions.forEach(function(q, idx) {
+    md += '### Q' + (idx + 1) + ': ' + q.text + '\n\n';
+    md += '> ' + (answers[q.id] || 'No answer').replace(/\n/g, '\n> ') + '\n\n';
   });
 
   md += '---\n*Generated by Entrepreneurs Oasis MENA — Project Definition Scoring*\n';
@@ -1293,11 +1320,27 @@ function sendToWebhook(scores, resultObj) {
     timestamp: new Date().toISOString()
   };
 
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
   fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-project-definition', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  }).catch(function(err) { console.warn('Webhook failed:', err); });
+    body: JSON.stringify(payload),
+    signal: controller.signal
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) { console.log('Webhook OK:', data); })
+  .catch(function(err) {
+    if (err.name === 'AbortError') {
+      console.warn('Webhook timeout — proceeding with local scores');
+      showToast('Score saved locally. Server sync will retry.');
+    } else {
+      console.warn('Webhook failed:', err);
+      showToast('Score saved locally. Server sync failed.');
+    }
+  })
+  .finally(function() { clearTimeout(timeoutId); });
 }
 
 // ========================================

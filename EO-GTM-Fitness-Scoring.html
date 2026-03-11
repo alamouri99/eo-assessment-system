@@ -653,7 +653,7 @@ select.email-input option { background: #050A12; color: #fff; }
        =================================== */
     window.handleEmailEntry = function() {
         var email = document.getElementById('auth-email').value.trim().toLowerCase();
-        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address'); return; }
         userEmail = email;
         localStorage.setItem('eo_user_email', email);
         var ventures = getVentures(email);
@@ -730,7 +730,7 @@ select.email-input option { background: #050A12; color: #fff; }
         var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html', 3: 'EO-Market-Attractiveness-Scoring.html', 4: 'EO-Strategy-Selector.html' };
         for (var i = 0; i < prerequisites.length; i++) {
             var n = prerequisites[i];
-            if (!scores['sc' + n] && scores['sc' + n] !== 0) {
+            var s = scores['sc' + n]; if (s === null || s === undefined) {
                 showError('Please complete <a href="' + files[n] + '" style="color:var(--eo-orange)">' + names[n] + '</a> first.');
                 return;
             }
@@ -1052,8 +1052,8 @@ select.email-input option { background: #050A12; color: #fff; }
         .then(function(r) { return r.json(); })
         .then(function(data) { console.log('Webhook OK:', data); })
         .catch(function(err) {
-            if (err.name === 'AbortError') { console.warn('Webhook timeout — proceeding with local scores'); }
-            else { console.warn('Webhook failed:', err); }
+            if (err.name === 'AbortError') { console.warn('Webhook timeout — proceeding with local scores'); showToast('Score saved locally. Server sync will retry.'); }
+            else { console.warn('Webhook failed:', err); showToast('Score saved locally. Server sync failed.'); }
         })
         .finally(function() { clearTimeout(timeoutId); });
     }
@@ -1212,61 +1212,93 @@ select.email-input option { background: #050A12; color: #fff; }
         var today = new Date();
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-        var md = '# GTM Fitness Assessment Results\n\n';
-        md += '**Email:** ' + userEmail + '\n';
+        var md = '# SC5: GTM Fitness — Full Analysis\n\n';
         md += '**Venture:** ' + ventureName + '\n';
+        md += '**Email:** ' + userEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**Score:** ' + score + '/100 — ' + band.label + '\n\n---\n\n';
 
-        /* Motion Ranking Table */
-        md += '## All 13 GTM Motions Ranked\n\n';
-        md += '| # | Motion | Fit | Readiness | MENA | Score | Tier |\n';
-        md += '|---|--------|-----|-----------|------|-------|------|\n';
+        // 1. STRATEGIC SUMMARY
+        md += '## Strategic Summary\n\n';
+
+        // Categorize motions
+        var primary = [], secondary = [], conditional = [], skip = [];
         for (var i = 0; i < motionScores.length; i++) {
             var ms = motionScores[i];
             var m = MOTIONS[ms.idx];
             var tier = getMotionTier(ms.score);
-            md += '| ' + (i + 1) + ' | ' + m.name + ' | ' + ms.fit + ' | ' + ms.readiness + ' | ' + ms.mena + ' | ' + (Math.round(ms.score * 100) / 100).toFixed(1) + ' | ' + tier.label + ' |\n';
+            var entry = m.name + ' (' + (Math.round(ms.score * 100) / 100).toFixed(1) + ')';
+            if (tier.label === 'PRIMARY') primary.push(entry);
+            else if (tier.label === 'SECONDARY') secondary.push(entry);
+            else if (tier.label === 'CONDITIONAL') conditional.push(entry);
+            else skip.push(entry);
         }
-        md += '\n_Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10_\n\n---\n\n';
 
-        /* Top 5 motions detail */
-        md += '## Top 5 Motions (Detailed)\n\n';
+        md += '**Strengths — Primary Motions (' + primary.length + '):** ';
+        md += primary.length > 0 ? primary.join(', ') : 'None yet — build foundational capabilities first.';
+        md += '\n\n';
+        if (skip.length > 0) {
+            md += '**Critical Gaps — Skip Motions (' + skip.length + '):** ' + skip.join(', ') + '\n\n';
+        }
+
+        // Top 5 motions detail
+        md += '### Top 5 Motions\n\n';
         for (var j = 0; j < Math.min(5, motionScores.length); j++) {
             var ms2 = motionScores[j];
             var m2 = MOTIONS[ms2.idx];
             var t2 = getMotionTier(ms2.score);
-            md += '### #' + (j + 1) + ' ' + m2.name + ' (' + t2.label + ')\n\n';
-            md += '- **Fit:** ' + ms2.fit + ' | **Readiness:** ' + ms2.readiness + ' | **MENA:** ' + ms2.mena + '\n';
-            md += '- **Best For:** ' + m2.bestFit + '\n';
-            md += '- **MENA Note:** ' + m2.menaNote + '\n';
-            md += '- **How to Start:**\n';
-            m2.howToStart.forEach(function(s) { md += '  1. ' + s + '\n'; });
-            md += '- **Weekly Hours:** ~' + m2.weeklyHours + 'h\n\n';
+            md += '**#' + (j + 1) + ' ' + m2.name + ' (' + t2.label + '):**\n';
+            md += '- Fit: ' + ms2.fit + ' | Readiness: ' + ms2.readiness + ' | MENA: ' + ms2.mena + '\n';
+            md += '- Best For: ' + m2.bestFit + '\n';
+            md += '- MENA Note: ' + m2.menaNote + '\n\n';
+        }
+
+        md += '### All 13 GTM Motions Ranked\n\n';
+        md += '| # | Motion | Fit | Readiness | MENA | Score | Tier |\n';
+        md += '|---|--------|-----|-----------|------|-------|------|\n';
+        for (var k = 0; k < motionScores.length; k++) {
+            var ms3 = motionScores[k];
+            var m3 = MOTIONS[ms3.idx];
+            var tier3 = getMotionTier(ms3.score);
+            md += '| ' + (k + 1) + ' | ' + m3.name + ' | ' + ms3.fit + ' | ' + ms3.readiness + ' | ' + ms3.mena + ' | ' + (Math.round(ms3.score * 100) / 100).toFixed(1) + ' | ' + tier3.label + ' |\n';
+        }
+        md += '\n_Score = (Fit x 0.4 + Readiness x 0.3 + MENA x 0.3) | Scale: 0-10_\n\n---\n\n';
+
+        // 2. RECOMMENDED FIXES
+        md += '## Recommended Fixes\n\n';
+
+        // 72-Hour Commitment
+        var primaryMotion = MOTIONS[motionScores[0].idx];
+        md += '### 72-Hour Launch Commitment\n\n';
+        md += '**Primary Motion:** ' + primaryMotion.name + '\n';
+        md += '**First Step:** ' + primaryMotion.howToStart[0] + '\n\n';
+
+        // How to start top 3
+        md += '### How to Start Your Top 3 Motions\n\n';
+        for (var l = 0; l < Math.min(3, motionScores.length); l++) {
+            var ms4 = motionScores[l];
+            var m4 = MOTIONS[ms4.idx];
+            md += (l + 1) + '. **' + m4.name + '** (~' + m4.weeklyHours + 'h/week):\n';
+            m4.howToStart.forEach(function(s) { md += '   - ' + s + '\n'; });
+            md += '\n';
         }
         md += '---\n\n';
 
-        /* 72-Hour Commitment */
-        var primaryMotion = MOTIONS[motionScores[0].idx];
-        md += '## 72-Hour Launch Commitment\n\n';
-        md += '**Primary Motion:** ' + primaryMotion.name + '\n';
-        md += '**Commitment:** ' + primaryMotion.howToStart[0] + '\n\n---\n\n';
-
-        /* All Answers */
-        md += '## Your Answers\n\n';
+        // 3. QUESTIONS & ANSWERS
+        md += '## Questions & Answers\n\n';
         QUESTIONS.forEach(function(q, idx) {
             var opt = answers[q.id] !== undefined ? q.options[answers[q.id]] : null;
-            md += '**Q' + (idx + 1) + ': ' + q.text + '**\n';
+            md += '### Q' + (idx + 1) + ': ' + q.text + '\n\n';
             md += '→ ' + (opt ? opt.label : '(No answer)') + '\n\n';
         });
 
-        md += '---\n\n_Generated by Entrepreneurs Oasis MENA GTM Fitness Assessment_\n';
+        md += '---\n*Generated by Entrepreneurs Oasis MENA — GTM Fitness Scoring*\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = 'gtm-fitness-results-' + ventureName.replace(/\s+/g, '-').toLowerCase() + '-' + dateStr + '.md';
+        a.download = 'SC5-GTM-Fitness-' + ventureName.replace(/\s+/g, '-').toLowerCase() + '-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

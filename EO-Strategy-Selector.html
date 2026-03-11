@@ -61,14 +61,14 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
 
 /* Question */
 .question-card { max-width: 640px; margin: 0 auto; padding: 28px 24px; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.question-text { font-size: 20px; font-weight: 700; color: #1A1A2E; margin-bottom: 8px; line-height: 1.4; }
+.question-text { font-size: 20px; font-weight: 700; color: #FFFFFF; margin-bottom: 8px; line-height: 1.4; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); margin-bottom: 20px; line-height: 1.5; font-style: italic; }
 .options-list { display: flex; flex-direction: column; gap: 10px; }
-.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #1A1A2E; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
+.option-card { background: var(--eo-card-bg); border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); padding: 16px 20px; cursor: pointer; font-size: 15px; font-weight: 500; color: #E2E8F0; transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition); user-select: none; line-height: 1.4; }
 .option-card:hover { border-color: var(--eo-orange); }
 .option-card.selected { background: var(--eo-orange); border-color: var(--eo-orange); color: #FFFFFF; }
 .option-card.focused { outline: 2px solid var(--eo-orange); outline-offset: 2px; }
-.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #1A1A2E; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
+.freetext-input { width: 100%; min-height: 160px; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-family: inherit; font-size: 15px; color: #E2E8F0; resize: vertical; outline: none; background: var(--eo-card-bg); line-height: 1.5; transition: border-color var(--eo-transition); }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; }
 .char-count { font-size: 12px; color: var(--eo-gray-text); text-align: right; margin-top: 6px; }
@@ -432,7 +432,7 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
        =================================== */
     window.handleEmailEntry = function() {
         var email = document.getElementById('auth-email').value.trim().toLowerCase();
-        if (!email || !email.includes('@')) { showError('Please enter a valid email address'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address'); return; }
         userEmail = email;
         try { localStorage.setItem('eo_user_email', email); } catch(e) {}
         var ventures = getVentures(email);
@@ -470,7 +470,7 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
         var b = document.getElementById('retrieval-banner');
         b.innerHTML = '<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:4px solid var(--green);border-radius:var(--eo-radius);padding:20px;max-width:440px;margin:24px auto 0">' +
             '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || 0) + '</div>' +
-            '<div><div style="font-weight:700;color:#1A1A2E;font-size:15px">Previously Completed</div><div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
+            '<div><div style="font-weight:700;color:#FFFFFF;font-size:15px">Previously Completed</div><div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div></div></div>' +
             '<div style="display:flex;gap:10px"><button class="btn-secondary" onclick="viewPreviousResults()" style="flex:1;padding:10px">View Results</button><button class="btn-full" onclick="startFresh()" style="flex:1;padding:10px;font-size:14px">Start Fresh</button></div></div>';
         b.style.display = 'block';
     }
@@ -485,7 +485,7 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
 
     function checkPrerequisites() {
         var scores = getScores(userEmail, ventureSlug);
-        var missing = [1, 2, 3].filter(function(n) { return !scores['sc' + n] && scores['sc' + n] !== 0; });
+        var missing = [1, 2, 3].filter(function(n) { var s = scores['sc' + n]; return s === null || s === undefined; });
         if (missing.length > 0) {
             var names = { 1: 'Project Definition', 2: 'ICP Clarity', 3: 'Market Attractiveness' };
             var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html', 3: 'EO-Market-Attractiveness-Scoring.html' };
@@ -822,11 +822,23 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
     function sendToWebhook(result, resultObj) {
         var upstream = {};
         for (var i = 1; i < SC_NUMBER; i++) { upstream['sc' + i + '_score'] = getScores(userEmail, ventureSlug)['sc' + i] || null; }
+
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
         fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-strategy', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: userEmail, venture_name: ventureName, venture_slug: ventureSlug, scorecard: 'SC4', answers: answers, scores: { total: result.normalized, raw: result.total, max: result.maxTotal }, selected_path: resultObj.selectedPath, archetype: resultObj.archetype, upstream_data: upstream, timestamp: new Date().toISOString() })
-        }).catch(function(e) { console.warn('Webhook failed:', e); });
+            body: JSON.stringify({ email: userEmail, venture_name: ventureName, venture_slug: ventureSlug, scorecard: 'SC4', answers: answers, scores: { total: result.normalized, raw: result.total, max: result.maxTotal }, selected_path: resultObj.selectedPath, archetype: resultObj.archetype, upstream_data: upstream, timestamp: new Date().toISOString() }),
+            signal: controller.signal
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { console.log('Webhook OK:', data); })
+        .catch(function(e) {
+            if (e.name === 'AbortError') { console.warn('Webhook timeout'); showToast('Score saved locally. Server sync will retry.'); }
+            else { console.warn('Webhook failed:', e); showToast('Score saved locally. Server sync failed.'); }
+        })
+        .finally(function() { clearTimeout(timeoutId); });
     }
 
     /* ===================================
@@ -950,55 +962,76 @@ body.rtl .raise-card { border-left: none; border-right: 4px solid var(--eo-orang
         var secondary = getSecondaryPath();
         var roadmap = getRoadmap();
         var pathObj = STRATEGY_PATHS[selectedPathIndex] || STRATEGY_PATHS[1];
+        var executionGaps = getExecutionGaps(selectedPathIndex);
         var today = new Date();
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
-        var md = '# Strategy Selector Results (v3.0)\n\n';
+        var md = '# SC4: Strategy Selector — Full Analysis\n\n';
         md += '**Venture:** ' + ventureName + '\n';
         md += '**Founder:** ' + userEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**Score:** ' + result.normalized + '/100 — ' + band.label + '\n\n---\n\n';
 
-        md += '## Recommended Strategy Path: ' + pathObj.name + '\n\n';
+        // 1. STRATEGIC SUMMARY
+        md += '## Strategic Summary\n\n';
+        md += '**Recommended Path:** ' + pathObj.name + '\n\n';
         md += pathObj.desc + '\n\n';
-        md += '### Why This Path\n\n';
+        md += '**Strengths — Why This Path:**\n\n';
         getWhyReasons(selectedPathIndex).forEach(function(r) { md += '- ' + r + '\n'; });
         md += '\n';
+        if (executionGaps.length > 0) {
+            md += '**Critical Gaps:** ' + executionGaps.length + ' execution gap' + (executionGaps.length > 1 ? 's' : '') + ' identified\n\n';
+        } else {
+            md += '**Critical Gaps:** None — strong alignment with selected path.\n\n';
+        }
 
-        md += '## Backup Path: ' + STRATEGY_PATHS[secondary.path].name + '\n\n';
-        md += 'Activate if: ' + secondary.condition + '\n\n';
+        md += '**Backup Path:** ' + STRATEGY_PATHS[secondary.path].name + '\n';
+        md += '- Activate if: ' + secondary.condition + '\n\n';
 
-        md += '## Founder Archetype: ' + archetype.name + '\n\n';
-        md += archetype.desc + '\n\n---\n\n';
+        md += '**Founder Archetype:** ' + archetype.name + '\n';
+        md += '- ' + archetype.desc + '\n\n';
 
-        md += '## 90-Day Roadmap\n\n';
+        md += '### 90-Day Roadmap\n\n';
         ['m1', 'm2', 'm3'].forEach(function(m, idx) {
-            md += '### Month ' + (idx + 1) + '\n\n';
+            md += '**Month ' + (idx + 1) + ':**\n';
             roadmap[m].forEach(function(item) { md += '- ' + item + '\n'; });
             md += '\n';
         });
+        md += '---\n\n';
 
-        md += '---\n\n## All 4 Paths Compared\n\n';
+        // 2. RECOMMENDED FIXES
+        md += '## Recommended Fixes\n\n';
+        if (executionGaps.length > 0) {
+            executionGaps.forEach(function(g, idx) {
+                md += (idx + 1) + '. **' + g.title + ':** ' + g.advice + '\n\n';
+            });
+        } else {
+            md += 'No critical execution gaps. Proceed to GTM Fitness (SC5) with confidence.\n\n';
+        }
+
+        md += '### All 4 Paths Compared\n\n';
         STRATEGY_PATHS.forEach(function(p, idx) {
             var marker = idx === selectedPathIndex ? ' ← RECOMMENDED' : '';
-            md += '### ' + p.name + marker + '\n\n' + p.desc + '\n\n';
+            md += '**' + p.name + marker + ':** ' + p.desc + '\n\n';
         });
+        md += '---\n\n';
 
-        md += '---\n\n## Full Answers\n\n';
+        // 3. QUESTIONS & ANSWERS
+        md += '## Questions & Answers\n\n';
         allQuestions.forEach(function(q, idx) {
             var eq = getEffective(idx);
-            md += '**Q' + (idx + 1) + '.** ' + eq.text + '\n\n';
+            md += '### Q' + (idx + 1) + ': ' + eq.text + '\n\n';
             if (eq.type === Q_FREETEXT) md += '> ' + (answers[eq.id] || '(No answer)').replace(/\n/g, '\n> ') + '\n\n';
             else { var opt = eq.id in answers && eq.options ? eq.options[answers[eq.id]] : null; md += '→ ' + (opt ? opt.label + ' (' + opt.score + '/' + eq.maxScore + ')' : '(No answer)') + '\n\n'; }
         });
 
-        md += '---\n\n## Execution Gaps\n\n';
-        getExecutionGaps(selectedPathIndex).forEach(function(g) { md += '### ' + g.title + '\n\n' + g.advice + '\n\n'; });
+        md += '---\n*Generated by Entrepreneurs Oasis MENA — Strategy Selector*\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
-        a.href = url; a.download = (slugify(ventureName) || 'strategy-selector') + '-results-' + dateStr + '.md';
+        a.href = url;
+        a.download = 'SC4-Strategy-Selector-' + (slugify(ventureName) || 'venture') + '-' + dateStr + '.md';
         document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
     }
 

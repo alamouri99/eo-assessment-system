@@ -41,17 +41,17 @@ body.rtl .progress-meta { flex-direction: row-reverse; }
 .screen { display: none; }
 .screen.active { display: block; }
 .auth-capture { max-width: 480px; margin: 60px auto; padding: 40px; text-align: center; background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-.auth-capture h2 { font-size: 26px; font-weight: 800; color: #1A1A2E; margin-bottom: 8px; }
+.auth-capture h2 { font-size: 26px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px; }
 .auth-capture .intro-badge { display: inline-block; background: var(--eo-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 4px; letter-spacing: 0.5px; margin-bottom: 12px; }
 .auth-capture p { color: var(--eo-gray-text); margin-bottom: 24px; font-size: 15px; }
-.auth-capture label { display: block; text-align: left; font-size: 12px; font-weight: 700; color: #1A1A2E; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; margin-top: 16px; }
-.auth-capture input, .auth-capture select { width: 100%; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); color: #1A1A2E; background: var(--eo-card-bg); }
+.auth-capture label { display: block; text-align: left; font-size: 12px; font-weight: 700; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; margin-top: 16px; }
+.auth-capture input, .auth-capture select { width: 100%; padding: 14px 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; outline: none; transition: border-color var(--eo-transition); color: #FFFFFF; background: var(--eo-card-bg); }
 .auth-capture input:focus, .auth-capture select:focus { border-color: var(--eo-orange); }
 .auth-capture .btn-primary { width: 100%; margin-top: 20px; }
 .question-card { background: var(--eo-beige); border-radius: var(--eo-radius); box-shadow: 0 4px 20px rgba(0,0,0,0.3); padding: 32px; max-width: 640px; margin: 0 auto; }
 .question-text { font-size: 20px; font-weight: 700; color: var(--eo-orange); text-align: center; margin-bottom: 12px; line-height: 1.35; }
 .question-help { font-size: 13px; color: var(--eo-gray-text); text-align: center; margin-bottom: 20px; line-height: 1.5; font-style: italic; }
-.freetext-input { width: 100%; padding: 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; resize: vertical; min-height: 160px; outline: none; transition: border-color var(--eo-transition); color: #1A1A2E; line-height: 1.5; background: var(--eo-card-bg); }
+.freetext-input { width: 100%; padding: 16px; border: 2px solid var(--eo-gray-border); border-radius: var(--eo-radius-sm); font-size: 15px; font-family: inherit; resize: vertical; min-height: 160px; outline: none; transition: border-color var(--eo-transition); color: #FFFFFF; line-height: 1.5; background: var(--eo-card-bg); }
 .freetext-input:focus { border-color: var(--eo-orange); }
 .freetext-input::placeholder { color: #9CA3AF; font-size: 14px; }
 .char-count { text-align: right; font-size: 12px; color: #9CA3AF; margin-top: 6px; }
@@ -206,7 +206,7 @@ var questions = [
 // === AUTH (Venture Selector) ===
 function handleEmailEntry() {
   var email = document.getElementById('auth-email').value.trim().toLowerCase();
-  if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email address'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address'); return; }
   userEmail = email;
   localStorage.setItem('eo_user_email', email);
   var ventures = getVentures(email);
@@ -220,7 +220,7 @@ function handleEmailEntry() {
 
 function showVentureSelector(ventures) {
   var sel = document.getElementById('venture-selector');
-  sel.innerHTML = '<label style="margin-top:0">Select Venture</label><select id="venture-select" style="width:100%;padding:14px 16px;border:2px solid var(--eo-gray-border);border-radius:var(--eo-radius-sm);font-size:15px;font-family:inherit;color:#1A1A2E;background:var(--eo-card-bg)" onchange="handleVentureSelect()"><option value="">— Choose your venture —</option>' +
+  sel.innerHTML = '<label style="margin-top:0">Select Venture</label><select id="venture-select" style="width:100%;padding:14px 16px;border:2px solid var(--eo-gray-border);border-radius:var(--eo-radius-sm);font-size:15px;font-family:inherit;color:#FFFFFF;background:var(--eo-card-bg)" onchange="handleVentureSelect()"><option value="">— Choose your venture —</option>' +
     ventures.map(function(v){return '<option value="'+v.venture_slug+'">'+v.venture_name+'</option>';}).join('') + '</select>';
   sel.style.display = 'block';
 }
@@ -243,7 +243,7 @@ function selectVenture(venture) {
 
 function checkPrerequisites() {
   var scores = getScores(userEmail, ventureSlug);
-  if (!scores.sc1 && scores.sc1 !== 0) {
+  if (scores.sc1 === null || scores.sc1 === undefined) {
     showError('Please complete <a href="EO-Project-Definition-Scoring.html" style="color:var(--eo-orange)">Project Definition</a> first.');
     return;
   }
@@ -388,19 +388,80 @@ function renderResults(result) {
 
 // === MD DOWNLOAD ===
 function downloadMd() {
-  var result=getUpstreamResult(SC_NUMBER,userEmail,ventureSlug);if(!result)return;
-  var dateStr=new Date().toISOString().split('T')[0];
-  var md='# ICP Clarity — Full Analysis\n\n**Venture:** '+ventureName+'\n**Date:** '+dateStr+'\n**Clarity Score:** '+result.score+'/100 — '+result.band+'\n\n---\n\n';
-  var p=result.polished_output||{};
-  md+='## ICP Profile\n\n### Who They Are\n'+(p.who||'N/A')+'\n\n### Key Pains\n'+(p.pain||'N/A')+'\n\n### Dream Outcome\n'+(p.dream_outcome||'N/A')+'\n\n### Where to Find Them\n'+(p.where_to_find||'N/A')+'\n\n';
-  md+='## Dimension Scores\n\n| Dimension | Score |\n|-----------|-------|\n';
-  var labels={who:'Customer Definition',pain:'Pain Clarity',dream:'Dream Outcome',journey:'Buyer Journey',access:'Access Channels',validation:'Validation Plan'};
-  var secs=result.sections||{};
-  Object.keys(labels).forEach(function(k){md+='| '+labels[k]+' | '+(secs[k]||0)+'/100 |\n';});
-  md+='\n## Areas to Sharpen\n\n';(result.weak_areas||[]).forEach(function(w){md+='### '+w.name+' ('+w.score+'/100)\n'+w.advice+'\n\n';});
-  md+='---\n\n## Raw Answers\n\n';questions.forEach(function(q){md+='### '+q.text+'\n'+(answers[q.id]||'No answer')+'\n\n';});
-  md+='---\n*Generated by Entrepreneurs Oasis MENA — ICP Clarity Scoring*\n';
-  var blob=new Blob([md],{type:'text/markdown;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='SC2-ICP-Clarity-'+ventureSlug+'-'+dateStr+'.md';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+  var result = getUpstreamResult(SC_NUMBER, userEmail, ventureSlug);
+  if (!result) return;
+  var dateStr = new Date().toISOString().split('T')[0];
+
+  var md = '# SC2: ICP Clarity — Full Analysis\n\n';
+  md += '**Venture:** ' + ventureName + '\n';
+  md += '**Email:** ' + userEmail + '\n';
+  md += '**Date:** ' + dateStr + '\n';
+  md += '**Clarity Score:** ' + result.score + '/100 — ' + result.band + '\n\n';
+  md += '---\n\n';
+
+  // 1. STRATEGIC SUMMARY
+  md += '## Strategic Summary\n\n';
+  var secs = result.sections || {};
+  var labels = { who: 'Customer Definition', pain: 'Pain Clarity', dream: 'Dream Outcome', journey: 'Buyer Journey', access: 'Access Channels', validation: 'Validation Plan' };
+  var strengths = [], gaps = [];
+  Object.keys(labels).forEach(function(k) {
+    var s = secs[k] || 0;
+    if (s >= 70) strengths.push(labels[k] + ' (' + s + ')');
+    else if (s < 55 && s > 0) gaps.push(labels[k] + ' (' + s + ')');
+  });
+  if (strengths.length > 0) md += '**Strengths:** ' + strengths.join(', ') + '\n\n';
+  else md += '**Strengths:** No dimensions above 70 yet — add more specificity to your buyer profile.\n\n';
+  if (gaps.length > 0) md += '**Critical Gaps:** ' + gaps.join(', ') + '\n\n';
+  else md += '**Critical Gaps:** None — your ICP definition is solid.\n\n';
+
+  // ICP Profile
+  var p = result.polished_output || {};
+  md += '### ICP Profile Summary\n\n';
+  if (p.who) md += '- **Who:** ' + p.who + '\n';
+  if (p.pain) md += '- **Pain:** ' + p.pain + '\n';
+  if (p.dream_outcome) md += '- **Dream Outcome:** ' + p.dream_outcome + '\n';
+  if (p.where_to_find) md += '- **Where to Find:** ' + p.where_to_find + '\n';
+  md += '\n';
+
+  md += '### Dimension Scores\n\n';
+  md += '| Dimension | Score | Status |\n|-----------|-------|--------|\n';
+  Object.keys(labels).forEach(function(k) {
+    var s = secs[k] || 0;
+    var status = s >= 85 ? 'Launch Ready' : s >= 70 ? 'Almost There' : s >= 55 ? 'Needs Work' : s >= 40 ? 'Early Stage' : 'Reset';
+    md += '| ' + labels[k] + ' | ' + s + '/100 | ' + status + ' |\n';
+  });
+  md += '\n---\n\n';
+
+  // 2. RECOMMENDED FIXES
+  md += '## Recommended Fixes\n\n';
+  var weakAreas = result.weak_areas || [];
+  if (weakAreas.length > 0) {
+    weakAreas.forEach(function(w, idx) {
+      md += (idx + 1) + '. **' + w.name + ' (' + w.score + '/100):** ' + w.advice + '\n\n';
+    });
+  } else {
+    md += 'All dimensions are strong. Proceed to Market Attractiveness (SC3) with confidence.\n\n';
+  }
+  md += '---\n\n';
+
+  // 3. QUESTIONS & ANSWERS
+  md += '## Questions & Answers\n\n';
+  questions.forEach(function(q, idx) {
+    md += '### Q' + (idx + 1) + ': ' + q.text + '\n\n';
+    md += '> ' + (answers[q.id] || 'No answer').replace(/\n/g, '\n> ') + '\n\n';
+  });
+
+  md += '---\n*Generated by Entrepreneurs Oasis MENA — ICP Clarity Scoring*\n';
+
+  var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'SC2-ICP-Clarity-' + ventureSlug + '-' + dateStr + '.md';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function retakeAssessment() { answers={};localStorage.removeItem(storageKey('answers',SC_NUMBER,userEmail,ventureSlug));localStorage.removeItem(storageKey('result',SC_NUMBER,userEmail,ventureSlug));currentQ=0;showScreen('screenStepper');renderQuestion(); }
@@ -409,10 +470,27 @@ function retakeAssessment() { answers={};localStorage.removeItem(storageKey('ans
 function sendToWebhook(scores, resultObj) {
   var upstream={};
   for(var i=1;i<SC_NUMBER;i++){upstream['sc'+i+'_score']=getScores(userEmail,ventureSlug)['sc'+i]||null;upstream['sc'+i+'_answers']=getUpstreamAnswers(i,userEmail,ventureSlug);}
-  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:userEmail,venture_name:ventureName,venture_slug:ventureSlug,scorecard:'SC2',answers:answers,scores:scores,upstream_data:upstream,timestamp:new Date().toISOString()})}).catch(function(err){console.warn('Webhook failed:',err);});
+
+  var controller = new AbortController();
+  var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
+  fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-icp-score',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({email:userEmail,venture_name:ventureName,venture_slug:ventureSlug,scorecard:'SC2',answers:answers,scores:scores,upstream_data:upstream,timestamp:new Date().toISOString()}),
+    signal: controller.signal
+  })
+  .then(function(r){return r.json();})
+  .then(function(data){console.log('Webhook OK:',data);})
+  .catch(function(err){
+    if(err.name==='AbortError'){console.warn('Webhook timeout');showToast('Score saved locally. Server sync will retry.');}
+    else{console.warn('Webhook failed:',err);showToast('Score saved locally. Server sync failed.');}
+  })
+  .finally(function(){clearTimeout(timeoutId);});
 }
 
 // === UTILITIES ===
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 function showScreen(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');}
 function countWords(t){if(!t||!t.trim())return 0;return t.trim().split(/\s+/).length;}
 function escapeHtml(t){if(!t)return '';return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}

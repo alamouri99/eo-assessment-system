@@ -21,7 +21,7 @@
     --red: #EF4444;
     --gold: #D97706;
     --teal: #0D9488;
-    --text: #1A1A2E;
+    --text: #FFFFFF;
     --text-2: #94A3B8;
     --text-3: #64748B;
     --surface: rgba(255,255,255,0.06);
@@ -217,7 +217,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
 .question-text {
     font-size: 20px;
     font-weight: 700;
-    color: #1A1A2E;
+    color: #FFFFFF;
     margin-bottom: 8px;
     line-height: 1.4;
 }
@@ -241,7 +241,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    color: #1A1A2E;
+    color: #E2E8F0;
     transition: border-color var(--eo-transition), background var(--eo-transition), color var(--eo-transition);
     user-select: none;
     line-height: 1.4;
@@ -268,7 +268,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
     border-radius: var(--eo-radius-sm);
     font-family: inherit;
     font-size: 15px;
-    color: #1A1A2E;
+    color: #FFFFFF;
     resize: vertical;
     outline: none;
     background: var(--eo-card-bg);
@@ -1197,7 +1197,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
        =================================== */
     window.handleEmailEntry = function() {
         var email = document.getElementById('auth-email').value.trim().toLowerCase();
-        if (!email || !email.includes('@')) {
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             showError('Please enter a valid email address');
             return;
         }
@@ -1261,7 +1261,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
               '<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">' +
                 '<div style="width:44px;height:44px;border-radius:50%;background:rgba(255,102,0,0.15);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--eo-orange)">' + (result.score || 0) + '</div>' +
                 '<div>' +
-                  '<div style="font-weight:700;color:#1A1A2E;font-size:15px">Previously Completed</div>' +
+                  '<div style="font-weight:700;color:#FFFFFF;font-size:15px">Previously Completed</div>' +
                   '<div style="font-size:12px;color:#64748B">' + (result.band || '') + ' — ' + (result.completed_at || '') + '</div>' +
                 '</div>' +
               '</div>' +
@@ -1294,7 +1294,7 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
         var names = { 1: 'Project Definition', 2: 'ICP Clarity' };
         var files = { 1: 'EO-Project-Definition-Scoring.html', 2: 'EO-ICP-Clarity-Scoring.html' };
 
-        var missing = prerequisites.filter(function(n) { return !scores['sc' + n] && scores['sc' + n] !== 0; });
+        var missing = prerequisites.filter(function(n) { var s = scores['sc' + n]; return s === null || s === undefined; });
 
         if (missing.length > 0) {
             var firstMissing = missing[0];
@@ -1853,11 +1853,27 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
             timestamp: new Date().toISOString()
         };
 
+        var controller = new AbortController();
+        var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
+
         fetch('https://ai.mamounalamouri.smorchestra.com/webhook/eo-mas-score', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).catch(function(err) { console.warn('Webhook failed:', err); });
+            body: JSON.stringify(payload),
+            signal: controller.signal
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { console.log('Webhook OK:', data); })
+        .catch(function(err) {
+            if (err.name === 'AbortError') {
+                console.warn('Webhook timeout — proceeding with local scores');
+                showToast('Score saved locally. Server sync will retry.');
+            } else {
+                console.warn('Webhook failed:', err);
+                showToast('Score saved locally. Server sync failed.');
+            }
+        })
+        .finally(function() { clearTimeout(timeoutId); });
     }
 
     /* ===================================
@@ -2048,18 +2064,34 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
         var dateStr = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
 
         var md = '';
-        md += '# Market Attractiveness Scorecard Results (v3.0)\n\n';
+        md += '# SC3: Market Attractiveness — Full Analysis\n\n';
         md += '**Venture:** ' + ventureName + '\n';
         md += '**Founder:** ' + userEmail + '\n';
         md += '**Date:** ' + dateStr + '\n';
         md += '**Overall Score:** ' + result.score + '/100 — ' + band.label + '\n\n';
         md += '---\n\n';
 
-        /* 4-Dimension Summary */
-        md += '## 4-Dimension Breakdown\n\n';
+        // 1. STRATEGIC SUMMARY
+        md += '## Strategic Summary\n\n';
+        var dimOrder = ['pain', 'purchasing', 'sizing', 'growth'];
+        var strengths = [], gaps = [];
+        dimOrder.forEach(function(key) {
+            var d = dims[key];
+            if (!d) return;
+            var pct = d.max > 0 ? Math.round((d.score / d.max) * 100) : 0;
+            if (pct >= 70) strengths.push(d.label + ' (' + pct + '%)');
+            else if (pct < 50) gaps.push(d.label + ' (' + pct + '%)');
+        });
+        if (strengths.length > 0) md += '**Strengths:** ' + strengths.join(', ') + '\n\n';
+        else md += '**Strengths:** No dimensions above 70% yet — strengthen market evidence.\n\n';
+        if (gaps.length > 0) md += '**Critical Gaps:** ' + gaps.join(', ') + '\n\n';
+        else md += '**Critical Gaps:** None — market signal is solid.\n\n';
+
+        md += '**Viability Verdict:** ' + getVerdict(result.score, dims) + '\n\n';
+
+        md += '### 4-Dimension Breakdown\n\n';
         md += '| Dimension | Score | Max | Percentage |\n';
         md += '|-----------|-------|-----|------------|\n';
-        var dimOrder = ['pain', 'purchasing', 'sizing', 'growth'];
         dimOrder.forEach(function(key) {
             var d = dims[key];
             if (!d) return;
@@ -2068,42 +2100,60 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
         });
         md += '\n';
 
-        /* Viability Verdict */
-        md += '## Viability Verdict\n\n';
-        md += getVerdict(result.score, dims) + '\n\n';
-        md += '---\n\n';
-
-        /* Section Breakdown */
-        md += '## Section Breakdown\n\n';
+        md += '### Section Breakdown\n\n';
         md += '| Section | Score | Max |\n';
         md += '|---------|-------|-----|\n';
         md += '| Evidence Validation (B) | ' + (result.sectionScores['B'] || 0) + ' | 40 |\n';
         md += '| Market Sizing & Growth (C) | ' + (result.sectionScores['C'] || 0) + ' | 40 |\n';
-        md += '\n---\n\n';
+        md += '\n';
 
         /* Upstream Data */
-        md += '## Upstream Data (From SC1 + SC2)\n\n';
-        if (upstreamPD && Object.keys(upstreamPD).length > 0) {
-            md += '### SC1: Project Definition\n';
-            ['niche', 'positioning', 'mena_context', 'product_vision'].forEach(function(key) {
-                var val = upstreamPD[key] || '';
-                if (val) md += '- **' + key.replace(/_/g, ' ') + ':** ' + val.substring(0, 200) + '\n';
-            });
+        if ((upstreamPD && Object.keys(upstreamPD).length > 0) || (upstreamICP && Object.keys(upstreamICP).length > 0)) {
+            md += '### Upstream Context (SC1 + SC2)\n\n';
+            if (upstreamPD && Object.keys(upstreamPD).length > 0) {
+                ['niche', 'positioning', 'mena_context', 'product_vision'].forEach(function(key) {
+                    var val = upstreamPD[key] || '';
+                    if (val) md += '- **' + key.replace(/_/g, ' ') + ':** ' + val.substring(0, 200) + '\n';
+                });
+            }
+            if (upstreamICP && Object.keys(upstreamICP).length > 0) {
+                ['who', 'pain', 'dream', 'access'].forEach(function(key) {
+                    var val = upstreamICP[key] || '';
+                    if (val) md += '- **' + key + ':** ' + val.substring(0, 200) + '\n';
+                });
+            }
             md += '\n';
         }
-        if (upstreamICP && Object.keys(upstreamICP).length > 0) {
-            md += '### SC2: ICP Clarity\n';
-            ['who', 'pain', 'dream', 'access'].forEach(function(key) {
-                var val = upstreamICP[key] || '';
-                if (val) md += '- **' + key + ':** ' + val.substring(0, 200) + '\n';
+        md += '---\n\n';
+
+        // 2. RECOMMENDED FIXES
+        md += '## Recommended Fixes\n\n';
+        var weakDims = getWeakDimensions(dims);
+        if (weakDims.length === 0) {
+            md += 'All dimensions are strong. Maintain evidence quality as you proceed to Strategy Selector (SC4).\n\n';
+        }
+        weakDims.forEach(function(wd, idx) {
+            var pct = wd.max > 0 ? Math.round((wd.score / wd.max) * 100) : 0;
+            md += (idx + 1) + '. **' + wd.label + ' (' + pct + '%):** ' + getRaiseAdvice(wd.key) + '\n\n';
+        });
+        var sectionOrder = ['B', 'C'];
+        var hasRecs = false;
+        sectionOrder.forEach(function(sid) {
+            if (RECOMMENDATIONS[sid] && RECOMMENDATIONS[sid].length > 0) hasRecs = true;
+        });
+        if (hasRecs) {
+            md += '### General Recommendations\n\n';
+            sectionOrder.forEach(function(sid) {
+                if (RECOMMENDATIONS[sid]) {
+                    RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
+                }
             });
             md += '\n';
         }
         md += '---\n\n';
 
-        /* Full Answers */
-        md += '## Full Answers\n\n';
-        var sectionOrder = ['B', 'C'];
+        // 3. QUESTIONS & ANSWERS
+        md += '## Questions & Answers\n\n';
         sectionOrder.forEach(function(sid) {
             var sec = null;
             for (var i = 0; i < SECTIONS.length; i++) { if (SECTIONS[i].id === sid) { sec = SECTIONS[i]; break; } }
@@ -2120,32 +2170,13 @@ body.rtl .dim-bar-row { flex-direction: row-reverse; }
             });
         });
 
-        /* How to Improve */
-        md += '---\n\n## How to Raise Your Score\n\n';
-        var weakDims = getWeakDimensions(dims);
-        if (weakDims.length === 0) {
-            md += 'All dimensions are strong. Maintain evidence quality as you proceed.\n\n';
-        }
-        weakDims.forEach(function(wd) {
-            var pct = wd.max > 0 ? Math.round((wd.score / wd.max) * 100) : 0;
-            md += '### ' + wd.label + ' (' + pct + '%)\n\n';
-            md += getRaiseAdvice(wd.key) + '\n\n';
-        });
-
-        /* General Recommendations */
-        md += '---\n\n## General Recommendations\n\n';
-        sectionOrder.forEach(function(sid) {
-            if (RECOMMENDATIONS[sid]) {
-                RECOMMENDATIONS[sid].forEach(function(r) { md += '- ' + r + '\n'; });
-            }
-        });
-        md += '\n';
+        md += '---\n*Generated by Entrepreneurs Oasis MENA — Market Attractiveness Scoring*\n';
 
         var blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
         var url = URL.createObjectURL(blob);
         var a = document.createElement('a');
         a.href = url;
-        a.download = (slugify(ventureName) || 'market-attractiveness') + '-results-' + dateStr + '.md';
+        a.download = 'SC3-Market-Attractiveness-' + (slugify(ventureName) || 'venture') + '-' + dateStr + '.md';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

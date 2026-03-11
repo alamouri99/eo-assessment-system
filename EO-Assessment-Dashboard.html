@@ -6,6 +6,22 @@
     <title>EO Founder Assessment Suite | Entrepreneurs Oasis MENA</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --eo-dark: #050A12;
+            --eo-orange: #FF6600;
+            --eo-beige: #0C1220;
+            --eo-card-bg: #111827;
+            --eo-gray-text: #94A3B8;
+            --eo-gray-border: rgba(255,255,255,0.06);
+            --eo-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            --eo-radius: 14px;
+            --eo-radius-sm: 8px;
+            --eo-transition: 300ms ease;
+            --green: #22C55E;
+            --gold: #D97706;
+            --red: #EF4444;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -142,7 +158,7 @@
 
         .eo-subtitle-small {
             font-size: 15px;
-            color: #666;
+            color: #94A3B8;
             font-weight: 400;
             margin-top: 4px;
         }
@@ -206,7 +222,7 @@
 
         .eo-card-source {
             font-size: 12px;
-            color: #666666;
+            color: #94A3B8;
             margin-bottom: 1.5rem;
             font-style: italic;
         }
@@ -272,7 +288,7 @@
         .eo-flow-step .step-meta {
             font-size: 11px;
             font-weight: 400;
-            color: #888;
+            color: #94A3B8;
             margin-top: 4px;
         }
 
@@ -299,7 +315,7 @@
         .step-status.pending {
             background: rgba(255,255,255,0.06);
             border: 1px solid #555;
-            color: #888;
+            color: #94A3B8;
         }
 
         .eo-flow-step.highlight .step-status.pending {
@@ -353,7 +369,7 @@
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 0.05em;
-            color: #888;
+            color: #94A3B8;
             margin-bottom: 6px;
             text-transform: uppercase;
         }
@@ -412,7 +428,7 @@
             justify-content: center;
             font-size: 11px;
             font-weight: 700;
-            color: #666;
+            color: #94A3B8;
         }
 
         .eo-resume-circle.complete {
@@ -692,7 +708,7 @@
             text-orientation: mixed;
             transform: rotate(180deg);
             font-size: 10px;
-            color: #666;
+            color: #94A3B8;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: flex;
@@ -713,7 +729,7 @@
         .eo-matrix-xlabel {
             text-align: center;
             font-size: 10px;
-            color: #666;
+            color: #94A3B8;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-top: 0.5rem;
@@ -939,12 +955,12 @@
             display: none !important;
         }
 
-        /* Status Colors */
-        .status-launch { color: #4CAF50; }
-        .status-almost { color: #FFC107; }
-        .status-needs { color: #FF9800; }
-        .status-early { color: #F44336; }
-        .status-reset { color: #D32F2F; }
+        /* Status Colors — matches design system */
+        .status-launch { color: #22C55E; }
+        .status-almost { color: #FF6600; }
+        .status-needs { color: #D97706; }
+        .status-early { color: #EF4444; }
+        .status-reset { color: #EF4444; }
     </style>
 </head>
 <body>
@@ -1107,19 +1123,19 @@
 
                 <!-- Score Inputs -->
                 <div class="eo-inputs">
-                    <div class="eo-inputs-title">Your Assessment Scores <span style="font-size: 12px; color: #666; font-weight: 400;">(or adjust manually)</span></div>
+                    <div class="eo-inputs-title">Your Assessment Scores <span style="font-size: 12px; color: #94A3B8; font-weight: 400;">(or adjust manually)</span></div>
 
                     <div class="eo-input-group">
                         <div class="eo-input-label">
-                            <span>Market Attractiveness Score</span>
-                            <span class="eo-input-value"><span id="mas-display">0</span>/100</span>
+                            <span>SC1 — Project Definition</span>
+                            <span class="eo-input-value"><span id="pd-display">0</span>/100</span>
                         </div>
-                        <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="mas-slider" oninput="updateScores()">
+                        <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="pd-slider" oninput="updateScores()">
                     </div>
 
                     <div class="eo-input-group">
                         <div class="eo-input-label">
-                            <span>ICP Clarity Score</span>
+                            <span>SC2 — ICP Clarity Score</span>
                             <span class="eo-input-value"><span id="icp-display">0</span>/100</span>
                         </div>
                         <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="icp-slider" oninput="updateScores()">
@@ -1127,7 +1143,23 @@
 
                     <div class="eo-input-group">
                         <div class="eo-input-label">
-                            <span>GTM Fitness Score</span>
+                            <span>SC3 — Market Attractiveness</span>
+                            <span class="eo-input-value"><span id="mas-display">0</span>/100</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="mas-slider" oninput="updateScores()">
+                    </div>
+
+                    <div class="eo-input-group">
+                        <div class="eo-input-label">
+                            <span>SC4 — Strategy Selector</span>
+                            <span class="eo-input-value"><span id="ss-display">0</span>/100</span>
+                        </div>
+                        <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="ss-slider" oninput="updateScores()">
+                    </div>
+
+                    <div class="eo-input-group">
+                        <div class="eo-input-label">
+                            <span>SC5 — GTM Fitness Score</span>
                             <span class="eo-input-value"><span id="gtm-display">0</span>/100</span>
                         </div>
                         <input type="range" min="0" max="100" value="0" class="eo-input-slider" id="gtm-slider" oninput="updateScores()">
@@ -1166,8 +1198,32 @@
                     </svg>
                 </div>
 
-                <!-- Three Pillar Cards -->
+                <!-- Five Pillar Cards -->
                 <div class="eo-pillars" id="pillars-section" style="display: none;">
+                    <div class="eo-pillar-card">
+                        <div class="eo-pillar-header">
+                            <div class="eo-pillar-name">Project Definition</div>
+                            <div class="eo-pillar-score" id="pillar-pd-score">0</div>
+                        </div>
+                        <div class="eo-pillar-bar">
+                            <div class="eo-pillar-fill" id="pillar-pd-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="eo-pillar-band" id="pillar-pd-band">-</div>
+                        <div class="eo-pillar-weakness" id="pillar-pd-weakness">-</div>
+                        <div class="eo-pillar-action">→ Sharpen niche & positioning</div>
+                    </div>
+                    <div class="eo-pillar-card">
+                        <div class="eo-pillar-header">
+                            <div class="eo-pillar-name">ICP Clarity</div>
+                            <div class="eo-pillar-score" id="pillar-icp-score">0</div>
+                        </div>
+                        <div class="eo-pillar-bar">
+                            <div class="eo-pillar-fill" id="pillar-icp-bar" style="width: 0%"></div>
+                        </div>
+                        <div class="eo-pillar-band" id="pillar-icp-band">-</div>
+                        <div class="eo-pillar-weakness" id="pillar-icp-weakness">-</div>
+                        <div class="eo-pillar-action">→ Sharpen buyer definition</div>
+                    </div>
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
                             <div class="eo-pillar-name">Market Attractiveness</div>
@@ -1182,15 +1238,15 @@
                     </div>
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
-                            <div class="eo-pillar-name">ICP Clarity</div>
-                            <div class="eo-pillar-score" id="pillar-icp-score">0</div>
+                            <div class="eo-pillar-name">Strategy Selector</div>
+                            <div class="eo-pillar-score" id="pillar-ss-score">0</div>
                         </div>
                         <div class="eo-pillar-bar">
-                            <div class="eo-pillar-fill" id="pillar-icp-bar" style="width: 0%"></div>
+                            <div class="eo-pillar-fill" id="pillar-ss-bar" style="width: 0%"></div>
                         </div>
-                        <div class="eo-pillar-band" id="pillar-icp-band">-</div>
-                        <div class="eo-pillar-weakness" id="pillar-icp-weakness">-</div>
-                        <div class="eo-pillar-action">→ Sharpen buyer definition</div>
+                        <div class="eo-pillar-band" id="pillar-ss-band">-</div>
+                        <div class="eo-pillar-weakness" id="pillar-ss-weakness">-</div>
+                        <div class="eo-pillar-action">→ Refine strategy path</div>
                     </div>
                     <div class="eo-pillar-card">
                         <div class="eo-pillar-header">
@@ -1264,8 +1320,10 @@
                         <thead>
                             <tr>
                                 <th>Date</th>
-                                <th>Market</th>
+                                <th>PD</th>
                                 <th>ICP</th>
+                                <th>MAS</th>
+                                <th>SS</th>
                                 <th>GTM</th>
                                 <th>Overall</th>
                             </tr>
@@ -1413,7 +1471,7 @@
         // DASHBOARD STATE
         // ========================================
 
-        var dashScores = { mas: 0, icp: 0, gtm: 0 };
+        var dashScores = { pd: 0, icp: 0, mas: 0, ss: 0, gtm: 0 };
         var dashboardAiData = null;
         var resumeEmail = '';
         var resumeVentureSlug = '';
@@ -1427,7 +1485,7 @@
 
         function handleResume() {
             var email = document.getElementById('resume-email').value.trim().toLowerCase();
-            if (!email || email.indexOf('@') === -1) {
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 document.getElementById('resume-status').textContent = 'Please enter a valid email address.';
                 document.getElementById('resume-status').style.color = '#EF4444';
                 return;
@@ -1518,8 +1576,10 @@
             ctaEl.style.display = 'block';
 
             // Also load into scorecard sliders
-            if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
+            if (sc.sc1) { dashScores.pd = sc.sc1; document.getElementById('pd-slider').value = sc.sc1; document.getElementById('pd-display').textContent = sc.sc1; }
             if (sc.sc2) { dashScores.icp = sc.sc2; document.getElementById('icp-slider').value = sc.sc2; document.getElementById('icp-display').textContent = sc.sc2; }
+            if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
+            if (sc.sc4) { dashScores.ss = sc.sc4; document.getElementById('ss-slider').value = sc.sc4; document.getElementById('ss-display').textContent = sc.sc4; }
             if (sc.sc5) { dashScores.gtm = sc.sc5; document.getElementById('gtm-slider').value = sc.sc5; document.getElementById('gtm-display').textContent = sc.sc5; }
         }
 
@@ -1585,19 +1645,23 @@
         // ========================================
 
         function updateScores() {
-            dashScores.mas = parseInt(document.getElementById('mas-slider').value);
+            dashScores.pd = parseInt(document.getElementById('pd-slider').value);
             dashScores.icp = parseInt(document.getElementById('icp-slider').value);
+            dashScores.mas = parseInt(document.getElementById('mas-slider').value);
+            dashScores.ss = parseInt(document.getElementById('ss-slider').value);
             dashScores.gtm = parseInt(document.getElementById('gtm-slider').value);
-            document.getElementById('mas-display').textContent = dashScores.mas;
+            document.getElementById('pd-display').textContent = dashScores.pd;
             document.getElementById('icp-display').textContent = dashScores.icp;
+            document.getElementById('mas-display').textContent = dashScores.mas;
+            document.getElementById('ss-display').textContent = dashScores.ss;
             document.getElementById('gtm-display').textContent = dashScores.gtm;
-            if (dashScores.mas > 0 || dashScores.icp > 0 || dashScores.gtm > 0) {
+            if (dashScores.mas > 0 || dashScores.icp > 0 || dashScores.gtm > 0 || dashScores.pd > 0 || dashScores.ss > 0) {
                 renderDashboard();
             }
         }
 
         function getOverallScore() {
-            return Math.round((dashScores.mas * 0.35) + (dashScores.icp * 0.35) + (dashScores.gtm * 0.30));
+            return Math.round((dashScores.pd * 0.15) + (dashScores.icp * 0.20) + (dashScores.mas * 0.25) + (dashScores.ss * 0.15) + (dashScores.gtm * 0.25));
         }
 
         function getBandInfo(score) {
@@ -1676,15 +1740,25 @@
         }
 
         function updatePillars() {
-            document.getElementById('pillar-mas-score').textContent = dashScores.mas;
-            document.getElementById('pillar-mas-bar').style.width = dashScores.mas + '%';
-            document.getElementById('pillar-mas-band').textContent = getPillarBand(dashScores.mas);
-            document.getElementById('pillar-mas-weakness').textContent = getWeakness(dashScores.mas);
+            document.getElementById('pillar-pd-score').textContent = dashScores.pd;
+            document.getElementById('pillar-pd-bar').style.width = dashScores.pd + '%';
+            document.getElementById('pillar-pd-band').textContent = getPillarBand(dashScores.pd);
+            document.getElementById('pillar-pd-weakness').textContent = getWeakness(dashScores.pd);
 
             document.getElementById('pillar-icp-score').textContent = dashScores.icp;
             document.getElementById('pillar-icp-bar').style.width = dashScores.icp + '%';
             document.getElementById('pillar-icp-band').textContent = getPillarBand(dashScores.icp);
             document.getElementById('pillar-icp-weakness').textContent = getWeakness(dashScores.icp);
+
+            document.getElementById('pillar-mas-score').textContent = dashScores.mas;
+            document.getElementById('pillar-mas-bar').style.width = dashScores.mas + '%';
+            document.getElementById('pillar-mas-band').textContent = getPillarBand(dashScores.mas);
+            document.getElementById('pillar-mas-weakness').textContent = getWeakness(dashScores.mas);
+
+            document.getElementById('pillar-ss-score').textContent = dashScores.ss;
+            document.getElementById('pillar-ss-bar').style.width = dashScores.ss + '%';
+            document.getElementById('pillar-ss-band').textContent = getPillarBand(dashScores.ss);
+            document.getElementById('pillar-ss-weakness').textContent = getWeakness(dashScores.ss);
 
             document.getElementById('pillar-gtm-score').textContent = dashScores.gtm;
             document.getElementById('pillar-gtm-bar').style.width = dashScores.gtm + '%';
@@ -1693,20 +1767,16 @@
         }
 
         function updateBottleneck() {
-            var lowest = Math.min(dashScores.mas, dashScores.icp, dashScores.gtm);
-            var title = '', desc = '';
-            if (lowest === dashScores.mas) {
-                title = 'Market Validation Needed';
-                desc = 'Your market signal is the weakest area. Do not invest heavily in GTM until market score reaches 70+. Focus on customer interviews and market research.';
-            } else if (lowest === dashScores.icp) {
-                title = 'ICP Clarity Crisis';
-                desc = 'You\'re selling to a blur. Sharpen your buyer definition before spending on distribution. Do deep ICP research before any GTM investment.';
-            } else {
-                title = 'GTM Machine Needed';
-                desc = 'You have a market and know your buyer — now build the distribution machine. Your execution readiness is the limiting factor.';
-            }
-            document.getElementById('bottleneck-title').textContent = title;
-            document.getElementById('bottleneck-desc').textContent = desc;
+            var areas = [
+                { key: 'pd', score: dashScores.pd, title: 'Project Definition Needed', desc: 'Your project foundation is the weakest area. Clarify your niche, positioning, and scope before investing in downstream assessments.' },
+                { key: 'icp', score: dashScores.icp, title: 'ICP Clarity Crisis', desc: 'You\'re selling to a blur. Sharpen your buyer definition before spending on distribution. Do deep ICP research before any GTM investment.' },
+                { key: 'mas', score: dashScores.mas, title: 'Market Validation Needed', desc: 'Your market signal is the weakest area. Do not invest heavily in GTM until market score reaches 70+. Focus on customer interviews and market research.' },
+                { key: 'ss', score: dashScores.ss, title: 'Strategy Path Unclear', desc: 'Your strategy alignment is the weakest area. Revisit the Strategy Selector to find the right path before scaling GTM execution.' },
+                { key: 'gtm', score: dashScores.gtm, title: 'GTM Machine Needed', desc: 'You have a market and know your buyer — now build the distribution machine. Your execution readiness is the limiting factor.' }
+            ];
+            var lowest = areas.reduce(function(min, a) { return a.score < min.score ? a : min; }, areas[0]);
+            document.getElementById('bottleneck-title').textContent = lowest.title;
+            document.getElementById('bottleneck-desc').textContent = lowest.desc;
         }
 
         function updateMatrix() {
@@ -1742,11 +1812,12 @@
 
         function saveToHistory(overall) {
             var today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            var entry = { date: today, pd: dashScores.pd, icp: dashScores.icp, mas: dashScores.mas, ss: dashScores.ss, gtm: dashScores.gtm, overall: overall };
             var existingIndex = history.findIndex(function(h) { return h.date === today; });
             if (existingIndex >= 0) {
-                history[existingIndex] = { date: today, mas: dashScores.mas, icp: dashScores.icp, gtm: dashScores.gtm, overall: overall };
+                history[existingIndex] = entry;
             } else {
-                history.push({ date: today, mas: dashScores.mas, icp: dashScores.icp, gtm: dashScores.gtm, overall: overall });
+                history.push(entry);
             }
             if (history.length > 12) history = history.slice(-12);
             localStorage.setItem('eo-history', JSON.stringify(history));
@@ -1757,7 +1828,7 @@
             tbody.innerHTML = '';
             history.forEach(function(entry) {
                 var row = document.createElement('tr');
-                row.innerHTML = '<td>' + entry.date + '</td><td>' + entry.mas + '</td><td>' + entry.icp + '</td><td>' + entry.gtm + '</td><td><strong>' + entry.overall + '</strong></td>';
+                row.innerHTML = '<td>' + entry.date + '</td><td>' + (entry.pd || 0) + '</td><td>' + (entry.icp || 0) + '</td><td>' + (entry.mas || 0) + '</td><td>' + (entry.ss || 0) + '</td><td>' + (entry.gtm || 0) + '</td><td><strong>' + entry.overall + '</strong></td>';
                 tbody.appendChild(row);
             });
             drawHistoryChart();
@@ -1773,10 +1844,10 @@
             ctx.scale(dpr, dpr);
             var width = rect.width, height = rect.height, padding = 30;
             var graphWidth = width - 2 * padding, graphHeight = height - 2 * padding;
-            ctx.fillStyle = '#000000';
+            ctx.fillStyle = '#050A12';
             ctx.fillRect(0, 0, width, height);
             if (history.length < 2) {
-                ctx.fillStyle = '#A3A3A3';
+                ctx.fillStyle = '#94A3B8';
                 ctx.font = '14px DM Sans';
                 ctx.textAlign = 'center';
                 ctx.fillText('Add more assessments to see progress', width / 2, height / 2);
@@ -1791,23 +1862,27 @@
                 ctx.lineTo(width - padding, y);
                 ctx.stroke();
             }
-            var colors = ['#FF6600', '#A3A3A3', '#666666'];
-            var datasets = ['mas', 'icp', 'gtm'];
+            var colors = ['#D97706', '#A3A3A3', '#FF6600', '#22C55E', '#60A5FA'];
+            var datasets = ['pd', 'icp', 'mas', 'ss', 'gtm'];
             datasets.forEach(function(key, idx) {
                 ctx.strokeStyle = colors[idx];
                 ctx.lineWidth = 2;
                 ctx.beginPath();
                 history.forEach(function(entry, i) {
                     var x = padding + (graphWidth / (history.length - 1)) * i;
-                    var yy = height - padding - (entry[key] / 100) * graphHeight;
+                    var yy = height - padding - ((entry[key] || 0) / 100) * graphHeight;
                     if (i === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
                 });
                 ctx.stroke();
             });
-            ctx.font = '12px DM Sans';
-            ctx.fillStyle = '#FF6600'; ctx.fillText('Market', width - 150, height - 10);
-            ctx.fillStyle = '#A3A3A3'; ctx.fillText('ICP', width - 100, height - 10);
-            ctx.fillStyle = '#666666'; ctx.fillText('GTM', width - 50, height - 10);
+            ctx.font = '11px DM Sans';
+            ctx.textAlign = 'left';
+            var legendX = padding;
+            ctx.fillStyle = '#D97706'; ctx.fillText('PD', legendX, height - 8);
+            ctx.fillStyle = '#A3A3A3'; ctx.fillText('ICP', legendX + 30, height - 8);
+            ctx.fillStyle = '#FF6600'; ctx.fillText('MAS', legendX + 60, height - 8);
+            ctx.fillStyle = '#22C55E'; ctx.fillText('SS', legendX + 100, height - 8);
+            ctx.fillStyle = '#60A5FA'; ctx.fillText('GTM', legendX + 130, height - 8);
         }
 
         // ========================================
@@ -1818,8 +1893,10 @@
             // Try new composite key format first
             if (resumeEmail && resumeVentureSlug) {
                 var sc = getScores(resumeEmail, resumeVentureSlug);
-                if (sc.sc3) { dashScores.mas = sc.sc3; }
+                if (sc.sc1) { dashScores.pd = sc.sc1; }
                 if (sc.sc2) { dashScores.icp = sc.sc2; }
+                if (sc.sc3) { dashScores.mas = sc.sc3; }
+                if (sc.sc4) { dashScores.ss = sc.sc4; }
                 if (sc.sc5) { dashScores.gtm = sc.sc5; }
             } else {
                 // Fallback: try old format
@@ -1830,11 +1907,13 @@
                 if (status.mas && status.mas.score > 0) saved.mas = status.mas.score;
                 if (status.icp && status.icp.score > 0) saved.icp = status.icp.score;
                 if (status.gtm && status.gtm.score > 0) saved.gtm = status.gtm.score;
-                dashScores = { mas: saved.mas || 0, icp: saved.icp || 0, gtm: saved.gtm || 0 };
+                dashScores = { pd: saved.pd || 0, icp: saved.icp || 0, mas: saved.mas || 0, ss: saved.ss || 0, gtm: saved.gtm || 0 };
             }
 
-            document.getElementById('mas-slider').value = dashScores.mas;
+            document.getElementById('pd-slider').value = dashScores.pd;
             document.getElementById('icp-slider').value = dashScores.icp;
+            document.getElementById('mas-slider').value = dashScores.mas;
+            document.getElementById('ss-slider').value = dashScores.ss;
             document.getElementById('gtm-slider').value = dashScores.gtm;
             updateScores();
         }
@@ -1855,8 +1934,10 @@
                 if (ventures.length > 0) {
                     var slug = ventures[0].venture_slug;
                     var sc = getScores(email, slug);
-                    if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
+                    if (sc.sc1) { dashScores.pd = sc.sc1; document.getElementById('pd-slider').value = sc.sc1; document.getElementById('pd-display').textContent = sc.sc1; }
                     if (sc.sc2) { dashScores.icp = sc.sc2; document.getElementById('icp-slider').value = sc.sc2; document.getElementById('icp-display').textContent = sc.sc2; }
+                    if (sc.sc3) { dashScores.mas = sc.sc3; document.getElementById('mas-slider').value = sc.sc3; document.getElementById('mas-display').textContent = sc.sc3; }
+                    if (sc.sc4) { dashScores.ss = sc.sc4; document.getElementById('ss-slider').value = sc.sc4; document.getElementById('ss-display').textContent = sc.sc4; }
                     if (sc.sc5) { dashScores.gtm = sc.sc5; document.getElementById('gtm-slider').value = sc.sc5; document.getElementById('gtm-display').textContent = sc.sc5; }
                     renderDashboard();
                     statusEl.textContent = 'Loaded scores for "' + ventures[0].venture_name + '".';
@@ -1891,18 +1972,21 @@
         async function fetchMyScores() {
             var email = document.getElementById('lookup-email').value.trim().toLowerCase();
             var statusEl = document.getElementById('lookup-status');
-            if (!email || email.indexOf('@') === -1) {
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 statusEl.textContent = 'Please enter a valid email address.';
                 statusEl.style.color = '#EF4444';
                 return;
             }
             statusEl.textContent = 'Fetching your scores...';
             statusEl.style.color = '#FF6600';
+            var controller = new AbortController();
+            var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
             try {
                 var response = await fetch(CONSOLIDATED_WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: email, action: 'retrieve' })
+                    body: JSON.stringify({ email: email, action: 'retrieve' }),
+                    signal: controller.signal
                 });
                 if (!response.ok) throw new Error('Server returned ' + response.status);
                 var data = await response.json();
@@ -1912,26 +1996,31 @@
                     return;
                 }
                 if (data.pillar_scores) {
-                    var mas = data.pillar_scores.mas || 0;
-                    var icp = data.pillar_scores.icp || 0;
-                    var gtm = data.pillar_scores.gtm || 0;
-                    document.getElementById('mas-slider').value = mas;
-                    document.getElementById('icp-slider').value = icp;
-                    document.getElementById('gtm-slider').value = gtm;
-                    dashScores.mas = mas;
-                    dashScores.icp = icp;
-                    dashScores.gtm = gtm;
-                    document.getElementById('mas-display').textContent = mas;
-                    document.getElementById('icp-display').textContent = icp;
-                    document.getElementById('gtm-display').textContent = gtm;
+                    var pd = data.pillar_scores.pd || data.pillar_scores.sc1 || 0;
+                    var icp = data.pillar_scores.icp || data.pillar_scores.sc2 || 0;
+                    var mas = data.pillar_scores.mas || data.pillar_scores.sc3 || 0;
+                    var ss = data.pillar_scores.ss || data.pillar_scores.sc4 || 0;
+                    var gtm = data.pillar_scores.gtm || data.pillar_scores.sc5 || 0;
+                    dashScores.pd = pd; document.getElementById('pd-slider').value = pd; document.getElementById('pd-display').textContent = pd;
+                    dashScores.icp = icp; document.getElementById('icp-slider').value = icp; document.getElementById('icp-display').textContent = icp;
+                    dashScores.mas = mas; document.getElementById('mas-slider').value = mas; document.getElementById('mas-display').textContent = mas;
+                    dashScores.ss = ss; document.getElementById('ss-slider').value = ss; document.getElementById('ss-display').textContent = ss;
+                    dashScores.gtm = gtm; document.getElementById('gtm-slider').value = gtm; document.getElementById('gtm-display').textContent = gtm;
                     renderDashboard();
                 }
                 statusEl.textContent = 'Scores loaded successfully.';
                 statusEl.style.color = '#22C55E';
             } catch (err) {
-                statusEl.textContent = 'Could not reach server. Loading from local data instead...';
+                clearTimeout(timeoutId);
+                if (err.name === 'AbortError') {
+                    statusEl.textContent = 'Server took too long. Loading from local data instead...';
+                } else {
+                    statusEl.textContent = 'Could not reach server. Loading from local data instead...';
+                }
                 statusEl.style.color = '#F59E0B';
                 setTimeout(function() { loadFromLocalData(); }, 500);
+            } finally {
+                clearTimeout(timeoutId);
             }
         }
 
@@ -1962,21 +2051,127 @@
             var overall = getOverallScore();
             var bandInfo = getBandInfo(overall);
             var vName = resumeVentureName || 'My Venture';
+            var email = resumeEmail || '';
+            var slug = resumeVentureSlug || '';
 
             var md = '';
-            md += '# Entrepreneurs Oasis MENA — Founder Project Brief\n\n';
+            md += '# Entrepreneurs Oasis MENA — Consolidated Founder Brief\n\n';
             md += '**Venture:** ' + vName + '\n';
             md += '**Generated:** ' + dateStr + '\n';
             md += '**Overall Readiness:** ' + overall + '/100 — ' + bandInfo.band + '\n\n';
             md += '> ' + bandInfo.desc + '\n\n';
 
-            md += '## Assessment Scores\n\n';
-            md += '| Assessment | Score | Band |\n';
-            md += '|------------|-------|------|\n';
-            md += '| Market Attractiveness | ' + dashScores.mas + '/100 | ' + getPillarBand(dashScores.mas) + ' |\n';
-            md += '| ICP Clarity | ' + dashScores.icp + '/100 | ' + getPillarBand(dashScores.icp) + ' |\n';
-            md += '| GTM Fitness | ' + dashScores.gtm + '/100 | ' + getPillarBand(dashScores.gtm) + ' |\n\n';
+            // --- STRATEGIC SUMMARY ---
+            md += '## Strategic Summary\n\n';
 
+            // Strengths
+            var strengths = [];
+            var weaknesses = [];
+            var allScores = [
+                { name: 'Project Definition', score: dashScores.pd },
+                { name: 'ICP Clarity', score: dashScores.icp },
+                { name: 'Market Attractiveness', score: dashScores.mas },
+                { name: 'Strategy Selector', score: dashScores.ss },
+                { name: 'GTM Fitness', score: dashScores.gtm }
+            ];
+            allScores.forEach(function(s) {
+                if (s.score >= 70) strengths.push(s.name + ' (' + s.score + ')');
+                else if (s.score > 0 && s.score < 55) weaknesses.push(s.name + ' (' + s.score + ')');
+            });
+            if (strengths.length > 0) {
+                md += '**Strengths:** ' + strengths.join(', ') + '\n\n';
+            }
+            if (weaknesses.length > 0) {
+                md += '**Critical Gaps:** ' + weaknesses.join(', ') + '\n\n';
+            }
+
+            // --- ASSESSMENT SCORES ---
+            md += '## Assessment Scores\n\n';
+            md += '| # | Assessment | Score | Band |\n';
+            md += '|---|------------|-------|------|\n';
+            md += '| SC1 | Project Definition | ' + dashScores.pd + '/100 | ' + getPillarBand(dashScores.pd) + ' |\n';
+            md += '| SC2 | ICP Clarity | ' + dashScores.icp + '/100 | ' + getPillarBand(dashScores.icp) + ' |\n';
+            md += '| SC3 | Market Attractiveness | ' + dashScores.mas + '/100 | ' + getPillarBand(dashScores.mas) + ' |\n';
+            md += '| SC4 | Strategy Selector | ' + dashScores.ss + '/100 | ' + getPillarBand(dashScores.ss) + ' |\n';
+            md += '| SC5 | GTM Fitness | ' + dashScores.gtm + '/100 | ' + getPillarBand(dashScores.gtm) + ' |\n\n';
+
+            // --- CONSOLIDATED INSIGHTS ---
+            md += '## Consolidated Insights\n\n';
+
+            // Extract upstream data for unique perspectives
+            var sc1Result = null, sc2Result = null, sc3Result = null, sc4Result = null, sc5Result = null;
+            if (email && slug) {
+                sc1Result = getUpstreamResult(1, email, slug);
+                sc2Result = getUpstreamResult(2, email, slug);
+                sc3Result = getUpstreamResult(3, email, slug);
+                sc4Result = getUpstreamResult(4, email, slug);
+                sc5Result = getUpstreamResult(5, email, slug);
+            }
+
+            // Project Summary Extraction
+            md += '### Project Foundation\n\n';
+            if (sc1Result && sc1Result.answers) {
+                var ans = sc1Result.answers;
+                if (ans.q1) md += '- **Niche:** ' + truncateAnswer(ans.q1) + '\n';
+                if (ans.q2) md += '- **Problem:** ' + truncateAnswer(ans.q2) + '\n';
+                if (ans.q3) md += '- **Solution:** ' + truncateAnswer(ans.q3) + '\n';
+            } else {
+                md += '_Complete SC1 (Project Definition) to populate this section._\n';
+            }
+            md += '\n';
+
+            // ICP Extraction
+            md += '### Ideal Customer Profile\n\n';
+            if (sc2Result && sc2Result.answers) {
+                var icpAns = sc2Result.answers;
+                if (icpAns.q1) md += '- **Who:** ' + truncateAnswer(icpAns.q1) + '\n';
+                if (icpAns.q2) md += '- **Pain:** ' + truncateAnswer(icpAns.q2) + '\n';
+                if (icpAns.q3) md += '- **Desired Outcome:** ' + truncateAnswer(icpAns.q3) + '\n';
+            } else {
+                md += '_Complete SC2 (ICP Clarity) to populate this section._\n';
+            }
+            md += '\n';
+
+            // Market Recommendation
+            md += '### Market Position\n\n';
+            if (dashScores.mas >= 70) {
+                md += 'Market signal is strong. You have evidence of demand. Move to execution.\n';
+            } else if (dashScores.mas >= 55) {
+                md += 'Market signal is moderate. Gather more evidence before scaling investment.\n';
+            } else if (dashScores.mas > 0) {
+                md += 'Market signal is weak. Prioritize customer discovery interviews before building.\n';
+            } else {
+                md += '_Complete SC3 (Market Attractiveness) to populate this section._\n';
+            }
+            md += '\n';
+
+            // Strategy Path
+            md += '### Strategy Path\n\n';
+            if (sc4Result && sc4Result.strategy_path) {
+                md += '- **Selected Path:** ' + sc4Result.strategy_path + '\n';
+                if (sc4Result.archetype) md += '- **Archetype:** ' + sc4Result.archetype + '\n';
+            } else if (dashScores.ss > 0) {
+                md += 'Strategy assessment completed (Score: ' + dashScores.ss + '). Review your SC4 results for full path details.\n';
+            } else {
+                md += '_Complete SC4 (Strategy Selector) to populate this section._\n';
+            }
+            md += '\n';
+
+            // GTM Recommendation
+            md += '### GTM Readiness\n\n';
+            if (sc5Result && sc5Result.primary_motions) {
+                md += '**Primary Motions:** ' + sc5Result.primary_motions.join(', ') + '\n';
+                if (sc5Result.secondary_motions) md += '**Secondary Motions:** ' + sc5Result.secondary_motions.join(', ') + '\n';
+            } else if (dashScores.gtm >= 70) {
+                md += 'GTM readiness is strong. Execute your top-ranked motions with confidence.\n';
+            } else if (dashScores.gtm > 0) {
+                md += 'GTM needs strengthening. Focus on building capabilities in your top 2-3 motions before scaling.\n';
+            } else {
+                md += '_Complete SC5 (GTM Fitness) to populate this section._\n';
+            }
+            md += '\n';
+
+            // --- DEMAND-FIRST MATRIX ---
             md += '## Demand-First Matrix Position\n\n';
             var execReady = Math.round((dashScores.icp + dashScores.gtm) / 2);
             var marketPull = dashScores.mas;
@@ -1987,6 +2182,22 @@
             md += '- **Market Pull:** ' + marketPull + ' | **Execution Readiness:** ' + execReady + '\n';
             md += '- **Quadrant:** ' + quadrant + '\n\n';
 
+            // --- RECOMMENDED FIXES ---
+            md += '## Recommended Fixes\n\n';
+            allScores.sort(function(a, b) { return a.score - b.score; });
+            allScores.forEach(function(s, idx) {
+                if (s.score < 70 && s.score > 0) {
+                    md += (idx + 1) + '. **' + s.name + ' (' + s.score + '):** ' + getWeakness(s.score) + '. ';
+                    if (s.name === 'Project Definition') md += 'Revisit your niche definition and positioning statement.\n';
+                    else if (s.name === 'ICP Clarity') md += 'Conduct 5-10 buyer interviews to sharpen your profile.\n';
+                    else if (s.name === 'Market Attractiveness') md += 'Gather more market evidence and validate demand signals.\n';
+                    else if (s.name === 'Strategy Selector') md += 'Re-evaluate your strategy path alignment.\n';
+                    else if (s.name === 'GTM Fitness') md += 'Build capabilities in your top-ranked GTM motions.\n';
+                }
+            });
+            md += '\n';
+
+            // --- NEXT STEPS ---
             md += '## Next Steps\n\n';
             md += document.getElementById('nextsteps-content').textContent + '\n\n';
             md += '---\n*Generated by Entrepreneurs Oasis MENA Founder Assessment Suite*\n';
@@ -1995,11 +2206,18 @@
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
-            a.download = 'project-brief-' + dateStr + '.md';
+            a.download = 'eo-founder-brief-' + vName.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase() + '-' + dateStr + '.md';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        function truncateAnswer(text) {
+            if (!text) return '';
+            var str = String(text).trim();
+            if (str.length > 120) return str.substring(0, 117) + '...';
+            return str;
         }
 
         // ========================================
