@@ -1,0 +1,24 @@
+# ── SMOrchestra AI-Native Git Architecture ── CODEOWNERS ──
+# Enforces directory ownership per the AI-Native Git Architecture v2 plan.
+# GitHub requires at least one approval from a code owner for matching paths.
+
+# Locked directories — require Mamoun (smorchestraai-code) approval
+/infra/                         @smorchestraai-code
+**/auth/**                      @smorchestraai-code
+**/billing/**                   @smorchestraai-code
+**/security/**                  @smorchestraai-code
+
+# Prompt library — Mamoun owns, team proposes via PR
+/prompts/                       @smorchestraai-code
+
+# Specs — auto-generated, Mamoun approves
+/specs/                         @smorchestraai-code
+
+# CI/CD and GitHub config
+/.github/                       @smorchestraai-code
+
+# Agent configuration
+/agents/                        @smorchestraai-code
+
+# Product code — any org member can review
+/product/                       @smorchestraai-code

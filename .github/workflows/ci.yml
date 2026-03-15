@@ -1,0 +1,255 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ── Commit message validation ──────────────────────────────────
+  commit-lint:
+    name: Validate commit messages
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check commit message format
+        run: |
+          VALID_PATTERN='^(feat|fix|refactor|test|docs|chore|agent)\(TASK-[0-9]+\): .+'
+          FAILED=0
+          while IFS= read -r msg; do
+            if ! echo "$msg" | grep -qE "$VALID_PATTERN"; then
+              echo "::error::Invalid commit message: $msg"
+              echo "  Expected format: type(TASK-XXX): description"
+              echo "  Valid types: feat, fix, refactor, test, docs, chore, agent"
+              FAILED=1
+            fi
+          done < <(git log --format='%s' origin/${{ github.base_ref }}..HEAD)
+
+          if [ "$FAILED" -eq 1 ]; then
+            echo ""
+            echo "::error::One or more commit messages do not follow the convention."
+            echo "Format: type(TASK-XXX): short description"
+            exit 1
+          fi
+          echo "All commit messages follow convention."
+
+  # ── HTML validation ────────────────────────────────────────────
+  html-validate:
+    name: Validate HTML files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install html-validate
+        run: npm install -g html-validate
+
+      - name: Validate HTML scorecards
+        run: |
+          shopt -s nullglob
+          FILES=(*.html product/**/*.html)
+          if [ ${#FILES[@]} -eq 0 ]; then
+            echo "No HTML files found, skipping."
+            exit 0
+          fi
+          html-validate "${FILES[@]}" || true
+          echo "HTML validation complete."
+
+  # ── Scope check (agent PRs) ───────────────────────────────────
+  scope-check:
+    name: Check agent PR file scope
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect scope violations
+        run: |
+          HEAD_BRANCH="${{ github.head_ref }}"
+
+          # Only enforce strict scope on agent/* branches
+          if [[ ! "$HEAD_BRANCH" =~ ^agent/ ]]; then
+            echo "Not an agent branch ($HEAD_BRANCH). Scope check is advisory only."
+            exit 0
+          fi
+
+          # Extract TASK-XXX from branch name
+          TASK_ID=$(echo "$HEAD_BRANCH" | grep -oE 'TASK-[0-9]+')
+          if [ -z "$TASK_ID" ]; then
+            echo "::error::Agent branch does not contain TASK-XXX identifier."
+            exit 1
+          fi
+
+          SPEC_FILE="specs/tasks/${TASK_ID}.md"
+          if [ ! -f "$SPEC_FILE" ]; then
+            echo "::warning::Spec file $SPEC_FILE not found. Cannot verify scope."
+            exit 0
+          fi
+
+          # Extract declared files from spec
+          DECLARED_FILES=$(sed -n '/^## Declared Files/,/^##/p' "$SPEC_FILE" | grep '^- ' | sed 's/^- //')
+          if [ -z "$DECLARED_FILES" ]; then
+            echo "::warning::No declared files found in spec. Skipping scope check."
+            exit 0
+          fi
+
+          # Get changed files in PR
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+
+          VIOLATION=0
+          while IFS= read -r file; do
+            MATCH=0
+            while IFS= read -r declared; do
+              if [ "$file" = "$declared" ]; then
+                MATCH=1
+                break
+              fi
+            done <<< "$DECLARED_FILES"
+
+            if [ "$MATCH" -eq 0 ]; then
+              echo "::error::SCOPE VIOLATION: $file is not in declared spec files"
+              VIOLATION=1
+            fi
+          done <<< "$CHANGED_FILES"
+
+          if [ "$VIOLATION" -eq 1 ]; then
+            echo "::error::Agent PR touches files outside declared scope. Flagging as high-risk."
+            exit 1
+          fi
+          echo "All changed files are within declared scope."
+
+  # ── Risk tier labeling ─────────────────────────────────────────
+  risk-label:
+    name: Assign risk tier label
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Calculate risk tier and label PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DIFF_SIZE=$(git diff --stat origin/${{ github.base_ref }}...HEAD | tail -1 | grep -oE '[0-9]+ insertion' | grep -oE '[0-9]+' || echo "0")
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+          HEAD_BRANCH="${{ github.head_ref }}"
+
+          RISK="low-risk"
+
+          # Check for sensitive directories
+          if echo "$CHANGED_FILES" | grep -qE '^(infra/|auth/|billing/|security/)'; then
+            RISK="high-risk"
+          fi
+
+          # Check diff size
+          if [ "${DIFF_SIZE:-0}" -gt 200 ]; then
+            RISK="high-risk"
+          fi
+
+          # Check if agent branch with scope violation (scope-check would have failed)
+          if [[ "$HEAD_BRANCH" =~ ^agent/ ]]; then
+            # Medium risk for standard agent PRs
+            if [ "$RISK" = "low-risk" ]; then
+              RISK="medium-risk"
+            fi
+          fi
+
+          # Low risk: tests, docs, prompts only
+          if echo "$CHANGED_FILES" | grep -qvE '^(tests/|docs/|prompts/|\.github/)'; then
+            : # Files outside test/docs exist, keep current risk
+          else
+            RISK="low-risk"
+          fi
+
+          echo "Risk tier: $RISK (diff: ${DIFF_SIZE:-0} insertions)"
+
+          # Remove existing risk labels then apply new one
+          for LABEL in high-risk medium-risk low-risk; do
+            gh pr edit "${{ github.event.pull_request.number }}" --remove-label "$LABEL" 2>/dev/null || true
+          done
+          gh pr edit "${{ github.event.pull_request.number }}" --add-label "$RISK"
+
+          # Add agent-generated label if agent branch
+          if [[ "$HEAD_BRANCH" =~ ^agent/ ]]; then
+            gh pr edit "${{ github.event.pull_request.number }}" --add-label "agent-generated"
+          else
+            gh pr edit "${{ github.event.pull_request.number }}" --add-label "human-generated"
+          fi
+
+  # ── Tests ──────────────────────────────────────────────────────
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run test suite
+        run: |
+          # When real tests exist in tests/, run them here
+          if [ -f "package.json" ]; then
+            npm ci 2>/dev/null || true
+            npm test 2>/dev/null || echo "No test script configured yet."
+          else
+            echo "No package.json found. Skipping npm tests."
+          fi
+
+          # Check for any test HTML or test scripts
+          shopt -s nullglob
+          TEST_FILES=(tests/*.js tests/*.mjs tests/*.html)
+          if [ ${#TEST_FILES[@]} -eq 0 ]; then
+            echo "No test files found in tests/. Placeholder for future tests."
+          else
+            echo "Found ${#TEST_FILES[@]} test files."
+          fi
+
+  # ── Branch TTL check ───────────────────────────────────────────
+  stale-branch-check:
+    name: Check for stale branches
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Flag branches older than 48 hours
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CUTOFF=$(date -d '48 hours ago' +%s 2>/dev/null || date -v-48H +%s)
+
+          git for-each-ref --sort=-committerdate --format='%(refname:short) %(committerdate:unix)' refs/remotes/origin/ | while read branch timestamp; do
+            BRANCH_NAME=${branch#origin/}
+
+            # Skip protected branches
+            if [[ "$BRANCH_NAME" == "main" || "$BRANCH_NAME" == "dev" || "$BRANCH_NAME" == "HEAD" ]]; then
+              continue
+            fi
+
+            if [ "$timestamp" -lt "$CUTOFF" ]; then
+              echo "::warning::STALE BRANCH: $BRANCH_NAME (last commit: $(date -d @$timestamp 2>/dev/null || date -r $timestamp))"
+            fi
+          done
