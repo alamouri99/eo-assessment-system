@@ -1,0 +1,17 @@
+# ── Commit Message Format ──
+# type(TASK-XXX): short description of what changed and why
+#
+# Human types: feat, fix, refactor, test, docs, chore
+# Agent prefix: agent
+#
+# Examples:
+#   feat(TASK-184): add exponential backoff to Redis queue consumer
+#   fix(TASK-201): resolve null pointer in signal scorer on empty payload
+#   agent(TASK-184): implement retry logic per spec - workers/queue.go only
+#   agent(TASK-184): self-fix: correct delay calculation after CI failure
+#
+# Rules:
+#   - Start with type, then (TASK-XXX), then colon and space
+#   - Keep first line under 72 characters
+#   - Agent commits must specify which files were modified
+#   - Use imperative mood ("add", "fix", not "added", "fixed")
